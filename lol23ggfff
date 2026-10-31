@@ -1,0 +1,4706 @@
+scripts scanned: 507
+
+===== FULL: Players.zhhshshszzss.PlayerScripts.Client.Main =====
+local v_u_1 = game:GetService("Players")
+local v2 = game:GetService("ReplicatedStorage")
+local v3 = game:GetService("RunService")
+local v_u_4 = game:GetService("UserInputService")
+local v_u_5 = game:GetService("GuiService")
+local v_u_6 = game:GetService("SoundService")
+local v7 = v2:WaitForChild("Shared")
+local v_u_8 = require(v7.AimStream)
+local v_u_9 = require(v7.Config)
+local v_u_10 = require(v7.Net)
+local v_u_11 = require(v7.Placement)
+local v_u_12 = require(v7.Matchmaking.PadBar)
+local v_u_13 = require(v7.AuraQuiet)
+local v_u_14 = require(v7.TableBuilder)
+local v_u_15 = require(v7.CueStickBuilder)
+local v_u_16 = require(v7.Physics.Simulation)
+local v_u_17 = require(v7.Physics.Aim)
+local v_u_18 = require(v7.Rules.ShotJudge)
+local v_u_19 = require(v7.Rules.MatchEngine)
+local v_u_20 = require(v7.Ults.Effects.TimeStop)
+local v_u_21 = require(v7.Ults.Catalog)
+local v_u_22 = require(v7.Rules.NiceShot)
+local v_u_23 = require(v7.Tutorial.Steps)
+local v24 = require(script.Parent.Audio)
+local v25 = require(script.Parent.Avatar)
+local v26 = require(script.Parent.BackCue)
+local v27 = require(script.Parent.BotChat)
+local v_u_28 = require(script.Parent.People)
+local v_u_29 = require(script.Parent.TutorialAnchors)
+local v_u_30 = require(script.Parent.TutorialSoft)
+local v_u_31 = require(v7.BallCallouts)
+local v32 = require(script.Parent.BallPulse)
+local v_u_33 = require(script.Parent.CueAssets)
+local v34 = require(script.Parent.CueSkinLook)
+local v35 = require(script.Parent.Effects)
+local v_u_36 = require(script.Parent.Camera)
+local v37 = require(script.Parent.CameraGuard)
+local v38 = require(script.Parent.DayCycle)
+local v39 = require(script.Parent.FirePit)
+local v40 = require(script.Parent.FontTest)
+local v41 = require(script.Parent.LobbyBoards)
+local v42 = require(script.Parent.HoleFill)
+local v_u_43 = require(script.Parent.Guideline)
+local v44 = require(script.Parent.Input)
+local v45 = require(script.Parent.MapAmbience)
+local v46 = require(script.Parent.Hub)
+local v47 = require(script.Parent.PowerCue)
+local v48 = require(script.Parent.SpinSelector)
+local v_u_49 = require(script.Parent.SettingsState)
+local v_u_50 = require(script.Parent.Freecam)
+local v51 = require(script.Parent.ZoomHint)
+local v52 = require(script.Parent.PadGuide)
+local v_u_53 = require(script.Parent.PadMode)
+local v54 = require(script.Parent.GiftDrop)
+local v_u_55 = require(script.Parent.HubPad)
+local v_u_56 = require(script.Parent.LuckyClient)
+local v_u_57 = require(script.Parent.UltHud)
+local v58 = require(script.Parent.UltPick)
+local v59 = require(script.Parent.UltCutscene)
+local v60 = require(script.Parent.AbilityFx)
+local v_u_61 = require(script.Parent.LookOverThereFx)
+local v62 = require(script.Parent.UltScreen)
+local v_u_63 = require(script.Parent.UI)
+local v_u_64 = require(script.Parent.MatchHUD)
+local v65 = require(script.Parent.StreakHud)
+local v66 = require(script.Parent.MatchTargets)
+local v67 = require(script.Parent.PadEffects)
+local v68 = require(script.Parent.MatchBar)
+local v69 = require(script.Parent.HostRules)
+local v70 = require(script.Parent.TableSign)
+local v71 = require(script.Parent.OpponentPrompt)
+local v_u_72 = require(script.Parent.Progression)
+local v_u_73 = require(script.Parent.EmoteHud)
+local v74 = require(script.Parent.QueueStatus)
+local v75 = require(script.Parent.TeleportScreen)
+local v_u_76 = require(v7.Strings)
+local v_u_77 = v_u_9.Multiplayer
+local v_u_78 = v_u_1.LocalPlayer
+workspace:WaitForChild(v_u_14.FolderName)
+local v_u_79 = workspace:GetAttribute(v_u_9.Arena.ModeAttribute) == "Arena"
+if v_u_79 then
+	local v80 = table.clone(v_u_9.Arena.Table)
+	v80.teamSize = workspace:GetAttribute(v_u_9.Arena.TeamSizeAttribute) or 1
+	v_u_11.setLayout({ v80 })
+end
+local v_u_81 = Instance.new("Folder")
+v_u_81.Name = "ClientVisuals"
+v_u_81.Parent = workspace
+local v_u_82 = v46.new(v_u_81)
+v27.start()
+v37.start()
+for v_u_83 = 1, v_u_11.tableCount() do
+	local v_u_84 = v_u_9.Debug.Commands.SlowmoAttribute .. v_u_83
+	workspace:GetAttributeChangedSignal(v_u_84):Connect(function() -- name: applySlowmo
+		-- upvalues: (copy) v_u_82, (copy) v_u_83, (copy) v_u_84
+		local v85 = v_u_82:matchFor(v_u_83)
+		local v86 = workspace:GetAttribute(v_u_84)
+		if v85 then
+			v85:setTimeScale(type(v86) ~= "number" and 1 or v86)
+		end
+	end)
+	local v87 = v_u_82:matchFor(v_u_83)
+	local v88 = workspace:GetAttribute(v_u_84)
+	if v87 then
+		v87:setTimeScale(type(v88) ~= "number" and 1 or v88)
+	end
+	local v_u_89 = v_u_9.Debug.Commands.HoldAttribute .. v_u_83
+	workspace:GetAttributeChangedSignal(v_u_89):Connect(function() -- name: applyHold
+		-- upvalues: (copy) v_u_82, (copy) v_u_83, (copy) v_u_89
+		local v90 = v_u_82:matchFor(v_u_83)
+		local v91 = workspace:GetAttribute(v_u_89)
+		if v90 then
+			if type(v91) ~= "number" then
+				v91 = nil
+			end
+			v90:setHold(v91)
+		end
+	end)
+	local v92 = v_u_82:matchFor(v_u_83)
+	local v93 = workspace:GetAttribute(v_u_89)
+	if not v92 then
+		continue
+	end
+	if type(v93) ~= "number" then
+		v93 = nil
+	end
+	v92:setHold(v93)
+end
+local v94 = v59.start(v_u_82)
+local v_u_95 = v60.start(v_u_82, v_u_81, v94)
+local v_u_96 = v44.new()
+v_u_15.setLoader(v_u_33)
+local v_u_97 = v_u_15.build(v_u_81)
+v_u_15.wear(v_u_97, v_u_78)
+v34.attach(v_u_97, {
+	["aura"] = true,
+	["own"] = true
+})
+local v_u_98 = v26.new(v_u_81)
+local v_u_99 = v25.new()
+local v100 = v_u_63.screen()
+local v_u_101 = v47.new(v100)
+v_u_101:follow(v_u_78)
+v_u_63.addPlayControl(v_u_101.root)
+local v_u_102 = v48.new(v100, v_u_96)
+local v_u_103 = v51.new(v100)
+local v_u_104 = v52.new(v100)
+local v_u_105 = v_u_57.new(v100, function()
+	-- upvalues: (copy) v_u_10
+	v_u_10.get("UltActivate"):FireServer()
+end)
+task.spawn(function()
+	-- upvalues: (copy) v_u_10, (copy) v_u_105
+	v_u_10.get("UltGain").OnClientEvent:Connect(function(p106)
+		-- upvalues: (ref) v_u_105
+		v_u_105:onGain(p106)
+	end)
+	v_u_10.get("UltNotice").OnClientEvent:Connect(function(p107)
+		-- upvalues: (ref) v_u_105
+		v_u_105:onNotice(p107)
+	end)
+end)
+local v_u_109 = v58.new(v100, function(p108)
+	-- upvalues: (copy) v_u_82
+	v_u_82:action("UltPick", p108)
+end)
+v_u_63.addPlayControl(v_u_102.root)
+local v_u_110 = nil
+local v_u_111 = nil
+local v_u_112 = -1
+local v_u_113 = nil
+local v_u_114 = nil
+local v_u_115 = nil
+local v_u_116 = nil
+local v_u_117 = nil
+local v_u_118 = nil
+local v_u_119 = nil
+local v_u_699 = nil
+local v_u_632 = 0
+local v_u_122 = 0
+local v_u_123 = nil
+local v_u_124 = false
+local v_u_125 = ""
+local v_u_126 = ""
+local v_u_127 = ""
+local v_u_128 = false
+local v_u_668 = 0
+local v_u_130 = nil
+local v_u_131 = nil
+local v_u_132 = nil
+local v_u_736 = false
+local v_u_664 = false
+local v_u_135 = {}
+local v_u_136 = {}
+local v_u_137 = {}
+local v_u_138 = {}
+local v_u_139 = ""
+local v_u_140 = nil
+local v_u_141 = v_u_31.new()
+local v_u_142 = v32.new()
+local v_u_143 = {}
+local function v_u_147() -- name: movingBallWorlds
+	-- upvalues: (copy) v_u_143, (ref) v_u_113, (ref) v_u_114, (copy) v_u_14, (copy) v_u_9
+	table.clear(v_u_143)
+	if v_u_113 and v_u_114 then
+		for _, v144 in v_u_113.state.balls do
+			if v144.pocketed or v144.vx == 0 and (v144.vy == 0 and (v144.z <= 0 and v144.vz == 0)) then
+				continue
+			end
+			local v145 = v_u_14.toWorld(v_u_114, v144.x, v144.y, v_u_9.Balls.RenderRadiusInches + v144.z)
+			local v146 = v_u_143
+			table.insert(v146, v145)
+		end
+	end
+	return v_u_143
+end
+local function v_u_152() -- name: frozenTurn
+	-- upvalues: (ref) v_u_110, (copy) v_u_78, (ref) v_u_118, (ref) v_u_113, (copy) v_u_20
+	local v148
+	if v_u_110 == nil then
+		v148 = false
+	else
+		v148 = v_u_110.shooter == v_u_78.UserId
+	end
+	if not v148 or (v_u_118 or (not v_u_113 or v_u_110.phase ~= "Frozen")) then
+		return false
+	end
+	if not (v_u_113:isHalted() and v_u_20.isFrozen(v_u_113.state)) then
+		return false
+	end
+	local v149 = v_u_113:findCueBall()
+	if v149 == nil or v149.pocketed then
+		return false
+	end
+	local v150 = v_u_113.shot
+	local v151 = v150 and v150.parts
+	if v151 then
+		v151 = v150.parts.strikes
+	end
+	return v151 == nil and true or #v151 <= v150.applied.strikes
+end
+local v_u_153 = false
+local function v_u_163(p154) -- name: sneakStick
+	-- upvalues: (copy) v_u_4, (copy) v_u_9, (ref) v_u_153, (ref) v_u_117
+	if v_u_4:GetGamepadConnected(Enum.UserInputType.Gamepad1) then
+		local v155 = 0
+		local v156 = 0
+		for _, v157 in v_u_4:GetGamepadState(Enum.UserInputType.Gamepad1) do
+			if v157.KeyCode ~= Enum.KeyCode.Thumbstick1 then
+				continue
+			end
+			v155 = v157.Position.X
+			v156 = v157.Position.Y
+		end
+		local v158 = v_u_9.Input.Gamepad
+		local v159 = v155 * v155 + v156 * v156
+		local v160 = math.sqrt(v159)
+		local v161 = math.min(v160, 1)
+		local v162 = v158.AimDeadZone >= v161 and 0 or ((v161 - v158.AimDeadZone) / (1 - v158.AimDeadZone)) ^ v158.PlaceCurve
+		if v162 > 0 then
+			v_u_153 = true
+			v_u_117:stickMove(v155 / v160 * v162, v156 / v160 * v162, p154)
+		elseif v_u_153 then
+			v_u_153 = false
+			v_u_117:finishGesture(true)
+		end
+	else
+		return
+	end
+end
+local function v_u_167() -- name: canShoot
+	-- upvalues: (copy) v_u_152, (ref) v_u_110, (copy) v_u_78, (ref) v_u_118, (ref) v_u_113, (ref) v_u_116, (copy) v_u_18, (copy) v_u_57, (copy) v_u_109
+	local v164
+	if v_u_152() then
+		v164 = true
+	else
+		local v165
+		if v_u_110 == nil then
+			v165 = false
+		else
+			v165 = v_u_110.shooter == v_u_78.UserId
+		end
+		if v165 and (not v_u_118 and (v_u_113 and not v_u_113:isBusy())) then
+			v164 = (v_u_110.phase == "Aiming" or v_u_110.phase == "Intro") and true or v_u_110.phase == "Placement"
+		else
+			v164 = false
+		end
+	end
+	if v164 and not (v_u_116 and v_u_116:isModal()) then
+		local v166
+		if v_u_110 == nil or (v_u_113 == nil or v_u_110.calledPocket ~= nil) then
+			v166 = false
+		else
+			v166 = v_u_18.eligible(v_u_113.state.balls, v_u_110.groups[v_u_110.activeTeam])
+		end
+		if v166 then
+			return false
+		elseif v_u_57.arming(v_u_110, workspace:GetServerTimeNow()) then
+			return false
+		else
+			return not v_u_109:blocking()
+		end
+	else
+		return false
+	end
+end
+local function v_u_186() -- name: refreshAim
+	-- upvalues: (copy) v_u_167, (ref) v_u_117, (copy) v_u_102, (ref) v_u_115, (ref) v_u_123, (copy) v_u_99, (copy) v_u_15, (copy) v_u_97, (ref) v_u_116, (copy) v_u_96, (ref) v_u_110, (copy) v_u_78, (copy) v_u_17, (ref) v_u_113, (ref) v_u_122, (copy) v_u_9, (copy) v_u_21, (copy) v_u_152, (copy) v_u_18
+	local v168 = v_u_167()
+	if v168 then
+		v168 = not v_u_117:isDragging()
+	end
+	v_u_102:setEnabled(v168)
+	if v_u_115 and v168 then
+		local v169 = v_u_96:getSpin()
+		local v170 = v_u_96:getElevation()
+		local v171
+		if v_u_110 == nil then
+			v171 = false
+		else
+			v171 = v_u_110.shooter == v_u_78.UserId
+		end
+		local v172
+		if v171 then
+			local v173 = v_u_110.ults
+			local v174
+			if type(v173) == "table" then
+				v174 = v173.armed
+			else
+				v174 = nil
+			end
+			if type(v174) == "table" then
+				local v175 = v174.id
+				if type(v175) == "string" then
+					v172 = v174.id
+				else
+					v172 = nil
+				end
+			else
+				v172 = nil
+			end
+		else
+			v172 = nil
+		end
+		local v176 = v_u_17.trace
+		local v177 = v_u_113.state
+		local v178 = {
+			["angle"] = v_u_96.angle
+		}
+		local v179 = v_u_122
+		local v180 = v_u_9.Input.MinPowerToShoot
+		v178.power = math.max(v179, v180)
+		v178.spin = v169
+		v178.elevation = v170
+		local v181 = v176(v177, v178, v_u_21.launchScale(v172))
+		v_u_123 = {
+			["angle"] = v_u_96.angle,
+			["power"] = v_u_122,
+			["spin"] = v169,
+			["elevation"] = v170
+		}
+		local v182 = v181.objectId ~= nil and not (v_u_110.breakShot or v_u_152())
+		if v182 then
+			v182 = not v_u_18.legalTarget(v_u_113.state.balls, v_u_110.groups[v_u_110.activeTeam], v181.objectId)
+		end
+		local v183
+		if v_u_21.fullLines(v172) then
+			v183 = v_u_17.fullLines(v_u_113.state, v181)
+		else
+			v183 = nil
+		end
+		local v184 = v_u_115
+		local v185 = v_u_110.settings
+		if v185 then
+			v185 = v_u_110.settings.difficulty
+		end
+		v184:show(v181, v182, v185, v183, v_u_21.fullLinesOrange(v172))
+		v_u_116:setInvalidTarget(v182)
+	else
+		v_u_123 = nil
+		if v_u_115 then
+			v_u_115:hide()
+		end
+		if not v_u_99:stroking() then
+			v_u_15.setVisible(v_u_97, false)
+		end
+		if v_u_116 then
+			v_u_116:setInvalidTarget(false)
+		end
+	end
+end
+local function v_u_193(p187, p188, p189) -- name: sound
+	-- upvalues: (copy) v_u_137, (copy) v_u_77, (copy) v_u_6
+	local v190 = v_u_137[p187]
+	if v190 then
+		v190:Stop()
+		v190:Play()
+	else
+		local v191 = Instance.new("Sound")
+		local v192 = p189 or v_u_77.UISoundVolume
+		v191.Name = p187
+		v191.SoundId = p188
+		v191.Volume = v192
+		v191.Parent = v_u_6
+		v_u_137[p187] = v191
+		v191:Play()
+	end
+end
+local function v_u_236() -- name: highlightOwn
+	-- upvalues: (ref) v_u_111, (ref) v_u_113, (copy) v_u_138, (ref) v_u_139, (ref) v_u_140, (copy) v_u_142, (copy) v_u_78, (copy) v_u_29, (copy) v_u_18, (copy) v_u_77, (copy) v_u_141, (copy) v_u_31
+	local v194 = v_u_111
+	local v195 = v_u_113
+	if v195 then
+		v195 = v_u_113.renderer
+	end
+	if v194 and (v195 and v194.phase ~= "Result") then
+		local v196 = 1
+		for _, v197 in v194.seats do
+			if v197.userId ~= v_u_78.UserId then
+				continue
+			end
+			v196 = v197.team
+		end
+		local v198 = v194.groups[v196]
+		local v199 = nil
+		local v200
+		if v198 == nil and v_u_29.game1() then
+			v200 = v_u_78:GetAttribute("TutorialAimBall")
+			if v_u_78:GetAttribute("TutorialLesson") == "Aim" and type(v200) == "number" then
+				if v200 <= 0 then
+					v200 = v199
+				end
+			else
+				v200 = v199
+			end
+		else
+			v200 = v199
+		end
+		local v201 = {
+			["solids"] = 0,
+			["stripes"] = 0
+		}
+		local v202 = 0
+		local v203 = {}
+		for v204 = 1, 15 do
+			local v205 = v_u_18.group(v204)
+			if v194.balls[v204 * 4 + 4] == 1 then
+				local v206 = bit32.lshift(1, v204)
+				v202 = bit32.bor(v202, v206)
+				v203[v204] = true
+			else
+				if not v205 then
+					continue
+				end
+				v201[v205] = v201[v205] + 1
+			end
+		end
+		local v207 = v_u_77.Style.BallPulse
+		local v208 = ("%d:%d"):format(v194.id, v194.epoch)
+		if v208 ~= v_u_141.key then
+			v_u_142:clear()
+		end
+		local v209 = v_u_31.observe(v_u_141, v208, v194.groups, v203, v194.solo ~= nil)
+		if #v209 > 0 then
+			local v210 = v194.groups[v196]
+			local v211 = {}
+			for _, v212 in v209 do
+				for _, v213 in v_u_113.state.balls do
+					local v214 = v195.parts
+					if v214 then
+						v214 = v195.parts[v213.id]
+					end
+					local v215
+					if v212.kind == "Reveal" then
+						if v210 == nil then
+							v215 = false
+						else
+							v215 = v_u_18.group(v213.id) == v210
+						end
+					else
+						v215 = v213.id == v212.ball
+					end
+					if not v215 or (v203[v213.id] or not (v214 and v214:IsA("BasePart"))) then
+						continue
+					end
+					local v216 = {
+						["part"] = v214
+					}
+					local v217 = v207.Color
+					v216.color = Color3.fromRGB(v217[1], v217[2], v217[3])
+					table.insert(v211, v216)
+				end
+			end
+			v_u_142:start(v211, v207.Pulses * v207.PulseSeconds)
+		end
+		local v218 = v194.solo
+		if v218 then
+			v218 = v194.solo.first or v198
+		end
+		if v218 then
+			if v201[v218] <= 0 then
+				v218 = v_u_18.opposite(v218)
+			end
+		else
+			v218 = v198
+		end
+		local v219
+		if v218 == nil then
+			v219 = false
+		else
+			v219 = v201[v218] == 0
+		end
+		local v220 = v_u_142
+		local v221 = ("%d:%d:%s:%s:%d:%s:%d"):format(v194.id, v194.epoch, v218 or "", tostring(v219), v202, tostring(v220:active()), v200 or 0)
+		if v221 == v_u_139 and v195 == v_u_140 then
+			return
+		else
+			for _, v222 in v_u_138 do
+				v222:Destroy()
+			end
+			table.clear(v_u_138)
+			v_u_139 = ""
+			v_u_140 = nil
+			v_u_139 = v221
+			v_u_140 = v195
+			if v218 or v200 then
+				local v223 = v_u_77.Style
+				local v224 = v223.StrongBallHighlights or v_u_29.game1()
+				for _, v225 in v_u_113.state.balls do
+					local v226 = v_u_18.group(v225.id)
+					local v227
+					if v200 then
+						v227 = v225.id == v200
+					elseif v226 == v218 then
+						v227 = true
+					elseif v225.id == 8 then
+						v227 = v219
+					else
+						v227 = false
+					end
+					local v228 = not v200
+					if v228 then
+						if v224 then
+							if v226 == nil then
+								v228 = false
+							else
+								v228 = v226 ~= v218
+							end
+						else
+							v228 = v224
+						end
+					end
+					local v229 = v195.parts
+					if v229 then
+						v229 = v195.parts[v225.id]
+					end
+					if v194.balls[v225.id * 4 + 4] == 1 or not (v227 or v228) or (not v229 or (not v229:IsA("BasePart") or v_u_142:has(v229))) then
+						continue
+					end
+					local v230 = Instance.new("Highlight")
+					v230.Adornee = v229
+					v230.DepthMode = Enum.HighlightDepthMode.Occluded
+					if v227 then
+						v230.FillTransparency = 1
+						local v231
+						if v224 then
+							v231 = v223.StrongOwnOutline
+						else
+							v231 = v223.Green
+						end
+						v230.OutlineColor = Color3.fromRGB(v231[1], v231[2], v231[3])
+						local v232
+						if v224 then
+							v232 = v223.StrongOwnOutlineTransparency
+						else
+							v232 = v223.OwnBallOutlineTransparency
+						end
+						v230.OutlineTransparency = v232
+					else
+						local v233 = v223.OpponentBallFill
+						v230.FillColor = Color3.fromRGB(v233[1], v233[2], v233[3])
+						v230.FillTransparency = v223.OpponentBallFillTransparency
+						v230.OutlineTransparency = 1
+					end
+					v230.Parent = v229
+					local v234 = v_u_138
+					table.insert(v234, v230)
+				end
+			end
+		end
+	else
+		for _, v235 in v_u_138 do
+			v235:Destroy()
+		end
+		table.clear(v_u_138)
+		v_u_139 = ""
+		v_u_140 = nil
+		v_u_142:clear()
+		return
+	end
+end
+v_u_78:GetAttributeChangedSignal("TutorialLesson"):Connect(v_u_236)
+local function v_u_247() -- name: suggestAim
+	-- upvalues: (ref) v_u_110, (ref) v_u_113, (copy) v_u_96, (copy) v_u_18
+	if v_u_110 and (v_u_113 and not v_u_110.breakShot) then
+		local v237 = v_u_110.groups[v_u_110.activeTeam]
+		if v237 then
+			local v238 = v_u_113:findCueBall()
+			if v238 then
+				local v239 = v_u_18.eligible(v_u_113.state.balls, v237)
+				local v240 = (1 / 0)
+				local v241 = nil
+				for _, v242 in v_u_113.state.balls do
+					if v242.pocketed or (not v239 or v242.id ~= 8) and (v239 or v_u_18.group(v242.id) ~= v237) then
+						continue
+					end
+					local v243 = (v242.x - v238.x) ^ 2 + (v242.y - v238.y) ^ 2
+					if v243 >= v240 then
+						continue
+					end
+					v241 = v242
+					v240 = v243
+				end
+				if v241 then
+					local v244 = v_u_96
+					local v245 = v241.y - v238.y
+					local v246 = v241.x - v238.x
+					v244:setAngle((math.atan2(v245, v246)))
+				end
+			end
+		else
+			return
+		end
+	else
+		v_u_96:setAngle(0)
+		return
+	end
+end
+local function v253(p248, p249) -- name: fire
+	-- upvalues: (copy) v_u_167, (copy) v_u_82, (ref) v_u_110, (copy) v_u_96, (ref) v_u_132, (ref) v_u_117, (copy) v_u_99, (ref) v_u_118, (ref) v_u_113, (ref) v_u_119, (copy) v_u_186
+	if v_u_167() then
+		v_u_82:reportAim(v_u_110.id, v_u_96.angle, 0, v_u_96:getElevation())
+		v_u_132 = 0
+		local v250, v251 = v_u_117:getPreview()
+		v_u_99:strike(p249 or p248, v250, v251)
+		v_u_82:fire(v_u_110.id, v_u_96.angle, p248, v_u_96:getSpin(), v_u_96:getElevation(), v250, v251)
+		v_u_117:shotFired()
+		v_u_118 = workspace:GetServerTimeNow()
+		local v252 = v_u_113 and (v_u_113.shot and v_u_113.shot.parts)
+		if v252 then
+			v252 = v_u_113.shot.parts.strikes
+		end
+		v_u_119 = v_u_110.phase == "Frozen" and (v252 and #v252 or 0) or nil
+		v_u_96:setEnabled(false)
+		v_u_96:resetSpin()
+		v_u_96:resetElevation()
+		v_u_186()
+	end
+end
+local function v_u_254() -- name: leave
+	-- upvalues: (ref) v_u_116, (copy) v_u_5, (ref) v_u_110, (copy) v_u_79, (copy) v_u_10, (copy) v_u_82
+	if v_u_116:isModal() then
+		v_u_116:closeModal()
+		return
+	elseif v_u_5.SelectedObject then
+		v_u_5.SelectedObject = nil
+		return
+	elseif v_u_110 and (v_u_110.phase == "Waiting" and v_u_79) then
+		v_u_10.get("ArenaAction"):FireServer("Lobby")
+		return
+	elseif v_u_110 and v_u_110.phase == "Waiting" then
+		v_u_82:action("LeaveQueue")
+	else
+		v_u_116:openLeave()
+	end
+end
+local function v257(p255, p256) -- name: action
+	-- upvalues: (copy) v_u_82
+	if p255 == "Vote" then
+		v_u_82:action(p255, {
+			["yes"] = p256
+		})
+		return
+	elseif p255 == "SetDifficulty" or p255 == "SetAbilities" then
+		v_u_82:action(p255, {
+			["value"] = p256
+		})
+	else
+		v_u_82:action(p255)
+	end
+end
+v_u_116 = v_u_64.new(v100, v257)
+local v_u_258 = v65.new(v100, v_u_82, v_u_116)
+v_u_104:attachLeave(v_u_116.leave)
+local v_u_259 = v68.new(v100, v257)
+local v_u_260 = v69.new(v100, v257)
+v_u_72.start(v100, {
+	["pocketToScreen"] = function(p261, p262) -- name: pocketToScreen
+		-- upvalues: (copy) v_u_82, (copy) v_u_14, (copy) v_u_5
+		local v263 = v_u_82:matchFor(p261)
+		local v264 = workspace.CurrentCamera
+		if not (v263 and v264) then
+			return nil
+		end
+		for _, v265 in v263.state.geometry.pockets do
+			if v265.id ~= p262 then
+				continue
+			end
+			local v266 = v264:WorldToViewportPoint(v_u_14.toWorld(v263.placement, v265.x, v265.y, 0))
+			local v267 = Vector2.new(v266.X, v266.Y)
+			if v266.Z < 0 then
+				v267 = v264.ViewportSize - v267
+			end
+			return v267 - v_u_5:GetGuiInset()
+		end
+		return nil
+	end
+})
+v_u_73.start(v_u_78:WaitForChild("PlayerGui"))
+v_u_29.setMatch(function()
+	-- upvalues: (copy) v_u_82
+	if v_u_82.mySeat then
+		return v_u_82.snapshots[v_u_82.mySeat]
+	else
+		return nil
+	end
+end)
+v_u_29.setWorldPoint(function(p268, p269, p270)
+	-- upvalues: (copy) v_u_82, (copy) v_u_14, (copy) v_u_9
+	local v271 = v_u_82:matchFor(p268)
+	if not v271 then
+		return nil
+	end
+	if p269 == "pocket" then
+		for _, v272 in v271.state.geometry.pockets do
+			if v272.id ~= p270 then
+				continue
+			end
+			return v_u_14.toWorld(v271.placement, v272.x, v272.y, 0)
+		end
+	elseif p269 == "ball" then
+		for _, v273 in v271.state.balls do
+			if v273.id ~= p270 or v273.pocketed then
+				continue
+			end
+			return v_u_14.toWorld(v271.placement, v273.x, v273.y, v_u_9.Balls.RadiusInches)
+		end
+	end
+	return nil
+end)
+v62.start(v100)
+local v_u_276 = v71.new(v100, function(p274, p275)
+	-- upvalues: (copy) v_u_10
+	v_u_10.get("AnswerRequest"):FireServer(p274, p275)
+end)
+v_u_10.get("OpponentRequest").OnClientEvent:Connect(function(p277)
+	-- upvalues: (copy) v_u_82, (copy) v_u_276
+	if v_u_82.mySeat == nil then
+		v_u_276:show(p277)
+	end
+end)
+local v_u_278 = v75.new()
+local v_u_279 = v74.new(v100)
+local v_u_280 = nil
+v_u_10.get("QueueNotice").OnClientEvent:Connect(function(p281)
+	-- upvalues: (copy) v_u_278, (copy) v_u_76, (copy) v_u_279
+	if type(p281) == "table" then
+		if p281.kind == "Found" or (p281.kind == "Home" or (p281.kind == "Portal" or p281.kind == "Restart")) then
+			v_u_278:show(p281.kind)
+			return
+		elseif p281.kind == "Local" then
+			v_u_278:flash(p281.moving == true)
+		elseif p281.kind == "Failed" then
+			v_u_278:hide()
+			local v282 = p281.reason
+			local v283
+			if type(v282) == "string" then
+				v283 = v_u_76.GlobalQueue.Failed[v282] or v_u_76.Arena[v282]
+			else
+				v283 = false
+			end
+			if type(v283) == "string" then
+				v_u_279:flash(v283)
+				return
+			end
+		elseif p281.kind == "Stopped" then
+			v_u_279:flash(v_u_76.GlobalQueue.Failed.Party)
+		end
+	else
+		return
+	end
+end)
+v_u_10.get("ArenaState").OnClientEvent:Connect(function(p284)
+	-- upvalues: (ref) v_u_280
+	if type(p284) == "table" then
+		v_u_280 = p284
+	end
+end)
+local v_u_285 = nil
+local v_u_286 = nil
+local v_u_287 = 0
+v_u_10.get("MatchSummary").OnClientEvent:Connect(function(p288)
+	-- upvalues: (ref) v_u_285, (ref) v_u_286, (ref) v_u_287
+	if type(p288) == "table" then
+		local v289 = p288.epoch
+		if type(v289) == "number" then
+			local v290 = p288.tableId
+			local v291 = p288.epoch
+			v_u_285 = v290
+			v_u_286 = v291
+			v_u_287 = v_u_287 + 1
+		end
+	end
+end)
+local v_u_292 = nil
+v_u_72.setChoiceHandler(function(p293, p294)
+	-- upvalues: (copy) v_u_82, (copy) v_u_72, (copy) v_u_10, (ref) v_u_292
+	local v295 = v_u_82.snapshots[p294.tableId]
+	local v296
+	if v295 == nil or v295.epoch ~= p294.epoch then
+		v296 = false
+	else
+		v296 = v295.phase == "Result"
+	end
+	if p293 == "Rematch" then
+		if v296 and v_u_82.mySeat == p294.tableId then
+			v_u_82:action("Rematch")
+			return
+		end
+	else
+		if p293 == "Leave" then
+			if v296 and v_u_82.mySeat == p294.tableId then
+				v_u_82:action("Decline")
+			end
+			v_u_72.endChoices()
+			return
+		end
+		if p293 == "Another" or (p293 == "CancelAnother" or p293 == "Lobby") then
+			v_u_10.get("ArenaAction"):FireServer(p293)
+			if p293 == "Lobby" then
+				v_u_292 = os.clock()
+			end
+		end
+	end
+end)
+local v_u_297 = nil
+local function v_u_316(p298, p299) -- name: postMatchState
+	-- upvalues: (copy) v_u_78, (copy) v_u_82, (ref) v_u_280, (copy) v_u_278, (ref) v_u_292, (copy) v_u_77, (ref) v_u_297, (copy) v_u_9
+	local v300 = v_u_78.UserId
+	local v301 = v_u_82.snapshots[p298.tableId]
+	if v301 and (v301.epoch > p298.epoch and (v301.phase ~= "Waiting" and v_u_82.mySeat == p298.tableId)) then
+		return nil, true
+	end
+	local v302 = {
+		["arena"] = nil,
+		["rematch"] = "gone",
+		["votes"] = 0,
+		["total"] = 0,
+		["arena"] = p298.arena == true
+	}
+	if v301 and (v301.epoch == p298.epoch and (v301.phase == "Result" and v301.rematch)) then
+		local v303 = 0
+		for _, v304 in v301.seats do
+			if v304.connected == false or not v304.team then
+				continue
+			end
+			v303 = v303 + 1
+		end
+		v302.votes = #v301.rematch.yes
+		v302.total = v303
+		v302.rematch = v301.rematch.declined and "gone" or (table.find(v301.rematch.yes, v300) and "voted" or "open")
+		v302.deadline = v301.deadline
+	end
+	if not v302.arena then
+		if v302.rematch == "gone" then
+			local v305 = v_u_297 or p299
+			v_u_297 = v305
+			if p299 - v305 > v_u_9.UI.Queue.NoticeSeconds / 2 then
+				return nil, false
+			end
+		else
+			v_u_297 = nil
+		end
+		return v302, false
+	end
+	local v306 = v_u_280
+	local v307 = tostring(v300)
+	local v308 = v306 and v306.choices
+	if v308 then
+		v308 = v306.choices[v307]
+	end
+	local v309 = v306 and v306.searching
+	if v309 then
+		v309 = v306.searching[v307]
+	end
+	if v308 then
+		v302.rematch = "off"
+	end
+	v302.another = v309 and "searching" or (v308 == "Another" and "team" or "ready")
+	v302.searchingSince = v309
+	if v306 and v306.teams then
+		for _, v310 in v306.teams do
+			if not table.find(v310, v300) then
+				continue
+			end
+			local v311 = 0
+			for _, v312 in v310 do
+				if v306.choices[tostring(v312)] ~= "Another" then
+					continue
+				end
+				v311 = v311 + 1
+			end
+			local v313 = #v310
+			v302.teamReady = v311
+			v302.teamSize = v313
+		end
+	end
+	local v314 = v306 and v306.decideBy
+	if v314 then
+		v314 = v306.decideBy[v307]
+	end
+	if v314 then
+		v302.deadline = v314
+	end
+	if v306 then
+		v306 = v306.practice
+	end
+	v302.practice = v306
+	local v315 = v308 == "Lobby" or v_u_278:isShown()
+	if not v315 then
+		if v_u_292 == nil then
+			v315 = false
+		else
+			v315 = os.clock() - v_u_292 < v_u_77.ActionRetrySeconds
+		end
+	end
+	v302.leaving = v315
+	return v302, false
+end
+local function v_u_319() -- name: statusLine
+	-- upvalues: (copy) v_u_79, (ref) v_u_280, (copy) v_u_76
+	if not v_u_79 then
+		return nil
+	end
+	local v317 = v_u_280
+	if not v317 or v317.begun then
+		return nil
+	end
+	if v317.notice == "NoOpponent" then
+		return v_u_76.Arena.NoOpponent
+	end
+	local v318 = #(v317.teams and (v317.teams[1] or {}) or {}) + #(v317.teams and (v317.teams[2] or {}) or {})
+	return v_u_76.Arena.WaitingFor:format(#(v317.arrived or {}), (math.max(v318, 2)))
+end
+v_u_117 = v66.new(v100, function(p320)
+	-- upvalues: (copy) v_u_5, (copy) v_u_82
+	v_u_5.SelectedObject = nil
+	v_u_82:action("Pocket", {
+		["pocket"] = p320
+	})
+end, function(p321, p322)
+	-- upvalues: (ref) v_u_113, (ref) v_u_110
+	if v_u_113 and v_u_110 then
+		v_u_113:holdCue(v_u_110.epoch, v_u_110.turnId, p321, p322)
+	end
+end, function(p323, p324, p325)
+	-- upvalues: (copy) v_u_82
+	v_u_82:action("Place", {
+		["x"] = p323,
+		["y"] = p324,
+		["seq"] = p325
+	})
+end)
+local function v_u_348(p326) -- name: acquireTable
+	-- upvalues: (ref) v_u_110, (ref) v_u_113, (ref) v_u_118, (copy) v_u_96, (copy) v_u_63, (copy) v_u_15, (copy) v_u_97, (ref) v_u_115, (ref) v_u_124, (copy) v_u_99, (copy) v_u_36, (copy) v_u_4, (ref) v_u_117, (ref) v_u_116, (copy) v_u_78, (copy) v_u_105, (copy) v_u_109, (ref) v_u_259, (ref) v_u_111, (ref) v_u_112, (copy) v_u_138, (ref) v_u_139, (ref) v_u_140, (copy) v_u_142, (ref) v_u_114, (ref) v_u_125, (ref) v_u_126, (ref) v_u_127, (copy) v_u_135, (copy) v_u_82, (copy) v_u_11, (copy) v_u_43, (copy) v_u_81, (ref) v_u_128, (ref) v_u_122, (ref) v_u_130, (ref) v_u_132, (ref) v_u_131, (copy) v_u_247, (copy) v_u_236, (copy) v_u_79, (copy) v_u_77, (copy) v_u_137, (copy) v_u_6, (copy) v_u_193, (copy) v_u_186
+	local v327 = v_u_110
+	if v327 then
+		v327 = v_u_110.id
+	end
+	if v_u_113 and (not p326 or p326.id ~= v327) then
+		v_u_113:releaseCue()
+	end
+	v_u_110 = p326
+	if not p326 then
+		v_u_118 = nil
+		v_u_96:setEnabled(false)
+		v_u_96:resetSpin()
+		v_u_96:resetElevation()
+		v_u_63.setPlayControlsVisible(false)
+		v_u_15.setVisible(v_u_97, false)
+		if v_u_115 then
+			v_u_115:destroy()
+			v_u_115 = nil
+		end
+		if v_u_124 then
+			v_u_99:release()
+			v_u_36.unlock()
+			v_u_4.MouseBehavior = Enum.MouseBehavior.Default
+			v_u_124 = false
+		end
+		v_u_117:clear()
+		v_u_116:setSnapshot(nil, v_u_78.UserId)
+		v_u_105:setSnapshot(nil, v_u_78.UserId)
+		v_u_109:setSnapshot(nil, nil, nil, v_u_78.UserId)
+		v_u_259:setSnapshot(nil, v_u_78.UserId)
+		v_u_111 = nil
+		v_u_112 = -1
+		for _, v328 in v_u_138 do
+			v328:Destroy()
+		end
+		table.clear(v_u_138)
+		v_u_139 = ""
+		v_u_140 = nil
+		v_u_142:clear()
+		v_u_113 = nil
+		v_u_114 = nil
+		v_u_125 = ""
+		v_u_126 = ""
+		v_u_127 = ""
+		if v327 and v_u_135[v327] then
+			v_u_135[v327]:resetStreak()
+		end
+		return
+	end
+	v_u_113 = v_u_82:matchFor(p326.id)
+	v_u_114 = v_u_11.forTable(p326.id)
+	if v327 ~= p326.id then
+		if v_u_115 then
+			v_u_115:destroy()
+		end
+		v_u_115 = v_u_43.new(v_u_81, v_u_114)
+		v_u_36.setTable(v_u_114)
+		v_u_125 = ""
+		v_u_126 = ""
+		v_u_127 = ""
+	end
+	local v329 = ("%d:%d:%d"):format(p326.id, p326.epoch, p326.turnId)
+	if v329 ~= v_u_125 then
+		v_u_125 = v329
+		local v330 = p326.id
+		local v331 = p326.epoch
+		local v332 = p326.shooter
+		local v333 = ("%d:%d:%s"):format(v330, v331, (tostring(v332)))
+		v_u_128 = v333 ~= v_u_127
+		v_u_127 = v333
+		v_u_118 = nil
+		v_u_96:resetSpin()
+		v_u_96:resetElevation()
+		v_u_122 = 0
+		v_u_130 = nil
+		v_u_132 = nil
+		v_u_131 = nil
+		v_u_99:newTurn()
+		v_u_36.setBallInHand(p326.ballInHand == true)
+		v_u_36.resetZoom()
+		local v334
+		if v_u_110 == nil then
+			v334 = false
+		else
+			v334 = v_u_110.shooter == v_u_78.UserId
+		end
+		if v334 then
+			v_u_247()
+		end
+	end
+	if p326.phase == "Resolving" then
+		v_u_118 = nil
+	end
+	v_u_111 = v_u_113:view(v_u_110)
+	v_u_112 = v_u_113.downVersion
+	v_u_116:setSnapshot(v_u_111, v_u_78.UserId)
+	v_u_236()
+	v_u_105:setSnapshot(p326, v_u_78.UserId)
+	v_u_109:setSnapshot(p326, v_u_113, v_u_114, v_u_78.UserId)
+	local v335 = v_u_259
+	local v336
+	if v_u_79 then
+		v336 = nil
+	else
+		v336 = p326
+	end
+	v335:setSnapshot(v336, v_u_78.UserId)
+	v_u_117:setSnapshot(p326, v_u_114, v_u_113.state.geometry, v_u_78.UserId)
+	local v337 = v329 .. ":" .. p326.phase
+	if v337 == v_u_126 then
+		v_u_186()
+	else
+		v_u_126 = v337
+		local v338, v339, v340, v341, v342
+		if p326.phase == "Intro" then
+			local v343
+			if v_u_110 == nil then
+				v343 = false
+			else
+				v343 = v_u_110.shooter == v_u_78.UserId
+			end
+			if v343 and v_u_128 then
+				local v344 = v_u_77.YourTurnSound
+				local v345 = v_u_137.YourTurn
+				if v345 then
+					v345:Stop()
+					v345:Play()
+				else
+					local v346 = Instance.new("Sound")
+					local v347 = v_u_77.UISoundVolume
+					v346.Name = "YourTurn"
+					v346.SoundId = v344
+					v346.Volume = v347
+					v346.Parent = v_u_6
+					v_u_137.YourTurn = v346
+					v346:Play()
+				end
+				v_u_186()
+				return
+			end
+			if p326.phase == "Foul" and (p326.foul and p326.foul.by == v_u_78.UserId) then
+				v338 = v_u_77.FoulSound
+				v339 = v_u_77.FoulSoundVolume
+				v340 = v_u_137.Foul
+				if v340 then
+					v340:Stop()
+					v340:Play()
+				else
+					v341 = Instance.new("Sound")
+					v342 = v339 or v_u_77.UISoundVolume
+					v341.Name = "Foul"
+					v341.SoundId = v338
+					v341.Volume = v342
+					v341.Parent = v_u_6
+					v_u_137.Foul = v341
+					v341:Play()
+				end
+			elseif p326.phase == "CoinFlip" then
+				task.delay(v_u_77.Style.CoinHoldSeconds, v_u_193, "CoinFlip", v_u_77.CoinSound)
+			end
+		elseif p326.phase == "Foul" and (p326.foul and p326.foul.by == v_u_78.UserId) then
+			v338 = v_u_77.FoulSound
+			v339 = v_u_77.FoulSoundVolume
+			v340 = v_u_137.Foul
+			if v340 then
+				v340:Stop()
+				v340:Play()
+			else
+				v341 = Instance.new("Sound")
+				v342 = v339 or v_u_77.UISoundVolume
+				v341.Name = "Foul"
+				v341.SoundId = v338
+				v341.Volume = v342
+				v341.Parent = v_u_6
+				v_u_137.Foul = v341
+				v341:Play()
+			end
+		elseif p326.phase == "CoinFlip" then
+			task.delay(v_u_77.Style.CoinHoldSeconds, v_u_193, "CoinFlip", v_u_77.CoinSound)
+		end
+		v_u_186()
+	end
+end
+local v_u_349 = nil
+local v_u_350 = nil
+v_u_82:onSeatChanged(function(p351)
+	-- upvalues: (copy) v_u_50, (ref) v_u_349, (ref) v_u_350, (copy) v_u_348, (copy) v_u_82
+	if p351 ~= nil then
+		v_u_50.stop("Auto")
+	end
+	if p351 == nil and v_u_349 then
+		v_u_350 = v_u_349
+	end
+	v_u_349 = p351
+	local v352 = v_u_348
+	local v353
+	if p351 then
+		v353 = v_u_82.snapshots[p351]
+	else
+		v353 = nil
+	end
+	v352(v353)
+end)
+v_u_82:onSnapshot(function(p354)
+	-- upvalues: (copy) v_u_82, (copy) v_u_348
+	if v_u_82.mySeat == p354.id then
+		v_u_348(p354)
+	end
+end)
+v_u_82:onShotRejected(function()
+	-- upvalues: (ref) v_u_118, (copy) v_u_99, (copy) v_u_186
+	v_u_118 = nil
+	v_u_99:cancelStroke()
+	v_u_186()
+end)
+v_u_96:onLeave(v_u_254)
+v_u_96:onAim(v_u_186)
+v_u_96:onSpin(v_u_186)
+v_u_96:onElevation(v_u_186)
+v_u_96:onShoot(v253)
+v_u_96:onZoom(function(p355)
+	-- upvalues: (copy) v_u_167, (ref) v_u_117, (copy) v_u_36, (copy) v_u_103
+	if v_u_167() and not v_u_117:isDragging() then
+		v_u_36.zoomBy(p355)
+		v_u_103:dismiss()
+	end
+end)
+v_u_96:onPlaceMove(function(p356, p357, p358)
+	-- upvalues: (ref) v_u_117
+	v_u_117:stickMove(p356, p357, p358)
+end)
+v_u_96:onPlaceEnd(function()
+	-- upvalues: (ref) v_u_117
+	v_u_117:finishGesture(true)
+end)
+v_u_96:onTick(function()
+	-- upvalues: (ref) v_u_110, (copy) v_u_167, (copy) v_u_135, (ref) v_u_113, (ref) v_u_114, (copy) v_u_14, (copy) v_u_9
+	if v_u_110 and v_u_167() then
+		local v359 = v_u_135[v_u_110.id]
+		local v360 = v_u_113
+		if v360 then
+			v360 = v_u_113:findCueBall()
+		end
+		v359:tick(not (v360 and v_u_114) and Vector3.new(0, 0, 0) or v_u_14.toWorld(v_u_114, v360.x, v360.y, v_u_9.Balls.RenderRadiusInches))
+	end
+end)
+v_u_96:onPower(function(p361)
+	-- upvalues: (copy) v_u_101, (ref) v_u_122, (ref) v_u_110, (copy) v_u_135, (copy) v_u_186
+	v_u_101:setPull(p361)
+	v_u_122 = p361 or 0
+	if v_u_110 then
+		v_u_135[v_u_110.id]:setPull(p361)
+	end
+	v_u_186()
+end)
+v_u_101:onDrag(function(p362)
+	-- upvalues: (copy) v_u_167, (copy) v_u_96
+	if v_u_167() then
+		v_u_96:setPower(p362)
+	end
+end, function()
+	-- upvalues: (copy) v_u_167, (copy) v_u_96
+	if v_u_167() then
+		v_u_96:releasePower()
+	end
+end)
+local v_u_363 = v_u_123
+local v_u_625 = v_u_131
+local v_u_365 = v_u_114
+local v_u_730 = v_u_350
+local v_u_656 = v_u_130
+local v_u_368 = v_u_285
+local v_u_369 = v_u_115
+local v_u_616 = v_u_132
+local v_u_713 = v_u_297
+local v_u_676 = v_u_118
+local v_u_617 = v_u_112
+local v_u_374 = v_u_122
+local v_u_375 = v_u_117
+local v_u_376 = v_u_113
+local v_u_609 = v_u_153
+local v_u_741 = v_u_119
+local v_u_762 = v_u_111
+local v_u_380 = v_u_287
+local v_u_381 = v_u_286
+local v_u_382 = v_u_259
+local v_u_383 = v_u_116
+local v_u_641 = v_u_124
+local v_u_385 = v_u_110
+local function v_u_393(p386, p387, p388) -- name: rewardsPocket
+	-- upvalues: (copy) v_u_82, (copy) v_u_18
+	if p388 == 0 then
+		return false
+	end
+	if p388 == 8 then
+		local v389
+		if p387.shot == nil then
+			v389 = false
+		else
+			v389 = p387.shot.eightWins == true
+		end
+		return v389
+	end
+	local v390 = v_u_82.snapshots[p386]
+	if not v390 then
+		return true
+	end
+	local v391 = p387:revealedGroups() or (v390.groups or {})
+	local v392
+	if v390.activeTeam then
+		v392 = v391[v390.activeTeam]
+	else
+		v392 = nil
+	end
+	return (v390.solo ~= nil or v392 == nil) and true or v_u_18.group(p388) == v392
+end
+local v_u_394 = {}
+for v_u_395 = 1, v_u_11.tableCount() do
+	local v_u_396 = assert(v_u_82:matchFor(v_u_395))
+	local v_u_397 = v24.new(v_u_81)
+	v_u_135[v_u_395] = v_u_397
+	v_u_397:attach(v_u_396)
+	local v_u_398 = v35.new(v_u_81)
+	v_u_136[v_u_395] = v_u_398
+	v_u_396:onEvent(function(p399, p400)
+		-- upvalues: (copy) v_u_258, (copy) v_u_395, (copy) v_u_396, (copy) v_u_14, (copy) v_u_16, (copy) v_u_393, (copy) v_u_398, (copy) v_u_82, (copy) v_u_9, (copy) v_u_22, (copy) v_u_397, (copy) v_u_394, (ref) v_u_385, (ref) v_u_641, (copy) v_u_36
+		if p399.type == "pocket" then
+			v_u_258:onPocket(v_u_395, v_u_396, p399, p400)
+			local v401 = nil
+			for _, v402 in v_u_396.state.geometry.pockets do
+				if v402.id ~= p399.other then
+					continue
+				end
+				v401 = v_u_14.toWorld(v_u_396.placement, v402.x, v402.y, 0)
+			end
+			local v403 = v_u_16.findBall(v_u_396.state, p399.ball)
+			if not v401 and v403 then
+				v401 = v_u_14.toWorld(v_u_396.placement, v403.x, v403.y, 0)
+			end
+			if v401 and v_u_393(v_u_395, v_u_396, p399.ball) then
+				v_u_398:pocketBurst(v401, p399.ball)
+				local v404 = v_u_82.snapshots[v_u_395]
+				local v405 = v_u_396.shot
+				local v406
+				if v405 == nil then
+					v406 = false
+				else
+					if v404 then
+						v404 = v404.breakShot
+					end
+					v406 = not v404
+					if v406 then
+						v406 = v_u_396.state.time - p399.t < v_u_9.Effects.NiceShot.FreshSeconds
+					end
+				end
+				local v407
+				if v406 then
+					v407 = v_u_22.isNice(v405.events, p399.ball, p400, v_u_396.state.geometry.pockets)
+				else
+					v407 = v406
+				end
+				if v407 then
+					v_u_398:niceShot(v401)
+					v_u_397:niceClap(v401)
+				end
+				local v408 = v_u_394[v_u_395]
+				if v405 and (v408 == nil or v408.shot ~= v405) then
+					v408 = {
+						["shot"] = nil,
+						["count"] = 0,
+						["shot"] = v405
+					}
+					v_u_394[v_u_395] = v408
+				end
+				if v408 then
+					v408.count = v408.count + 1
+					if v406 and v408.count >= 2 then
+						v_u_398:multiPot(v401, v408.count, v407 == true)
+					end
+				end
+			end
+			if v_u_385 and v_u_385.id == v_u_395 then
+				for _, v409 in v_u_396.state.geometry.pockets do
+					if v409.id ~= p399.other or not v_u_641 then
+						continue
+					end
+					v_u_36.kick(v_u_14.toWorld(v_u_396.placement, v409.x, v409.y, 0), p399.speed)
+				end
+			end
+		end
+	end)
+end
+v_u_10.get("MatchFeedback").OnClientEvent:Connect(function(p410)
+	-- upvalues: (copy) v_u_135, (copy) v_u_82
+	if type(p410) == "table" then
+		local v411 = p410.id
+		if type(v411) == "string" then
+			local v412 = p410.tableId
+			if type(v412) == "number" then
+				local v413 = p410.epoch
+				if type(v413) == "number" then
+					local v414 = p410.seq
+					if type(v414) == "number" then
+						local v415 = p410.index
+						if type(v415) == "number" then
+							local v416 = p410.ball
+							if type(v416) == "number" then
+								local v417 = v_u_135[p410.tableId]
+								if v417 and v_u_82.mySeat == p410.tableId then
+									v417:grant(p410)
+								end
+								return
+							end
+						end
+					end
+				end
+			end
+		end
+	end
+end)
+v_u_4.InputBegan:Connect(function(p418, p419)
+	-- upvalues: (ref) v_u_385, (copy) v_u_72, (copy) v_u_254, (ref) v_u_383, (copy) v_u_63
+	if p419 then
+		return
+	elseif p418.KeyCode == Enum.KeyCode.L and (v_u_385 and not v_u_72.isBusy()) then
+		v_u_254()
+		return
+	elseif p418.KeyCode == Enum.KeyCode.Escape and v_u_383:isModal() then
+		v_u_383:closeModal()
+	elseif p418.KeyCode == Enum.KeyCode.F3 then
+		v_u_63.toggleStatus()
+	end
+end)
+v_u_55.start({
+	["snapshot"] = function() -- name: snapshot
+		-- upvalues: (ref) v_u_385
+		return v_u_385
+	end,
+	["playing"] = function() -- name: playing
+		-- upvalues: (copy) v_u_96, (copy) v_u_50
+		return v_u_96.enabled or v_u_50.active()
+	end,
+	["leave"] = v_u_254,
+	["matchBar"] = v_u_382,
+	["opponentPrompt"] = v_u_276,
+	["hostRules"] = v_u_260
+})
+v54.setBusy(function()
+	-- upvalues: (copy) v_u_72, (copy) v_u_56
+	return v_u_72.isBusy() or v_u_56.busy()
+end)
+local v_u_420 = workspace:WaitForChild("TableZones")
+local v_u_421 = v67.new(v_u_420)
+local v_u_422 = v45.new()
+local v_u_423 = v38.new()
+local v425, v426 = pcall(function()
+	-- upvalues: (copy) v_u_423, (copy) v_u_82
+	local v424 = script.Parent:FindFirstChild("HalloweenMap")
+	if v424 and v424:FindFirstChild("MapClient") then
+		require(script.Parent.HalloweenMap.MapClient).start(v_u_423, v_u_82)
+	end
+end)
+if not v425 then
+	warn("[HalloweenMap] MapClient failed to start: " .. tostring(v426))
+end
+local v_u_427 = v39.new()
+local v_u_428 = v70.new(v_u_78:WaitForChild("PlayerGui"))
+if not v_u_79 then
+	v41.start(v_u_78:WaitForChild("PlayerGui"))
+end
+v40.watch(v_u_78:WaitForChild("PlayerGui"))
+if v_u_9.UI.Kit.HoleFill.Everywhere then
+	v42.watch(v_u_78:WaitForChild("PlayerGui"), v_u_9.UI.Kit.HoleFill.Drop.Everywhere)
+end
+local function v_u_431(p429) -- name: queueOpen
+	-- upvalues: (copy) v_u_82
+	local v430 = v_u_82.snapshots[p429]
+	return v430 == nil and true or v430.phase == "Waiting"
+end
+v_u_96:setEnabled(false)
+v_u_63.setPlayControlsVisible(false)
+v_u_15.setVisible(v_u_97, false)
+local v_u_432 = {
+	["placement"] = nil,
+	["state"] = nil,
+	["cueX"] = nil,
+	["cueY"] = nil,
+	["angle"] = 0,
+	["pull"] = 0,
+	["spin"] = nil,
+	["showCue"] = false,
+	["aimTurn"] = false,
+	["cameraPos"] = nil
+}
+local v_u_613 = nil
+local function v_u_442(p434, p435) -- name: padUnder
+	-- upvalues: (copy) v_u_11, (copy) v_u_420, (copy) v_u_77
+	for v436 = 1, v_u_11.tableCount() do
+		local v437 = v_u_420:FindFirstChild(("QueuePad_%02d"):format(v436))
+		if not (v437 and v437:IsA("BasePart")) then
+			continue
+		end
+		local v438 = v437.CFrame:PointToObjectSpace(p434.Position)
+		local v439 = v438.X
+		if math.abs(v439) > v437.Size.X / 2 + p435 then
+			continue
+		end
+		local v440 = v438.Z
+		if math.abs(v440) > v437.Size.Z / 2 + p435 then
+			continue
+		end
+		local v441 = v438.Y
+		if math.abs(v441) >= v_u_77.QueueVisual.VerticalTolerance then
+			continue
+		end
+		return v436
+	end
+	return nil
+end
+local function v_u_444() -- name: dropStrayMatchSelection
+	-- upvalues: (copy) v_u_5, (ref) v_u_385, (ref) v_u_383, (ref) v_u_375, (copy) v_u_72, (copy) v_u_73
+	local v443 = v_u_5.SelectedObject
+	if v443 and (v_u_385 and v_u_385.phase ~= "Waiting") then
+		if not (v443:IsDescendantOf(v_u_383.modal) or (v443:IsDescendantOf(v_u_375.root) or (v_u_72.isBusy() or v_u_73.isOpen()))) then
+			v_u_5.SelectedObject = nil
+		end
+	else
+		return
+	end
+end
+local v_u_445 = (1 / 0)
+local v_u_446 = {}
+local function v_u_458(p447) -- name: holdShots
+	-- upvalues: (ref) v_u_445, (copy) v_u_9, (copy) v_u_15, (copy) v_u_78, (copy) v_u_82, (copy) v_u_446, (copy) v_u_28, (copy) v_u_33
+	v_u_445 = v_u_445 + p447
+	if v_u_445 >= v_u_9.CueSkins.Warm.ShotRefreshSeconds then
+		v_u_445 = 0
+		local v448 = { v_u_15.equippedCue(v_u_78) }
+		local v449 = v_u_78:GetAttribute("CuePreviewId")
+		if type(v449) == "string" then
+			table.insert(v448, v449)
+		end
+		local v450 = {}
+		if v_u_82.mySeat then
+			local v451 = v_u_82.mySeat
+			table.insert(v450, v451)
+		end
+		for v452 in v_u_82.boundTo do
+			if v452 == v_u_82.mySeat then
+				continue
+			end
+			table.insert(v450, v452)
+		end
+		table.clear(v_u_446)
+		for _, v453 in v450 do
+			for _, v454 in v_u_82:seatsAt(v453) do
+				local v455 = v_u_28.owner(v454.userId)
+				if not v455 then
+					continue
+				end
+				local v456 = v_u_15.equippedCue(v455)
+				table.insert(v448, v456)
+				if v455 == v_u_78 then
+					continue
+				end
+				local v457 = v_u_446
+				table.insert(v457, v456)
+			end
+		end
+		v_u_33.holdShots(v448)
+		v_u_33.holdLooks(v_u_446)
+	end
+end
+local v_u_459 = (1 / 0)
+local v_u_460 = {}
+local function v_u_462(p461) -- name: quietAuras
+	-- upvalues: (ref) v_u_459, (copy) v_u_9, (copy) v_u_460, (copy) v_u_97, (copy) v_u_78, (copy) v_u_82, (copy) v_u_98, (copy) v_u_13
+	v_u_459 = v_u_459 + p461
+	if v_u_459 >= v_u_9.CueSkins.Quiet.CheckSeconds then
+		v_u_459 = 0
+		table.clear(v_u_460)
+		v_u_460[v_u_97] = v_u_78.UserId
+		v_u_82.watched:owners(v_u_460)
+		v_u_98:owners(v_u_460)
+		v_u_13.apply(v_u_460, v_u_78.UserId, v_u_82.snapshots)
+	end
+end
+local function v_u_777(p463) -- name: renderFrame
+	-- upvalues: (copy) v_u_29, (copy) v_u_96, (copy) v_u_82, (copy) v_u_152, (copy) v_u_458, (copy) v_u_462, (copy) v_u_95, (ref) v_u_369, (ref) v_u_363, (copy) v_u_11, (copy) v_u_135, (copy) v_u_136, (copy) v_u_78, (copy) v_u_421, (copy) v_u_431, (ref) v_u_641, (copy) v_u_428, (ref) v_u_385, (ref) v_u_676, (ref) v_u_376, (copy) v_u_19, (copy) v_u_64, (ref) v_u_699, (ref) v_u_632, (copy) v_u_9, (copy) v_u_422, (copy) v_u_423, (copy) v_u_427, (ref) v_u_382, (copy) v_u_442, (ref) v_u_613, (copy) v_u_420, (copy) v_u_276, (copy) v_u_72, (copy) v_u_316, (ref) v_u_713, (copy) v_u_279, (copy) v_u_319, (copy) v_u_278, (ref) v_u_730, (copy) v_u_77, (copy) v_u_1, (copy) v_u_12, (copy) v_u_79, (copy) v_u_30, (ref) v_u_380, (ref) v_u_260, (ref) v_u_368, (ref) v_u_381, (copy) v_u_99, (copy) v_u_73, (copy) v_u_109, (copy) v_u_105, (ref) v_u_374, (ref) v_u_383, (copy) v_u_104, (copy) v_u_56, (ref) v_u_617, (ref) v_u_762, (copy) v_u_236, (copy) v_u_142, (ref) v_u_741, (copy) v_u_10, (copy) v_u_101, (ref) v_u_664, (copy) v_u_18, (copy) v_u_57, (ref) v_u_375, (copy) v_u_49, (copy) v_u_36, (ref) v_u_365, (copy) v_u_15, (copy) v_u_97, (copy) v_u_4, (copy) v_u_167, (copy) v_u_5, (copy) v_u_63, (copy) v_u_23, (copy) v_u_103, (copy) v_u_55, (copy) v_u_444, (copy) v_u_61, (ref) v_u_736, (copy) v_u_14, (copy) v_u_147, (copy) v_u_432, (copy) v_u_163, (ref) v_u_609, (copy) v_u_186, (ref) v_u_668, (copy) v_u_8, (ref) v_u_616, (ref) v_u_656, (ref) v_u_625
+	-- control flow flattened: this region could not be structured without a goto (unsupported in Luau), so it was lowered to the state-machine dispatch loop below to keep the output runnable.
+	local v610, v611, v612, v614, v615, v618, v619, v620, v621, v622, v623, v624, v626, v627, v628, v629, v630, v631, v633, v634, v635, v636, v637, v638, v639, v640, v642, v643, v644, v645, v646, v647, v648, v649, v650, v651, v652, v653, v654, v655, v657, v658, v659, v660, v661, v662, v663, v665, v666, v667, v669, v670, v671, v672, v673, v674, v675, v677, v678, v679, v680, v681, v682, v683, v684, v685, v686, v687, v688, v689, v690, v691, v692, v693, v694, v695, v696, v697, v698, v700, v701, v702, v703, v704, v705, v706, v707, v708, v709, v710, v711, v712, v714, v715, v716, v717, v718, v719, v720, v721, v722, v723, v724, v725, v726, v727, v728, v729, v731, v732, v733, v734, v735, v737, v738, v739, v740, v742, v743, v744, v745, v746, v747, v748, v749, v750, v751, v752, v753, v754, v755, v756, v757, v758, v759, v760, v761, v763, v764, v765, v766, v767, v768, v769, v770
+	local v_u_609, v610, v611, v612, v_u_613, v614, v615, v_u_616, v_u_617, v618, v619, v620, v621, v622, v623, v624, v_u_625, v626, v627, v628, v629, v630, v631, v_u_632, v633, v634, v635, v636, v637, v638, v639, v640, v_u_641, v642, v643, v644, v645, v646, v647, v648, v649, v650, v651, v652, v653, v654, v655, v_u_656, v657, v658, v659, v660, v661, v662, v663, v_u_664, v665, v666, v667, v_u_668, v669, v670, v671, v672, v673, v674, v675, v_u_676, v677, v678, v679, v680, v681, v682, v683, v684, v685, v686, v687, v688, v689, v690, v691, v692, v693, v694, v695, v696, v697, v698, v_u_699, v700, v701, v702, v703, v704, v705, v706, v707, v708, v709, v710, v711, v712, v_u_713, v714, v715, v716, v717, v718, v719, v720, v721, v722, v723, v724, v725, v726, v727, v728, v729, v_u_730, v731, v732, v733, v734, v735, v_u_736, v737, v738, v739, v740, v_u_741, v742, v743, v744, v745, v746, v747, v748, v749, v750, v751, v752, v753, v754, v755, v756, v757, v758, v759, v760, v761, v_u_762, v763, v764, v765, v766, v767, v768, v769, v770
+	local v771 = 9
+	while true do
+		if v771 == 1 then
+			if v666 == "Sneak" and v_u_375:canPlace() then
+				v_u_163(p463)
+			elseif v_u_609 then
+				v_u_609 = false
+			end
+			v_u_375:update(p463, workspace.CurrentCamera)
+			v_u_109:update(p463, workspace.CurrentCamera)
+			v747 = v_u_383
+			v615 = v_u_375:canPlace()
+			if v615 then
+				v615 = v666 ~= "Sneak"
+			end
+			v747:setPlacing(v615, v_u_375:isBlocked())
+			v_u_383:setFrozenAim((v_u_152()))
+			if v_u_369 then
+				v_u_369:update(p463)
+			end
+			v_u_186()
+			v_u_668 = v_u_668 + p463
+			if v_u_668 >= 1 / v_u_9.Aim.PlacementSendsPerSecond then
+				v670, v671, v672 = v_u_375:takeStream()
+			else
+				v670 = nil
+				v671 = nil
+				v672 = nil
+			end
+			v754 = v_u_8.quantizePull(v_u_374) or 0
+			if v_u_385 == nil then
+				v686 = false
+			else
+				v686 = v_u_385.shooter == v_u_78.UserId
+			end
+			v653 = v686 and (v_u_676 == nil and (v666 == "Aiming" or (v666 == "Intro" or v666 == "Placement"))) and true or v_u_152()
+			if v_u_616 == nil or v_u_616 <= 0 then
+				v687 = false
+			else
+				v687 = v754 == 0
+			end
+			if v670 or v653 and v687 or v_u_167() and v_u_8.due(v_u_668, v_u_96.angle, v754, v_u_656, v_u_616, v_u_96:getElevation(), v_u_625) then
+				v_u_668 = 0
+				v654 = v_u_96.angle
+				v655 = v_u_96:getElevation()
+				v_u_656 = v654
+				v_u_616 = v754
+				v_u_625 = v655
+				v_u_82:reportAim(v_u_385.id, v_u_96.angle, v754, v_u_96:getElevation(), v670, v671, v672)
+			end
+			v_u_736 = v740
+			return
+		elseif v771 == 2 then
+			v659 = v665 or v666 == "Sneak"
+			v771 = 3
+		elseif v771 == 3 then
+			if v665 then
+				v660 = v_u_109:reserveTop()
+			elseif v666 == "Sneak" then
+				v660 = v_u_61.reserveTop(v_u_383:reservedHeight())
+			else
+				v660 = v_u_383:reservedHeight() + v_u_77.Style.TargetSize / 2
+			end
+			v737 = v_u_5.TopbarInset.Max.Y - v_u_5:GetGuiInset().Y + v_u_77.Style.TargetSize / 2
+			v763 = math.max(v660, v737)
+			v764 = v_u_77.Style.PocketArrows
+			v651 = not v665 and (v666 ~= "Sneak" and (v764.On and v764.Outside))
+			if v651 then
+				v651 = not v764.Beside
+			end
+			v652 = workspace.CurrentCamera.ViewportSize.Y < v_u_77.Style.ShortHeight
+			v_u_36.setMode(v659, v763 + v_u_5:GetGuiInset().Y, v_u_383:reservedBottom() + v_u_77.Style.TargetSize / 2, not v651 and 0 or v764.CameraMarginPx[v652 and 1 or 2])
+			if v740 and not v_u_736 then
+				v715 = v_u_376:findCueBall()
+				v716 = v_u_376:cueBallSpeedNow()
+				if v715 and v716 > 0 then
+					v734 = v715.vx / v716
+					v735 = v715.vy / v716
+					v_u_36.beginShot(v716, v715.wx * v734 + v715.wy * v735, -v715.wx * v735 + v715.wy * v734)
+				else
+					v_u_36.beginShot(0)
+				end
+				v_u_99:ballMoving()
+			end
+			v689 = v_u_376:findCueBall()
+			v748 = v_u_375:isHolding()
+			if not v748 then
+				if v689 == nil then
+					v748 = false
+				else
+					v748 = v689.pocketed
+				end
+			end
+			v749 = v_u_36.update
+			v750 = v_u_376
+			if v750 then
+				v750 = v_u_376:findCueBall()
+			end
+			v738 = not (v750 and v_u_365) and Vector3.new(0, 0, 0) or v_u_14.toWorld(v_u_365, v750.x, v750.y, v_u_9.Balls.RenderRadiusInches)
+			v717 = v_u_96.angle
+			v739 = v740 or v666 == "Resolving"
+			if v740 then
+				v718 = v_u_376:cueBallWorldNow()
+			else
+				v718 = nil
+			end
+			if v740 then
+				v650 = v_u_147()
+			else
+				v650 = nil
+			end
+			v749(p463, v738, v717, v739, v718, v650, v748)
+			if v_u_385 == nil then
+				v719 = false
+			else
+				v719 = v_u_385.shooter == v_u_78.UserId
+			end
+			if v719 and (v666 == "Resolving" and not v_u_99:stroking()) then
+				v_u_99:release()
+				v_u_15.setVisible(v_u_97, false)
+			else
+				if v_u_385 == nil then
+					v720 = false
+				else
+					v720 = v_u_385.shooter == v_u_78.UserId
+				end
+				if v720 then
+					v_u_99:take()
+					v685 = v_u_376:findCueBall()
+					if v685 == nil then
+						v657 = false
+					else
+						v657 = not v685.pocketed
+					end
+					v610 = v_u_432
+					v610.placement = v_u_365
+					v610.state = v_u_376.state
+					if v657 then
+						v658 = v685.x
+					else
+						v658 = nil
+					end
+					v610.cueX = v658
+					if v657 then
+						v751 = v685.y
+					else
+						v751 = nil
+					end
+					v610.cueY = v751
+					v610.angle = v_u_96.angle
+					v610.pull = v_u_374
+					v610.spin = v_u_96:getSpin()
+					v610.elevation = v_u_96:getElevation()
+					v611 = v_u_167()
+					if v611 then
+						v611 = not v_u_375:isDragging()
+					end
+					v610.showCue = v611
+					if v_u_152() then
+						v695 = true
+					else
+						if v_u_385 == nil then
+							v667 = false
+						else
+							v667 = v_u_385.shooter == v_u_78.UserId
+						end
+						if v667 and (not v_u_676 and (v_u_376 and not v_u_376:isBusy())) then
+							v695 = (v_u_385.phase == "Aiming" or v_u_385.phase == "Intro") and true or v_u_385.phase == "Placement"
+						else
+							v695 = false
+						end
+					end
+					v610.aimTurn = v695
+					v610.cameraPos = v_u_36.position()
+					v610.showBody = v666 == "Sneak"
+					v752 = v_u_99:update(p463, v610)
+					v_u_15.setVisible(v_u_97, v752.visible)
+					v765 = v610.elevation > v_u_9.Cue.CueElevationDegrees
+					v766 = v765 or v752.pitch > v_u_9.Cue.CueElevationDegrees + v_u_9.Cue.RaisedFxOffDegrees
+					if v_u_97:GetAttribute("AuraOff") ~= v766 then
+						v_u_97:SetAttribute("AuraOff", v766)
+					end
+					if v752.visible then
+						v_u_15.placeAt(v_u_97, v752.tip)
+						v767 = v_u_36.fadeNear
+						v768 = v_u_97
+						v769 = v_u_9.Cue.CameraFadeStuds
+						if v765 then
+							v770 = v_u_9.Cue.RaisedCueFade
+						else
+							v770 = nil
+						end
+						v767(v768, v769, v770)
+					end
+				end
+			end
+			v_u_4.MouseBehavior = Enum.MouseBehavior.Default
+			v771 = 1
+		elseif v771 == 4 then
+			if v666 == "Intro" then
+				v771 = 6
+			else
+				v771 = 2
+			end
+		elseif v771 == 5 then
+			if v665 then
+				v660 = v_u_109:reserveTop()
+			elseif v666 == "Sneak" then
+				v660 = v_u_61.reserveTop(v_u_383:reservedHeight())
+			else
+				v660 = v_u_383:reservedHeight() + v_u_77.Style.TargetSize / 2
+			end
+			v737 = v_u_5.TopbarInset.Max.Y - v_u_5:GetGuiInset().Y + v_u_77.Style.TargetSize / 2
+			v763 = math.max(v660, v737)
+			v764 = v_u_77.Style.PocketArrows
+			v651 = not v665 and (v666 ~= "Sneak" and (v764.On and v764.Outside))
+			if v651 then
+				v651 = not v764.Beside
+			end
+			v652 = workspace.CurrentCamera.ViewportSize.Y < v_u_77.Style.ShortHeight
+			v_u_36.setMode(v659, v763 + v_u_5:GetGuiInset().Y, v_u_383:reservedBottom() + v_u_77.Style.TargetSize / 2, not v651 and 0 or v764.CameraMarginPx[v652 and 1 or 2])
+			if v740 and not v_u_736 then
+				v715 = v_u_376:findCueBall()
+				v716 = v_u_376:cueBallSpeedNow()
+				if v715 and v716 > 0 then
+					v734 = v715.vx / v716
+					v735 = v715.vy / v716
+					v_u_36.beginShot(v716, v715.wx * v734 + v715.wy * v735, -v715.wx * v735 + v715.wy * v734)
+				else
+					v_u_36.beginShot(0)
+				end
+				v_u_99:ballMoving()
+			end
+			v689 = v_u_376:findCueBall()
+			v748 = v_u_375:isHolding()
+			if not v748 then
+				if v689 == nil then
+					v748 = false
+				else
+					v748 = v689.pocketed
+				end
+			end
+			v749 = v_u_36.update
+			v750 = v_u_376
+			if v750 then
+				v750 = v_u_376:findCueBall()
+			end
+			v738 = not (v750 and v_u_365) and Vector3.new(0, 0, 0) or v_u_14.toWorld(v_u_365, v750.x, v750.y, v_u_9.Balls.RenderRadiusInches)
+			v717 = v_u_96.angle
+			v739 = v740 or v666 == "Resolving"
+			if v740 then
+				v718 = v_u_376:cueBallWorldNow()
+			else
+				v718 = nil
+			end
+			if v740 then
+				v650 = v_u_147()
+			else
+				v650 = nil
+			end
+			v749(p463, v738, v717, v739, v718, v650, v748)
+			if v_u_385 == nil then
+				v719 = false
+			else
+				v719 = v_u_385.shooter == v_u_78.UserId
+			end
+			if v719 and (v666 == "Resolving" and not v_u_99:stroking()) then
+				v_u_99:release()
+				v_u_15.setVisible(v_u_97, false)
+			else
+				if v_u_385 == nil then
+					v720 = false
+				else
+					v720 = v_u_385.shooter == v_u_78.UserId
+				end
+				if v720 then
+					v_u_99:take()
+					v685 = v_u_376:findCueBall()
+					if v685 == nil then
+						v657 = false
+					else
+						v657 = not v685.pocketed
+					end
+					v610 = v_u_432
+					v610.placement = v_u_365
+					v610.state = v_u_376.state
+					if v657 then
+						v658 = v685.x
+					else
+						v658 = nil
+					end
+					v610.cueX = v658
+					if v657 then
+						v751 = v685.y
+					else
+						v751 = nil
+					end
+					v610.cueY = v751
+					v610.angle = v_u_96.angle
+					v610.pull = v_u_374
+					v610.spin = v_u_96:getSpin()
+					v610.elevation = v_u_96:getElevation()
+					v611 = v_u_167()
+					if v611 then
+						v611 = not v_u_375:isDragging()
+					end
+					v610.showCue = v611
+					if v_u_152() then
+						v695 = true
+					else
+						if v_u_385 == nil then
+							v667 = false
+						else
+							v667 = v_u_385.shooter == v_u_78.UserId
+						end
+						if v667 and (not v_u_676 and (v_u_376 and not v_u_376:isBusy())) then
+							v695 = (v_u_385.phase == "Aiming" or v_u_385.phase == "Intro") and true or v_u_385.phase == "Placement"
+						else
+							v695 = false
+						end
+					end
+					v610.aimTurn = v695
+					v610.cameraPos = v_u_36.position()
+					v610.showBody = v666 == "Sneak"
+					v752 = v_u_99:update(p463, v610)
+					v_u_15.setVisible(v_u_97, v752.visible)
+					v765 = v610.elevation > v_u_9.Cue.CueElevationDegrees
+					v766 = v765 or v752.pitch > v_u_9.Cue.CueElevationDegrees + v_u_9.Cue.RaisedFxOffDegrees
+					if v_u_97:GetAttribute("AuraOff") ~= v766 then
+						v_u_97:SetAttribute("AuraOff", v766)
+					end
+					if v752.visible then
+						v_u_15.placeAt(v_u_97, v752.tip)
+						v767 = v_u_36.fadeNear
+						v768 = v_u_97
+						v769 = v_u_9.Cue.CameraFadeStuds
+						if v765 then
+							v770 = v_u_9.Cue.RaisedCueFade
+						else
+							v770 = nil
+						end
+						v767(v768, v769, v770)
+					end
+				end
+			end
+			v_u_4.MouseBehavior = Enum.MouseBehavior.Default
+			v771 = 1
+		elseif v771 == 6 then
+			if v_u_385 == nil or (v_u_376 == nil or v_u_385.calledPocket ~= nil) then
+				v659 = false
+			else
+				v659 = v_u_18.eligible(v_u_376.state.balls, v_u_385.groups[v_u_385.activeTeam])
+			end
+			if v659 then
+				v771 = 5
+			else
+				v771 = 7
+			end
+		elseif v771 == 7 then
+			v659 = v665 or v666 == "Sneak"
+			v771 = 3
+		elseif v771 == 8 then
+			v659 = true
+			if v665 then
+				v660 = v_u_109:reserveTop()
+			elseif v666 == "Sneak" then
+				v660 = v_u_61.reserveTop(v_u_383:reservedHeight())
+			else
+				v660 = v_u_383:reservedHeight() + v_u_77.Style.TargetSize / 2
+			end
+			v737 = v_u_5.TopbarInset.Max.Y - v_u_5:GetGuiInset().Y + v_u_77.Style.TargetSize / 2
+			v763 = math.max(v660, v737)
+			v764 = v_u_77.Style.PocketArrows
+			v651 = not v665 and (v666 ~= "Sneak" and (v764.On and v764.Outside))
+			if v651 then
+				v651 = not v764.Beside
+			end
+			v652 = workspace.CurrentCamera.ViewportSize.Y < v_u_77.Style.ShortHeight
+			v_u_36.setMode(v659, v763 + v_u_5:GetGuiInset().Y, v_u_383:reservedBottom() + v_u_77.Style.TargetSize / 2, not v651 and 0 or v764.CameraMarginPx[v652 and 1 or 2])
+			if v740 and not v_u_736 then
+				v715 = v_u_376:findCueBall()
+				v716 = v_u_376:cueBallSpeedNow()
+				if v715 and v716 > 0 then
+					v734 = v715.vx / v716
+					v735 = v715.vy / v716
+					v_u_36.beginShot(v716, v715.wx * v734 + v715.wy * v735, -v715.wx * v735 + v715.wy * v734)
+				else
+					v_u_36.beginShot(0)
+				end
+				v_u_99:ballMoving()
+			end
+			v689 = v_u_376:findCueBall()
+			v748 = v_u_375:isHolding()
+			if not v748 then
+				if v689 == nil then
+					v748 = false
+				else
+					v748 = v689.pocketed
+				end
+			end
+			v749 = v_u_36.update
+			v750 = v_u_376
+			if v750 then
+				v750 = v_u_376:findCueBall()
+			end
+			v738 = not (v750 and v_u_365) and Vector3.new(0, 0, 0) or v_u_14.toWorld(v_u_365, v750.x, v750.y, v_u_9.Balls.RenderRadiusInches)
+			v717 = v_u_96.angle
+			v739 = v740 or v666 == "Resolving"
+			if v740 then
+				v718 = v_u_376:cueBallWorldNow()
+			else
+				v718 = nil
+			end
+			if v740 then
+				v650 = v_u_147()
+			else
+				v650 = nil
+			end
+			v749(p463, v738, v717, v739, v718, v650, v748)
+			if v_u_385 == nil then
+				v719 = false
+			else
+				v719 = v_u_385.shooter == v_u_78.UserId
+			end
+			if v719 and (v666 == "Resolving" and not v_u_99:stroking()) then
+				v_u_99:release()
+				v_u_15.setVisible(v_u_97, false)
+			else
+				if v_u_385 == nil then
+					v720 = false
+				else
+					v720 = v_u_385.shooter == v_u_78.UserId
+				end
+				if v720 then
+					v_u_99:take()
+					v685 = v_u_376:findCueBall()
+					if v685 == nil then
+						v657 = false
+					else
+						v657 = not v685.pocketed
+					end
+					v610 = v_u_432
+					v610.placement = v_u_365
+					v610.state = v_u_376.state
+					if v657 then
+						v658 = v685.x
+					else
+						v658 = nil
+					end
+					v610.cueX = v658
+					if v657 then
+						v751 = v685.y
+					else
+						v751 = nil
+					end
+					v610.cueY = v751
+					v610.angle = v_u_96.angle
+					v610.pull = v_u_374
+					v610.spin = v_u_96:getSpin()
+					v610.elevation = v_u_96:getElevation()
+					v611 = v_u_167()
+					if v611 then
+						v611 = not v_u_375:isDragging()
+					end
+					v610.showCue = v611
+					if v_u_152() then
+						v695 = true
+					else
+						if v_u_385 == nil then
+							v667 = false
+						else
+							v667 = v_u_385.shooter == v_u_78.UserId
+						end
+						if v667 and (not v_u_676 and (v_u_376 and not v_u_376:isBusy())) then
+							v695 = (v_u_385.phase == "Aiming" or v_u_385.phase == "Intro") and true or v_u_385.phase == "Placement"
+						else
+							v695 = false
+						end
+					end
+					v610.aimTurn = v695
+					v610.cameraPos = v_u_36.position()
+					v610.showBody = v666 == "Sneak"
+					v752 = v_u_99:update(p463, v610)
+					v_u_15.setVisible(v_u_97, v752.visible)
+					v765 = v610.elevation > v_u_9.Cue.CueElevationDegrees
+					v766 = v765 or v752.pitch > v_u_9.Cue.CueElevationDegrees + v_u_9.Cue.RaisedFxOffDegrees
+					if v_u_97:GetAttribute("AuraOff") ~= v766 then
+						v_u_97:SetAttribute("AuraOff", v766)
+					end
+					if v752.visible then
+						v_u_15.placeAt(v_u_97, v752.tip)
+						v767 = v_u_36.fadeNear
+						v768 = v_u_97
+						v769 = v_u_9.Cue.CameraFadeStuds
+						if v765 then
+							v770 = v_u_9.Cue.RaisedCueFade
+						else
+							v770 = nil
+						end
+						v767(v768, v769, v770)
+					end
+				end
+			end
+			v_u_4.MouseBehavior = Enum.MouseBehavior.Default
+			v771 = 1
+		else
+			v688 = v_u_29.takeAim()
+			if v688 then
+				v_u_96:setAngle(v688)
+			end
+			v740 = v_u_82:update(p463)
+			if v740 then
+				v740 = not v_u_152()
+			end
+			v_u_458(p463)
+			v_u_462(p463)
+			v626 = v_u_95
+			if v_u_369 then
+				v696 = v_u_369:contact()
+			else
+				v696 = nil
+			end
+			v626:update(p463, v696, v_u_363)
+			for v772 = 1, v_u_11.tableCount() do
+				v627 = v_u_135[v772]
+				v673 = v_u_82
+				v628 = assert(v673:matchFor(v772))
+				v627:updateRoll(v628, p463)
+				v627:updatePull(p463)
+				v629 = v_u_136[v772]
+				v630 = v_u_82.snapshots[v772]
+				if v630 then
+					v755 = v630.shooter
+				else
+					v755 = nil
+				end
+				v629:follow(v755)
+				v756 = v_u_82:cueBallPartFor(v772)
+				if v756 and v629.boundCue ~= v756 then
+					v629:attachTrail(v756)
+					v629.boundCue = v756
+				elseif v756 == nil and v629.boundCue then
+					v629:detachTrail()
+					v629.boundCue = nil
+				end
+				v629:updateTrail(v628:findCueBall(), v628:isBusy())
+			end
+			v757 = v_u_78.Character
+			if v757 then
+				v757 = v_u_78.Character:FindFirstChild("HumanoidRootPart")
+			end
+			v643 = v_u_421
+			v644 = v_u_431
+			v645 = v_u_82.mySeat ~= nil and true or v_u_641
+			v697 = v_u_428.id
+			if v757 and v757:IsA("BasePart") then
+				v698 = v757.Position
+			else
+				v698 = nil
+			end
+			v643:update(p463, v644, v645, v697, v698)
+			if v_u_385 then
+				if v_u_152() then
+					v631 = true
+				else
+					if v_u_385 == nil then
+						v646 = false
+					else
+						v646 = v_u_385.shooter == v_u_78.UserId
+					end
+					if v646 and (not v_u_676 and (v_u_376 and not v_u_376:isBusy())) then
+						v631 = (v_u_385.phase == "Aiming" or v_u_385.phase == "Intro") and true or v_u_385.phase == "Placement"
+					else
+						v631 = false
+					end
+				end
+				if v631 and (v_u_19.isShotClock(v_u_385.phase, v_u_385.breakShot) and v_u_385.deadline) then
+					v647 = v_u_64.clockLeft(v_u_385, workspace:GetServerTimeNow())
+					v725 = math.ceil(v647)
+					if v_u_699 == v_u_385.turnId then
+						if v725 ~= v_u_632 then
+							v_u_632 = v725
+							if v725 >= 1 and v725 <= v_u_9.Audio.ClockTick.FromSeconds then
+								v_u_135[v_u_385.id]:clockTick(v725)
+							end
+						end
+					else
+						v_u_699 = v_u_385.turnId
+						v_u_632 = v725
+					end
+				end
+			end
+			v_u_422:update(os.clock())
+			v_u_423:update(os.clock())
+			v_u_427:update(os.clock(), v_u_423.fire)
+			v633 = v_u_78.Character
+			if v633 then
+				v633 = v633:FindFirstChild("HumanoidRootPart")
+			end
+			v726 = v_u_82.mySeat
+			if v726 then
+				v726 = v_u_82.snapshots[v_u_82.mySeat]
+			end
+			if v726 == nil then
+				v637 = false
+			else
+				v637 = v726.phase == "Waiting"
+			end
+			if v633 and v633:IsA("BasePart") then
+				v638 = v633
+			else
+				v638 = nil
+			end
+			v727 = v_u_382
+			if v637 then
+				if v638 == nil then
+					v637 = false
+				else
+					v637 = v_u_442(v638, 0) ~= v_u_82.mySeat
+				end
+			end
+			v727:setAway(v637)
+			v728 = v_u_428
+			if v633 and v633:IsA("BasePart") then
+				v639 = v633.Position
+			else
+				v639 = nil
+			end
+			v728:update(v639, v_u_641 or (v_u_82.mySeat ~= nil and true or v_u_613 ~= nil), nil, v_u_420, function(p773)
+				-- upvalues: (ref) v_u_82
+				return v_u_82.snapshots[p773]
+			end, workspace:GetServerTimeNow())
+			v_u_276:update(workspace:GetServerTimeNow(), v_u_82.mySeat ~= nil and true or v_u_641, function(p774)
+				-- upvalues: (ref) v_u_82
+				return v_u_82.snapshots[p774]
+			end)
+			v711 = workspace:GetServerTimeNow()
+			v729 = v_u_72.choosing()
+			if v729 then
+				v712, v648 = v_u_316(v729, v711)
+				if v712 then
+					v_u_72.setChoices(v712, v711)
+				elseif v648 then
+					v_u_72.endChoices()
+				else
+					v_u_72.dropChoices()
+				end
+			else
+				v_u_713 = nil
+			end
+			v_u_279:setLine(v_u_319())
+			v_u_279:update()
+			v_u_278:update()
+			if v_u_82.mySeat == nil and not v_u_641 then
+				if not (v633 and v633:IsA("BasePart")) then
+					v633 = nil
+				end
+				if v633 then
+					v640 = v_u_442(v633, 0)
+				else
+					v640 = v633
+				end
+				if v_u_730 and (not v633 or v_u_442(v633, v_u_77.QueueVisual.AreaMargin) ~= v_u_730) then
+					v_u_730 = nil
+				end
+				if v640 and v640 ~= v_u_730 then
+					v714 = v_u_82.snapshots[v640]
+				else
+					v714 = nil
+				end
+				if v714 and (v714.phase == "Waiting" and #v714.seats < v714.teamSize * 2) then
+					v690 = table.clone(v714)
+					v690.seats = table.clone(v714.seats)
+					v731 = v690.seats
+					v732 = {
+						["userId"] = nil,
+						["name"] = nil,
+						["displayName"] = nil,
+						["connected"] = true,
+						["userId"] = v_u_78.UserId,
+						["name"] = v_u_78.Name,
+						["displayName"] = v_u_78.DisplayName
+					}
+					table.insert(v731, v732)
+					if v714.hostId and v714.hostId > 0 then
+						v612 = v714.hostId
+					else
+						v612 = v_u_78.UserId
+					end
+					v690.hostId = v612
+					v_u_382:setSnapshot(v690, v_u_78.UserId)
+					v_u_613 = v640
+				elseif v_u_613 then
+					v_u_613 = nil
+					v_u_382:setSnapshot(nil, v_u_78.UserId)
+				end
+			elseif v_u_613 then
+				v_u_613 = nil
+			end
+			v691 = v_u_78:GetAttribute("TutorialActive")
+			v692 = {}
+			for _, v775 in v_u_1:GetPlayers() do
+				if v775 == v_u_78 then
+					continue
+				end
+				v733 = v775.UserId
+				table.insert(v692, v733)
+			end
+			v649 = v_u_382
+			v753 = {
+				["nobodyFree"] = v_u_12.nobodyFree(v692, v_u_82.snapshots)
+			}
+			if workspace:GetAttribute(v_u_9.UI.MatchBar.PublicLobbyAttribute) == true then
+				v614 = not v_u_79
+			else
+				v614 = false
+			end
+			v753.publicLobby = v614
+			v753.tutorial = v691 ~= false
+			v753.seated = v_u_82.mySeat ~= nil and true or (v_u_641 or v_u_613 ~= nil)
+			v753.result = v_u_72.resultUp()
+			v753.soft = v_u_30.wantsGlobal()
+			v753.played = v_u_380
+			v649:setSpawn(v753)
+			v_u_382:update(workspace:GetServerTimeNow())
+			if not v_u_260:faking() then
+				v693 = v_u_382.snapshot
+				v694 = v_u_260
+				v700 = workspace:GetServerTimeNow()
+				v709 = {
+					["snapshot"] = v693
+				}
+				v634 = v_u_382:isOpen() and not v_u_382:isSpawnPill()
+				if v634 then
+					v634 = v691 == false
+				end
+				v709.show = v634
+				if v693 == nil then
+					v635 = false
+				else
+					v635 = v_u_82.mySeat == v693.id
+				end
+				v709.seated = v635
+				v694:update(v700, v709)
+			end
+			if v726 == nil or (v726.phase == "Waiting" or v726.id ~= v_u_368) then
+				v636 = false
+			else
+				v636 = v726.epoch == v_u_381
+			end
+			if v726 == nil or (v726.phase == "Waiting" or v726.phase == "Result") then
+				v710 = false
+			else
+				v710 = not v636
+			end
+			v669 = {}
+			if v710 then
+				for _, v776 in v726.seats do
+					v669[v776.userId] = true
+				end
+			end
+			v721 = v_u_72.update
+			v674 = {
+				["inMatch"] = v710
+			}
+			if v726 == nil then
+				v758 = false
+			else
+				v758 = v726.phase == "Result" and true or v636
+			end
+			v674.afterMatch = v758
+			v674.shooting = v_u_641
+			v674.matchUserIds = v669
+			v674.overHotbar = v_u_382:isOpen() and not v_u_382:isSpawnPill() or v_u_276:isOpen()
+			v674.overHotbarPx = v_u_382:spawnLift()
+			v721(v674)
+			if v_u_385 == nil then
+				v759 = false
+			else
+				v759 = v_u_385.shooter == v_u_78.UserId
+			end
+			if v759 then
+				if v_u_385 == nil or v_u_385.phase ~= "Resolving" then
+					v759 = false
+				else
+					v759 = not v_u_99:stroking()
+				end
+			end
+			v760 = v_u_73.update
+			v661 = v_u_641
+			if v661 then
+				v661 = not v759
+			end
+			v760(v710, v661, v_u_109:isShown())
+			v761 = v_u_105
+			if v_u_374 > 0 then
+				v722 = not v_u_96.padPower or v_u_96:levelMoving()
+			else
+				v722 = false
+			end
+			v761:update(p463, v722)
+			v_u_383:setUltReserve(v_u_105:reservedBottom())
+			v_u_104:setUlt(v_u_105:promptShown())
+			v_u_104:setInfo(v_u_105.info.bound == true)
+			if not (v_u_385 and v_u_376) then
+				v662 = v_u_56.aimedKind() ~= nil
+				v_u_104:setSet(v662 and "mystery" or "block")
+				v723 = v_u_104
+				if v662 or v_u_56.heldKind() ~= nil then
+					v663 = not v_u_72.isBusy()
+				else
+					v663 = false
+				end
+				v723:setVisible(v663)
+				return
+			end
+			if v_u_376.downVersion ~= v_u_617 then
+				v_u_762 = v_u_376:view(v_u_385)
+				v_u_617 = v_u_376.downVersion
+				v_u_383:setSnapshot(v_u_762, v_u_78.UserId)
+				v_u_236()
+			end
+			if v_u_142:step() then
+				v_u_236()
+			end
+			v675 = workspace:GetServerTimeNow()
+			if v_u_676 and v_u_741 then
+				v724 = v_u_376.shot and v_u_376.shot.parts
+				if v724 then
+					v724 = v_u_376.shot.parts.strikes
+				end
+				if v724 and v_u_741 < #v724 or v_u_385.phase ~= "Frozen" then
+					v_u_676 = nil
+					v_u_741 = nil
+				end
+			end
+			if v_u_676 and v675 - v_u_676 >= v_u_77.ActionRetrySeconds then
+				v_u_676 = nil
+				v_u_10.get("SnapshotRequest"):FireServer()
+			end
+			v_u_383:update(v675)
+			v_u_101:place(v_u_383:reservedHeight())
+			v618 = v_u_101
+			if v_u_385 == nil then
+				v677 = false
+			else
+				v677 = v_u_385.shooter == v_u_78.UserId
+			end
+			if v677 then
+				v619 = v_u_385.ults
+				if type(v619) == "table" then
+					v678 = v619.armed
+				else
+					v678 = nil
+				end
+				if type(v678) == "table" then
+					v679 = v678.id
+					if type(v679) == "string" then
+						v680 = v678.id
+					else
+						v680 = nil
+					end
+				else
+					v680 = nil
+				end
+			else
+				v680 = nil
+			end
+			v618:setSkin(v680)
+			v620 = v_u_383:isModal()
+			if v620 ~= v_u_664 then
+				v_u_96:setSpinEditing(false)
+				if v620 then
+					v_u_96:setEnabled(false)
+				end
+				v_u_664 = v620
+			end
+			v742 = v_u_109
+			if v_u_152() then
+				v681 = true
+			else
+				if v_u_385 == nil then
+					v743 = false
+				else
+					v743 = v_u_385.shooter == v_u_78.UserId
+				end
+				if v743 and (not v_u_676 and (v_u_376 and not v_u_376:isBusy())) then
+					v681 = (v_u_385.phase == "Aiming" or v_u_385.phase == "Intro") and true or v_u_385.phase == "Placement"
+				else
+					v681 = false
+				end
+			end
+			if v681 then
+				if v_u_385 == nil or (v_u_376 == nil or v_u_385.calledPocket ~= nil) then
+					v621 = false
+				else
+					v621 = v_u_18.eligible(v_u_376.state.balls, v_u_385.groups[v_u_385.activeTeam])
+				end
+				v681 = not v621
+				if v681 then
+					v681 = not v_u_57.arming(v_u_385, v675)
+				end
+			end
+			v665 = v742:setActive(v681, not v620, v_u_383:reservedHeight())
+			v682 = v_u_375
+			v622 = not v620
+			if v622 then
+				if v_u_676 == nil then
+					v622 = not v_u_376:isBusy()
+					if v622 then
+						v622 = not v665
+					end
+				else
+					v622 = false
+				end
+			end
+			v682:setEnabled(v622)
+			v_u_96:setPlaceAllowed(v_u_375:canPlace())
+			v666 = v_u_385.phase
+			v623 = v666 == "Resolving" and (not v_u_99:stroking() and v_u_49.get("ShotCam"))
+			if v623 then
+				v623 = v_u_78:GetAttribute("TutorialActive") == false
+			end
+			v624 = v_u_36.setVertical
+			v701 = v_u_49.get("ShotCamTall") and not v_u_49.get("ShotCam")
+			if v701 then
+				v701 = v_u_78:GetAttribute("TutorialActive") == false
+			end
+			v624(v701)
+			if v_u_385 == nil then
+				v702 = false
+			else
+				v702 = v_u_385.shooter == v_u_78.UserId
+			end
+			if v702 then
+				if v666 == "Waiting" or (v666 == "CoinFlip" or v666 == "Foul" and v_u_385.solo == nil) then
+					v702 = false
+				elseif v666 == "Result" then
+					v702 = false
+				else
+					v702 = not v623
+				end
+			end
+			if v702 ~= v_u_641 then
+				v_u_641 = v702
+				if v702 then
+					v_u_36.setTable(v_u_365)
+					v_u_36.lock()
+					if v_u_385 == nil then
+						v744 = false
+					else
+						v744 = v_u_385.shooter == v_u_78.UserId
+					end
+					if v744 then
+						v_u_99:take()
+					end
+				else
+					v_u_99:release()
+					v_u_15.setVisible(v_u_97, false)
+					v_u_36.unlock()
+					v_u_4.MouseBehavior = Enum.MouseBehavior.Default
+				end
+			end
+			v703 = v_u_167() and not v_u_375:isDragging()
+			if v703 then
+				v703 = v_u_5.SelectedObject == nil
+			end
+			if v_u_96.enabled ~= v703 then
+				v_u_96:setEnabled(v703)
+			end
+			v745 = v_u_63.setPlayControlsVisible
+			v746 = v_u_167()
+			if v746 then
+				v746 = not v620
+			end
+			v745(v746)
+			v704 = v_u_78:GetAttribute("TutorialStep")
+			v705 = v_u_23.guided
+			if type(v704) ~= "string" then
+				v704 = nil
+			end
+			v706 = v705(v704)
+			v707 = v_u_103
+			v683 = v_u_167()
+			if v683 then
+				v683 = not v620
+				if v683 then
+					v683 = not v706
+				end
+			end
+			v707:setVisible(v683)
+			v684 = v_u_375:canCall()
+			v708 = v_u_104
+			if v_u_167() or (v665 or v684) then
+				v642 = not v620
+			else
+				v642 = v684
+			end
+			v708:setVisible(v642)
+			v_u_104:setSet(v_u_109:padSet() or (v684 and "call" or (v_u_96.spinEditing and "spin" or "aim")))
+			v_u_55.update()
+			v_u_444()
+			v_u_96:update(p463)
+			if not v_u_641 then
+				if v666 == "Sneak" and v_u_375:canPlace() then
+					v_u_163(p463)
+				elseif v_u_609 then
+					v_u_609 = false
+				end
+				v_u_375:update(p463, workspace.CurrentCamera)
+				v_u_109:update(p463, workspace.CurrentCamera)
+				v747 = v_u_383
+				v615 = v_u_375:canPlace()
+				if v615 then
+					v615 = v666 ~= "Sneak"
+				end
+				v747:setPlacing(v615, v_u_375:isBlocked())
+				v_u_383:setFrozenAim((v_u_152()))
+				if v_u_369 then
+					v_u_369:update(p463)
+				end
+				v_u_186()
+				v_u_668 = v_u_668 + p463
+				if v_u_668 >= 1 / v_u_9.Aim.PlacementSendsPerSecond then
+					v670, v671, v672 = v_u_375:takeStream()
+				else
+					v670 = nil
+					v671 = nil
+					v672 = nil
+				end
+				v754 = v_u_8.quantizePull(v_u_374) or 0
+				if v_u_385 == nil then
+					v686 = false
+				else
+					v686 = v_u_385.shooter == v_u_78.UserId
+				end
+				v653 = v686 and (v_u_676 == nil and (v666 == "Aiming" or (v666 == "Intro" or v666 == "Placement"))) and true or v_u_152()
+				if v_u_616 == nil or v_u_616 <= 0 then
+					v687 = false
+				else
+					v687 = v754 == 0
+				end
+				if v670 or v653 and v687 or v_u_167() and v_u_8.due(v_u_668, v_u_96.angle, v754, v_u_656, v_u_616, v_u_96:getElevation(), v_u_625) then
+					v_u_668 = 0
+					v654 = v_u_96.angle
+					v655 = v_u_96:getElevation()
+					v_u_656 = v654
+					v_u_616 = v754
+					v_u_625 = v655
+					v_u_82:reportAim(v_u_385.id, v_u_96.angle, v754, v_u_96:getElevation(), v670, v671, v672)
+				end
+				v_u_736 = v740
+				return
+			end
+			if v666 == "PocketChoice" then
+				v771 = 8
+			else
+				v771 = 4
+			end
+		end
+	end
+end
+require(script.Parent.Tutorial).start()
+local v778 = script.Parent:FindFirstChild("HalloweenMap")
+if v778 then
+	v778 = v778:FindFirstChild("KingCape")
+end
+local v_u_779
+if v778 and v778:IsA("ModuleScript") then
+	local v780 = require
+	local v781
+	v781, v_u_779 = pcall(v780, v778)
+	if not v781 then
+		v_u_779 = nil
+	end
+else
+	v_u_779 = nil
+end
+v3.RenderStepped:Connect(function(p782)
+	-- upvalues: (copy) v_u_777, (copy) v_u_98, (copy) v_u_97, (copy) v_u_82, (ref) v_u_779
+	v_u_777(p782)
+	v_u_98:update(p782, v_u_97:GetAttribute("Visible") == true, v_u_82.watched:holding())
+	if v_u_779 then
+		v_u_779.step(p782)
+	end
+end)
+require(script.Parent.GuiQA).start()
+require(script.Parent.GuiQA).add("aim", function(p783, p784)
+	-- upvalues: (copy) v_u_96, (ref) v_u_374, (copy) v_u_186
+	if type(p783) == "number" then
+		v_u_96:setAngle(p783)
+	end
+	if type(p784) == "number" then
+		v_u_374 = p784
+	end
+	v_u_186()
+	return v_u_96.angle
+end)
+require(script.Parent.GuiQA).add("turn", function(p785, p786)
+	-- upvalues: (copy) v_u_96
+	local v787 = p786 or 10
+	for _ = 1, v787 do
+		v_u_96:rotate((p785 or 2) / v787)
+		task.wait(0.05)
+	end
+	return v_u_96.angle
+end)
+require(script.Parent.GuiQA).add("camera", function(p788)
+	-- upvalues: (copy) v_u_36
+	local v789 = v_u_36.setOverride
+	local v790
+	if typeof(p788) == "CFrame" then
+		v790 = p788
+	else
+		v790 = nil
+	end
+	v789(v790, 1)
+	return p788 ~= nil
+end)
+require(script.Parent.GuiQA).add("padMode", function(p791)
+	-- upvalues: (copy) v_u_53
+	v_u_53.force(p791)
+	return v_u_53.active()
+end)
+require(script.Parent.GuiQA).add("pad", function(p792, p793, p794, p795)
+	-- upvalues: (copy) v_u_53, (ref) v_u_375, (copy) v_u_109, (copy) v_u_105, (copy) v_u_9, (copy) v_u_96, (copy) v_u_55
+	local v796 = v_u_53.key(p792)
+	if v796 == nil then
+		return "unknown key"
+	end
+	local v797 = Enum.UserInputState[p793 or "Begin"]
+	local v798 = {
+		["KeyCode"] = v796,
+		["Position"] = Vector3.new(p794 or 0, p795 or 0, 0),
+		["UserInputType"] = Enum.UserInputType.Gamepad1
+	}
+	local v799 = Enum.ContextActionResult.Sink
+	if v_u_375.padBound and v_u_375:handlePad(v797, v798) == v799 then
+		return "call"
+	end
+	if v_u_109.bound and v_u_109:handlePad(v797, v798) == v799 then
+		return "pick"
+	end
+	if v_u_105.bound and (v796 == Enum.KeyCode[v_u_9.UI.Ults.GamepadKey] and v797 == Enum.UserInputState.Begin) then
+		v_u_105:press()
+		return "ability"
+	end
+	if not v_u_105.info.bound or (v796 ~= Enum.KeyCode[v_u_9.UI.Ults.Info.GamepadKey] or v797 ~= Enum.UserInputState.Begin) then
+		return v_u_96.gamepadBound and v_u_96:handleGamepad(v797, v798) == v799 and "table" or (v797 == Enum.UserInputState.Begin and v_u_55.press(v796) and "lobby" or "nobody")
+	end
+	v_u_105.info:toggle()
+	return "info"
+end)
+require(script.Parent.HudFocus).start()
+require(script.Parent.LeaveNudge).start()
+require(script.Parent.MotionSpike).start()
+require(script.Parent.ShopLab).start()
+require(script.Parent.CueCardLab).start()
+print("[8ball] multiplayer client ready")
+
+===== FULL: Players.zhhshshszzss.PlayerScripts.Client.Hub =====
+local v_u_1 = game:GetService("Players")
+local v2 = game:GetService("ReplicatedStorage")
+local v_u_3 = game:GetService("UserInputService")
+local v_u_4 = game:GetService("Workspace")
+local v5 = v2:WaitForChild("Shared")
+local v_u_6 = require(v5:WaitForChild("AimStream"))
+local v_u_7 = require(v5:WaitForChild("Config"))
+local v_u_8 = require(v5:WaitForChild("CueStickBuilder"))
+local v_u_9 = require(v5:WaitForChild("Net"))
+local v_u_10 = require(v5:WaitForChild("Placement"))
+local v_u_11 = require(script.Parent:WaitForChild("BallRenderer"))
+local v_u_12 = require(script.Parent:WaitForChild("CueSkinLook"))
+local v_u_13 = require(script.Parent:WaitForChild("Match"))
+local v_u_14 = require(script.Parent:WaitForChild("WatchedShooters"))
+local v_u_15 = {}
+v_u_15.__index = v_u_15
+function v_u_15.new(p16) -- name: new
+	-- upvalues: (copy) v_u_10, (copy) v_u_3, (copy) v_u_7, (copy) v_u_11, (copy) v_u_8, (copy) v_u_12, (copy) v_u_14, (copy) v_u_15, (copy) v_u_13, (copy) v_u_9
+	local v17 = Instance.new("Folder")
+	v17.Name = "Balls"
+	v17.Parent = p16
+	local v18 = v_u_10.rows()[1]
+	local v19 = v_u_10.forTable(v18.id)
+	local v20 = {}
+	local v21 = {}
+	local v22 = v_u_3.TouchEnabled
+	if v22 then
+		v22 = not v_u_3.KeyboardEnabled
+	end
+	local v23
+	if v22 then
+		v23 = v_u_7.Hub.RenderedTablesPhone
+	else
+		v23 = v_u_7.Hub.RenderedTables
+	end
+	local v24 = v_u_10.tableCount
+	for v25 = 1, math.min(v23, v24()) do
+		local v26 = v_u_11.new
+		table.insert(v20, v26(v17, v19, v25))
+		local v27 = v_u_8.build(p16)
+		v27.Name = ("WatchedCue_%d"):format(v25)
+		v_u_8.setVisible(v27, false)
+		v_u_12.attach(v27, {
+			["aura"] = true
+		})
+		table.insert(v21, v27)
+	end
+	local v28 = {
+		["folder"] = nil,
+		["matches"] = nil,
+		["pool"] = nil,
+		["boundTo"] = nil,
+		["seats"] = nil,
+		["sinceRebind"] = (1 / 0),
+		["seatListeners"] = nil,
+		["rejectListeners"] = nil,
+		["mySeat"] = nil,
+		["snapshots"] = nil,
+		["snapshotListeners"] = nil,
+		["cues"] = nil,
+		["cueOf"] = nil,
+		["aims"] = nil,
+		["shots"] = nil,
+		["watched"] = nil,
+		["folder"] = v17,
+		["matches"] = {},
+		["pool"] = v20,
+		["boundTo"] = {},
+		["seats"] = {},
+		["seatListeners"] = {},
+		["rejectListeners"] = {},
+		["snapshots"] = {},
+		["snapshotListeners"] = {},
+		["cues"] = v21,
+		["cueOf"] = {},
+		["aims"] = {},
+		["shots"] = {},
+		["watched"] = v_u_14.new(v21)
+	}
+	local v29 = v_u_15
+	local v30 = setmetatable(v28, v29)
+	for _, v31 in v_u_10.rows() do
+		local v32 = v_u_10.forTable(v31.id)
+		if not v32 then
+			continue
+		end
+		v30.matches[v31.id] = v_u_13.new(v32, nil, v_u_7.Rack.DefaultSeed + v31.id)
+		v30.seats[v31.id] = {}
+	end
+	v30:listen()
+	task.defer(function()
+		-- upvalues: (ref) v_u_9
+		v_u_9.get("SnapshotRequest"):FireServer()
+	end)
+	return v30
+end
+function v_u_15.onSeatChanged(p33, p34) -- name: onSeatChanged
+	local v35 = p33.seatListeners
+	table.insert(v35, p34)
+end
+function v_u_15.onShotRejected(p36, p37) -- name: onShotRejected
+	local v38 = p36.rejectListeners
+	table.insert(v38, p37)
+end
+function v_u_15.reportAim(p39, p40, p41, p42, p43, p44, p45, p46) -- name: reportAim
+	-- upvalues: (copy) v_u_9
+	local v47 = p39.snapshots[p40]
+	if v47 then
+		v_u_9.get("AimUpdate"):FireServer(p40, p41, v47.epoch, v47.turnId, p42, p44, p45, p46, p43)
+	end
+end
+function v_u_15.onSnapshot(p48, p49) -- name: onSnapshot
+	local v50 = p48.snapshotListeners
+	table.insert(v50, p49)
+end
+function v_u_15.action(p51, p52, p53) -- name: action
+	-- upvalues: (copy) v_u_9
+	local v54 = p51.mySeat
+	if v54 then
+		v54 = p51.snapshots[p51.mySeat]
+	end
+	if v54 then
+		local v55 = not p53 and {} or table.clone(p53)
+		local v56 = v54.id
+		local v57 = v54.epoch
+		local v58 = v54.turnId
+		v55.kind = p52
+		v55.tableId = v56
+		v55.epoch = v57
+		v55.turnId = v58
+		v_u_9.get("MatchAction"):FireServer(v55)
+	end
+end
+function v_u_15.fire(p59, p60, p61, p62, p63, p64, p65, p66) -- name: fire
+	-- upvalues: (copy) v_u_9
+	local v67 = p59.snapshots[p60]
+	if v67 then
+		v_u_9.get("ShotFired"):FireServer({
+			["epoch"] = v67.epoch,
+			["turnId"] = v67.turnId,
+			["cueX"] = p65,
+			["cueY"] = p66,
+			["tableId"] = p60,
+			["angle"] = p61,
+			["power"] = p62,
+			["spin"] = p63,
+			["elevation"] = p64
+		})
+	end
+end
+local function v_u_93(p68, p69) -- name: recordShot
+	local v70 = p69.seed
+	local v71 = p69.start
+	local v72 = p69.epoch
+	local v73
+	if type(v72) == "number" and v72 == v72 then
+		v73 = math.abs(v72) < (1 / 0)
+	else
+		v73 = false
+	end
+	if v73 then
+		local v74 = p69.seq
+		local v75
+		if type(v74) == "number" and v74 == v74 then
+			v75 = math.abs(v74) < (1 / 0)
+		else
+			v75 = false
+		end
+		if v75 and (typeof(v70) == "table" and typeof(v71) == "table") then
+			local v76 = v70.vx
+			local v77
+			if type(v76) == "number" and v76 == v76 then
+				v77 = math.abs(v76) < (1 / 0)
+			else
+				v77 = false
+			end
+			if v77 then
+				local v78 = v70.vy
+				local v79
+				if type(v78) == "number" and v78 == v78 then
+					v79 = math.abs(v78) < (1 / 0)
+				else
+					v79 = false
+				end
+				if v79 then
+					local v80, v81, v82, v83, v84, v85, v86, v87, v88, v89, v90
+					if v70.vz == nil then
+						v80 = v71[1]
+						if type(v80) == "number" and v80 == v80 then
+							v81 = math.abs(v80) < (1 / 0)
+						else
+							v81 = false
+						end
+						if v81 then
+							v82 = v71[2]
+							if type(v82) == "number" and v82 == v82 then
+								v83 = math.abs(v82) < (1 / 0)
+							else
+								v83 = false
+							end
+							if v83 and v70.vx * v70.vx + v70.vy * v70.vy >= 1e-12 then
+								v84 = p68.shots[p69.tableId]
+								if v84 == nil then
+									v84 = {
+										["epoch"] = 0,
+										["seq"] = 0,
+										["angle"] = 0,
+										["x"] = 0,
+										["y"] = 0
+									}
+									p68.shots[p69.tableId] = v84
+								end
+								v85 = p69.epoch
+								v86 = p69.seq
+								v84.epoch = v85
+								v84.seq = v86
+								v87 = v70.vy
+								v88 = v70.vx
+								v84.angle = math.atan2(v87, v88)
+								v89 = v71[1]
+								v90 = v71[2]
+								v84.x = v89
+								v84.y = v90
+								return
+							end
+						end
+					else
+						local v91 = v70.vz
+						local v92
+						if type(v91) == "number" and v91 == v91 then
+							v92 = math.abs(v91) < (1 / 0)
+						else
+							v92 = false
+						end
+						if not v92 then
+							return
+						end
+						v80 = v71[1]
+						if type(v80) == "number" and v80 == v80 then
+							v81 = math.abs(v80) < (1 / 0)
+						else
+							v81 = false
+						end
+						if v81 then
+							v82 = v71[2]
+							if type(v82) == "number" and v82 == v82 then
+								v83 = math.abs(v82) < (1 / 0)
+							else
+								v83 = false
+							end
+							if v83 and v70.vx * v70.vx + v70.vy * v70.vy >= 1e-12 then
+								v84 = p68.shots[p69.tableId]
+								if v84 == nil then
+									v84 = {
+										["epoch"] = 0,
+										["seq"] = 0,
+										["angle"] = 0,
+										["x"] = 0,
+										["y"] = 0
+									}
+									p68.shots[p69.tableId] = v84
+								end
+								v85 = p69.epoch
+								v86 = p69.seq
+								v84.epoch = v85
+								v84.seq = v86
+								v87 = v70.vy
+								v88 = v70.vx
+								v84.angle = math.atan2(v87, v88)
+								v89 = v71[1]
+								v90 = v71[2]
+								v84.x = v89
+								v84.y = v90
+								return
+							end
+						end
+					end
+				end
+			else
+				return
+			end
+		else
+			return
+		end
+	else
+		return
+	end
+end
+function v_u_15.listen(p_u_94) -- name: listen
+	-- upvalues: (copy) v_u_1, (copy) v_u_9, (copy) v_u_6, (copy) v_u_93
+	local v_u_95 = v_u_1.LocalPlayer.UserId
+	v_u_9.get("ShotRejected").OnClientEvent:Connect(function(p96)
+		-- upvalues: (copy) p_u_94
+		for _, v97 in p_u_94.rejectListeners do
+			v97(typeof(p96) ~= "string" and "?" or p96)
+		end
+	end)
+	v_u_9.get("AimBroadcast").OnClientEvent:Connect(function(p98)
+		-- upvalues: (ref) v_u_9, (ref) v_u_6, (copy) p_u_94
+		if typeof(p98) == "table" then
+			local v99 = {}
+			for v100 = 1, #p98, v_u_9.AimStride do
+				local v101 = v_u_6.read(p98, v100)
+				if not v101 then
+					continue
+				end
+				v99[v101.id] = true
+				local v102 = p_u_94.aims[v101.id]
+				if v102 and v102.by == v101.by then
+					v102.angle = v101.angle
+					local v103 = v101.x
+					local v104 = v101.y
+					v102.x = v103
+					v102.y = v104
+					v102.pull = v101.pull
+					v102.elevation = v101.elevation
+				else
+					p_u_94.aims[v101.id] = {
+						["angle"] = v101.angle,
+						["shown"] = v101.angle,
+						["by"] = v101.by,
+						["x"] = v101.x,
+						["y"] = v101.y,
+						["shownX"] = v101.x,
+						["shownY"] = v101.y,
+						["pull"] = v101.pull,
+						["shownPull"] = v101.pull,
+						["elevation"] = v101.elevation
+					}
+				end
+			end
+			for v105 in p_u_94.aims do
+				if v99[v105] then
+					continue
+				end
+				p_u_94.aims[v105] = nil
+			end
+		end
+	end)
+	v_u_9.get("ShotResult").OnClientEvent:Connect(function(p106)
+		-- upvalues: (copy) p_u_94, (ref) v_u_93
+		if typeof(p106) == "table" then
+			local v107 = p106.tableId
+			if typeof(v107) == "number" then
+				local v108 = p_u_94.matches[p106.tableId]
+				if v108 then
+					v_u_93(p_u_94, p106)
+					v108:receive(p106)
+				end
+				return
+			end
+		end
+	end)
+	v_u_1.PlayerRemoving:Connect(function(p109)
+		-- upvalues: (copy) p_u_94
+		p_u_94.watched:forgetUser(p109.UserId)
+	end)
+	v_u_9.get("TableState").OnClientEvent:Connect(function(p110)
+		-- upvalues: (copy) p_u_94, (copy) v_u_95
+		if typeof(p110) == "table" then
+			local v111 = p110.id
+			if typeof(v111) == "number" then
+				local v112 = p_u_94.snapshots[p110.id]
+				if not v112 or p110.epoch >= v112.epoch and (p110.epoch ~= v112.epoch or p110.revision >= v112.revision) then
+					p_u_94.snapshots[p110.id] = p110
+					local v113 = p_u_94.matches[p110.id]
+					if v113 then
+						v113:snapshot(p110)
+					end
+					p_u_94.seats[p110.id] = p110.seats or {}
+					local v114 = nil
+					for v115, v116 in p_u_94.seats do
+						for _, v117 in v116 do
+							if v117.userId ~= v_u_95 or not v117.connected then
+								continue
+							end
+							v114 = v115
+						end
+					end
+					if v114 ~= p_u_94.mySeat then
+						p_u_94.mySeat = v114
+						for _, v118 in p_u_94.seatListeners do
+							v118(v114)
+						end
+					end
+					for _, v119 in p_u_94.snapshotListeners do
+						v119(p110)
+					end
+				end
+			end
+		end
+	end)
+end
+function v_u_15.matchFor(p120, p121) -- name: matchFor
+	return p120.matches[p121]
+end
+function v_u_15.cueBallPartFor(p122, p123) -- name: cueBallPartFor
+	local v124 = p122.boundTo[p123]
+	if v124 == nil then
+		return nil
+	else
+		local v125 = v124.folder:FindFirstChild("CueBall")
+		if v125 and v125:IsA("BasePart") then
+			return v125
+		else
+			return nil
+		end
+	end
+end
+function v_u_15.seatsAt(p126, p127) -- name: seatsAt
+	return p126.seats[p127] or {}
+end
+function v_u_15.requestSeat(_, p128) -- name: requestSeat
+	-- upvalues: (copy) v_u_9
+	v_u_9.get("RequestSeat"):FireServer(p128)
+end
+function v_u_15.requestLeave(_) -- name: requestLeave
+	-- upvalues: (copy) v_u_9
+	v_u_9.get("RequestLeave"):FireServer()
+end
+function v_u_15.requestRerack(_, p129) -- name: requestRerack
+	-- upvalues: (copy) v_u_9
+	v_u_9.get("RequestRerack"):FireServer(p129)
+end
+local function v_u_159(p130, p131) -- name: rebind
+	-- upvalues: (copy) v_u_8
+	local v132 = {}
+	for v133, v134 in p130.matches do
+		local v135 = v134.placement
+		local v136 = v135.x - p131.X
+		local v137 = v135.z - p131.Z
+		local v138 = {
+			["id"] = v133,
+			["d"] = v133 == p130.mySeat and -1 or v136 * v136 + v137 * v137
+		}
+		table.insert(v132, v138)
+	end
+	table.sort(v132, function(p139, p140)
+		if p139.d == p140.d then
+			return p139.id < p140.id
+		else
+			return p139.d < p140.d
+		end
+	end)
+	local v141 = #p130.pool
+	local v142 = #v132
+	local v143 = {}
+	for v144 = 1, math.min(v141, v142) do
+		v143[v132[v144].id] = true
+	end
+	for v145, _ in p130.boundTo do
+		if v143[v145] then
+			continue
+		end
+		p130.matches[v145]:detach()
+		p130.boundTo[v145] = nil
+		local v146 = p130.cueOf[v145]
+		if v146 then
+			v_u_8.setVisible(v146, false)
+			p130.cueOf[v145] = nil
+		end
+		p130.watched:unbind(v145)
+	end
+	local v147 = {}
+	for _, v148 in p130.boundTo do
+		v147[v148] = true
+	end
+	local v149 = {}
+	for _, v150 in p130.pool do
+		if v147[v150] then
+			continue
+		end
+		table.insert(v149, v150)
+	end
+	local v151 = {}
+	for _, v152 in p130.cueOf do
+		v151[v152] = true
+	end
+	local v153 = {}
+	for _, v154 in p130.cues do
+		if v151[v154] then
+			continue
+		end
+		table.insert(v153, v154)
+	end
+	for v155 in v143 do
+		local v156 = p130.boundTo[v155] == nil and table.remove(v149)
+		if v156 then
+			local v157 = p130.matches[v155]
+			v156:rebind(v157.placement, v155)
+			v157:attach(v156)
+			p130.boundTo[v155] = v156
+		end
+		if p130.cueOf[v155] ~= nil then
+			continue
+		end
+		local v158 = table.remove(v153)
+		if not v158 then
+			continue
+		end
+		p130.cueOf[v155] = v158
+	end
+end
+local function v_u_178(p160, p161) -- name: followPlacement
+	-- upvalues: (copy) v_u_7, (copy) v_u_1
+	local v162 = -p161
+	local v163 = v_u_7.Aim.BallSmoothingSeconds
+	local v164 = v162 / math.max(v163, 0.001)
+	local v165 = 1 - math.exp(v164)
+	local v166 = v_u_1.LocalPlayer.UserId
+	for v167, v168 in p160.aims do
+		local v169 = p160.matches[v167]
+		local v170 = p160.snapshots[v167]
+		if v169 and (v170 and (v168.by ~= v166 and (v168.by == v170.shooter and (v170.ballInHand == true and (v170.phase == "Intro" or v170.phase == "Placement"))))) and not v169:isBusy() then
+			local v171 = v168.shownX
+			local v172 = v168.shownY
+			v168.shownX = v168.shownX + (v168.x - v171) * v165
+			v168.shownY = v168.shownY + (v168.y - v172) * v165
+			local v173 = v169:findCueBall()
+			if not v173 then
+				continue
+			end
+			local v174 = v173.x - v168.shownX
+			if math.abs(v174) <= 0.0001 then
+				local v175 = v173.y - v168.shownY
+				if math.abs(v175) <= 0.0001 then
+					continue
+				end
+			end
+			v169:setCue(v168.shownX, v168.shownY)
+		else
+			local v176 = v168.x
+			local v177 = v168.y
+			v168.shownX = v176
+			v168.shownY = v177
+		end
+	end
+end
+local function v_u_196(p179, p180) -- name: easeAims
+	-- upvalues: (copy) v_u_7, (copy) v_u_1
+	local v181 = v_u_7.Aim
+	local v182 = -p180
+	local v183 = v181.SmoothingSeconds
+	local v184 = v182 / math.max(v183, 0.001)
+	local v185 = 1 - math.exp(v184)
+	local v186 = -p180
+	local v187 = v181.PullSmoothingSeconds
+	local v188 = v186 / math.max(v187, 0.001)
+	local v189 = 1 - math.exp(v188)
+	local v190 = v_u_1.LocalPlayer.UserId
+	for v191 in p179.cueOf do
+		local v192 = p179.aims[v191]
+		local v193 = p179.matches[v191]
+		local v194 = p179.snapshots[v191]
+		if not v192 or (v192.by == v190 or (not v193 or (v193:isBusy() or (not v194 or (v194.shooter ~= v192.by or v194.phase ~= "Aiming" and (v194.phase ~= "Intro" and v194.phase ~= "Placement")))))) then
+			continue
+		end
+		local v195 = (v192.angle - v192.shown + 3.141592653589793) % 6.283185307179586 - 3.141592653589793
+		v192.shown = v192.shown + v195 * v185
+		v192.shownPull = v192.shownPull + (v192.pull - v192.shownPull) * v189
+	end
+end
+function v_u_15.update(p197, p198) -- name: update
+	-- upvalues: (copy) v_u_7, (copy) v_u_4, (copy) v_u_159, (copy) v_u_178, (copy) v_u_196
+	p197.sinceRebind = p197.sinceRebind + p198
+	if p197.sinceRebind >= v_u_7.Hub.RebindEverySeconds then
+		p197.sinceRebind = 0
+		local v199 = v_u_4.CurrentCamera
+		v_u_159(p197, not v199 and Vector3.new(0, 0, 0) or v199.CFrame.Position)
+	end
+	local v200 = false
+	for v201, v202 in p197.matches do
+		local v203 = v202:update(p198)
+		if v202.renderer then
+			v202.renderer:animate(p198)
+		end
+		if v201 ~= p197.mySeat then
+			continue
+		end
+		v200 = v203
+	end
+	v_u_178(p197, p198)
+	v_u_196(p197, p198)
+	p197.watched:update(p198, p197.cueOf, p197.snapshots, p197.matches, p197.aims, p197.shots)
+	return v200
+end
+function v_u_15.renderedCount(p204) -- name: renderedCount
+	local v205 = 0
+	for _ in p204.boundTo do
+		v205 = v205 + 1
+	end
+	return v205
+end
+return v_u_15
+
+===== FULL: Players.zhhshshszzss.PlayerScripts.Client.HubCorners =====
+local v_u_1 = game:GetService("GuiService")
+local v_u_2 = game:GetService("Players")
+local v3 = game:GetService("ReplicatedStorage")
+local v_u_4 = game:GetService("TextService")
+local v_u_5 = game:GetService("TweenService")
+local v6 = v3:WaitForChild("Shared")
+local v_u_7 = require(v6:WaitForChild("Config"))
+local v_u_8 = require(v6:WaitForChild("Strings"))
+local v_u_9 = require(script.Parent.GuiQA)
+local v_u_10 = require(script.Parent.HudParts)
+local v_u_11 = require(script.Parent.InvitePrompt)
+local v_u_12 = require(script.Parent.PadMode)
+local v_u_13 = require(script.Parent.ItemState)
+local v_u_14 = require(script.Parent.Menus)
+local v_u_15 = require(script.Parent.ShopCards)
+local v_u_16 = require(script.Parent.ShopParts)
+local v_u_17 = require(script.Parent.TutorialAnchors)
+local v_u_18 = require(script.Parent.UIAnim)
+local v_u_19 = require(script.Parent.UISound)
+local v_u_20 = {}
+local function v_u_24(p_u_21) -- name: halloween
+	-- upvalues: (copy) v_u_20
+	local v22 = v_u_20[p_u_21]
+	if v22 == nil then
+		local v23
+		v23, v22 = pcall(function()
+			-- upvalues: (copy) p_u_21
+			return require((script.Parent.Halloween:FindFirstChild(p_u_21)))
+		end)
+		if not v23 then
+			warn(("[8ball] HubCorners: Halloween.%s failed to load: %s"):format(p_u_21, (tostring(v22))))
+		end
+		if not v23 then
+			v22 = false
+		end
+		v_u_20[p_u_21] = v22
+	end
+	return v22 or nil
+end
+local v_u_25 = v_u_7.UI.Corners
+local v_u_26 = v_u_7.UI.Settings
+local v_u_27 = v_u_7.UI.Kit
+local v_u_28 = v_u_7.Multiplayer.Style
+local v_u_29 = v_u_8.Corners
+local v_u_30 = {}
+v_u_30.__index = v_u_30
+local function v_u_33() -- name: padRing
+	-- upvalues: (copy) v_u_10, (copy) v_u_25, (copy) v_u_27
+	local v31 = Instance.new("Frame")
+	v31.Name = "PadRing"
+	v31.BackgroundTransparency = 1
+	v31.Size = UDim2.fromScale(1, 1)
+	v_u_10.corner(v31, v_u_25.PadRingCornerPx)
+	local v32 = Instance.new("UIStroke")
+	v32.Color = v_u_10.color(v_u_27.Colors.Gold)
+	v32.Thickness = v_u_25.PadRingPx
+	v32.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+	v32.Parent = v31
+	return v31
+end
+local function v_u_44(p34, p35, p36, p37, p38) -- name: corner
+	-- upvalues: (copy) v_u_10, (copy) v_u_33, (copy) v_u_25, (copy) v_u_18
+	local v39 = v_u_10.candy(p34, "", p38, "Blue", nil)
+	v39.Name = p35
+	v39.Selectable = false
+	v39.SelectionImageObject = v_u_33()
+	local v40 = v_u_10.candyParts(v39)
+	v40.face.Visible = false
+	local v_u_41 = v_u_10.icon(v40.body, p36, "Art")
+	v_u_41.AnchorPoint = Vector2.new(0.5, 0.5)
+	v_u_41.Position = UDim2.fromScale(0.5, 0.45)
+	v_u_41.Size = UDim2.fromScale(1.05, 1.05)
+	v_u_41.ZIndex = 3
+	local v42 = v_u_10.text(v40.body, "Word", v_u_25.WordPx, p37)
+	v42.TextWrapped = false
+	v42.AnchorPoint = Vector2.new(0.5, 0.5)
+	v42.Position = UDim2.fromScale(0.5, 0.92)
+	v42.ZIndex = 4
+	v_u_10.onLit(v39, function(p43)
+		-- upvalues: (ref) v_u_18, (copy) v_u_41
+		v_u_18.sunRays(v_u_41, p43)
+	end)
+	return {
+		["button"] = v39,
+		["icon"] = v_u_41,
+		["word"] = v42
+	}
+end
+local function v_u_55(p45) -- name: starterArt
+	-- upvalues: (copy) v_u_10, (copy) v_u_27, (copy) v_u_25, (copy) v_u_7, (copy) v_u_18
+	local v46 = p45.icon
+	local v_u_47 = v_u_10.frame(v46.Parent, "StarterArt")
+	v_u_47.AnchorPoint = v46.AnchorPoint
+	v_u_47.Position = v46.Position
+	v_u_47.Size = v46.Size
+	v_u_47.ZIndex = v46.ZIndex
+	v_u_47.Visible = false
+	local v48 = Instance.new("UIAspectRatioConstraint")
+	v48.AspectRatio = 1
+	v48.Parent = v_u_47
+	local v49 = Instance.new("ImageLabel")
+	v49.Name = "Glow"
+	v49.BackgroundTransparency = 1
+	v49.Image = v_u_27.Art.SoftGlow
+	local v50 = v_u_25.StarterGlowTint
+	v49.ImageColor3 = Color3.fromRGB(v50[1], v50[2], v50[3])
+	v49.ImageTransparency = v_u_25.StarterGlowTransparency
+	v49.AnchorPoint = Vector2.new(0.5, 0.5)
+	v49.Position = UDim2.fromScale(0.5, 0.5)
+	v49.Size = UDim2.fromScale(v_u_25.StarterGlowScale, v_u_25.StarterGlowScale)
+	v49.ZIndex = v46.ZIndex - 1
+	v49.Parent = v_u_47
+	local v51 = v_u_7.LuckyBlocks.Kinds[v_u_7.Shop.StarterBlock]
+	local v52 = v_u_10.icon(v_u_47, "StarterPack", "Block")
+	v52.Image = not v51 and "" or v51.Icon
+	local v53 = v_u_25.StarterBlock
+	v52.AnchorPoint = Vector2.new(0.5, 0.5)
+	v52.Position = UDim2.fromScale(v53[1], v53[2])
+	v52.Size = UDim2.fromScale(v53[3], v53[3])
+	v52.ZIndex = v46.ZIndex + 1
+	v_u_10.onLit(p45.button, function(p54)
+		-- upvalues: (ref) v_u_18, (copy) v_u_47
+		v_u_18.sunRays(v_u_47, p54)
+	end)
+	return v_u_47
+end
+function v_u_30.new(p56, p57) -- name: new
+	-- upvalues: (copy) v_u_30, (copy) v_u_10, (copy) v_u_7, (copy) v_u_33, (copy) v_u_44, (copy) v_u_29, (copy) v_u_17, (copy) v_u_12, (copy) v_u_27, (copy) v_u_19, (copy) v_u_14, (copy) v_u_13, (copy) v_u_55, (copy) v_u_18, (copy) v_u_25, (copy) v_u_8, (copy) v_u_2, (copy) v_u_24, (copy) v_u_9
+	local v58 = v_u_30
+	local v_u_59 = setmetatable({}, v58)
+	v_u_59.screen = p56
+	v_u_59.deps = p57
+	v_u_59.wanted = false
+	v_u_59.showing = false
+	v_u_59.alive = true
+	v_u_59.challengeHidden = false
+	v_u_59.challengeDue = true
+	v_u_59.freshOn = {}
+	v_u_59.connections = {}
+	local v60 = v_u_10.frame(p56, "HubCorners")
+	v60.Size = UDim2.fromScale(1, 1)
+	v60.ZIndex = v_u_7.UI.Menu.Column.ZIndex
+	v60.Visible = false
+	v_u_59.root = v60
+	if p57.boostPill then
+		p57.boostPill.tag.SelectionImageObject = v_u_33()
+	end
+	v_u_59.challenge = v_u_44(v60, "Challenge", "Challenge", v_u_29.Challenge, function()
+		-- upvalues: (ref) v_u_17, (copy) v_u_59
+		v_u_17.notePress("Challenge")
+		v_u_59:pressChallenge()
+	end)
+	v_u_10.padKey(v_u_10.candyParts(v_u_59.challenge.button).body, v_u_12.key(v_u_7.Input.Gamepad.Hub.Side), v_u_27.PadKey.Corner)
+	v_u_59.padFocused = false
+	v_u_59.inviteTile = v_u_44(v60, "Invite", "Invite", v_u_29.Invite, function()
+		-- upvalues: (ref) v_u_19, (ref) v_u_17, (copy) v_u_59
+		v_u_19.play("Click")
+		v_u_17.notePress("Invite")
+		v_u_59:invite()
+	end)
+	v_u_59.gearTile = v_u_44(v60, "Settings", "Gear", v_u_29.Settings, function()
+		-- upvalues: (ref) v_u_19, (ref) v_u_14
+		v_u_19.play("Click")
+		v_u_14.open("Settings")
+	end)
+	v_u_59.plusTile = v_u_44(v60, "Plus", "RobloxPlus", v_u_29.Plus, function()
+		-- upvalues: (ref) v_u_19, (ref) v_u_13
+		v_u_19.play("Click")
+		task.spawn(v_u_13.request, "StoreRequest", "RobloxPlus")
+	end)
+	v_u_59.offerSpecs = {
+		{
+			["key"] = "StarterPack",
+			["section"] = "Offer",
+			["icon"] = "StarterPack",
+			["words"] = nil,
+			["words"] = v_u_29.Starter
+		},
+		{
+			["key"] = "VipOffer",
+			["section"] = "Vip",
+			["icon"] = "Vip",
+			["words"] = nil,
+			["words"] = v_u_29.VipName
+		}
+	}
+	v_u_59.openOffers = {}
+	v_u_59.offerIndex = 1
+	v_u_59.offerKey = nil
+	v_u_59.offerFlippedAt = os.clock()
+	v_u_59.flipping = false
+	local v61 = v_u_44(v60, "Offer", "StarterPack", v_u_29.Starter, function()
+		-- upvalues: (copy) v_u_59
+		v_u_59:pressOffer()
+	end)
+	v61.button.Visible = false
+	v_u_59.starterArt = v_u_55(v61)
+	v_u_18.shake(v61.icon, "Wiggle")
+	v_u_18.shake(v_u_59.starterArt, "Wiggle")
+	v_u_59.offerDismissed = false
+	local v62 = v_u_10.candy(v60, "", function()
+		-- upvalues: (ref) v_u_19, (copy) v_u_59
+		v_u_19.play("Click")
+		v_u_59.offerDismissed = true
+		v_u_59:refreshOffers()
+	end, "Red", "X")
+	v62.Name = "OfferDismiss"
+	v62.Selectable = false
+	v62.AnchorPoint = Vector2.new(0.5, 0.5)
+	v62.Visible = false
+	v_u_10.setMinHit(v62, v_u_25.DismissHitPx)
+	v_u_59.offerDismiss = v62
+	local v63 = v_u_10.candyParts(v61.button).body
+	local v64 = v_u_10.text(v63, "Deal", v_u_25.DealPx, "")
+	v64.TextWrapped = false
+	v64.AnchorPoint = Vector2.new(0.5, 0.5)
+	v64.TextColor3 = Color3.new(1, 1, 1)
+	v64.ZIndex = 4
+	v_u_18.rainbow(v64)
+	local v65 = v_u_10.text(v63, "Price", v_u_25.PricePx, "")
+	v65.RichText = true
+	v65.TextWrapped = false
+	v65.AnchorPoint = Vector2.new(0.5, 0.5)
+	v65.ZIndex = 4
+	v_u_59.offerDeal = v64
+	v_u_59.offerPrice = v65
+	local v66 = v_u_10.pill(v63, "Timer", v_u_10.tone("Gold"))
+	v66.AnchorPoint = Vector2.new(0.5, 0.5)
+	v66.ZIndex = 5
+	local v67 = v_u_10.text(v66, "Time", v_u_25.TimerPx, "")
+	v67.AutoLocalize = false
+	v67.TextWrapped = false
+	v67.Size = UDim2.fromScale(1, 1)
+	v67.ZIndex = 6
+	v_u_59.offerTile = v61
+	v_u_59.offerTimer = v67
+	v_u_59.offerTimerPill = v66
+	local v_u_68 = Instance.new("ImageLabel")
+	v_u_68.Name = "OfferRays"
+	v_u_68.BackgroundTransparency = 1
+	v_u_68.Image = v_u_27.Art.Rays
+	v_u_68.ImageTransparency = v_u_25.OfferRaysTransparency
+	v_u_68.AnchorPoint = Vector2.new(0.5, 0.5)
+	v_u_68.ZIndex = 0
+	v_u_68.Visible = false
+	v_u_68.Parent = v60
+	v_u_18.rainbow(v_u_68)
+	v_u_18.loop(v_u_68, function(p69)
+		-- upvalues: (copy) v_u_68, (ref) v_u_27
+		v_u_68.Rotation = p69 * v_u_27.Motion.RaysDegreesPerSecond % 360
+	end)
+	v_u_59.offerRays = v_u_68
+	v_u_59.fresh = {}
+	for v70, v71 in {
+		["Challenge"] = v_u_59.challenge
+	} do
+		local v72 = v_u_10.pill(v_u_10.candyParts(v71.button).body, "New", v_u_10.tone("Red"))
+		v72.AnchorPoint = Vector2.new(0.5, 0.5)
+		v72.Position = UDim2.fromScale(0.86, 0.1)
+		v72.ZIndex = 6
+		v72.Visible = false
+		local v73 = v_u_10.text(v72, "Words", v_u_25.WordPx + 1, v_u_8.Tutorial.New)
+		v73.TextWrapped = false
+		v73.Size = UDim2.fromScale(1, 1)
+		v73.ZIndex = 7
+		v_u_59.fresh[v70] = v72
+	end
+	v_u_59:refreshChallengeDot()
+	v_u_17.set("Challenge", v_u_59.challenge.button)
+	v_u_17.set("Offer", v61.button)
+	v_u_17.set("OfferDismiss", v_u_59.offerDismiss)
+	v_u_17.set("Invite", v_u_59.inviteTile.button)
+	local v_u_74 = Instance.new("ImageLabel")
+	v_u_74.Name = "Flash"
+	v_u_74.BackgroundTransparency = 1
+	v_u_74.Image = v_u_27.Art.SoftGlow
+	v_u_74.ImageColor3 = v_u_10.tone("Gold")
+	v_u_74.AnchorPoint = Vector2.new(0.5, 0.5)
+	v_u_74.Position = UDim2.fromScale(0.5, 0.45)
+	v_u_74.Size = UDim2.fromScale(2, 2)
+	v_u_74.ZIndex = 1
+	v_u_74.Parent = v_u_10.candyParts(v_u_59.challenge.button).body
+	v_u_59.flash = v_u_18.loop(v_u_74, function(p75)
+		-- upvalues: (ref) v_u_25, (copy) v_u_74
+		local v76 = 6.283185307179586 * p75 / v_u_25.ChallengeFlashSeconds
+		v_u_74.ImageTransparency = (1 - (math.cos(v76) * 0.5 + 0.5)) * 0.75 + 0.25
+	end)
+	local function v77() -- name: queueLayout
+		-- upvalues: (copy) v_u_59
+		v_u_59:layout()
+	end
+	local v78 = v_u_59.connections
+	local v79 = p56:GetPropertyChangedSignal("AbsoluteSize")
+	table.insert(v78, v79:Connect(v77))
+	local v80 = p57.rankHud
+	if v80 then
+		v80 = p57.rankHud.holder
+	end
+	if typeof(v80) == "Instance" and v80:IsA("GuiObject") then
+		local v81 = v_u_59.connections
+		local v82 = v80:GetPropertyChangedSignal("AbsoluteSize")
+		table.insert(v81, v82:Connect(v77))
+		local v83 = v_u_59.connections
+		local v84 = v80:GetPropertyChangedSignal("AbsolutePosition")
+		table.insert(v83, v84:Connect(v77))
+	end
+	local v85 = p57.money
+	if v85 then
+		v85 = p57.money.root
+	end
+	if typeof(v85) == "Instance" and v85:IsA("GuiObject") then
+		local v86 = v_u_59.connections
+		local v87 = v85:GetPropertyChangedSignal("AbsoluteSize")
+		table.insert(v86, v87:Connect(v77))
+		local v88 = v_u_59.connections
+		local v89 = v85:GetPropertyChangedSignal("AbsolutePosition")
+		table.insert(v88, v89:Connect(v77))
+	end
+	local v90 = v_u_2.LocalPlayer
+	if v90 then
+		local v91 = v_u_59.connections
+		local v92 = v90:GetPropertyChangedSignal("MembershipType")
+		table.insert(v91, v92:Connect(function()
+			-- upvalues: (copy) v_u_59
+			v_u_59:refreshPlus()
+		end))
+	end
+	local v93 = v_u_59.connections
+	local v94 = v_u_13.Changed.Shop
+	table.insert(v93, v94:Connect(function()
+		-- upvalues: (copy) v_u_59
+		v_u_59:refreshPlus()
+		v_u_59:refreshOffers()
+	end))
+	local v95 = v_u_59.connections
+	local v96 = v_u_17.Changed
+	table.insert(v95, v96:Connect(function()
+		-- upvalues: (copy) v_u_59
+		v_u_59:refreshShown()
+		v_u_59:refreshOffers()
+	end))
+	task.spawn(function()
+		-- upvalues: (copy) v_u_59, (ref) v_u_25
+		while v_u_59.alive do
+			if v_u_59.showing then
+				v_u_59:refreshOffers()
+				if #v_u_59.openOffers > 1 and os.clock() - v_u_59.offerFlippedAt >= v_u_25.OfferFlipSeconds then
+					v_u_59:flipOffer()
+				end
+			end
+			task.wait(1)
+		end
+	end)
+	local v97 = v_u_24("EventButton")
+	if v97 then
+		local v98 = v97.new
+		local v99, v100 = pcall(v98, v60, v_u_59)
+		if v99 then
+			v_u_59.eventTile = v100
+		else
+			warn(("[8ball] Halloween tile failed to build: %s"):format((tostring(v100))))
+		end
+	end
+	v_u_59:refreshPlus()
+	v_u_59:refreshOffers()
+	v_u_59:layout()
+	v_u_9.add("cornerOffers", function(p101)
+		-- upvalues: (copy) v_u_59
+		local v102 = workspace:GetServerTimeNow() + 3600
+		v_u_59.fakeOffers = p101 and {
+			["StarterPack"] = {
+				["open"] = true,
+				["endsAt"] = nil,
+				["endsAt"] = v102
+			},
+			["VipOffer"] = {
+				["open"] = true,
+				["endsAt"] = nil,
+				["endsAt"] = v102
+			}
+		} or nil
+		v_u_59:refreshOffers()
+		return #v_u_59.openOffers
+	end)
+	return v_u_59
+end
+function v_u_30.refreshShown(p103) -- name: refreshShown
+	-- upvalues: (copy) v_u_25, (copy) v_u_17, (copy) v_u_18
+	local v104 = p103.challenge.button
+	local v105 = v_u_25.ChallengeOn and not p103.challengeHidden
+	if v105 then
+		v105 = not v_u_17.hidden("Challenge")
+	end
+	local v106
+	if v104.Visible == v105 then
+		v106 = false
+	elseif v105 and p103.showing then
+		v_u_18.popIn(v104)
+		v106 = true
+	else
+		v104.Visible = v105
+		v106 = true
+	end
+	local v107 = p103.inviteTile.button
+	local v108 = not v_u_17.hidden("Invite")
+	local v109
+	if v107.Visible == v108 then
+		v109 = false
+	elseif v108 and p103.showing then
+		v_u_18.popIn(v107)
+		v109 = true
+	else
+		v107.Visible = v108
+		v109 = true
+	end
+	local v110 = v109 or v106
+	local v111 = p103.plusTile.button
+	local v112
+	if p103.plusOffered == true then
+		v112 = not v_u_17.hidden("Plus")
+	else
+		v112 = false
+	end
+	local v113
+	if v111.Visible == v112 then
+		v113 = false
+	elseif v112 and p103.showing then
+		v_u_18.popIn(v111)
+		v113 = true
+	else
+		v111.Visible = v112
+		v113 = true
+	end
+	if v113 or v110 then
+		p103:layout()
+	end
+end
+function v_u_30.setFresh(p114, p115, p116) -- name: setFresh
+	-- upvalues: (copy) v_u_18
+	p114.freshOn[p115] = p116
+	if p115 == "Challenge" then
+		p114:refreshChallengeDot()
+	else
+		local v117 = p114.fresh[p115]
+		if v117 ~= nil then
+			if v117.Visible == p116 then
+				return
+			end
+			if p116 then
+				v_u_18.popIn(v117)
+				return
+			end
+			v117.Visible = false
+		end
+	end
+end
+function v_u_30.refreshChallengeDot(p118) -- name: refreshChallengeDot
+	-- upvalues: (copy) v_u_18
+	local v119 = p118.fresh.Challenge
+	local v120 = p118.challengeDue or p118.freshOn.Challenge == true
+	if v119 ~= nil then
+		if v119.Visible == v120 then
+			return
+		end
+		if v120 then
+			v_u_18.popIn(v119)
+			return
+		end
+		v119.Visible = false
+	end
+end
+local function v_u_145(p121, p122) -- name: drawOffer
+	-- upvalues: (copy) v_u_10, (copy) v_u_13, (copy) v_u_16, (copy) v_u_29, (copy) v_u_7, (copy) v_u_25, (copy) v_u_15
+	p121.offerKey = p122.key
+	local v123 = p122.key == "StarterPack"
+	local v124 = v_u_10.setIcon
+	local v125 = p121.offerTile.icon
+	local v126
+	if v123 then
+		v126 = nil
+	else
+		v126 = p122.icon
+	end
+	v124(v125, v126)
+	p121.starterArt.Visible = v123
+	p121.offerTile.word.Text = p122.words
+	local v127 = v_u_13.shop()
+	local v128 = type(v127) ~= "table" and {} or v127
+	local v129 = v128.products
+	local v130 = type(v129) ~= "table" and {} or v128.products
+	local v131 = v_u_16.robuxOf(v130[p122.key], p122.key)
+	if v123 then
+		local v132 = p121.offerDeal
+		local v133 = v_u_29.Value
+		local v134 = v128.restricted == true
+		local v135 = v_u_7.Products.List
+		local v136 = v135.Pack1
+		local v137
+		if v134 then
+			v137 = v_u_7.Shop.StarterRestrictedMoney
+		else
+			v137 = v_u_7.Shop.StarterMoney
+		end
+		local v138 = v137 / v136.Money * v136.Robux + (v134 and 0 or v135.RestockRare.Robux)
+		local v139
+		if v131 > 0 then
+			local v140 = v138 / v131
+			local v141 = math.floor(v140)
+			v139 = math.max(1, v141)
+		else
+			v139 = 1
+		end
+		v132.Text = v133:format(v139)
+	else
+		local v142 = v_u_16.robuxOf(v130.Vip, "Vip")
+		local v143
+		if v142 > 0 then
+			local v144 = (1 - v131 / v142) * 100 + 0.5
+			v143 = math.floor(v144)
+		else
+			v143 = 0
+		end
+		p121.offerDeal.Text = v_u_29.Off:format(v143)
+	end
+	p121.offerPrice.Text = v_u_29.Only:format(Color3.fromRGB(v_u_25.PriceColor[1], v_u_25.PriceColor[2], v_u_25.PriceColor[3]):ToHex(), v_u_15.robuxText(v131))
+end
+function v_u_30.flipOffer(p_u_146) -- name: flipOffer
+	-- upvalues: (copy) v_u_10, (copy) v_u_25, (copy) v_u_5, (copy) v_u_145, (copy) v_u_16
+	if not p_u_146.flipping and #p_u_146.openOffers >= 2 then
+		p_u_146.flipping = true
+		p_u_146.offerFlippedAt = os.clock()
+		local v_u_147 = v_u_10.candyParts(p_u_146.offerTile.button).body
+		v_u_147.AnchorPoint = Vector2.new(0.5, 0.5)
+		v_u_147.Position = UDim2.fromScale(0.5, 0.5)
+		local v_u_148 = v_u_147.Size
+		local v_u_149 = v_u_25.OfferFlipHalfSeconds
+		local v150 = v_u_5:Create(v_u_147, TweenInfo.new(v_u_149, Enum.EasingStyle.Quad, Enum.EasingDirection.In), {
+			["Size"] = UDim2.new(0, 0, v_u_148.Y.Scale, v_u_148.Y.Offset)
+		})
+		v150.Completed:Connect(function()
+			-- upvalues: (copy) p_u_146, (ref) v_u_145, (ref) v_u_16, (ref) v_u_5, (copy) v_u_147, (copy) v_u_149, (copy) v_u_148
+			p_u_146.offerIndex = p_u_146.offerIndex % #p_u_146.openOffers + 1
+			local v151 = p_u_146.openOffers[p_u_146.offerIndex]
+			if v151 then
+				v_u_145(p_u_146, v151.spec)
+				p_u_146.offerTimer.Text = v_u_16.timeLeft(v151.endsAt - workspace:GetServerTimeNow())
+				p_u_146:sizeTimerPill()
+			end
+			local v152 = {
+				["Size"] = v_u_148
+			}
+			local v153 = v_u_5:Create(v_u_147, TweenInfo.new(v_u_149, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), v152)
+			v153.Completed:Connect(function()
+				-- upvalues: (ref) v_u_147, (ref) v_u_148, (ref) p_u_146
+				v_u_147.Size = v_u_148
+				p_u_146.flipping = false
+			end)
+			v153:Play()
+		end)
+		v150:Play()
+	end
+end
+function v_u_30.refreshOffers(p154) -- name: refreshOffers
+	-- upvalues: (copy) v_u_13, (copy) v_u_17, (copy) v_u_145, (copy) v_u_18, (copy) v_u_16
+	local v155 = v_u_13.shop()
+	local v156 = type(v155) ~= "table" and {} or v155
+	local v157 = v156.offers
+	local v158 = type(v157) ~= "table" and {} or v156.offers
+	if p154.fakeOffers then
+		v158 = p154.fakeOffers
+	end
+	local v159 = workspace:GetServerTimeNow()
+	local v160 = not (p154.challengeHidden or v_u_17.hidden("Offer"))
+	if v160 then
+		v160 = not p154.offerDismissed
+	end
+	local v161 = {}
+	for _, v162 in p154.offerSpecs do
+		local v163 = v158[v162.key]
+		local v164
+		if p154.fakeOffers then
+			v164 = false
+		elseif v162.key == "StarterPack" then
+			v164 = v156.starterBought == true
+		else
+			v164 = v156.vip == true
+		end
+		if not v160 or (v164 or (type(v163) ~= "table" or v163.open ~= true)) then
+			continue
+		end
+		local v165 = v163.endsAt
+		if type(v165) ~= "number" or v159 >= v163.endsAt then
+			continue
+		end
+		local v166 = {
+			["spec"] = v162,
+			["endsAt"] = v163.endsAt
+		}
+		table.insert(v161, v166)
+	end
+	p154.openOffers = v161
+	if p154.offerIndex > #v161 then
+		p154.offerIndex = 1
+	end
+	local v167 = v161[p154.offerIndex]
+	local v168
+	if v167 and (v167.spec.key ~= p154.offerKey and not p154.flipping) then
+		v_u_145(p154, v167.spec)
+		v168 = true
+	else
+		v168 = false
+	end
+	local v169 = p154.offerTile.button
+	local v170 = v167 ~= nil
+	local v171
+	if v169.Visible == v170 then
+		v171 = false
+	elseif v170 and p154.showing then
+		v_u_18.popIn(v169)
+		v171 = true
+	else
+		v169.Visible = v170
+		v171 = true
+	end
+	if v171 or v168 then
+		p154:layout()
+	end
+	if v167 then
+		p154.offerTimer.Text = v_u_16.timeLeft(v167.endsAt - v159)
+		p154:sizeTimerPill()
+	end
+end
+function v_u_30.refreshPlus(p172) -- name: refreshPlus
+	-- upvalues: (copy) v_u_2, (copy) v_u_13
+	local v173 = v_u_2.LocalPlayer
+	local v174
+	if v173 == nil then
+		v174 = false
+	else
+		v174 = v173.MembershipType == Enum.MembershipType.Premium
+	end
+	local v175 = v_u_13.shop()
+	local v176
+	if type(v175) == "table" then
+		v176 = v175.robloxPlus == true
+	else
+		v176 = false
+	end
+	if v176 then
+		v176 = not v174
+	end
+	p172.plusOffered = v176
+	p172:refreshShown()
+end
+function v_u_30.layout(p177) -- name: layout
+	-- upvalues: (copy) v_u_28, (copy) v_u_25, (copy) v_u_27, (copy) v_u_4, (copy) v_u_29, (copy) v_u_10, (copy) v_u_26
+	local v178 = p177.screen.AbsoluteSize
+	if v178.X > 0 and v178.Y > 0 then
+		local v179 = v178.Y < v_u_28.ShortHeight
+		local v180
+		if v179 then
+			v180 = v_u_25.ShortChallengePx
+		else
+			v180 = v_u_25.ChallengePx
+		end
+		local v181
+		if v179 then
+			v181 = v_u_25.ShortSmallPx
+		else
+			v181 = v_u_25.SmallPx
+		end
+		local v182
+		if v179 then
+			v182 = v_u_25.ShortWordPx
+		else
+			v182 = v_u_25.WordPx
+		end
+		local v183
+		if v179 then
+			v183 = v_u_25.ShortBigWordPx
+		else
+			v183 = v_u_25.BigWordPx
+		end
+		local v184 = Enum.Font[v_u_27.Font]
+		local v185 = v_u_29.Challenge
+		local v186 = v_u_4:GetTextSize(string.gsub(v185, "<[^>]*>", ""), v183, v184, Vector2.new(2000, 200)).X
+		for _, v187 in p177.offerSpecs do
+			local v188 = v187.words
+			local v189 = v_u_4:GetTextSize(string.gsub(v188, "<[^>]*>", ""), v183, v184, Vector2.new(2000, 200)).X
+			v186 = math.max(v186, v189)
+		end
+		local v190 = p177.offerDeal.Text
+		local v191
+		if v179 then
+			v191 = v_u_25.ShortDealPx
+		else
+			v191 = v_u_25.DealPx
+		end
+		local v192 = v_u_4:GetTextSize(string.gsub(v190, "<[^>]*>", ""), v191, v184, Vector2.new(2000, 200)).X
+		local v193 = p177.offerPrice.Text
+		local v194
+		if v179 then
+			v194 = v_u_25.ShortPricePx
+		else
+			v194 = v_u_25.PricePx
+		end
+		local v195 = v_u_4:GetTextSize(string.gsub(v193, "<[^>]*>", ""), v194, v184, Vector2.new(2000, 200)).X
+		local v196 = math.max(v186, v192, v195)
+		local v197 = v_u_25.ChallengeRightPx
+		local v198 = (v196 - v180) / 2
+		local v199 = math.ceil(v198) + v_u_25.WordEdgePx
+		local v200 = math.max(v197, v199)
+		local v201 = p177.challenge
+		v201.button.AnchorPoint = Vector2.new(1, 0.5)
+		v201.button.Size = UDim2.fromOffset(v180, v180)
+		v201.button.Position = UDim2.new(1, -v200, v_u_25.ChallengeYShare, 0)
+		v201.word.Size = UDim2.fromOffset(v180 * 2, v183 + 4)
+		v_u_10.setTextSize(v201.word, v183)
+		local v202
+		if v179 then
+			v202 = v_u_25.ShortOfferPx
+		else
+			v202 = v_u_25.OfferPx
+		end
+		local v203
+		if v179 then
+			v203 = v_u_25.ShortTimerPx
+		else
+			v203 = v_u_25.TimerPx
+		end
+		local v204
+		if v179 then
+			v204 = v_u_25.ShortDealPx
+		else
+			v204 = v_u_25.DealPx
+		end
+		local v205
+		if v179 then
+			v205 = v_u_25.ShortPricePx
+		else
+			v205 = v_u_25.PricePx
+		end
+		local v206 = -v200 - v180 / 2
+		local v207
+		if v_u_25.ChallengeOn then
+			v207 = v178.Y * v_u_25.ChallengeYShare + v180 / 2 + v183 + v_u_25.OfferGapPx + v202 / 2
+		else
+			v207 = v178.Y * v_u_25.ChallengeYShare
+		end
+		local v208 = p177.offerTile
+		v208.button.AnchorPoint = Vector2.new(0.5, 0.5)
+		v208.button.Size = UDim2.fromOffset(v202, v202)
+		local v209 = v208.button
+		local v210 = UDim2.new
+		local v211 = v206 + 0.5
+		local v212 = math.floor(v211)
+		local v213 = v207 + 0.5
+		v209.Position = v210(1, v212, 0, (math.floor(v213)))
+		local v214 = v208.word
+		local v215 = UDim2.fromOffset
+		local v216 = v202 * 2.4 + 0.5
+		v214.Size = v215(math.floor(v216), v183 + 4)
+		v_u_10.setTextSize(v208.word, v183)
+		local v217 = 0.92 * v202 + v183 / 2 + 2
+		local v218 = p177.offerDeal
+		local v219 = UDim2.fromOffset
+		local v220 = v202 / 2 + 0.5
+		local v221 = math.floor(v220)
+		local v222 = v217 + v204 / 2 + 0.5
+		v218.Position = v219(v221, (math.floor(v222)))
+		local v223 = p177.offerDeal
+		local v224 = UDim2.fromOffset
+		local v225 = v202 * 2.4 + 0.5
+		v223.Size = v224(math.floor(v225), v204 + 4)
+		v_u_10.setTextSize(p177.offerDeal, v204)
+		local v226 = p177.offerPrice
+		local v227 = UDim2.fromOffset
+		local v228 = v202 / 2 + 0.5
+		local v229 = math.floor(v228)
+		local v230 = v217 + v204 + 2 + v205 / 2 + 0.5
+		v226.Position = v227(v229, (math.floor(v230)))
+		local v231 = p177.offerPrice
+		local v232 = UDim2.fromOffset
+		local v233 = v202 * 2.4 + 0.5
+		v231.Size = v232(math.floor(v233), v205 + 4)
+		v_u_10.setTextSize(p177.offerPrice, v205)
+		local v234
+		if v179 then
+			v234 = v_u_25.ShortTimerPillPx
+		else
+			v234 = v_u_25.TimerPillPx
+		end
+		p177.timerPx = v203
+		p177.timerPillPx = v234
+		p177.offerTimerPill.Position = UDim2.fromScale(v_u_25.TimerPillAt[1], v_u_25.TimerPillAt[2])
+		v_u_10.setTextSize(p177.offerTimer, v203, v203)
+		p177:sizeTimerPill()
+		local v235 = v202 * v_u_25.OfferRaysShare + 0.5
+		local v236 = math.floor(v235)
+		p177.offerRays.Size = UDim2.fromOffset(v236, v236)
+		p177.offerRays.Position = v208.button.Position
+		p177.offerRays.Visible = v208.button.Visible
+		local v237
+		if v179 then
+			v237 = v_u_25.ShortDismissPx
+		else
+			v237 = v_u_25.DismissPx
+		end
+		p177.offerDismiss.Size = UDim2.fromOffset(v237, v237)
+		local v238 = p177.offerDismiss
+		local v239 = UDim2.new
+		local v240 = v206 + v202 / 2 - v237 * v_u_25.DismissInShare + 0.5
+		local v241 = math.floor(v240)
+		local v242 = v207 - v202 / 2 + v237 * v_u_25.DismissInShare + 0.5
+		v238.Position = v239(1, v241, 0, (math.floor(v242)))
+		p177.offerDismiss.Visible = v208.button.Visible
+		if p177.eventTile then
+			local v243 = v178.X + v206
+			local v244 = v207 - v202 / 2 + v_u_25.TimerPillAt[2] * v202
+			local v245
+			if v179 then
+				v245 = v_u_25.ShortTimerPillPx
+			else
+				v245 = v_u_25.TimerPillPx
+			end
+			local v246 = v244 - v245 / 2
+			local v247 = v207 - v202 / 2 + v217 + v204 + v205 + 6
+			p177.eventTile:layout(v178, v179, v243, v208.button.Visible and {
+				["x"] = v243 - 1.2 * v202,
+				["y"] = v246,
+				["w"] = 2.4 * v202,
+				["h"] = v247 - v246
+			} or nil)
+		end
+		for _, v248 in p177.fresh do
+			v248.Size = UDim2.fromOffset(v182 + 12, v182 + 8)
+		end
+		local v249
+		if v179 then
+			v249 = v_u_26.ShortGearPx
+		else
+			v249 = v_u_26.GearPx
+		end
+		local v250 = p177.gearTile
+		v250.button.AnchorPoint = Vector2.new(0, 0.5)
+		v250.button.Size = UDim2.fromOffset(v249, v249)
+		local v251 = p177.deps.rankHud
+		if v251 then
+			v251 = p177.deps.rankHud.holder
+		end
+		if typeof(v251) ~= "Instance" or not v251:IsA("GuiObject") then
+			v251 = nil
+		end
+		if v251 and v251.AbsoluteSize.X > 0 then
+			local v252 = p177.screen.AbsolutePosition
+			local v253 = p177.deps.rankHud
+			local v254
+			if v253 and v253.grownRight then
+				v254 = v253:grownRight()
+			else
+				v254 = v251.AbsolutePosition.X + v251.AbsoluteSize.X
+			end
+			local v255 = v250.button
+			local v256 = UDim2.fromOffset
+			local v257 = v254 - v252.X + v_u_26.GearGapPx + 0.5
+			local v258 = math.floor(v257)
+			local v259 = v251.AbsolutePosition.Y - v252.Y + v251.AbsoluteSize.Y / 2 + 0.5
+			v255.Position = v256(v258, (math.floor(v259)))
+		else
+			v250.button.Position = UDim2.fromOffset(300, 40)
+		end
+		v250.word.Size = UDim2.fromOffset(v249 * 2, v182 + 4)
+		v_u_10.setTextSize(v250.word, v182)
+		local v260 = p177.screen.AbsolutePosition
+		local v261 = p177.deps.money
+		if v261 then
+			v261 = p177.deps.money.root
+		end
+		if typeof(v261) ~= "Instance" or not v261:IsA("GuiObject") then
+			v261 = nil
+		end
+		local v262 = v178.Y - v181
+		local v263
+		if v261 and v261.AbsoluteSize.X > 0 then
+			v263 = v261.AbsolutePosition.X - v260.X + v261.AbsoluteSize.X + v_u_25.SmallGapPx
+			v262 = v261.AbsolutePosition.Y - v260.Y + v261.AbsoluteSize.Y / 2
+		else
+			v263 = 200
+		end
+		for v264, v265 in { p177.inviteTile, p177.plusTile } do
+			v265.button.AnchorPoint = Vector2.new(0, 0.5)
+			v265.button.Size = UDim2.fromOffset(v181, v181)
+			local v266 = v265.button
+			local v267 = UDim2.fromOffset
+			local v268 = v263 + (v264 - 1) * (v181 + v_u_25.SmallGapPx) + 0.5
+			local v269 = math.floor(v268)
+			local v270 = v262 + 0.5
+			v266.Position = v267(v269, (math.floor(v270)))
+			v265.word.Size = UDim2.fromOffset(v181 * 2, v182 + 4)
+			v_u_10.setTextSize(v265.word, v182)
+		end
+	end
+end
+function v_u_30.setVisible(p271, p272) -- name: setVisible
+	-- upvalues: (copy) v_u_2, (copy) v_u_18
+	local v273 = v_u_2.LocalPlayer
+	local v274 = p272 and (v273 == nil and true or v273:GetAttribute("DataLoaded") == true)
+	if v274 ~= p271.showing then
+		p271.showing = v274
+		if v274 then
+			p271.root.Visible = true
+			p271:layout()
+			if p271.challenge.button.Visible then
+				v_u_18.popIn(p271.challenge.button)
+				return
+			end
+		else
+			p271.root.Visible = false
+			p271:blurPad()
+		end
+	end
+end
+function v_u_30.setChallengeHidden(p275, p276) -- name: setChallengeHidden
+	if p275.challengeHidden ~= p276 then
+		p275.challengeHidden = p276
+		p275:refreshShown()
+		p275:refreshOffers()
+	end
+end
+function v_u_30.sizeTimerPill(p277) -- name: sizeTimerPill
+	-- upvalues: (copy) v_u_25, (copy) v_u_4, (copy) v_u_27
+	local v278 = p277.timerPx or v_u_25.TimerPx
+	local v279 = p277.timerPillPx or v_u_25.TimerPillPx
+	local v280 = v_u_4:GetTextSize(p277.offerTimer.Text, v278, Enum.Font[v_u_27.Font], Vector2.new(400, 100)).X
+	local v281 = p277.offerTimerPill
+	local v282 = UDim2.fromOffset
+	local v283 = v279 * 2
+	local v284 = math.ceil(v280) + 14
+	v281.Size = v282(math.max(v283, v284), v279)
+end
+function v_u_30.isShown(p285) -- name: isShown
+	return p285.showing
+end
+function v_u_30.padStops(p286) -- name: padStops
+	-- upvalues: (copy) v_u_24
+	local v287 = {}
+	local v288 = {}
+	local v289 = p286.eventTile
+	if v289 then
+		v289 = p286.eventTile.button
+	end
+	local v290 = v_u_24("Countdown")
+	local v291
+	if v290 then
+		local v292 = v290.padStop
+		local v293
+		v293, v291 = pcall(v292)
+		if not v293 then
+			v291 = nil
+		end
+	else
+		v291 = nil
+	end
+	local v294 = p286.challenge.button
+	local v295 = p286.offerTile.button
+	local v296 = p286.offerDismiss
+	local v297 = p286.gearTile.button
+	local v298 = p286.inviteTile.button
+	local v299 = p286.plusTile.button
+	local v300 = p286.deps.boostPill
+	if v300 then
+		v300 = p286.deps.boostPill.tag
+	end
+	__set_list(v288, 1, {v289, v291, v294, v295, v296, v297, v298, v299, v300})
+	for _, v301 in v288 do
+		if not v301.Visible then
+			continue
+		end
+		table.insert(v287, v301)
+	end
+	return v287
+end
+function v_u_30.focusPad(p302) -- name: focusPad
+	-- upvalues: (copy) v_u_1
+	if not p302.showing then
+		return false
+	end
+	local v303 = p302:padStops()
+	if #v303 == 0 then
+		return false
+	end
+	for _, v304 in v303 do
+		v304.Selectable = true
+	end
+	p302.padFocused = true
+	v_u_1.SelectedObject = v303[1]
+	return true
+end
+function v_u_30.blurPad(p305) -- name: blurPad
+	-- upvalues: (copy) v_u_1, (copy) v_u_24
+	if p305.padFocused then
+		p305.padFocused = false
+		local v306 = v_u_1.SelectedObject
+		local v307 = {}
+		local v308 = p305.challenge.button
+		local v309 = p305.offerTile.button
+		local v310 = p305.offerDismiss
+		local v311 = p305.gearTile.button
+		local v312 = p305.inviteTile.button
+		local v313 = p305.plusTile.button
+		local v314 = p305.deps.boostPill
+		if v314 then
+			v314 = p305.deps.boostPill.tag
+		end
+		local v315 = p305.eventTile
+		if v315 then
+			v315 = p305.eventTile.button
+		end
+		local v316 = v_u_24("Countdown")
+		local v317
+		if v316 then
+			local v318 = v316.padStop
+			local v319
+			v319, v317 = pcall(v318)
+			if not v319 then
+				v317 = nil
+			end
+		else
+			v317 = nil
+		end
+		__set_list(v307, 1, {v308, v309, v310, v311, v312, v313, v314, v315, v317})
+		for _, v320 in v307 do
+			v320.Selectable = false
+			if v306 ~= v320 then
+				continue
+			end
+			v_u_1.SelectedObject = nil
+		end
+		if p305.deps.boostPill then
+			p305.deps.boostPill:closeCard()
+		end
+	end
+end
+function v_u_30.padFocusedOn(p321, p322) -- name: padFocusedOn
+	-- upvalues: (copy) v_u_24
+	local v323 = p321.deps.boostPill
+	if v323 then
+		v323 = p321.deps.boostPill.tag
+	end
+	local v324 = v_u_24("Countdown")
+	local v325
+	if v324 then
+		local v326 = v324.padStop
+		local v327
+		v327, v325 = pcall(v326)
+		if not v327 then
+			v325 = nil
+		end
+	else
+		v325 = nil
+	end
+	local v328 = not p321.padFocused or (p322 == nil or p322:IsDescendantOf(p321.root)) or v323 ~= nil and (p322 == v323 or p322:IsDescendantOf(v323))
+	if not v328 then
+		if v325 == nil then
+			v328 = false
+		else
+			v328 = p322 == v325
+		end
+	end
+	return v328
+end
+function v_u_30.pressOffer(p329) -- name: pressOffer
+	-- upvalues: (copy) v_u_19, (copy) v_u_17, (copy) v_u_14
+	local v330 = p329.openOffers[p329.offerIndex]
+	if v330 then
+		v_u_19.play("Click")
+		v_u_17.notePress("Offer")
+		v_u_14.open("Shop", v330.spec.section)
+	end
+end
+function v_u_30.pressChallenge(p331) -- name: pressChallenge
+	-- upvalues: (copy) v_u_25, (copy) v_u_19, (copy) v_u_18, (copy) v_u_10, (copy) v_u_29
+	if v_u_25.ChallengeOn then
+		if p331.showing then
+			v_u_19.play("Click")
+			p331.challengeDue = false
+			p331:refreshChallengeDot()
+			local v332 = p331.challenge.button
+			v_u_18.bounce(v332)
+			v_u_18.glowBurst(p331.challenge.icon, v_u_10.tone("Gold"), 0.5)
+			p331:say(v_u_29.ChallengeSoon, v332, -1)
+		end
+	else
+		if p331.offerTile.button.Visible then
+			p331:pressOffer()
+		end
+		return
+	end
+end
+function v_u_30.say(p_u_333, p334, p335, p336) -- name: say
+	-- upvalues: (copy) v_u_10, (copy) v_u_25, (copy) v_u_4, (copy) v_u_27, (copy) v_u_18
+	if p_u_333.bubble then
+		p_u_333.bubble:Destroy()
+	end
+	local v_u_337 = v_u_10.pill(p_u_333.root, "Bubble", v_u_10.tone("White"))
+	v_u_337.AnchorPoint = Vector2.new(p336 < 0 and 1 or 0, 0.5)
+	local v338 = v_u_10.note(v_u_337, "Words", v_u_25.BubblePx, p334)
+	v338.Size = UDim2.new(1, -16, 1, 0)
+	v338.Position = UDim2.fromOffset(8, 0)
+	v338.TextWrapped = false
+	local v339 = v_u_4:GetTextSize(p334, v_u_25.BubblePx, Enum.Font[v_u_27.Font], Vector2.new(2000, 200)).X
+	local v340 = p_u_333.screen.AbsoluteSize.X - 40
+	local v341 = v339 + 28
+	local v342 = math.min(v340, v341)
+	local v343 = UDim2.fromOffset
+	local v344 = v342 + 0.5
+	v_u_337.Size = v343(math.floor(v344), v_u_25.BubblePx + 18)
+	local v345 = p335.AbsolutePosition - p_u_333.root.AbsolutePosition
+	local v346
+	if p336 < 0 then
+		v346 = v345.X - 8
+	else
+		v346 = v345.X + p335.AbsoluteSize.X + 8
+	end
+	local v347 = UDim2.fromOffset
+	local v348 = v346 + 0.5
+	local v349 = math.floor(v348)
+	local v350 = v345.Y + p335.AbsoluteSize.Y / 2 + 0.5
+	v_u_337.Position = v347(v349, (math.floor(v350)))
+	v_u_337.ZIndex = 8
+	v338.ZIndex = 9
+	p_u_333.bubble = v_u_337
+	v_u_18.popIn(v_u_337)
+	task.delay(v_u_25.BubbleSeconds, function()
+		-- upvalues: (copy) p_u_333, (copy) v_u_337, (ref) v_u_18
+		if p_u_333.bubble == v_u_337 then
+			p_u_333.bubble = nil
+			v_u_18.popOut(v_u_337, function()
+				-- upvalues: (ref) v_u_337
+				v_u_337:Destroy()
+			end)
+		end
+	end)
+end
+function v_u_30.invite(p_u_351) -- name: invite
+	-- upvalues: (copy) v_u_11, (copy) v_u_29
+	v_u_11.show(function()
+		-- upvalues: (copy) p_u_351, (ref) v_u_29
+		p_u_351:say(v_u_29.InviteFailed, p_u_351.inviteTile.button, 1)
+	end)
+end
+function v_u_30.destroy(p352) -- name: destroy
+	p352.alive = false
+	for _, v353 in p352.connections do
+		v353:Disconnect()
+	end
+	p352.flash.stop()
+	p352.root:Destroy()
+end
+return v_u_30
+
+===== FULL: Players.zhhshshszzss.PlayerScripts.Client.HubPad =====
+local v_u_1 = game:GetService("ContextActionService")
+local v_u_2 = game:GetService("GuiService")
+local v3 = game:GetService("ReplicatedStorage")
+local v_u_4 = game:GetService("UserInputService")
+local v_u_5 = require(v3:WaitForChild("Shared"):WaitForChild("Config"))
+local v_u_6 = require(script.Parent.GuiQA)
+local v_u_7 = require(script.Parent.Menus)
+local v8 = require(script.Parent.PadMode)
+local v_u_9 = require(script.Parent.Progression)
+local v10 = v_u_5.Input.Gamepad.Hub
+local v_u_11 = v8.key(v10.Rank)
+local v_u_12 = v8.key(v10.Queue)
+local v_u_13 = v8.key(v10.Side)
+local v_u_14 = {}
+local v_u_15 = nil
+local v_u_16 = false
+local v_u_17 = false
+local v_u_18 = {
+	["at"] = nil,
+	["from"] = nil,
+	["moved"] = false
+}
+local function v_u_21(p19) -- name: bindSideBack
+	-- upvalues: (ref) v_u_17, (copy) v_u_1, (copy) v_u_9, (ref) v_u_15
+	if p19 == v_u_17 then
+		return
+	else
+		v_u_17 = p19
+		if p19 then
+			v_u_1:BindActionAtPriority("8ballHubSideBack", function(_, p20)
+				-- upvalues: (ref) v_u_9, (ref) v_u_15
+				if p20 == Enum.UserInputState.Begin then
+					v_u_9.padSideBlur()
+					v_u_15.hostRules:padBlur()
+				end
+				return Enum.ContextActionResult.Sink
+			end, false, Enum.ContextActionPriority.High.Value + 15, Enum.KeyCode.ButtonB)
+		else
+			v_u_1:UnbindAction("8ballHubSideBack")
+		end
+	end
+end
+function v_u_14.press(p22) -- name: press
+	-- upvalues: (ref) v_u_16, (ref) v_u_15, (copy) v_u_13, (copy) v_u_9, (copy) v_u_11, (copy) v_u_12, (copy) v_u_4, (copy) v_u_7
+	if v_u_16 and not v_u_15.playing() then
+		local v23 = v_u_15.snapshot()
+		if p22 == v_u_13 then
+			if v_u_9.padSideOn() then
+				v_u_9.padSideBlur()
+				return true
+			end
+			if not v_u_15.hostRules.padFocused then
+				return v_u_15.hostRules:padFocus() and true or v_u_9.padSide()
+			end
+			v_u_15.hostRules:padBlur()
+			return true
+		elseif v_u_9.padRoute(p22) then
+			return true
+		elseif p22 == v_u_11 then
+			if v23 == nil or v23.phase == "Waiting" then
+				return v_u_9.toggleRank()
+			else
+				return false
+			end
+		elseif p22 == v_u_12 then
+			if v_u_4:GetFocusedTextBox() ~= nil or v_u_7.isOpen() then
+				return false
+			end
+			if v_u_15.matchBar:padPress() then
+				return true
+			end
+			local v24
+			if v23 == nil then
+				v24 = v_u_15.opponentPrompt:padJoin()
+			else
+				v24 = false
+			end
+			return v24
+		elseif p22 == Enum.KeyCode.ButtonB then
+			if v23 == nil or v_u_9.isBusy() then
+				local v25
+				if v23 == nil then
+					v25 = v_u_15.opponentPrompt:padDismiss()
+				else
+					v25 = false
+				end
+				return v25
+			else
+				v_u_15.leave()
+				return true
+			end
+		else
+			return false
+		end
+	else
+		return false
+	end
+end
+local function v_u_27() -- name: dropStray
+	-- upvalues: (copy) v_u_2, (copy) v_u_9, (ref) v_u_15, (copy) v_u_7
+	local v26 = v_u_2.SelectedObject
+	if v_u_9.isBusy() then
+		return
+	elseif v26 == nil then
+		v_u_9.padSideBlur()
+		v_u_15.hostRules:padBlur()
+		return
+	elseif v_u_15.hostRules.padFocused then
+		if not v_u_15.hostRules:holds(v26) then
+			v_u_15.hostRules:padBlur()
+			if v_u_2.SelectedObject == v26 then
+				v_u_2.SelectedObject = nil
+			end
+		end
+		return
+	elseif v_u_9.padSideOn() then
+		if not v_u_9.padSideHolds(v26) then
+			v_u_9.padSideBlur()
+			if v_u_2.SelectedObject == v26 then
+				v_u_2.SelectedObject = nil
+			end
+		end
+	elseif not v_u_7.selectable(v26) then
+		v_u_2.SelectedObject = nil
+	end
+end
+local function v_u_40() -- name: freeTheStick
+	-- upvalues: (copy) v_u_5, (copy) v_u_2, (copy) v_u_9, (copy) v_u_4, (copy) v_u_18
+	local v28 = v_u_5.Input.Gamepad
+	local v29 = v_u_2.SelectedObject
+	local v30
+	if v29 then
+		v30 = v29:FindFirstAncestorOfClass("ScreenGui")
+	else
+		v30 = nil
+	end
+	local v31 = 0
+	if v30 then
+		v30 = v30.Name == "TutorialGui" and true or v30.Name == "EmoteHud"
+	end
+	if v29 ~= nil and not (v_u_9.isBusy() or v30) then
+		for _, v32 in v_u_4:GetGamepadState(Enum.UserInputType.Gamepad1) do
+			if v32.KeyCode ~= Enum.KeyCode.Thumbstick1 then
+				continue
+			end
+			v31 = Vector2.new(v32.Position.X, v32.Position.Y).Magnitude
+		end
+	end
+	if v31 < v28.FreeStickPush then
+		local v33 = v_u_18
+		local v34 = v_u_18
+		v_u_18.at = nil
+		v33.from = nil
+		v34.moved = false
+		return
+	else
+		local v35 = os.clock()
+		if v_u_18.at == nil then
+			local v36 = v_u_18
+			local v37 = v_u_18
+			v_u_18.at = v35
+			v36.from = v29
+			v37.moved = false
+		else
+			if v29 ~= v_u_18.from then
+				v_u_18.moved = true
+			end
+			if not v_u_18.moved and v35 - v_u_18.at >= v28.FreeStickSeconds then
+				v_u_9.padSideBlur()
+				v_u_2.SelectedObject = nil
+				local v38 = v_u_18
+				local v39 = v_u_18
+				v_u_18.at = nil
+				v38.from = nil
+				v39.moved = false
+			end
+		end
+	end
+end
+function v_u_14.update() -- name: update
+	-- upvalues: (ref) v_u_16, (ref) v_u_15, (copy) v_u_9, (ref) v_u_17, (copy) v_u_1, (copy) v_u_27, (copy) v_u_40, (copy) v_u_21
+	if v_u_16 then
+		if v_u_15.playing() then
+			v_u_9.padSideBlur()
+			v_u_15.hostRules:padBlur()
+			if v_u_17 ~= false then
+				v_u_17 = false
+				v_u_1:UnbindAction("8ballHubSideBack")
+			end
+		else
+			v_u_27()
+			v_u_40()
+			v_u_21(v_u_9.padSideOn() or v_u_15.hostRules.padFocused)
+			return
+		end
+	else
+		return
+	end
+end
+function v_u_14.start(p41) -- name: start
+	-- upvalues: (ref) v_u_16, (ref) v_u_15, (copy) v_u_6, (copy) v_u_14, (copy) v_u_4
+	if not v_u_16 then
+		v_u_16 = true
+		v_u_15 = p41
+		v_u_6.add("pad", function(p42)
+			-- upvalues: (ref) v_u_14
+			return v_u_14.press(Enum.KeyCode[p42])
+		end)
+		v_u_4.InputBegan:Connect(function(p43, p44)
+			-- upvalues: (ref) v_u_14
+			if not p44 and string.find(p43.UserInputType.Name, "^Gamepad") then
+				v_u_14.press(p43.KeyCode)
+			end
+		end)
+	end
+end
+return v_u_14
