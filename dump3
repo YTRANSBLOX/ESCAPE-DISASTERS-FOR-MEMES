@@ -1,0 +1,1005 @@
+keys: askShare, Share, gallery, Entry
+scripts scanned: 88
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.Util =====
+1: local v_u_1 = game:GetService("TweenService")
+2: local v_u_2 = game:GetService("SoundService")
+3: local v_u_3 = game:GetService("UserInputService")
+4: local v_u_4 = game:GetService("RunService")
+5: local v5 = game:GetService("ReplicatedStorage")
+6: local v_u_6 = v5:WaitForChild("DrawRemotes"):WaitForChild("Api")
+7: local v_u_7 = require(v5:WaitForChild("DrawShared"):WaitForChild("Library"))
+8: local v_u_8 = {}
+9: local v_u_9 = nil
+10: local v_u_10 = nil
+11: v_u_8.ACCENT = Color3.fromRGB(92, 108, 255)
+12: v_u_8.BTN = Color3.fromRGB(46, 44, 72)
+13: v_u_8.GREEN = Color3.fromRGB(56, 206, 128)
+14: v_u_8.DANGER = Color3.fromRGB(238, 64, 92)
+15: v_u_8.ON = Color3.fromRGB(255, 178, 48)
+16: v_u_8.ON_TEXT = Color3.fromRGB(255, 255, 255)
+17: v_u_8.VIP_OWNED = Color3.fromRGB(150, 80, 255)
+18: local v_u_11 = Color3.new(1, 1, 1)
+19: local v_u_12 = Color3.new(0, 0, 0)
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.Renderer =====
+1: local v1 = game:GetService("ReplicatedStorage")
+2: local v_u_2 = game:GetService("TextService")
+3: local v_u_3 = game:GetService("RunService")
+4: local v4 = v1:WaitForChild("DrawShared")
+5: local v_u_5 = require(v4.Config)
+6: local v_u_6 = require(v4.Library)
+7: local v_u_7 = require(v4.Rig)
+8: local v_u_8 = require(v4.Schema)
+9: local v_u_9 = require(v4.Anim)
+10: local v_u_10 = v1:WaitForChild("DrawAssets")
+11: local v_u_11 = v_u_7.rot
+12: local v_u_12 = {}
+13: local v_u_13 = {}
+14: v_u_13.__index = v_u_13
+15: local v_u_14 = {
+16: 	{ -1, -1 },
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.Project =====
+1: local v1 = game:GetService("ReplicatedStorage"):WaitForChild("DrawShared")
+2: local v_u_2 = require(v1.Config)
+3: local v_u_3 = require(v1.Library)
+4: local v_u_4 = require(v1.Schema)
+5: local v_u_5 = require(v1.Anim)
+6: local v_u_6 = require(v1.Rig)
+7: local v_u_7 = {}
+8: v_u_7.__index = v_u_7
+9: local function v_u_12(p8) -- name: deep
+10: 	-- upvalues: (copy) v_u_12
+11: 	if type(p8) ~= "table" then
+12: 		return p8
+13: 	end
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.Timeline =====
+1: local v_u_1 = game:GetService("UserInputService")
+2: local v_u_2 = game:GetService("RunService")
+3: local v3 = game:GetService("ReplicatedStorage")
+4: local v_u_4 = require(v3:WaitForChild("DrawShared"):WaitForChild("Library"))
+5: local v_u_5 = {}
+6: local v_u_6 = nil
+7: local v_u_7 = nil
+8: local v_u_8 = nil
+9: local v_u_9 = nil
+10: local v_u_10 = nil
+11: local v_u_11 = nil
+12: local v_u_12 = nil
+13: local v_u_13 = nil
+14: local v_u_14 = nil
+15: local v_u_15 = nil
+16: local v_u_16 = {}
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.Playback =====
+1: local v_u_1 = game:GetService("RunService")
+2: local v_u_2 = game:GetService("UserInputService")
+3: local v3 = game:GetService("ReplicatedStorage"):WaitForChild("DrawShared")
+4: local v_u_4 = require(v3.Config)
+5: local v_u_5 = require(v3.Rig)
+6: local v_u_6 = require(v3.Anim)
+7: local v_u_7 = require(v3.Library)
+8: local v_u_8 = game:GetService("ContentProvider")
+9: local v_u_9 = game:GetService("SoundService")
+10: local v_u_10 = game:GetService("GuiService")
+11: local v_u_11 = {
+12: 	["active"] = false
+13: }
+14: local v_u_12 = nil
+15: local v_u_13 = nil
+   ...
+584: 	local v283 = math.min(p166, v282) * 10
+585: 	local v284 = math.floor(v283)
+586: 	if v284 ~= v_u_40 then
+587: 		v_u_40 = v284
+588: 		v_u_20.Time.Text = string.format("%.1f / %.1f", v284 / 10, v_u_27)
+589: 	end
+590: end
+591: local v_u_286 = {}
+592: local function v_u_294() -- name: syncMusic
+593: 	-- upvalues: (ref) v_u_24, (copy) v_u_7, (ref) v_u_286, (copy) v_u_4, (ref) v_u_30, (ref) v_u_29
+594: 	local v287 = v_u_24 and v_u_7.musicList(v_u_24.music) or {}
+595: 	for v288, v289 in ipairs(v_u_286) do
+596: 		local v290 = v_u_4.musicEntry(v287[v288] or 0)
+597: 		if v290 and (v290.Id and v290.Id ~= 0) then
+598: 			local v291 = v290.Id
+599: 			local v292 = "rbxassetid://" .. tostring(v291)
+600: 			if v289.SoundId ~= v292 then
+601: 				v289.SoundId = v292
+602: 			end
+603: 			if v_u_30 then
+604: 				local v293 = v289.TimeLength
+605: 				v289.TimePosition = v293 > 0 and v_u_29 % v293 or v_u_29
+606: 				v289:Resume()
+607: 			else
+608: 				v289:Pause()
+   ...
+675: 		v_u_301:Play()
+676: 	end
+677: end
+678: local function v_u_313(p306) -- name: playSfx
+679: 	-- upvalues: (ref) v_u_24, (copy) v_u_7, (copy) v_u_6, (copy) v_u_305, (copy) v_u_47, (copy) v_u_26
+680: 	local v307 = v_u_24.frames[v_u_24.order[p306]]
+681: 	if v307 and v307.sn then
+682: 		for _, v308 in ipairs(v307.sn) do
+683: 			local v309 = v_u_7.Sounds[v_u_6.soundKey(v308)]
+684: 			if not v309 then
+685: 				continue
+686: 			end
+687: 			local v310 = v_u_6.soundEntry(v308, v309.Length).d
+688: 			if v310 <= 0.01 then
+689: 				v_u_305(v308)
+690: 			else
+691: 				local v311 = v_u_47
+692: 				local v312 = {
+693: 					["at"] = v_u_26[p306] + v310,
+694: 					["e"] = v308
+695: 				}
+696: 				table.insert(v311, v312)
+697: 			end
+698: 		end
+699: 	end
+   ...
+705: 			continue
+706: 		end
+707: 		v_u_305(v_u_47[v314].e)
+708: 		table.remove(v_u_47, v314)
+709: 	end
+710: end
+711: local function v_u_320() -- name: refreshButtons
+712: 	-- upvalues: (ref) v_u_13, (ref) v_u_20, (ref) v_u_30, (ref) v_u_31, (ref) v_u_25, (ref) v_u_18, (copy) v_u_38
+713: 	v_u_13.iconText(v_u_20.PlayBtn, v_u_30 and "\226\143\184 Pause" or "\226\143\181 Play")
+714: 	v_u_13.setColor(v_u_20.LoopBtn, v_u_31 and v_u_13.ACCENT or v_u_13.BTN)
+715: 	local v316 = v_u_25
+716: 	if v316 then
+717: 		v316 = v_u_25.gallery
+718: 	end
+719: 	if v316 then
+720: 		local v317 = v_u_18.Actions
+721: 		v317.LikeBtn.Text = v_u_13.short(v316.likes)
+722: 		v317.DislikeBtn.Text = v_u_13.short(v316.dislikes)
+723: 		v_u_13.setColor(v317.LikeBtn, v316.vote == 1 and v_u_13.GREEN or v_u_13.BTN)
+724: 		v_u_13.setColor(v317.DislikeBtn, v316.vote == -1 and v_u_13.DANGER or v_u_13.BTN)
+725: 		local v318 = v316.views
+726: 		local v319 = tonumber(v318) or 0
+727: 		v_u_18.Info.Views.Num.Text = v_u_13.short(v319) .. (v319 == 1 and " view" or " views")
+728: 		v317.CommentsBtn.Text = v_u_13.short(v316.comments)
+729: 		v317.StarBtn.Text = v_u_13.short(v316.stars)
+   ...
+968: 				v_u_11.close()
+969: 				v388(v389)
+970: 			end
+971: 		end)
+972: 		local v390 = v_u_39
+973: 		table.insert(v390, v387)
+974: 	end
+975: 	v382.Tags.Visible = #v_u_39 > 0
+976: 	v382.Visible = v382.Desc.Visible or v382.Tags.Visible
+977: end
+978: local function v_u_393(p392) -- name: refreshFor
+979: 	-- upvalues: (copy) v_u_11, (ref) v_u_25, (copy) v_u_320
+980: 	if v_u_11.active and (v_u_25 and v_u_25.gallery == p392) then
+981: 		v_u_320()
+982: 	end
+983: end
+984: local function v_u_396() -- name: popStar
+985: 	-- upvalues: (ref) v_u_1
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.Editor =====
+1: local v_u_1 = game:GetService("UserInputService")
+2: local v2 = game:GetService("ReplicatedStorage")
+3: local v_u_3 = game:GetService("SoundService")
+4: local v4 = v2:WaitForChild("DrawShared")
+5: local v_u_5 = require(v4.Config)
+6: local v_u_6 = require(v4.Library)
+7: local v_u_7 = require(v4.Rig)
+8: local v_u_8 = require(v4.Schema)
+9: local v_u_9 = require(v4.Anim)
+10: local v_u_10 = game:GetService("RunService")
+11: local v_u_11 = {}
+12: local v_u_12 = nil
+13: local v_u_13 = nil
+14: local v_u_14 = nil
+15: local v_u_15 = nil
+16: local v_u_16 = nil
+   ...
+2766: 		v_u_76.Name = "MusicPreview"
+2767: 		v_u_76.Parent = v_u_3
+2768: 		for v912 = 1, v_u_5.MAX_BG_TRACKS do
+2769: 			local v913 = Instance.new("Sound")
+2770: 			v913.Name = "Track" .. v912
+2771: 			v913.Looped = true
+2772: 			v913.Volume = 0.5
+2773: 			v913.Parent = v_u_76
+2774: 		end
+2775: 	end
+2776: 	for v914 = 1, v_u_5.MAX_BG_TRACKS do
+2777: 		local v915 = v_u_76["Track" .. v914]
+2778: 		local v916 = v_u_5.musicEntry(p911[v914] or 0)
+2779: 		if v916 and (v916.Id and v916.Id ~= 0) then
+2780: 			local v917 = v916.Id
+2781: 			local v918 = "rbxassetid://" .. tostring(v917)
+2782: 			if v915.SoundId == v918 then
+2783: 				if v915.IsPlaying then
+2784: 					continue
+2785: 				end
+2786: 				v915:Play()
+2787: 			else
+2788: 				v915.SoundId = v918
+2789: 				v915.TimePosition = 0
+2790: 				v915:Play()
+2791: 			end
+2792: 		else
+2793: 			v915:Stop()
+2794: 		end
+2795: 	end
+2796: end
+2797: v_u_90.customNames = {}
+2798: function v_u_90.customTrack(p920) -- name: customTrack
+2799: 	-- upvalues: (copy) v_u_5
+2800: 	for _, v921 in ipairs(p920) do
+2801: 		local v922 = v_u_5.musicEntry(v921)
+2802: 		if not (v922 and v922.Custom) then
+2803: 			continue
+2804: 		end
+2805: 		return v921
+2806: 	end
+2807: 	return nil
+2808: end
+2809: function v_u_90.pickCustomAudio() -- name: pickCustomAudio
+2810: 	-- upvalues: (copy) v_u_5, (ref) v_u_12, (copy) v_u_11, (copy) v_u_6, (ref) v_u_32, (copy) v_u_90, (ref) v_u_13, (copy) v_u_910, (copy) v_u_919, (ref) v_u_22, (copy) v_u_302
+2811: 	if v_u_5.ownsCustomAudio(v_u_12.owned) then
+2812: 		local v923 = v_u_6.musicList(v_u_32.music)
+2813: 		local v924 = v_u_90.customTrack(v923)
+   ...
+2825: 				v_u_919(v923)
+2826: 				local v927 = v_u_22.TopBar.Right.SaveLbl
+2827: 				v927.Text = "Unsaved"
+2828: 				v927.TextColor3 = Color3.fromRGB(150, 156, 175)
+2829: 				v_u_302()
+2830: 				return
+2831: 			else
+2832: 				v_u_13.busy(true, "Checking audio...")
+2833: 				local v928, v929 = v_u_13.call("AudioInfo", (tonumber(v926)))
+2834: 				v_u_13.busy(false)
+2835: 				if v928 and v_u_32 then
+2836: 					for v930 = #v923, 1, -1 do
+2837: 						if v_u_5.musicEntry(v923[v930]).Kind ~= "music" then
+2838: 							continue
+2839: 						end
+2840: 						table.remove(v923, v930)
+2841: 					end
+2842: 					if #v923 >= v_u_5.MAX_BG_TRACKS then
+2843: 						v_u_13.toast("Up to " .. v_u_5.MAX_BG_TRACKS .. " sounds at once", true)
+2844: 					else
+2845: 						v_u_90.customNames[v928.id] = v928.name
+2846: 						local v931 = v928.id
+2847: 						table.insert(v923, v931)
+2848: 						v_u_32:setMusic(v923)
+2849: 						v_u_910()
+   ...
+2895: 			v941:SetAttribute("Track", p_u_938)
+2896: 			v_u_13.iconText(v941, p940)
+2897: 			v941.Parent = v_u_22.Music.List
+2898: 			v_u_13.button(v941, function()
+2899: 				-- upvalues: (copy) p_u_938, (ref) v_u_6, (ref) v_u_32, (ref) v_u_5, (ref) v_u_13, (ref) v_u_910, (ref) v_u_919, (ref) v_u_22, (ref) v_u_302
+2900: 				local v942 = p_u_938 == 0 and {} or v_u_6.musicList(v_u_32.music)
+2901: 				local v943 = table.find(v942, p_u_938)
+2902: 				if v943 then
+2903: 					table.remove(v942, v943)
+2904: 				elseif p_u_938 > 0 then
+2905: 					if v_u_5.Music[p_u_938].Kind == "music" then
+2906: 						for v944 = #v942, 1, -1 do
+2907: 							if v_u_5.musicEntry(v942[v944]).Kind ~= "music" then
+2908: 								continue
+2909: 							end
+2910: 							table.remove(v942, v944)
+2911: 						end
+2912: 					end
+2913: 					if #v942 >= v_u_5.MAX_BG_TRACKS then
+2914: 						v_u_13.toast("Up t
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.ColorPicker =====
+1: local v_u_1 = game:GetService("UserInputService")
+2: local v2 = game:GetService("ReplicatedStorage"):WaitForChild("DrawShared")
+3: local v_u_3 = require(v2.Config)
+4: local v_u_4 = require(v2.Schema)
+5: local v_u_5 = {}
+6: local v_u_6 = nil
+7: local v_u_7 = nil
+8: local v_u_8 = nil
+9: local v_u_9 = nil
+10: local v_u_10 = nil
+11: local v_u_11 = nil
+12: local v_u_12 = 0
+13: local v_u_13 = 0
+14: local v_u_14 = 0
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.Shop =====
+1: local v_u_1 = game:GetService("MarketplaceService")
+2: local v_u_2 = game:GetService("PolicyService")
+3: local v_u_3 = game:GetService("RunService")
+4: local v_u_4 = game:GetService("SoundService")
+5: local v_u_5 = game:GetService("TweenService")
+6: local v_u_6 = game:GetService("ReplicatedStorage")
+7: local v7 = v_u_6:WaitForChild("DrawShared")
+8: local v_u_8 = require(v7:WaitForChild("Config"))
+9: local v_u_9 = require(v7:WaitForChild("Library"))
+10: local v_u_10 = require(script.Parent:WaitForChild("CrateSkins"))
+11: local v_u_11 = {}
+12: local v_u_12 = nil
+13: local v_u_13 = nil
+14: local v_u_14 = nil
+15: local v_u_15 = nil
+16: local v_u_16 = nil
+17: local v_u_17 = nil
+18: local v_u_18 = nil
+19: local v_u_19 = false
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.Tutorial =====
+1: local v_u_1 = game:GetService("RunService")
+2: local v_u_2 = game:GetService("UserInputService")
+3: local v_u_3 = game:GetService("ReplicatedStorage")
+4: local v4 = v_u_3:WaitForChild("DrawShared")
+5: local v_u_5 = require(v4.Config)
+6: local v_u_6 = {
+7: 	["active"] = false
+8: }
+9: local v_u_7 = nil
+10: local v_u_8 = nil
+11: local v_u_9 = nil
+12: local v_u_10 = nil
+13: local v_u_11 = nil
+14: local v_u_12 = nil
+15: local v_u_13 = nil
+16: local v_u_14 = nil
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.Admin =====
+1: local v_u_1 = game:GetService("UserInputService")
+2: local v_u_2 = game:GetService("ReplicatedStorage")
+3: local v_u_3 = require(v_u_2:WaitForChild("DrawShared"):WaitForChild("Config"))
+4: local v4 = {}
+5: local v_u_5 = nil
+6: local v_u_6 = nil
+7: local v_u_7 = nil
+8: local v_u_8 = nil
+9: local v_u_9 = false
+10: local v_u_10 = false
+11: local v_u_11 = 0
+12: local function v_u_15() -- name: refresh
+13: 	-- upvalues: (ref) v_u_6, (ref) v_u_8, (copy) v_u_3
+14: 	local v12 = v_u_6.call("AdminInfo")
+15: 	if v_u_8.Visible then
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.Home =====
+1: local v_u_1 = game:GetService("RunService")
+2: local v_u_2 = game:GetService("TweenService")
+3: local v_u_3 = game:GetService("UserInputService")
+4: local v_u_4 = game:GetService("ReplicatedStorage")
+5: local v5 = v_u_4:WaitForChild("DrawShared")
+6: local v_u_6 = require(v5.Config)
+7: local v_u_7 = require(script.Parent:WaitForChild("CrateSkins"))
+8: local v_u_8 = {}
+9: local v_u_9 = nil
+10: local v_u_10 = nil
+11: local v_u_11 = nil
+12: local v_u_12 = nil
+13: local v_u_13 = nil
+14: local v_u_14 = nil
+15: local v_u_15 = nil
+16: local v_u_16 = nil
+17: local v_u_17 = nil
+   ...
+48: local v_u_48 = {}
+49: local v_u_49 = 0
+50: local v_u_50 = Color3.fromRGB(255, 98, 48)
+51: local v_u_51 = {
+52: 	"\240\159\146\153",
+53: 	"\226\156\168",
+54: 	"\240\159\146\156",
+55: 	"\226\156\168"
+56: }
+57: local v_u_52 = Color3.fromRGB(24, 170, 214)
+58: local v_u_53 = {
+59: 	["my"] = "<font color=\"#FFD84A\">Make</font> <font color=\"#FF7AC0\">a</font> <font color=\"#6FD6FF\">Cartoon</font><font color=\"#B98CFF\">!</font>",
+60: 	["gallery"] = "<font color=\"#6FD6FF\">Browse</font> <font color=\"#FFD84A\">Cartoons</font>",
+61: 	["author"] = "<font color=\"#FF7AC0\">Creator</font> <font color=\"#B98CFF\">Profile</font>"
+62: }
+63: local v_u_54 = {
+64: 	["foryou"] = Color3.fromRGB(255, 92, 140),
+65: 	["new"] = Color3.fromRGB(32, 186, 150),
+66: 	["popular"] = Color3.fromRGB(255, 160, 40)
+67: }
+68: local v_u_55 = Color3.fromRGB(56, 150, 255)
+69: local v_u_56 = Color3.fromRGB(150, 84, 255)
+70: local v_u_57 = Color3.fromRGB(64, 52, 116)
+71: local v_u_58 = Color3.fromRGB(52, 46, 84)
+72: local v_u_59 = Color3.fromRGB(14, 11, 26)
+   ...
+661: 		v_u_10.stop(p257, "sw")
+662: 		p257.Knob.Position = v260
+663: 		p257.BackgroundColor3 = v261
+664: 	else
+665: 		v_u_10.tween(p257.Knob, 0.18, {
+666: 			["Position"] = v260
+667: 		}, Enum.EasingStyle.Back, Enum.EasingDirection.Out, "sw")
+668: 		v_u_10.tween(p257, 0.18, {
+669: 			["BackgroundColor3"] = v261
+670: 		}, nil, nil, "sw")
+671: 	end
+672: end
+673: local function v_u_289(p263, p264) -- name: askShare
+674: 	-- upvalues: (ref) v_u_32, (ref) v_u_31, (ref) v_u_40, (copy) v_u_256, (ref) v_u_10, (ref) v_u_41, (copy) v_u_6, (copy) v_u_188, (ref) v_u_189, (copy) v_u_173
+675: 	if v_u_32 then
+676: 		v_u_32(nil)
+677: 	end
+678: 	v_u_31.Title.Text = p264 and "Update your cartoon" or "Publish your cartoon"
+679: 	v_u_31.ShareBtn.Text = p264 and "Update" or "Publish"
+680: 	v_u_31.TitleBox.Text = p263.title or ""
+681: 	v_u_31.DescBox.Text = p263.desc or ""
+682: 	local v265 = p263.rx == true
+683: 	v_u_40 = v265
+684: 	local v266 = v_u_31.RemixRow.Switch
+685: 	local v267 = v265 and UDim2.new(1, -27, 0.5, 0) or UDim2.new(0, 3, 0.5, 0)
+686: 	local v268 = v265 and v_u_256 or v_u_10.BTN
+687: 	v_u_10.stop(v266.Knob, "sw")
+688: 	v_u_10.stop(v266, "sw")
+689: 	v266.Knob.Position = v267
+690: 	v266.BackgroundColor3 = v268
+691: 	local v269 = p263.nd ~= true
+   ...
+1256: 	local v412 = v_u_69
+1257: 	v_u_70 = math.max(v410, v411(v412))
+1258: 	v_u_9.Cosmetics.setEquipped(v403.cs)
+1259: 	local v413 = v403.max or v_u_6.MAX_PROJECTS
+1260: 	v_u_399(v_u_21, v413)
+1261: 	if v403.tuto == false and (#v_u_21 < v413 and v_u_9.Tutorial) then
+1262: 		task.defer(v_u_9.Tutorial.start)
+1263: 	end
+1264: 	return v_u_21
+1265: end
+1266: local v_u_414 = nil
+1267: local v_u_415 = nil
+1268: local function v_u_443(p_u_416, p_u_417, p418, p_u_419, p_u_420) -- name: galleryCard
+1269: 	-- upvalues: (ref) v_u_16, (copy) v_u_65, (copy) v_u_6, (ref) v_u_9, (copy) v_u_113, (copy) v_u_3, (ref) v_u_11, (ref) v_u_10, (copy) v_u_158, (ref) v_u_415, (copy) v_u_140, (copy) v_u_145
+1270: 	local v421 = v_u_16.GalleryCard:Clone()
+1271: 	v421.Visible = true
+1272: 	v421.Name = "G" .. p_u_417
+1273: 	v421.LayoutOrder = p_u_417
+1274: 	v421:SetAttribute("PostId", p_u_416.id)
+1275: 	v421.Body.Fit.Scale = v_u_65[p418] or 1
+1276: 	local v_u_422 = v421.Body.Inner
+1277: 	local v423 = v_u_422.AuthorRow
+1278: 	local v424 = v_u_422.Title
+1279: 	local v425 = p_u_416.t and p_u_416.t ~= "" and (p_u_416.
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.CommentsUI =====
+1: local v1 = game:GetService("ReplicatedStorage"):WaitForChild("DrawShared")
+2: local v_u_2 = require(v1.Config)
+3: local v_u_3 = {}
+4: local v_u_4 = nil
+5: local v_u_5 = nil
+6: local v_u_6 = nil
+7: local v_u_7 = nil
+8: local v_u_8 = nil
+9: local v_u_9 = nil
+10: local v_u_10 = nil
+11: local v_u_11 = nil
+12: local v_u_12 = nil
+13: local v_u_13 = nil
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.SoundEdit =====
+1: local v_u_1 = game:GetService("UserInputService")
+2: local v_u_2 = game:GetService("RunService")
+3: local v3 = game:GetService("ReplicatedStorage"):WaitForChild("DrawShared")
+4: local v_u_4 = require(v3.Anim)
+5: local v_u_5 = require(v3.Library)
+6: local v_u_6 = {}
+7: local v_u_7 = nil
+8: local v_u_8 = nil
+9: local v_u_9 = nil
+10: local v_u_10 = nil
+11: local v_u_11 = nil
+12: local v_u_12 = nil
+13: local v_u_13 = nil
+14: local v_u_14 = nil
+15: local v_u_15 = nil
+   ...
+38: 		return math.round(v24) .. "%"
+39: 	end
+40: }
+41: function v_u_6.make(p26, p27) -- name: make
+42: 	-- upvalues: (copy) v_u_4, (copy) v_u_5
+43: 	local v28 = v_u_4.soundKey(p26)
+44: 	if v28 then
+45: 		v28 = v_u_5.Sounds[v28]
+46: 	end
+47: 	if not v28 then
+48: 		return nil, 0
+49: 	end
+50: 	local v29 = v_u_4.soundEntry(p26, v28.Length)
+51: 	local v30 = v28.Sound:Clone()
+52: 	v30.Volume = v28.Sound.Volume * v29.v
+53: 	v30.PlaybackSpeed = v29.s
+54: 	if v29.a > 0.001 or v29.b < v28.Length - 0.011 then
+55: 		v30.PlaybackRegionsEnabled = true
+56: 		v30.PlaybackRegion = NumberRange.new(v29.a, v29.b)
+57: 	end
+58: 	local v31 = 0
+59: 	if v29.p ~= 0 then
+60: 		local v32 = Instance.new("PitchShiftSoundEffect")
+61: 		v32.Octave = 2 ^ (v29.p / 12)
+62: 		v32.Parent = v30
+   ...
+278: 			v_u_14:Destroy()
+279: 			v_u_14 = nil
+280: 		end
+281: 		if v_u_10 then
+282: 			v_u_10.Head.Visible = false
+283: 		end
+284: 		local v100 = {
+285: 			["index"] = p96,
+286: 			["snd"] = v99
+287: 		}
+288: 		local v101 = v99.Length
+289: 		v100.len = math.max(v101, 0.1)
+290: 		v100.full = v_u_4.soundEntry(v98, v99.Length)
+291: 		v_u_12 = v100
+292: 		local v102 = v_u_12
+293: 		local v103 = v_u_12.full
+294: 		v102.sig = string.format("%.2f|%.2f|%.2f|%.2f|%.2f|%.2f|%.2f|%.2f", v103.d, v103.v, v103.s, v103.p, v103.r, v103.e, v103.a, v103.b)
+295: 		if v_u_12 then
+296: 			v_u_9.Head.SndName.Text = v_u_12.snd.Name
+297: 			v_u_9.Head.Info.Text = string.format("%s  -  %.1fs", v_u_12.snd.Cat, v_u_12.len)
+298: 			v_u_43()
+299: 			v_u_51()
+300: 		end
+301: 		if not v_u_8.isOpen(v_u_9) then
+302: 			v_u_8.open(v_u_9)
+   ...
+328: 	end
+329: end
+330: function v_u_6.refresh() -- name: refresh
+331: 	-- upvalues: (ref) v_u_12, (ref) v_u_7, (copy) v_u_4, (copy) v_u_6, (ref) v_u_13, (ref) v_u_9, (copy) v_u_43, (copy) v_u_51
+332: 	if v_u_12 then
+333: 		local v105 = v_u_7.Editor.project()
+334: 		local v106 = v105 and v105:frame().sn
+335: 		if v106 then
+336: 			v106 = v105:frame().sn[v_u_12.index]
+337: 		end
+338: 		if v106 and v_u_4.soundKey(v106) == v_u_12.snd.Id then
+339: 			if not v_u_13 then
+340: 				v_u_12.full = v_u_4.soundEntry(v106, v_u_12.snd.Length)
+341: 				local v107 = v_u_12
+342: 				local v108 = v_u_12.full
+343: 				v107.sig = string.format("%.2f|%.2f|%.2f|%.2f|%.2f|%.2f|%.2f|%.2f", v108.d, v108.v, v108.s, v108.p, v108.r, v108.e, v108.a, v108.b)
+344: 				if not v_u_12 then
+345: 					return
+346: 				end
+347: 				v_u_9.Head.SndName.Text = v_u_12.snd.Name
+348: 				v_u_9.Head.Info.Text = string.format("%s  -  %.1fs", v_u_12.snd.Cat, v_u_12.len)
+349: 				v_u_43()
+350: 				v_u_51()
+351: 			end
+352: 		else
+   ...
+451: 				v_u_13 = nil
+452: 				v_u_55()
+453: 				if v126.key ~= "d" then
+454: 					v_u_65()
+455: 				end
+456: 			end
+457: 		end
+458: 	end)
+459: 	v_u_8.button(v_u_9.Buttons.PreviewBtn, v_u_65)
+460: 	v_u_8.button(v_u_9.Buttons.ResetBtn, function()
+461: 		-- upvalues: (ref) v_u_12, (ref) v_u_4, (ref) v_u_9, (ref) v_u_43, (ref) v_u_51, (ref) v_u_55
+462: 		if v_u_12 then
+463: 			v_u_12.full = v_u_4.soundEntry(v_u_12.snd.Id, v_u_12.snd.Length)
+464: 			if v_u_12 then
+465: 				v_u_9.Head.SndName.Text = v_u_12.snd.Name
+466: 				v_u_9.Head.Info.Text = string.format("%s  -  %.1fs", v_u_12.snd.Cat, v_u_12.len)
+467: 				v_u_43()
+468: 				v_u_51()
+469: 			end
+470: 			v_u_55()
+471: 		end
+472: 	end)
+473: 	v_u_8.button(v_u_9.Buttons.DoneBtn, v_u_6.close)
+474: 	v_u_8.button(v_u_9.CloseBtn, v_u_6.close)
+475: end
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.Demo =====
+1: local v_u_1 = game:GetService("RunService")
+2: local v2 = game:GetService("ReplicatedStorage"):WaitForChild("DrawShared")
+3: local v_u_3 = require(v2.Anim)
+4: local v_u_4 = require(v2.Rig)
+5: require(v2.Library)
+6: local v5 = {}
+7: local v_u_6 = nil
+8: local v_u_7 = nil
+9: local v_u_8 = nil
+10: local v_u_9 = nil
+11: local v_u_10 = nil
+12: local v_u_11 = nil
+13: local v_u_12 = nil
+14: local v_u_13 = nil
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.Presets =====
+1: local v1 = game:GetService("ReplicatedStorage"):WaitForChild("DrawShared")
+2: local v_u_2 = require(v1.Rig)
+3: local v3 = require(v1.Library)
+4: local v4 = {
+5: 	["t"] = 180,
+6: 	["h"] = 180,
+7: 	["ual"] = 20,
+8: 	["fal"] = 10,
+9: 	["uar"] = -20,
+10: 	["far"] = -10,
+11: 	["thl"] = 10,
+12: 	["shl"] = 4,
+13: 	["thr"] = -10,
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.EventPrompt =====
+1: local v_u_1 = game:GetService("UserInputService")
+2: local v_u_2 = game:GetService("SocialService")
+3: local v3 = game:GetService("ReplicatedStorage")
+4: local v_u_4 = require(v3:WaitForChild("DrawShared"):WaitForChild("Config"))
+5: local v5 = {}
+6: local v_u_6 = nil
+7: local v_u_7 = os.clock()
+8: local function v_u_9() -- name: popupOpen
+9: 	-- upvalues: (ref) v_u_6
+10: 	for _, v8 in ipairs(v_u_6.ui.Root.Popups:GetChildren()) do
+11: 		if not (v8:IsA("GuiObject") and v8.Visible) then
+12: 			continue
+13: 		end
+14: 		return true
+15: 	end
+16: 	return false
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.Reels =====
+1: local v_u_1 = game:GetService("RunService")
+2: local v_u_2 = game:GetService("UserInputService")
+3: local v_u_3 = game:GetService("GuiService")
+4: local v4 = game:GetService("ReplicatedStorage")
+5: local v_u_5 = require(v4:WaitForChild("DrawShared"):WaitForChild("Config"))
+6: local v_u_6 = {
+7: 	["active"] = false
+8: }
+9: local v_u_7 = nil
+10: local v_u_8 = nil
+11: local v_u_9 = nil
+12: local v_u_10 = nil
+13: local v_u_11 = nil
+14: local v_u_12 = nil
+15: local v_u_13 = nil
+16: local v_u_14 = nil
+17: local v_u_15 = nil
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.MenuMusic =====
+1: local v1 = game:GetService("ReplicatedStorage")
+2: local v_u_2 = game:GetService("SoundService")
+3: local v_u_3 = require(v1:WaitForChild("DrawShared"):WaitForChild("Config"))
+4: local v_u_4 = {}
+5: local v_u_5 = Color3.fromRGB(40, 30, 110)
+6: local v_u_6 = Color3.fromRGB(96, 90, 130)
+7: local v_u_7 = Color3.fromRGB(40, 36, 64)
+8: local v_u_8 = nil
+9: local v_u_9 = nil
+10: local v_u_10 = nil
+11: local v_u_11 = {}
+12: local v_u_12 = true
+13: local v_u_13 = false
+14: local v_u_14 = 0
+15: local v_u_15 = nil
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.Afk =====
+1: local v1 = game:GetService("ReplicatedStorage")
+2: local v_u_2 = game:GetService("UserInputService")
+3: local v_u_3 = require(v1:WaitForChild("DrawShared"):WaitForChild("Config"))
+4: local v4 = {}
+5: local v_u_5 = nil
+6: local v_u_6 = os.clock()
+7: local function v_u_7() -- name: touch
+8: 	-- upvalues: (ref) v_u_6
+9: 	v_u_6 = os.clock()
+10: end
+11: function v4.init(p8) -- name: init
+12: 	-- upvalues: (ref) v_u_5, (copy) v_u_2, (copy) v_u_7, (ref) v_u_6, (copy) v_u_3
+13: 	v_u_5 = p8.Util
+14: 	v_u_2.InputBegan:Connect(v_u_7)
+15: 	v_u_2.InputChanged:Connect(v_u_7)
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.EditorTips =====
+1: local v_u_1 = game:GetService("UserInputService")
+2: local v2 = game:GetService("ReplicatedStorage"):WaitForChild("DrawShared")
+3: local v_u_3 = require(v2:WaitForChild("Config"))
+4: local v_u_4 = require(v2:WaitForChild("Library"))
+5: local v_u_5 = {}
+6: local v_u_6 = Color3.fromRGB(255, 214, 90)
+7: local v_u_7 = Color3.fromRGB(255, 160, 40)
+8: local v_u_8 = Color3.fromRGB(110, 60, 10)
+9: local v_u_9 = Color3.fromRGB(96, 90, 130)
+10: local v_u_10 = Color3.fromRGB(40, 36, 64)
+11: local v_u_11 = {
+12: 	"Library",
+13: 	"Scenes",
+14: 	"Music",
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.DuetView =====
+1: local v1 = game:GetService("ReplicatedStorage"):WaitForChild("DrawShared")
+2: local v_u_2 = require(v1:WaitForChild("Config"))
+3: local v_u_3 = require(v1:WaitForChild("Rig"))
+4: local v_u_4 = {}
+5: v_u_4.__index = v_u_4
+6: local v_u_5 = nil
+7: local v_u_6 = {}
+8: function v_u_4.new(p7, p8) -- name: new
+9: 	-- upvalues: (copy) v_u_4, (ref) v_u_5
+10: 	local v9 = v_u_4
+11: 	local v10 = setmetatable({}, v9)
+12: 	local v11 = Instance.new("Frame")
+13: 	v11.Name = "DuetView"
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.MenuThemes =====
+1: local v_u_1 = game:GetService("StarterGui")
+2: local v_u_2 = game:GetService("TweenService")
+3: local v_u_3 = game:GetService("UserInputService")
+4: local v4 = game:GetService("ReplicatedStorage")
+5: local v_u_5 = require(v4:WaitForChild("DrawShared"):WaitForChild("Config"))
+6: local v_u_6 = {}
+7: local v_u_7 = nil
+8: local v_u_8 = nil
+9: local v_u_9 = {}
+10: local v_u_10 = {}
+11: local v_u_11 = nil
+12: local v_u_12 = nil
+13: local v_u_13 = nil
+14: local function v_u_23(p14, p15, p16, p17) -- name: fillPreview
+15: 	-- upvalues: (copy) v_u_1, (ref) v_u_7
+16: 	local v18 = p14.Preview:FindFirstChild("Holder")
+17: 	if v18 then
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.Contest =====
+1: local v1 = game:GetService("ReplicatedStorage")
+2: local v_u_2 = game:GetService("GuiService")
+3: local v_u_3 = require(v1:WaitForChild("DrawShared"):WaitForChild("Config"))
+4: local v_u_4 = require(script.Parent:WaitForChild("CrateSkins"))
+5: local v_u_5 = {}
+6: local v_u_6 = nil
+7: local v_u_7 = nil
+8: local v_u_8 = nil
+9: local v_u_9 = nil
+10: local v_u_10 = nil
+11: local v_u_11 = nil
+12: local v_u_12 = nil
+13: local v_u_13 = nil
+14: local v_u_14 = nil
+15: local v_u_15 = nil
+   ...
+86: 	local v46 = v42.Phase
+87: 	local v47 = v_u_15 and (v_u_15.active and v_u_15.phase) or nil
+88: 	local v48
+89: 	if v47 == "enter" then
+90: 		v48 = "\226\143\176 Entries close in " .. v_u_31(v_u_15.voteAt)
+91: 	elseif v47 == "vote" then
+92: 		v48 = "\240\159\151\179 Voting ends in " .. v_u_31(v_u_15.ends)
+93: 	else
+94: 		v48 = v_u_15 and "Closed" or "Loading..."
+95: 	end
+96: 	v45(v46, v48)
+97: 	local v49 = v_u_15 and (v_u_15.active and v_u_15.phase) or nil
+98: 	local v50 = v_u_11.Entry
+99: 	local v51 = v_u_35()
+100: 	local v52
+101: 	if v_u_15 == nil then
+102: 		v52 = false
+103: 	else
+104: 		v52 = v_u_15.entry ~= nil
+105: 	end
+106: 	local v53 = v50.EntryTitle
+107: 	local v54
+108: 	if v52 then
+109: 		local v55 = v51 and (v51.title or "Your cartoon") or "Your cartoon"
+110: 		v54 = tostring(v55) or "Not entered yet"
+111: 	else
+112: 		v54 = "Not entered yet"
+113: 	end
+114: 	v53.Text = v54
+115: 	if v49 == "enter" then
+116: 		v50.Hint.Text = v52 and "You can switch to another cartoon until voting opens " .. (not (v_u_15 and v_u_15.voteAt) and "on the last day of the week" or DateTime.fromUnixTimestamp(v_u_15.voteAt):FormatLocalTime("ddd, MMM D [at] LT", "en-us")) .. "." or "Publish a " .. (v43 and "#" .. v43.Tag .. " " or "") .. "cartoon and enter it! Voting opens " .. (not (v_u_15 and v_u_15.voteAt) and "on the last day of the week" or DateTime.fromUnixTimestamp(v_u_15.voteAt):FormatLocalTime("ddd, MMM D [at] LT", "en-us")) .. "."
+117: 	elseif v49 == "vote" then
+118: 		v50.Hint.Text = v52 and "Voting is on. Good luck!" or "Entries are closed, but you can still vote!"
+   ...
+215: 			v_u_7.busy(true, "Entering...")
+216: 			local v88, v89 = v_u_7.call("ContestEnter", v85)
+217: 			v_u_7.busy(false)
+218: 			if v88 then
+219: 				if v_u_7.isOpen(v_u_13) then
+220: 					v_u_7.close(v_u_13)
+221: 					v_u_7.dim(false)
+222: 				end
+223: 				if v_u_15 then
+224: 					v_u_15.entry = v88.entry
+225: 				end
+226: 				v_u_57()
+227: 				v_u_7.burst(v_u_11.Entry.EnterBtn, { "\226\156\168", "\240\159\143\134" }, 14)
+228: 				v_u_7.toast("You\'re in! Voting opens " .. (not (v_u_15 and v_u_15.voteAt) and "on the last day of the week" or DateTime.fromUnixTimestamp(v_u_15.voteAt):FormatLocalTime("ddd, MMM D [at] LT", "en-us")))
+229: 			else
+230: 				v_u_7.toast(v89, true)
+231: 			end
+232: 		else
+233: 			return
+234: 		end
+235: 	end
+236: end
+237: local function v_u_105() -- name: openPick
+238: 	-- upvalues: (ref) v_u_6, (ref) v_u_13, (ref) v_u_15, (ref) v_u_8, (ref) v_u_7, (copy) v_u_90
+239: 	local v91 = {}
+   ...
+650: 	v_u_7.iconText(v_u_11.WinnersHeader, v_u_11.WinnersHeader.Text)
+651: 	v_u_7.iconText(v_u_14.TopBar.Title, v_u_14.TopBar.Title.Text)
+652: 	for v183, v184 in ipairs(v_u_3.CONTEST_PLACES) do
+653: 		local v185 = v_u_11.Prizes.Row:FindFirstChild("Place" .. v183)
+654: 		if not v185 then
+655: 			continue
+656: 		end
+657: 		v_u_7.iconText(v185, v_u_23[v183] .. " " .. v184.Stars .. " \226\173\144 + " .. v184.Crates .. (v184.Crates == 1 and " crate" or " crates"))
+658: 	end
+659: 	v_u_11.Prizes.Foot.Text = "Everyone who enters gets " .. v_u_3.CONTEST_ENTRY_STARS .. " stars when results are in. Winners also get a trophy, 1st gets a Winner Plaque!"
+660: 	v_u_7.button(v_u_10.CloseBtn, v_u_5.close)
+661: 	v_u_7.button(v_u_13.CloseBtn, v_u_81)
+662: 	v_u_7.setColor(v_u_11.Entry.EnterBtn, v_u_7.GREEN, true)
+663: 	v_u_7.button(v_u_11.Entry.EnterBtn, v_u_105)
+664: 	v_u_7.setColor(v_u_11.VoteBtn, Color3.fromRGB(255, 140, 40), true)
+665: 	v_u_7.iconText(v_u_11.VoteBtn, v_u_11.VoteBt
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.Levels =====
+1: local v1 = game:GetService("ReplicatedStorage")
+2: local v_u_2 = require(v1:WaitForChild("DrawShared"):WaitForChild("Config"))
+3: local v_u_3 = {}
+4: local v_u_4 = nil
+5: local v_u_5 = nil
+6: local v_u_6 = nil
+7: local v_u_7 = {}
+8: function v_u_3.perksText(p8) -- name: perksText
+9: 	-- upvalues: (copy) v_u_2
+10: 	local v9 = v_u_2.CREATOR_LEVELS[p8]
+11: 	local v10 = v_u_2.CREATOR_LEVELS[p8 - 1]
+12: 	if not v9 then
+13: 		return ""
+14: 	end
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.Cosmetics =====
+1: local v_u_1 = game:GetService("TweenService")
+2: local v2 = game:GetService("ReplicatedStorage")
+3: local v_u_3 = require(v2:WaitForChild("DrawShared"):WaitForChild("Config"))
+4: local v_u_4 = {}
+5: local v_u_5 = nil
+6: local v_u_6 = nil
+7: local v_u_7 = nil
+8: local v_u_8 = nil
+9: local v_u_9 = {}
+10: local v_u_10 = nil
+11: local v_u_11 = {}
+12: local v_u_12 = false
+13: local v_u_13 = setmetatable({}, {
+14: 	["__mode"] = "k"
+15: })
+
+===== ReplicatedStorage.DrawShared.Config =====
+   ...
+1864: 	{
+1865: 		["Name"] = "\240\159\140\138 Waterfall",
+1866: 		["Id"] = 9116496581,
+1867: 		["Kind"] = "ambient"
+1868: 	}
+1869: }
+1870: v_u_1.MAX_BG_TRACKS = 3
+1871: v_u_1.CUSTOM_AUDIO_PRODUCT = 3723724028
+1872: v_u_1.CUSTOM_AUDIO_KEY = "CustomAudio"
+1873: v_u_1.CUSTOM_AUDIO_MIN = 100000
+1874: v_u_1.CUSTOM_AUDIO_MAX = 1000000000000000
+1875: local v_u_96 = {}
+1876: function v_u_1.musicEntry(p97) -- name: musicEntry
+1877: 	-- upvalues: (copy) v_u_1, (copy) v_u_96
+1878: 	if type(p97) ~= "number" then
+1879: 		return nil
+1880: 	end
+1881: 	if v_u_1.CUSTOM_AUDIO_MIN > p97 or p97 > v_u_1.CUSTOM_AUDIO_MAX then
+1882: 		return v_u_1.Music[p97]
+1883: 	end
+1884: 	local v98 = v_u_96[p97]
+1885: 	if not v98 then
+1886: 		v98 = {
+1887: 			["Name"] = "\240\159\142\181 Custom audio",
+1888: 			["Id"] = nil,
+
+===== ReplicatedStorage.DrawShared.Library =====
+   ...
+182: 	for v43, v44 in ipairs(v39) do
+183: 		if v_u_2.MAX_BG_TRACKS * 2 < v43 or #v40 >= v_u_2.MAX_BG_TRACKS then
+184: 			break
+185: 		end
+186: 		local v45
+187: 		if type(v44) == "number" and v44 == v44 then
+188: 			v45 = math.floor(v44) or nil
+189: 		else
+190: 			v45 = nil
+191: 		end
+192: 		local v46
+193: 		if v45 then
+194: 			v46 = v_u_2.musicEntry(v45)
+195: 		else
+196: 			v46 = v45
+197: 		end
+198: 		if v46 and (v46.Custom and p38) then
+199: 			v46 = nil
+200: 		end
+201: 		if not v46 or (v41[v45] or v46.Kind == "music" and v42) then
+202: 			continue
+203: 		end
+204: 		v41[v45] = true
+205: 		v42 = v42 or v46.Kind == "music"
+206: 		table.insert(v40, v45)
+
+===== ReplicatedStorage.DrawShared.Schema =====
+   ...
+506: 		end
+507: 		local v194 = v_u_4.soundKey(v193)
+508: 		local v195
+509: 		if type(v194) == "string" and #v194 <= 40 then
+510: 			v195 = v_u_2.Sounds[v194]
+511: 		else
+512: 			v195 = false
+513: 		end
+514: 		if not (v195 and v_u_1.ownsCrateItem(p190, v194)) then
+515: 			continue
+516: 		end
+517: 		local v196 = v_u_4.packSound
+518: 		local v197 = v_u_4.soundEntry(v193, v195.Length)
+519: 		local v198 = v195.Length
+520: 		table.insert(v191, v196(v197, v198))
+521: 	end
+522: 	return #v191 > 0 and v191 and v191 or nil
+523: end
+524: local function v_u_215(p200) -- name: cleanShake
+525: 	-- upvalues: (copy) v_u_4
+526: 	if type(p200) == "table" then
+527: 		local v201 = p200[1]
+528: 		local v202
+529: 		if type(v201) == "number" and (v201 == v201 and v201 ~= (1 / 0)) then
+530: 			v202 = v201 ~= (-1 / 0)
+
+===== ReplicatedStorage.DrawShared.Anim =====
+   ...
+492: 		0,
+493: 		0.05
+494: 	}
+495: }
+496: v_u_2.SND_KEYS = {
+497: 	"d",
+498: 	"v",
+499: 	"s",
+500: 	"p",
+501: 	"r",
+502: 	"e"
+503: }
+504: function v_u_2.soundEntry(p17, p18) -- name: soundEntry
+505: 	-- upvalues: (copy) v_u_2
+506: 	local v19 = math.max(p18 or 0, 0.1)
+507: 	local v20
+508: 	if type(p17) == "table" then
+509: 		v20 = p17.k or p17
+510: 	else
+511: 		v20 = p17
+512: 	end
+513: 	local v21 = type(p17) == "table" and p17 and p17 or {}
+514: 	local v22 = {
+515: 		["k"] = v20
+516: 	}
+
+===== REMOTES =====
