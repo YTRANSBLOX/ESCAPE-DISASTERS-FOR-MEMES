@@ -1,0 +1,159 @@
+keys: ShareBtn, TitleBox.Text, nd ~= true, call("Publish
+scripts scanned: 89
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.Editor =====
+   ...
+4252: 		})
+4253: 		local v1274 = v_u_12
+4254: 		if v1274 then
+4255: 			v1274 = v_u_12.Tutorial
+4256: 		end
+4257: 		if v1274 and v1274.active then
+4258: 			v1274.notify("play", nil, nil)
+4259: 		end
+4260: 	end
+4261: end
+4262: function v_u_90.refreshShare() -- name: refreshShare
+4263: 	-- upvalues: (ref) v_u_22, (ref) v_u_32
+4264: 	local v1276 = v_u_22.TopBar.Left:FindFirstChild("ShareBtn")
+4265: 	if v1276 and v_u_32 then
+4266: 		v1276.Text = v_u_32.pub and "Update" or "Publish"
+4267: 	end
+4268: end
+4269: function v_u_90.share() -- name: share
+4270: 	-- upvalues: (ref) v_u_45, (copy) v_u_90, (ref) v_u_32, (ref) v_u_37, (ref) v_u_57, (ref) v_u_490, (ref) v_u_84, (copy) v_u_11, (ref) v_u_761, (ref) v_u_92, (ref) v_u_13, (copy) v_u_435, (ref) v_u_12
+4271: 	if v_u_45 or (v_u_90.styleDrag or (not v_u_32 or v_u_37)) then
+4272: 		return
+4273: 	else
+4274: 		if v_u_57 then
+4275: 			v_u_490(nil)
+4276: 		end
+   ...
+5086: 		v_u_13.setColor(v1417, Color3.fromRGB(255, 98, 48), true)
+5087: 		v_u_13.button(v1417, function()
+5088: 			-- upvalues: (ref) v_u_11, (ref) v_u_12
+5089: 			v_u_11.closePanels()
+5090: 			v_u_11.exit(function()
+5091: 				-- upvalues: (ref) v_u_12
+5092: 				v_u_12.Reels.open("foryou")
+5093: 			end)
+5094: 		end)
+5095: 	end
+5096: 	v_u_13.button(v1416.Left.TitleBtn, v_u_1271)
+5097: 	v_u_13.setColor(v1416.Left.BackBtn, v_u_13.ACCENT, true)
+5098: 	if v1416.Left:FindFirstChild("ShareBtn") then
+5099: 		v_u_13.setColor(v1416.Left.ShareBtn, v_u_13.GREEN, true)
+5100: 		v_u_13.button(v1416.Left.ShareBtn, v_u_90.share)
+5101: 	end
+5102: 	v_u_13.button(v1416.Right.UndoBtn, function()
+5103: 		-- upvalues: (ref) v_u_34, (ref) v_u_90, (ref) v_u_45, (ref) v_u_32, (ref) v_u_33, (ref) v_u_16, (ref) v_u_359, (ref) v_u_22, (ref) v_u_302
+5104: 		if v_u_34 == "draw" then
+5105: 			v_u_90.undoStroke()
+5106: 		elseif not v_u_45 then
+5107: 			if v_u_90.styleDrag then
+5108: 				return
+5109: 			end
+5110: 			if v_u_32:undoOp() then
+5111: 				if v_u_33 and not v_u_32.objs[v_u_33] then
+5112: 					v_u_33 = nil
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.Home =====
+   ...
+667: 		}, Enum.EasingStyle.Back, Enum.EasingDirection.Out, "sw")
+668: 		v_u_10.tween(p257, 0.18, {
+669: 			["BackgroundColor3"] = v261
+670: 		}, nil, nil, "sw")
+671: 	end
+672: end
+673: local function v_u_289(p263, p264) -- name: askShare
+674: 	-- upvalues: (ref) v_u_32, (ref) v_u_31, (ref) v_u_40, (copy) v_u_256, (ref) v_u_10, (ref) v_u_41, (copy) v_u_6, (copy) v_u_188, (ref) v_u_189, (copy) v_u_173
+675: 	if v_u_32 then
+676: 		v_u_32(nil)
+677: 	end
+678: 	v_u_31.Title.Text = p264 and "Update your cartoon" or "Publish your cartoon"
+679: 	v_u_31.ShareBtn.Text = p264 and "Update" or "Publish"
+680: 	v_u_31.TitleBox.Text = p263.title or ""
+681: 	v_u_31.DescBox.Text = p263.desc or ""
+682: 	local v265 = p263.rx == true
+683: 	v_u_40 = v265
+684: 	local v266 = v_u_31.RemixRow.Switch
+685: 	local v267 = v265 and UDim2.new(1, -27, 0.5, 0) or UDim2.new(0, 3, 0.5, 0)
+686: 	local v268 = v265 and v_u_256 or v_u_10.BTN
+687: 	v_u_10.stop(v266.Knob, "sw")
+688: 	v_u_10.stop(v266, "sw")
+689: 	v266.Knob.Position = v267
+690: 	v266.BackgroundColor3 = v268
+691: 	local v269 = p263.nd ~= true
+692: 	v_u_41 = v269
+693: 	local v270 = v_u_31.DuetRow.Switch
+694: 	local v271 = v269 and UDim2.new(1, -27, 0.5, 0) or UDim2.new(0, 3, 0.5, 0)
+695: 	local v272 = v269 and v_u_256 or v_u_10.BTN
+696: 	v_u_10.stop(v270.Knob, "sw")
+697: 	v_u_10.stop(v270, "sw")
+698: 	v270.Knob.Position = v271
+699: 	v270.BackgroundColor3 = v272
+700: 	local v273 = v_u_31.TitleBox
+701: 	local v274 = v_u_6.MAX_TITLE_LEN
+702: 	local v275 = utf8.len(v273.Text)
+703: 	if v275 and v274 < v275 then
+   ...
+767: 				continue
+768: 			end
+769: 			v292 = v292 + 1
+770: 		end
+771: 		if v_u_68 <= v292 then
+772: 			v_u_10.toast("You can only publish " .. v_u_68 .. " cartoons. Level up to publish more!", true)
+773: 			return
+774: 		end
+775: 	end
+776: 	local v294 = v_u_289(p290, v291)
+777: 	if v294 then
+778: 		v_u_167(v291 and "Updating your cartoon..." or "Publishing your cartoon...", "Saving it for everyone, please wait!")
+779: 		local v295, v296 = v_u_10.call("Publish", p290.id, v294.title, {
+780: 			["d"] = v294.desc,
+781: 			["rx"] = v294.rx,
+782: 			["nd"] = v294.nd
+783: 		})
+784: 		if v295 then
+785: 			if v291 then
+786: 				v_u_170("Cartoon updated!", "Everyone now sees the new version.")
+787: 			else
+788: 				v_u_170("Your cartoon is live!", "Everyone can watch it in the Gallery.")
+789: 			end
+790: 			local v_u_297 = v_u_29
+791: 			task.delay(1.6, function()
+   ...
+2644: 	v_u_17.Visible = false
+2645: 	v_u_31 = v_u_9.ui.Root.Popups.ShareForm
+2646: 	v_u_31.Visible = false
+2647: 	v_u_14.Trending.Visible = false
+2648: 	local function v775() -- name: cancel
+2649: 		-- upvalues: (ref) v_u_32
+2650: 		if v_u_32 then
+2651: 			v_u_32(nil)
+2652: 		end
+2653: 	end
+2654: 	v_u_10.button(v_u_31.CloseBtn, v775)
+2655: 	v_u_10.button(v_u_31.CancelBtn, v775)
+2656: 	v_u_10.button(v_u_31.ShareBtn, function()
+2657: 		-- upvalues: (ref) v_u_32, (ref) v_u_31, (ref) v_u_10, (ref) v_u_40, (ref) v_u_41
+2658: 		if v_u_32 then
+2659: 			if string.gsub(v_u_31.TitleBox.Text, "^%s+", "") == "" then
+2660: 				v_u_10.toast("Give your cartoon a title first", true)
+2661: 			else
+2662: 				v_u_32({
+2663: 					["title"] = v_u_31.TitleBox.Text,
+2664: 					["desc"] = v_u_31.DescBox.Text,
+2665: 					["rx"] = v_u_40,
+2666: 					["nd"] = not v_u_41
+2667: 				})
+2668: 			end
+2669: 		else
+2670: 			return
+2671: 		end
+2672: 	end)
+2673: 	v_u_31.RemixRow.Activated:Connect(function()
+2674: 		-- upvalues: (ref) v_u_32, (ref) v_u_40, (ref) v_u_262, (ref) v_u_31
+2675: 		if v_u_32 then
+
+===== REMOTES =====
