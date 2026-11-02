@@ -1,0 +1,1461 @@
+keys: Draw, Submit, Upload, Canvas
+scripts scanned: 88
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient =====
+1: local v1 = game:GetService("Players")
+2: local v_u_2 = game:GetService("StarterGui")
+3: local v_u_3 = game:GetService("GuiService")
+4: game:GetService("UserInputService")
+5: if not game:IsLoaded() then
+6: 	game.Loaded:Wait()
+7: end
+8: local v_u_4 = v1.LocalPlayer
+9: local v5 = v_u_4:WaitForChild("PlayerGui")
+10: local v_u_6 = {}
+11: for _, v7 in ipairs({
+12: 	"DrawWorld",
+13: 	"DrawHandles",
+14: 	"DrawUI",
+15: 	"DrawWatch"
+16: }) do
+17: 	local v8 = v5:FindFirstChild(v7)
+18: 	if not v8 then
+19: 		v8 = v_u_2:WaitForChild(v7):Clone()
+20: 		v8.Parent = v5
+21: 	end
+22: 	v_u_6[v7] = v8
+23: end
+24: v5.ChildAdded:Connect(function(p9)
+25: 	-- upvalues: (copy) v_u_6
+26: 	local v10 = v_u_6[p9.Name]
+27: 	if v10 and v10 ~= p9 then
+   ...
+107: end)
+108: pcall(function()
+109: 	game:GetService("RunService"):Set3dRenderingEnabled(false)
+110: end)
+111: local v_u_29 = {
+112: 	["player"] = nil,
+113: 	["ui"] = nil,
+114: 	["world"] = nil,
+115: 	["handles"] = nil,
+116: 	["watch"] = nil,
+117: 	["scale"] = 1,
+118: 	["player"] = v_u_4,
+119: 	["ui"] = v_u_6.DrawUI,
+120: 	["world"] = v_u_6.DrawWorld,
+121: 	["handles"] = v_u_6.DrawHandles,
+122: 	["watch"] = v_u_6.DrawWatch
+123: }
+124: v_u_29.ui.Enabled = true
+125: v_u_29.world.Enabled = false
+126: v_u_29.handles.Enabled = false
+127: v_u_29.watch.Enabled = false
+128: function v_u_29.layoutRoot(p30, p31) -- name: layoutRoot
+129: 	-- upvalues: (copy) v_u_29
+130: 	local v32 = p30.AbsoluteSize
+131: 	if v32.X < 10 or v32.Y < 10 then
+132: 		return v_u_29.scale, 1
+133: 	end
+134: 	local v33 = v32.X / 1100
+   ...
+181: 				if not (v49 and v49:GetAttribute("Boost")) then
+182: 					continue
+183: 				end
+184: 				local v50 = v49:GetAttribute("BaseMax") or v49.MaxTextSize
+185: 				v49:SetAttribute("BaseMax", v50)
+186: 				local v51 = v50 * p43 + 0.5
+187: 				v49.MaxTextSize = math.floor(v51)
+188: 			end
+189: 		end
+190: 	end
+191: end
+192: local v52 = Instance.new("ScreenGui")
+193: v52.Name = "DrawScreen"
+194: v52.IgnoreGuiInset = true
+195: v52.ScreenInsets = Enum.ScreenInsets.None
+196: v52.ClipToDeviceSafeArea = false
+197: v52.ResetOnSpawn = false
+198: local v_u_53 = Instance.new("Frame")
+199: v_u_53.Name = "Screen"
+200: v_u_53.Size = UDim2.fromScale(1, 1)
+201: v_u_53.BackgroundTransparency = 1
+202: v_u_53.Active = false
+203: v_u_53.Parent = v52
+204: v52.Parent = v5
+205: local function v_u_72(p54) -- name: layoutBleed
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.Util =====
+1: local v_u_1 = game:GetService("TweenService")
+2: local v_u_2 = game:GetService("SoundService")
+3: local v_u_3 = game:GetService("UserInputService")
+4: local v_u_4 = game:GetService("RunService")
+5: local v5 = game:GetService("ReplicatedStorage")
+6: local v_u_6 = v5:WaitForChild("DrawRemotes"):WaitForChild("Api")
+7: local v_u_7 = require(v5:WaitForChild("DrawShared"):WaitForChild("Library"))
+8: local v_u_8 = {}
+9: local v_u_9 = nil
+10: local v_u_10 = nil
+11: v_u_8.ACCENT = Color3.fromRGB(92, 108, 255)
+12: v_u_8.BTN = Color3.fromRGB(46, 44, 72)
+13: v_u_8.GREEN = Color3.fromRGB(56, 206, 128)
+14: v_u_8.DANGER = Color3.fromRGB(238, 64, 92)
+15: v_u_8.ON = Color3.fromRGB(255, 178, 48)
+16: v_u_8.ON_TEXT = Color3.fromRGB(255, 255, 255)
+17: v_u_8.VIP_OWNED = Color3.fromRGB(150, 80, 255)
+18: local v_u_11 = Color3.new(1, 1, 1)
+19: local v_u_12 = Color3.new(0, 0, 0)
+   ...
+583: 	Color3.fromRGB(92, 168, 255),
+584: 	Color3.fromRGB(180, 110, 255),
+585: 	Color3.fromRGB(255, 140, 60)
+586: }
+587: local v_u_159 = nil
+588: local v_u_160 = {}
+589: local v_u_161 = nil
+590: local v_u_162 = Font.new("rbxasset://fonts/families/LegacyArial.json")
+591: function v_u_8.burst(p163, p164, p165) -- name: burst
+592: 	-- upvalues: (ref) v_u_159, (ref) v_u_9, (copy) v_u_8, (copy) v_u_162, (copy) v_u_1
+593: 	if not v_u_159 then
+594: 		v_u_159 = Instance.new("ScreenGui")
+595: 		v_u_159.Name = "DrawFx"
+596: 		v_u_159.DisplayOrder = 100
+597: 		v_u_159.IgnoreGuiInset = true
+598: 		v_u_159.ResetOnSpawn = false
+599: 		v_u_159.Parent = v_u_9.player:WaitForChild("PlayerGui")
+600: 	end
+601: 	local v166 = v_u_159
+602: 	local v167 = p163.AbsolutePosition + p163.AbsoluteSize / 2 - v166.AbsolutePosition
+603: 	local v168 = v_u_9.scale or 1
+604: 	local v169 = Random.new()
+605: 	for v170 = 1, p165 do
+606: 		local v171 = v169:NextNumber(18, 30) * v168
+607: 		local v172 = math.floor(v171)
+   ...
+663: 	if #v_u_160 == 0 and v_u_161 then
+664: 		v_u_161:Disconnect()
+665: 		v_u_161 = nil
+666: 	end
+667: end
+668: function v_u_8.celebrate() -- name: celebrate
+669: 	-- upvalues: (copy) v_u_157, (copy) v_u_8, (ref) v_u_159, (ref) v_u_9, (copy) v_u_158, (copy) v_u_160, (ref) v_u_161, (copy) v_u_4, (copy) v_u_191
+670: 	for _, v192 in ipairs(v_u_157) do
+671: 		v_u_8.sfx(v192)
+672: 	end
+673: 	if not v_u_159 then
+674: 		v_u_159 = Instance.new("ScreenGui")
+675: 		v_u_159.Name = "DrawFx"
+676: 		v_u_159.DisplayOrder = 100
+677: 		v_u_159.IgnoreGuiInset = true
+678: 		v_u_159.ResetOnSpawn = false
+679: 		v_u_159.Parent = v_u_9.player:WaitForChild("PlayerGui")
+680: 	end
+681: 	local v193 = v_u_159.AbsoluteSize
+682: 	local v194 = v_u_9.scale or 1
+683: 	local v195 = Random.new()
+684: 	for v196 = 1, 70 do
+685: 		local v197 = v196 % 2 == 0 and 1 or -1
+686: 		local v198 = Instance.new("Frame")
+687: 		v198.BorderSizePixel = 0
+   ...
+880: 		local v255 = p_u_245.Size
+881: 		local v256 = p_u_245.AnchorPoint
+882: 		local v257 = v254.Y - UDim.new(v255.Y.Scale * v256.Y, v255.Y.Offset * v256.Y)
+883: 		v_u_252.AnchorPoint = Vector2.new(v256.X, 0)
+884: 		v_u_253.AnchorPoint = Vector2.new(v256.X, 1)
+885: 		v_u_252.Position = UDim2.new(v254.X, v257)
+886: 		v_u_253.Position = UDim2.new(v254.X, v257 + v255.Y)
+887: 		v_u_252.Size = UDim2.new(v255.X, UDim.new(0, 30))
+888: 		v_u_253.Size = v_u_252.Size
+889: 	end
+890: 	local function v265() -- name: paint
+891: 		-- upvalues: (copy) p_u_245, (copy) v_u_252, (copy) v_u_253
+892: 		local v259 = p_u_245.CanvasPosition.Y
+893: 		local v260 = p_u_245.AbsoluteCanvasSize.Y - p_u_245.AbsoluteWindowSize.Y
+894: 		local v261 = v_u_252
+895: 		local v262 = p_u_245.Visible
+896: 		if v262 then
+897: 			v262 = v259 > 1
+898: 		end
+899: 		v261.Visible = v262
+900: 		local v263 = v_u_253
+901: 		local v264 = p_u_245.Visible
+902: 		if v264 then
+903: 			v264 = v259 < v260 - 1
+904: 		end
+905: 		v263.Visible = v264
+906: 	end
+907: 	v258()
+908: 	local v266 = p_u_245.CanvasPosition.Y
+909: 	local v267 = p_u_245.AbsoluteCanvasSize.Y - p_u_245.AbsoluteWindowSize.Y
+910: 	local v268 = p_u_245.Visible
+911: 	if 
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.Renderer =====
+1: local v1 = game:GetService("ReplicatedStorage")
+2: local v_u_2 = game:GetService("TextService")
+3: local v_u_3 = game:GetService("RunService")
+4: local v4 = v1:WaitForChild("DrawShared")
+5: local v_u_5 = require(v4.Config)
+6: local v_u_6 = require(v4.Library)
+7: local v_u_7 = require(v4.Rig)
+8: local v_u_8 = require(v4.Schema)
+9: local v_u_9 = require(v4.Anim)
+10: local v_u_10 = v1:WaitForChild("DrawAssets")
+11: local v_u_11 = v_u_7.rot
+12: local v_u_12 = {}
+13: local v_u_13 = {}
+14: v_u_13.__index = v_u_13
+15: local v_u_14 = {
+16: 	{ -1, -1 },
+17: 	{ 1, -1 },
+18: 	{ 1, 1 },
+19: 	{ -1, 1 }
+20: }
+21: local v_u_15 = Color3.fromRGB(255, 230, 90)
+22: local v_u_16 = Color3.fromRGB(240, 70, 30)
+   ...
+834: 	local v268
+835: 	if type(p267) == "table" then
+836: 		v268 = v_u_6.get(p267.k)
+837: 	else
+838: 		v268 = false
+839: 	end
+840: 	if not v268 then
+841: 		return nil
+842: 	end
+843: 	local v269
+844: 	if v268.Kind == "drawing" then
+845: 		v269 = Instance.new("Frame")
+846: 		v269.Name = "Drawing"
+847: 		v269.BackgroundTransparency = 1
+848: 		v269.BorderSizePixel = 0
+849: 		v269.Size = UDim2.fromOffset(0, 0)
+850: 		for v270, v271 in ipairs(v_u_5.DRAWING_ENABLED and (p267.s or {}) or {}) do
+851: 			v_u_12.drawStroke(v269, v271, v270)
+852: 		end
+853: 	else
+854: 		v269 = v268.Template:Clone()
+855: 	end
+856: 	v269.AnchorPoint = Vector2.zero
+857: 	v269.Position = UDim2.fromOffset(0, 0)
+858: 	local v272 = Instance.new("UIScale")
+   ...
+1246: 		return p483[2] < p484[2]
+1247: 	else
+1248: 		return p483[1].ZIndex < p484[1].ZIndex
+1249: 	end
+1250: end
+1251: function v_u_12.sample(p486, p487, p488, p489) -- name: sample
+1252: 	-- upvalues: (copy) v_u_11, (copy) v_u_482, (copy) v_u_459, (copy) v_u_467, (copy) v_u_485
+1253: 	local v_u_490 = p486.BackgroundColor3
+1254: 	local v491 = p486.AbsolutePosition
+1255: 	local v492 = p486.AbsoluteSize
+1256: 	local function v_u_525(p493, p494, p495, p496, p497) -- name: visit
+1257: 		-- upvalues: (ref) v_u_11, (ref) v_u_482, (ref) v_u_459, (ref) v_u_467, (ref) v_u_490, (ref) v_u_485, (copy) v_u_525
+1258: 		if p493.Visible and not p493:IsA("CanvasGroup") then
+1259: 			local v498 = p493:FindFirstChildOfClass("UIScale")
+1260: 			local v499 = v498 and v498.Scale or 1
+1261: 			if v499 > 0 then
+1262: 				local v500 = p493.Size
+1263: 				local v501 = p493.Position
+1264: 				local v502 = p493.AnchorPoint
+1265: 				local v503 = v500.X.Scale * p496 + v500.X.Offset
+1266: 				local v504 = v500.Y.Scale * p497 + v500.Y.Offset
+1267: 				local v505 = v503 * v499
+1268: 				local v506 = v504 * v499
+1269: 				local v507 = v501.X.Scale * p496 + v501.X.Offset + (0.5 - v502.X) * v505
+1270: 				local v508 = v501.Y.Scale * p497 + v501.Y.Offset + (0.5 - v502.Y) * v506
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.Project =====
+1: local v1 = game:GetService("ReplicatedStorage"):WaitForChild("DrawShared")
+2: local v_u_2 = require(v1.Config)
+3: local v_u_3 = require(v1.Library)
+4: local v_u_4 = require(v1.Schema)
+5: local v_u_5 = require(v1.Anim)
+6: local v_u_6 = require(v1.Rig)
+7: local v_u_7 = {}
+8: v_u_7.__index = v_u_7
+9: local function v_u_12(p8) -- name: deep
+10: 	-- upvalues: (copy) v_u_12
+11: 	if type(p8) ~= "table" then
+12: 		return p8
+13: 	end
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.Timeline =====
+1: local v_u_1 = game:GetService("UserInputService")
+2: local v_u_2 = game:GetService("RunService")
+3: local v3 = game:GetService("ReplicatedStorage")
+4: local v_u_4 = require(v3:WaitForChild("DrawShared"):WaitForChild("Library"))
+5: local v_u_5 = {}
+6: local v_u_6 = nil
+7: local v_u_7 = nil
+8: local v_u_8 = nil
+9: local v_u_9 = nil
+10: local v_u_10 = nil
+11: local v_u_11 = nil
+12: local v_u_12 = nil
+13: local v_u_13 = nil
+14: local v_u_14 = nil
+15: local v_u_15 = nil
+16: local v_u_16 = {}
+   ...
+116: 		v_u_22 = true
+117: 		v_u_41(p42.x)
+118: 		v_u_23 = v_u_2.RenderStepped:Connect(function()
+119: 			-- upvalues: (ref) v_u_21, (ref) v_u_8, (ref) v_u_41
+120: 			local v53 = v_u_21
+121: 			if v53 then
+122: 				local v54 = v_u_8.AbsolutePosition.X
+123: 				local v55 = v54 + v_u_8.AbsoluteSize.X
+124: 				local v56 = v53.x < v54 + 40 and -9 or (v53.x > v55 - 40 and 9 or 0)
+125: 				if v56 ~= 0 then
+126: 					local v57 = v_u_8
+127: 					local v58 = Vector2.new
+128: 					local v59 = v_u_8.CanvasPosition.X + v56
+129: 					v57.CanvasPosition = v58(math.max(0, v59), 0)
+130: 					v_u_41(v53.x)
+131: 				end
+132: 			end
+133: 		end)
+134: 	end
+135: end
+136: function v_u_5.init(p61) -- name: init
+137: 	-- upvalues: (ref) v_u_6, (ref) v_u_7, (ref) v_u_15, (ref) v_u_8, (ref) v_u_9, (ref) v_u_10, (ref) v_u_11, (ref) v_u_13, (ref) v_u_14, (ref) v_u_12, (copy) v_u_1, (ref) v_u_20, (ref) v_u_21, (copy) v_u_41, (copy) v_u_60, (ref) v_u_23, (copy) v_u_5
+138: 	v_u_6 = p61
+139: 	v_u_7 = p61.Util
+140: 	local v62 = v_u_6.ui.Root.Editor
+141: 	v_u_15 = v62.Timeline
+   ...
+639: 			v_u_5.paintKeys()
+640: 			v_u_10.Text = "Frame " .. v163.cur .. " / " .. #v163.order
+641: 			v_u_11.Text = v_u_7.secs(v163:frame().d)
+642: 			if v_u_16[v163.cur] then
+643: 				local v_u_172 = v_u_16[v163.cur]
+644: 				task.defer(function()
+645: 					-- upvalues: (copy) v_u_172, (ref) v_u_8
+646: 					if v_u_172.Parent then
+647: 						local v173 = v_u_172.AbsolutePosition.X - v_u_8.AbsolutePosition.X
+648: 						local v174 = v173 + v_u_172.AbsoluteSize.X
+649: 						local v175 = v_u_8.AbsoluteSize.X
+650: 						if v173 < 0 or v175 < v174 then
+651: 							local v176 = v_u_8.CanvasPosition.X + v173 - v175 / 2 + v_u_172.AbsoluteSize.X / 2
+652: 							v_u_8.CanvasPosition = Vector2.new(math.max(0, v176), 0)
+653: 						end
+654: 					end
+655: 				end)
+656: 			end
+657: 		else
+658: 			v_u_5.rebuild()
+659: 		end
+660: 	else
+661: 		return
+662: 	end
+663: end
+664: return v_u_5
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.Playback =====
+1: local v_u_1 = game:GetService("RunService")
+2: local v_u_2 = game:GetService("UserInputService")
+3: local v3 = game:GetService("ReplicatedStorage"):WaitForChild("DrawShared")
+4: local v_u_4 = require(v3.Config)
+5: local v_u_5 = require(v3.Rig)
+6: local v_u_6 = require(v3.Anim)
+7: local v_u_7 = require(v3.Library)
+8: local v_u_8 = game:GetService("ContentProvider")
+9: local v_u_9 = game:GetService("SoundService")
+10: local v_u_10 = game:GetService("GuiService")
+11: local v_u_11 = {
+12: 	["active"] = false
+13: }
+14: local v_u_12 = nil
+15: local v_u_13 = nil
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.Editor =====
+1: local v_u_1 = game:GetService("UserInputService")
+2: local v2 = game:GetService("ReplicatedStorage")
+3: local v_u_3 = game:GetService("SoundService")
+4: local v4 = v2:WaitForChild("DrawShared")
+5: local v_u_5 = require(v4.Config)
+6: local v_u_6 = require(v4.Library)
+7: local v_u_7 = require(v4.Rig)
+8: local v_u_8 = require(v4.Schema)
+9: local v_u_9 = require(v4.Anim)
+10: local v_u_10 = game:GetService("RunService")
+11: local v_u_11 = {}
+12: local v_u_12 = nil
+13: local v_u_13 = nil
+14: local v_u_14 = nil
+15: local v_u_15 = nil
+16: local v_u_16 = nil
+   ...
+608: 		local v290 = v287:FindFirstChild("Icon")
+609: 		if v290 and v290:IsA("TextLabel") then
+610: 			v290.TextTransparency = v289
+611: 			local v291 = v290:FindFirstChild("Img")
+612: 			if v291 then
+613: 				v291.ImageTransparency = v289
+614: 			end
+615: 		end
+616: 		v_u_13.setActive(v280.OnionBtn, v_u_35)
+617: 		v_u_13.setActive(v280.CameraBtn, v_u_34 == "camera")
+618: 		local v292 = v_u_22.LeftBar
+619: 		v_u_13.setActive(v292.AddBtn, v_u_13.isOpen(v_u_22.Library))
+620: 		v_u_13.setActive(v292.DrawBtn, v_u_34 == "draw")
+621: 		v_u_13.setActive(v292.SceneBtn, v_u_13.isOpen(v_u_22.Scenes))
+622: 		v_u_13.setActive(v292.MusicBtn, v_u_13.isOpen(v_u_22.Music))
+623: 		if v_u_76 and not v_u_13.isOpen(v_u_22.Music) then
+624: 			for _, v293 in ipairs(v_u_76:GetChildren()) do
+625: 				v293:Stop()
+626: 			end
+627: 		end
+628: 		v_u_13.setActive(v292.SoundBtn, v_u_13.isOpen(v_u_22.Sounds) or v_u_13.isOpen(v_u_22.Music))
+629: 		local v294 = v_u_29.Buttons
+630: 		v_u_13.setActive(v294.FxBtn, v_u_13.isOpen(v_u_22.ObjFx))
+631: 		v_u_13.setActive(v_u_29.Buttons.MovesBtn, v_u_13.isOpen(v_u_22.Moves))
+632: 		v_u_13.setActive(v294.FaceBtn, v_u_13.isOpen(v_u_22.FacePanel))
+   ...
+1912: 		if v722 == "brush" then
+1913: 			if v_u_34 ~= "draw" then
+1914: 				v_u_18.close()
+1915: 			end
+1916: 		elseif v722 ~= v_u_33 or v_u_34 ~= "select" then
+1917: 			v_u_18.close()
+1918: 		end
+1919: 	end
+1920: 	v_u_323()
+1921: 	v_u_88()
+1922: 	v_u_302()
+1923: end
+1924: local function v_u_725() -- name: exitDraw
+1925: 	-- upvalues: (ref) v_u_55, (ref) v_u_30, (ref) v_u_45, (ref) v_u_89, (ref) v_u_84, (copy) v_u_11, (ref) v_u_57, (ref) v_u_490, (ref) v_u_34, (ref) v_u_24, (ref) v_u_18, (ref) v_u_33, (ref) v_u_323, (ref) v_u_88, (copy) v_u_302
+1926: 	if v_u_55 then
+1927: 		v_u_55.root:Destroy()
+1928: 		v_u_55 = nil
+1929: 	end
+1930: 	v_u_30.Visible = false
+1931: 	if v_u_45 then
+1932: 		v_u_89()
+1933: 	end
+1934: 	if v_u_84 then
+1935: 		v_u_11.cancelAttach()
+1936: 	end
+   ...
+1944: 		if v724 == "brush" then
+1945: 			if v_u_34 ~= "draw" then
+1946: 				v_u_18.close()
+1947: 			end
+1948: 		elseif v724 ~= v_u_33 or v_u_34 ~= "select" then
+1949: 			v_u_18.close()
+1950: 		end
+1951: 	end
+1952: 	v_u_323()
+1953: 	v_u_88()
+1954: 	v_u_302()
+1955: end
+1956: local function v_u_729() -- name: enterDraw
+1957: 	-- upvalues: (copy) v_u_5, (ref) v_u_32, (ref) v_u_13, (ref) v_u_92, (ref) v_u_45, (ref) v_u_89, (ref) v_u_84, (copy) v_u_11, (ref) v_u_57, (ref) v_u_490, (ref) v_u_34, (ref) v_u_33, (ref) v_u_18, (ref) v_u_323, (ref) v_u_88, (copy) v_u_302, (ref) v_u_55, (ref) v_u_14, (ref) v_u_23, (ref) v_u_30, (ref) v_u_91
+1958: 	if v_u_5.DRAWING_ENABLED then
+1959: 		if v_u_32:objCount() >= v_u_5.MAX_OBJECTS then
+1960: 			v_u_13.toast("Too many objects (max " .. v_u_5.MAX_OBJECTS .. ")", true)
+1961: 			return
+1962: 		else
+1963: 			local v726 = v_u_5.MAX_POINTS
+1964: 			local v727 = v_u_5.MAX_TOTAL_POINTS - v_u_32:pointsUsed()
+1965: 			if math.min(v726, v727) < 10 then
+1966: 				v_u_13.toast("Your drawings are too big, delete one first", true)
+1967: 			else
+1968: 				v_u_92(false)
+   ...
+1995: 					["undone"] = {},
+1996: 					["root"] = v_u_14.newRoot("Ink")
+1997: 				}
+1998: 				v_u_55.root.Parent = v_u_23.Draft
+1999: 				v_u_30.Visible = true
+2000: 				v_u_91()
+2001: 			end
+2002: 		end
+2003: 	else
+2004: 		return
+2005: 	end
+2006: end
+2007: local function v_u_760() -- name: finishDraw
+2008: 	-- upvalues: (ref) v_u_55, (ref) v_u_30, (ref) v_u_4
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.ColorPicker =====
+1: local v_u_1 = game:GetService("UserInputService")
+2: local v2 = game:GetService("ReplicatedStorage"):WaitForChild("DrawShared")
+3: local v_u_3 = require(v2.Config)
+4: local v_u_4 = require(v2.Schema)
+5: local v_u_5 = {}
+6: local v_u_6 = nil
+7: local v_u_7 = nil
+8: local v_u_8 = nil
+9: local v_u_9 = nil
+10: local v_u_10 = nil
+11: local v_u_11 = nil
+12: local v_u_12 = 0
+13: local v_u_13 = 0
+14: local v_u_14 = 0
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.Shop =====
+1: local v_u_1 = game:GetService("MarketplaceService")
+2: local v_u_2 = game:GetService("PolicyService")
+3: local v_u_3 = game:GetService("RunService")
+4: local v_u_4 = game:GetService("SoundService")
+5: local v_u_5 = game:GetService("TweenService")
+6: local v_u_6 = game:GetService("ReplicatedStorage")
+7: local v7 = v_u_6:WaitForChild("DrawShared")
+8: local v_u_8 = require(v7:WaitForChild("Config"))
+9: local v_u_9 = require(v7:WaitForChild("Library"))
+10: local v_u_10 = require(script.Parent:WaitForChild("CrateSkins"))
+11: local v_u_11 = {}
+12: local v_u_12 = nil
+13: local v_u_13 = nil
+14: local v_u_14 = nil
+15: local v_u_15 = nil
+16: local v_u_16 = nil
+17: local v_u_17 = nil
+18: local v_u_18 = nil
+19: local v_u_19 = false
+   ...
+979: 			table.insert(v300, v306)
+980: 		end
+981: 		local v307 = v_u_21
+982: 		local v308 = v_u_12.Demo.reels
+983: 		table.insert(v307, v308(v300))
+984: 	end
+985: end
+986: local v_u_310 = nil
+987: local function v_u_319() -- name: refreshNav
+988: 	-- upvalues: (ref) v_u_20, (copy) v_u_30, (ref) v_u_15, (ref) v_u_310, (ref) v_u_13, (copy) v_u_33
+989: 	if v_u_20 then
+990: 		local v311 = v_u_30[1]
+991: 		local v312 = v_u_15.AbsoluteCanvasSize.Y - v_u_15.AbsoluteWindowSize.Y
+992: 		if v312 > 0 and v_u_15.CanvasPosition.Y >= v312 - 4 then
+993: 			v311 = v_u_30[#v_u_30]
+994: 		else
+995: 			for _, v313 in ipairs(v_u_30) do
+996: 				local v314 = v_u_15:FindFirstChild(v313)
+997: 				if not v314 or v314.AbsolutePosition.Y - v_u_15.AbsolutePosition.Y > v_u_15.AbsoluteWindowSize.Y * 0.35 then
+998: 					continue
+999: 				end
+1000: 				v311 = v313
+1001: 			end
+1002: 		end
+1003: 		if v311 ~= v_u_310 then
+1004: 			v_u_310 = v311
+   ...
+1022: 		end
+1023: 	else
+1024: 		return
+1025: 	end
+1026: end
+1027: local function v_u_328(p320) -- name: scrollTo
+1028: 	-- upvalues: (ref) v_u_15, (ref) v_u_14, (ref) v_u_13
+1029: 	local v321 = v_u_15:FindFirstChild(p320)
+1030: 	if v321 then
+1031: 		local v322 = v_u_14.AbsoluteSize.X
+1032: 		local v323 = v_u_14.Size.X.Offset
+1033: 		local v324 = v322 / math.max(v323, 1)
+1034: 		local v325 = v_u_15.CanvasPosition.Y + v321.AbsolutePosition.Y - v_u_15.AbsolutePosition.Y - 6 * v324
+1035: 		local v326 = v_u_15.AbsoluteCanvasSize.Y - v_u_15.AbsoluteWindowSize.Y
+1036: 		local v327 = math.max(0, v326)
+1037: 		v_u_13.tween(v_u_15, 0.45, {
+1038: 			["CanvasPosition"] = Vector2.new(0, (math.clamp(v325, 0, v327)))
+1039: 		}, Enum.EasingStyle.Quart, Enum.EasingDirection.Out, "scroll")
+1040: 	end
+1041: end
+1042: local v_u_329 = {
+1043: 	{
+1044: 		"Slot1",
+1045: 		"Knight",
+1046: 		{
+1047: 			"Punch",
+1048: 			"Wave",
+1049: 			"Jump",
+1050: 			"Clap"
+   ...
+1184: 					local v364 = v_u_13.tween
+1185: 					local v365 = {
+1186: 						["Size"] = UDim2.fromOffset(v363.Size.X.Offset, v_u_362:NextInteger(30, 140))
+1187: 					}
+1188: 					v364(v363, 0.225, v365, Enum.EasingStyle.Quad, Enum.EasingDirection.Out, "eq")
+1189: 				end
+1190: 				task.wait(0.25)
+1191: 			end
+1192: 		end)
+1193: 		task.spawn(function()
+1194: 			-- upvalues: (ref) v_u_360, (copy) v_u_362, (copy) v_u_361, (ref) v_u_49, (ref) v_u_5, (ref) v_u_48
+1195: 			while v_u_360 do
+1196: 				local v366 = Instance.new("CanvasGroup")
+1197: 				v366.BackgroundTransparency = 1
+1198: 				v366.Size = UDim2.fromOffset(30, 36)
+1199: 				v366.AnchorPoint = Vector2.new(0.5, 0.5)
+1200: 				local v367 = v_u_362:NextNumber(0.1, 0.9)
+1201: 				v366.Position = UDim2.fromScale(v367, 0.95)
+1202: 				v366.Rotation = v_u_362:NextInteger(-20, 20)
+1203: 				local v368 = v_u_361.Vinyl.Label.Note:Clone()
+1204: 				v368.Position = UDim2.fromScale(0.5, 0.5)
+1205: 				local v369 = v_u_49[v_u_362:NextInteger(1, #v_u_49)]
+1206: 				for _, v370 in ipairs(v368:GetChildren()) do
+1207: 					v370.BackgroundColor3 = v369
+1208: 				end
+   ...
+1493: 	-- upvalues: (ref) v_u_12, (copy) v_u_59, (ref) v_u_23, (ref) v_u_47, (copy) v_u_11, (ref) v_u_19, (ref) v_u_13, (ref) v_u_15, (ref) v_u_14, (copy) v_u_309, (copy) v_u_357, (copy) v_u_375, (ref) v_u_310, (copy) v_u_319, (copy) v_u_328
+14
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.Tutorial =====
+1: local v_u_1 = game:GetService("RunService")
+2: local v_u_2 = game:GetService("UserInputService")
+3: local v_u_3 = game:GetService("ReplicatedStorage")
+4: local v4 = v_u_3:WaitForChild("DrawShared")
+5: local v_u_5 = require(v4.Config)
+6: local v_u_6 = {
+7: 	["active"] = false
+8: }
+9: local v_u_7 = nil
+10: local v_u_8 = nil
+11: local v_u_9 = nil
+12: local v_u_10 = nil
+13: local v_u_11 = nil
+14: local v_u_12 = nil
+15: local v_u_13 = nil
+16: local v_u_14 = nil
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.Admin =====
+1: local v_u_1 = game:GetService("UserInputService")
+2: local v_u_2 = game:GetService("ReplicatedStorage")
+3: local v_u_3 = require(v_u_2:WaitForChild("DrawShared"):WaitForChild("Config"))
+4: local v4 = {}
+5: local v_u_5 = nil
+6: local v_u_6 = nil
+7: local v_u_7 = nil
+8: local v_u_8 = nil
+9: local v_u_9 = false
+10: local v_u_10 = false
+11: local v_u_11 = 0
+12: local function v_u_15() -- name: refresh
+13: 	-- upvalues: (ref) v_u_6, (ref) v_u_8, (copy) v_u_3
+14: 	local v12 = v_u_6.call("AdminInfo")
+15: 	if v_u_8.Visible then
+   ...
+175: 			v_u_8.Visible = not v_u_8.Visible
+176: 			if v_u_8.Visible then
+177: 				v_u_10 = false
+178: 				v_u_11 = v_u_11 + 1
+179: 				v_u_8.ResetBtn.Text = "Reset Profile"
+180: 				task.spawn(v_u_15)
+181: 			end
+182: 		end
+183: 	end)
+184: end
+185: local function v_u_42() -- name: listenQA
+186: 	-- upvalues: (copy) v_u_2, (ref) v_u_5, (ref) v_u_6
+187: 	local v39 = v_u_2:WaitForChild("DrawRemotes"):WaitForChild("Qa", 30)
+188: 	if v39 then
+189: 		v39.OnClientEvent:Connect(function(p40, p41)
+190: 			-- upvalues: (ref) v_u_5, (ref) v_u_6
+191: 			if p40 == "tutorial" then
+192: 				if v_u_5.Playback.active then
+193: 					v_u_5.Playback.close()
+194: 				end
+195: 				if v_u_5.Editor.isOpen() then
+196: 					v_u_5.Editor.exit()
+197: 				end
+198: 				v_u_5.Tutorial.reset()
+199: 				v_u_5.Home.open()
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.Home =====
+1: local v_u_1 = game:GetService("RunService")
+2: local v_u_2 = game:GetService("TweenService")
+3: local v_u_3 = game:GetService("UserInputService")
+4: local v_u_4 = game:GetService("ReplicatedStorage")
+5: local v5 = v_u_4:WaitForChild("DrawShared")
+6: local v_u_6 = require(v5.Config)
+7: local v_u_7 = require(script.Parent:WaitForChild("CrateSkins"))
+8: local v_u_8 = {}
+9: local v_u_9 = nil
+10: local v_u_10 = nil
+11: local v_u_11 = nil
+12: local v_u_12 = nil
+13: local v_u_13 = nil
+14: local v_u_14 = nil
+15: local v_u_15 = nil
+16: local v_u_16 = nil
+17: local v_u_17 = nil
+   ...
+1448: 		["new"] = v_u_14.Sub.NewTab,
+1449: 		["popular"] = v_u_14.Sub.PopularTab
+1450: 	}) do
+1451: 		local v461 = v_u_54[v459]
+1452: 		v_u_10.setColor(v460, v459 == p456 and v461 and v461 or v461:Lerp(v_u_10.BTN, 0.55), v459 == p456)
+1453: 	end
+1454: 	v_u_445()
+1455: 	local v462 = v_u_19
+1456: 	for _, v463 in ipairs(v462) do
+1457: 		v463:Destroy()
+1458: 	end
+1459: 	table.clear(v462)
+1460: 	v_u_14.GridMask.Grid.CanvasPosition = Vector2.zero
+1461: 	v_u_14.Status.Text = "Loading..."
+1462: 	v_u_14.Status.Visible = true
+1463: 	local v464 = p456 == "search"
+1464: 	local v465, v466
+1465: 	if v464 then
+1466: 		v465, v466 = v_u_10.call("Search", v_u_30)
+1467: 	else
+1468: 		v465, v466 = v_u_10.call("Feed", p456, v_u_30)
+1469: 	end
+1470: 	if v_u_25 == v458 then
+1471: 		if v464 and type(v465) == "table" then
+1472: 			local v467 = v465.author
+   ...
+1583: 	if v491 then
+1584: 		local v492 = v_u_15.FollowList
+1585: 		v_u_49 = v_u_49 + 1
+1586: 		local v493 = v_u_49
+1587: 		local v494 = v_u_48
+1588: 		for _, v495 in ipairs(v494) do
+1589: 			v495:Destroy()
+1590: 		end
+1591: 		table.clear(v494)
+1592: 		v492.Title.Text = "Following"
+1593: 		v492.Empty.Text = "Loading..."
+1594: 		v492.Empty.Visible = true
+1595: 		v492.List.CanvasPosition = Vector2.zero
+1596: 		v492.Visible = true
+1597: 		local v496, v497 = v_u_10.call("Following", v491.id)
+1598: 		if v493 == v_u_49 then
+1599: 			if v496 then
+1600: 				v492.Title.Text = "Following (" .. v_u_10.short(v496.total) .. ")"
+1601: 				v492.Empty.Text = "Not following anyone yet"
+1602: 				v492.Empty.Visible = #v496.list == 0
+1603: 				for v498, v_u_499 in ipairs(v496.list) do
+1604: 					local v500 = v492.Templates.Row:Clone()
+1605: 					v500.LayoutOrder = v498
+1606: 					local v501 = v500.Avatar
+1607: 					local v502 = v_u_499.a
+   ...
+1727: 				v533.Text = v535
+1728: 				v533.TextTransparency = 0
+1729: 			end
+1730: 			v_u_526(nil, false)
+1731: 			local v536 = v_u_15.Top
+1732: 			v536.Avatar.Image = "rbxthumb://type=AvatarHeadShot&id=" .. p527 .. "&w=150&h=150"
+1733: 			v536.DisplayName.Text = "..."
+1734: 			v536.Username.Text = ""
+1735: 			v536.Count.Text = ""
+1736: 			v536.Avatar.LvBadge.Visible = false
+1737: 			v_u_9.Cosmetics.applyProfile(v536, nil)
+1738: 			v_u_9.Cosmetics.showScene(nil)
+1739: 			v_u_15.GridMask.Grid.CanvasPosition = Vector2.zero
+1740: 			v_u_15.Status.Text = "Loading..."
+1741: 			v_u_15.Status.Visible = true
+1742: 			local v537, v538 = v_u_10.call("Author", p527)
+1743: 			if v_u_26 == v528 then
+1744: 				if v537 then
+1745: 					local v539 = {
+1746: 						["id"] = p527
+1747: 					}
+1748: 					local v540 = v537.followers
+1749: 					v539.followers = tonumber(v540) or 0
+1750: 					local v541 = v537.following
+1751: 					v539.following = tonumber(v541) or 0
+   ...
+2272: 		end
+2273: 		return
+2274: 	else
+2275: 		v_u_77 = v_u_77 + 1
+2276: 		local v682 = v_u_77
+2277: 		local v683 = v_u_78
+2278: 		for _, v684 in ipairs(v683) do
+2279: 			v684:Destroy()
+2280: 		end
+2281: 		table.clear(v683)
+2282: 		v_u_73.Empty.Text = "Loading..."
+2283: 		v_u_73.Empty.Visible = true
+2284: 		v_u_73.List.CanvasPosition = Vector2.zero
+2285: 		v_u_74.Visible = true
+2286: 		v_u_10.open(v_u_73)
+2287: 		local v685, v686 = v_u_10.call("Inbox")
+2288: 		if v682 == v_u_77 then
+2289: 			if v685 then
+2290: 				v_u_681(v685)
+2291: 				local v687 = v685.unread
+2292: 				if (tonumber(v687) or 0) > 0 or v_u_80 > 0 then
+2293: 					v_u_80 = 0
+2294: 					lo
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.CommentsUI =====
+1: local v1 = game:GetService("ReplicatedStorage"):WaitForChild("DrawShared")
+2: local v_u_2 = require(v1.Config)
+3: local v_u_3 = {}
+4: local v_u_4 = nil
+5: local v_u_5 = nil
+6: local v_u_6 = nil
+7: local v_u_7 = nil
+8: local v_u_8 = nil
+9: local v_u_9 = nil
+10: local v_u_10 = nil
+11: local v_u_11 = nil
+12: local v_u_12 = nil
+13: local v_u_13 = nil
+   ...
+397: 	if v_u_13 then
+398: 		v_u_16 = v_u_16 + 1
+399: 		local v132 = v_u_16
+400: 		local v133 = v_u_13
+401: 		if not p131 then
+402: 			v_u_34()
+403: 			v_u_19 = nil
+404: 			v_u_12.Visible = false
+405: 			v_u_17 = nil
+406: 			v_u_7.LoadMore.Visible = false
+407: 			v_u_6.Empty.Text = "Loading..."
+408: 			v_u_6.Empty.Visible = true
+409: 			v_u_7.CanvasPosition = Vector2.zero
+410: 		end
+411: 		local v134, v135 = v_u_5.call("Comments", v133.id, p131 and v_u_17 or nil, v_u_18)
+412: 		if v132 == v_u_16 and v_u_13 == v133 then
+413: 			if v134 then
+414: 				local v136 = v134.block
+415: 				v_u_20 = type(v136) == "string"
+416: 				local v137 = v134.next
+417: 				local v138 = (tonumber(v137) or 0) - #v134.list
+418: 				for v139, v140 in ipairs(v134.list) do
+419: 					if v_u_15[v140.i] then
+420: 						continue
+421: 					end
+   ...
+470: 			v147.Icon.TextTransparency = 0
+471: 			if v147.Icon:FindFirstChild("Img") then
+472: 				v147.Icon.Img.ImageTransparency = 0
+473: 			end
+474: 			if v_u_13 == v146 then
+475: 				if v149 then
+476: 					v_u_9.Text = ""
+477: 					v_u_19 = nil
+478: 					v_u_12.Visible = false
+479: 					local v151 = v149.comment
+480: 					if v151.re == nil then
+481: 						v_u_71(v151, nil, 0)
+482: 						v_u_7.CanvasPosition = Vector2.zero
+483: 					else
+484: 						local v152 = v_u_15[v151.re]
+485: 						if v152 and not v_u_15[v151.i] then
+486: 							v152.Content.Replies.Visible = true
+487: 							v_u_71(v151, v152, v151.i)
+488: 						end
+489: 					end
+490: 					local v153 = v_u_6.Empty
+491: 					local v154
+492: 					if #v_u_14 == 0 then
+493: 						v154 = not v_u_7.LoadMore.Visible
+494: 					else
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.SoundEdit =====
+1: local v_u_1 = game:GetService("UserInputService")
+2: local v_u_2 = game:GetService("RunService")
+3: local v3 = game:GetService("ReplicatedStorage"):WaitForChild("DrawShared")
+4: local v_u_4 = require(v3.Anim)
+5: local v_u_5 = require(v3.Library)
+6: local v_u_6 = {}
+7: local v_u_7 = nil
+8: local v_u_8 = nil
+9: local v_u_9 = nil
+10: local v_u_10 = nil
+11: local v_u_11 = nil
+12: local v_u_12 = nil
+13: local v_u_13 = nil
+14: local v_u_14 = nil
+15: local v_u_15 = nil
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.Demo =====
+1: local v_u_1 = game:GetService("RunService")
+2: local v2 = game:GetService("ReplicatedStorage"):WaitForChild("DrawShared")
+3: local v_u_3 = require(v2.Anim)
+4: local v_u_4 = require(v2.Rig)
+5: require(v2.Library)
+6: local v5 = {}
+7: local v_u_6 = nil
+8: local v_u_7 = nil
+9: local v_u_8 = nil
+10: local v_u_9 = nil
+11: local v_u_10 = nil
+12: local v_u_11 = nil
+13: local v_u_12 = nil
+14: local v_u_13 = nil
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.Presets =====
+1: local v1 = game:GetService("ReplicatedStorage"):WaitForChild("DrawShared")
+2: local v_u_2 = require(v1.Rig)
+3: local v3 = require(v1.Library)
+4: local v4 = {
+5: 	["t"] = 180,
+6: 	["h"] = 180,
+7: 	["ual"] = 20,
+8: 	["fal"] = 10,
+9: 	["uar"] = -20,
+10: 	["far"] = -10,
+11: 	["thl"] = 10,
+12: 	["shl"] = 4,
+13: 	["thr"] = -10,
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.BadgePopup =====
+   ...
+43: 		["views"] = p19
+44: 	}
+45: 	table.insert(v20, v21)
+46: 	v_u_10()
+47: end
+48: function v_u_3.init(p22) -- name: init
+49: 	-- upvalues: (ref) v_u_4, (ref) v_u_5, (ref) v_u_6, (copy) v_u_11, (copy) v_u_2, (copy) v_u_3, (copy) v_u_1
+50: 	v_u_4 = p22
+51: 	v_u_5 = p22.Util
+52: 	v_u_6 = v_u_4.ui.Root.Popups.Badge
+53: 	v_u_5.button(v_u_6.OkBtn, v_u_11)
+54: 	v_u_5.button(v_u_6.CloseBtn, v_u_11)
+55: 	v_u_2:WaitForChild("DrawRemotes"):WaitForChild("Badge").OnClientEvent:Connect(v_u_3.show)
+56: 	task.spawn(function()
+57: 		-- upvalues: (ref) v_u_1
+58: 		for _ = 1, 30 do
+59: 			local v23 = v_u_1.SetCore
+60: 			local v24 = v_u_1
+61: 			if pcall(v23, v24, "BadgesNotificationsActive", false) then
+62: 				break
+63: 			end
+64: 			task.wait(1)
+65: 		end
+66: 	end)
+67: end
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.EventPrompt =====
+1: local v_u_1 = game:GetService("UserInputService")
+2: local v_u_2 = game:GetService("SocialService")
+3: local v3 = game:GetService("ReplicatedStorage")
+4: local v_u_4 = require(v3:WaitForChild("DrawShared"):WaitForChild("Config"))
+5: local v5 = {}
+6: local v_u_6 = nil
+7: local v_u_7 = os.clock()
+8: local function v_u_9() -- name: popupOpen
+9: 	-- upvalues: (ref) v_u_6
+10: 	for _, v8 in ipairs(v_u_6.ui.Root.Popups:GetChildren()) do
+11: 		if not (v8:IsA("GuiObject") and v8.Visible) then
+12: 			continue
+13: 		end
+14: 		return true
+15: 	end
+16: 	return false
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.Reels =====
+1: local v_u_1 = game:GetService("RunService")
+2: local v_u_2 = game:GetService("UserInputService")
+3: local v_u_3 = game:GetService("GuiService")
+4: local v4 = game:GetService("ReplicatedStorage")
+5: local v_u_5 = require(v4:WaitForChild("DrawShared"):WaitForChild("Config"))
+6: local v_u_6 = {
+7: 	["active"] = false
+8: }
+9: local v_u_7 = nil
+10: local v_u_8 = nil
+11: local v_u_9 = nil
+12: local v_u_10 = nil
+13: local v_u_11 = nil
+14: local v_u_12 = nil
+15: local v_u_13 = nil
+16: local v_u_14 = nil
+17: local v_u_15 = nil
+   ...
+2787: 		if v_u_10.active and (v734 == Enum.UserInputType.MouseButton1 or v734 == Enum.UserInputType.Touch) then
+2788: 			v_u_68 = p733
+2789: 			v_u_69 = v_u_10.isPlaying()
+2790: 			v_u_10.setPlaying(false)
+2791: 			local v735 = v_u_70 or v_u_68 ~= nil
+2792: 			local v736 = v_u_13.Progress
+2793: 			v736.Size = UDim2.fromOffset(v736.Size.X.Offset, v735 and 9 or 4)
+2794: 			v736.Knob.Visible = v735
+2795: 			v_u_659(p733.Position.X)
+2796: 		end
+2797: 	end)
+2798: 	local v737 = Instance.new("ScreenGui")
+2799: 	v737.Name = "DrawFade"
+2800: 	v737.DisplayOrder = 20
+2801: 	v737.IgnoreGuiInset = true
+2802: 	v737.ScreenInsets = Enum.ScreenInsets.None
+2803: 	v737.ClipToDeviceSafeArea = false
+2804: 	v737.ResetOnSpawn = false
+2805: 	v_u_44 = Instance.new("Frame")
+2806: 	v_u_44.Name = "Black"
+2807: 	v_u_44.Size = UDim2.fromScale(1, 1)
+2808: 	v_u_44.BorderSizePixel = 0
+2809: 	v_u_44.BackgroundColor3 = v_u_21.Slot.BackgroundColor3
+2810: 	v_u_44.BackgroundTransparency = 1
+2811: 	v_u_44.Visible = false
+2812: 	v_u_44.Parent = v737
+2813: 	v737.Parent = v_u_7.player:WaitForChild("PlayerGui")
+2814: 	v_u_45 = Instance.new("ScreenGui")
+2815: 	v_u_45.Name = "DrawReelsBack"
+2816: 	v_u_45.DisplayOrder = 0
+2817: 	v_u_45.IgnoreGuiInset = true
+2818: 	v_u_45.ScreenInsets = Enum.ScreenInsets.None
+2819: 	v_u_45.ClipToDeviceSafeArea = false
+2820: 	v_u_45.ResetOnSpawn = false
+2821: 	v_u_45.Enabled = false
+2822: 	local v738 = Instance.new("Frame")
+2823: 	v738.Name = "Black"
+2824: 	v738.Size = UDim2.fromScale(1, 1)
+2825: 	v738.BorderSizePixel = 0
+2826: 	v738.BackgroundColor3 = v_u_21.Slot.BackgroundColor3
+2827: 	v738.Parent = v_u_45
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.MenuMusic =====
+1: local v1 = game:GetService("ReplicatedStorage")
+2: local v_u_2 = game:GetService("SoundService")
+3: local v_u_3 = require(v1:WaitForChild("DrawShared"):WaitForChild("Config"))
+4: local v_u_4 = {}
+5: local v_u_5 = Color3.fromRGB(40, 30, 110)
+6: local v_u_6 = Color3.fromRGB(96, 90, 130)
+7: local v_u_7 = Color3.fromRGB(40, 36, 64)
+8: local v_u_8 = nil
+9: local v_u_9 = nil
+10: local v_u_10 = nil
+11: local v_u_11 = {}
+12: local v_u_12 = true
+13: local v_u_13 = false
+14: local v_u_14 = 0
+15: local v_u_15 = nil
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.Afk =====
+1: local v1 = game:GetService("ReplicatedStorage")
+2: local v_u_2 = game:GetService("UserInputService")
+3: local v_u_3 = require(v1:WaitForChild("DrawShared"):WaitForChild("Config"))
+4: local v4 = {}
+5: local v_u_5 = nil
+6: local v_u_6 = os.clock()
+7: local function v_u_7() -- name: touch
+8: 	-- upvalues: (ref) v_u_6
+9: 	v_u_6 = os.clock()
+10: end
+11: function v4.init(p8) -- name: init
+12: 	-- upvalues: (ref) v_u_5, (copy) v_u_2, (copy) v_u_7, (ref) v_u_6, (copy) v_u_3
+13: 	v_u_5 = p8.Util
+14: 	v_u_2.InputBegan:Connect(v_u_7)
+15: 	v_u_2.InputChanged:Connect(v_u_7)
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.EditorTips =====
+1: local v_u_1 = game:GetService("UserInputService")
+2: local v2 = game:GetService("ReplicatedStorage"):WaitForChild("DrawShared")
+3: local v_u_3 = require(v2:WaitForChild("Config"))
+4: local v_u_4 = require(v2:WaitForChild("Library"))
+5: local v_u_5 = {}
+6: local v_u_6 = Color3.fromRGB(255, 214, 90)
+7: local v_u_7 = Color3.fromRGB(255, 160, 40)
+8: local v_u_8 = Color3.fromRGB(110, 60, 10)
+9: local v_u_9 = Color3.fromRGB(96, 90, 130)
+10: local v_u_10 = Color3.fromRGB(40, 36, 64)
+11: local v_u_11 = {
+12: 	"Library",
+13: 	"Scenes",
+14: 	"Music",
+15: 	"Speed",
+16: 	"ColorPicker",
+17: 	"ObjFx",
+18: 	"Sounds",
+19: 	"SoundEdit",
+20: 	"OnionPop",
+21: 	"Moves",
+22: 	"FacePanel",
+23: 	"PosePop",
+24: 	"StylePanel",
+25: 	"DrawBar",
+26: 	"PickBar",
+27: 	"AttachBar",
+28: 	"FrameBar"
+29: }
+30: local v_u_33 = {
+31: 	{ "Inspector.Buttons.PoseBtn", "Pose lets you drag the dots to move arms and legs", function(p12)
+32: 			return p12.sel ~= nil
+33: 		end },
+34: 	{ "Timeline.Actions.AddFrameBtn", "Add a frame, then change the pose to make it move", function(p13)
+35: 			local v14
+36: 			if p13.frames == 1 then
+37: 				v14 = p13.objs >= 1
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.DuetView =====
+1: local v1 = game:GetService("ReplicatedStorage"):WaitForChild("DrawShared")
+2: local v_u_2 = require(v1:WaitForChild("Config"))
+3: local v_u_3 = require(v1:WaitForChild("Rig"))
+4: local v_u_4 = {}
+5: v_u_4.__index = v_u_4
+6: local v_u_5 = nil
+7: local v_u_6 = {}
+8: function v_u_4.new(p7, p8) -- name: new
+9: 	-- upvalues: (copy) v_u_4, (ref) v_u_5
+10: 	local v9 = v_u_4
+11: 	local v10 = setmetatable({}, v9)
+12: 	local v11 = Instance.new("Frame")
+13: 	v11.Name = "DuetView"
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.MenuThemes =====
+1: local v_u_1 = game:GetService("StarterGui")
+2: local v_u_2 = game:GetService("TweenService")
+3: local v_u_3 = game:GetService("UserInputService")
+4: local v4 = game:GetService("ReplicatedStorage")
+5: local v_u_5 = require(v4:WaitForChild("DrawShared"):WaitForChild("Config"))
+6: local v_u_6 = {}
+7: local v_u_7 = nil
+8: local v_u_8 = nil
+9: local v_u_9 = {}
+10: local v_u_10 = {}
+11: local v_u_11 = nil
+12: local v_u_12 = nil
+13: local v_u_13 = nil
+14: local function v_u_23(p14, p15, p16, p17) -- name: fillPreview
+15: 	-- upvalues: (copy) v_u_1, (ref) v_u_7
+16: 	local v18 = p14.Preview:FindFirstChild("Holder")
+17: 	if v18 then
+18: 		v18:Destroy()
+19: 	end
+20: 	local v19
+21: 	if p15 == "Galaxy" then
+22: 		v19 = v_u_1.DrawUI.Root.Home.Space
+23: 	else
+24: 		v19 = v_u_7.ui.Root.Home.MenuBgs:FindFirstChild(p15)
+25: 	end
+26: 	if v19 then
+27: 		local v20 = Instance.new("Frame")
+28: 		v20.Name = "Holder"
+29: 		v20.BackgroundTransparency = 1
+30: 		v20.Size = UDim2.fromOffset(1100, 670)
+31: 		local v21 = Instance.new("UIScale")
+32: 		v21.Scale = p16 / 1100
+33: 		v21.Parent = v20
+34: 		local v22 = v19:Clone()
+   ...
+80: 	-- upvalues: (ref) v_u_12, (copy) v_u_5, (ref) v_u_13, (ref) v_u_7, (copy) v_u_1, (copy) v_u_2, (copy) v_u_6
+81: 	if type(p31) ~= "string" or (p31 == "Galaxy" or not (v_u_5.MENU_BG_BY_KEY[p31] and p31)) then
+82: 		p31 = nil
+83: 	end
+84: 	v_u_12 = p31
+85: 	local v_u_33 = v_u_13
+86: 	v_u_13 = nil
+87: 	local v_u_34 = v_u_7.ui.Root.Home.Space
+88: 	local v35 = v_u_12
+89: 	if v35 then
+90: 		local v36 = v_u_12
+91: 		if v36 == "Galaxy" then
+92: 			v35 = v_u_1.DrawUI.Root.Home.Space
+93: 		else
+94: 			v35 = v_u_7.ui.Root.Home.MenuBgs:FindFirstChild(v36)
+95: 		end
+96: 	end
+97: 	if v35 then
+98: 		local v_u_37 = v35:Clone()
+99: 		v_u_37.Name = "MenuTheme"
+100: 		v_u_37.Position = UDim2.new()
+101: 		v_u_37.Size = UDim2.fromScale(1, 1)
+102: 		v_u_37.ZIndex = 10
+103: 		v_u_37.Visible = true
+104: 		if p32 then
+105: 			local v_u_38 = Instance.new("CanvasGroup")
+106: 			v_u_38.Name = "MenuReveal"
+107: 			v_u_38.BackgroundTransparency = 1
+108: 			v_u_38.Size = UDim2.fromScale(1, 1)
+109: 			v_u_38.ZIndex = 11
+110: 			v_u_38.GroupTransparency = 1
+111: 			v_u_37.Parent = v_u_38
+112: 			v_u_38.Parent = v_u_34
+113: 			local v39 = v_u_2:Create(v_u_38, TweenInfo.new(0.9, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+114: 				["GroupTransparency"] = 0
+115: 			})
+116: 			v39.Completed:Connect(function()
+117: 				-- upvalues: (copy) v_u_37, (copy) v_u_38, (copy) v_u_34, (copy) v_u_33
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.Contest =====
+1: local v1 = game:GetService("ReplicatedStorage")
+2: local v_u_2 = game:GetService("GuiService")
+3: local v_u_3 = require(v1:WaitForChild("DrawShared"):WaitForChild("Config"))
+4: local v_u_4 = require(script.Parent:WaitForChild("CrateSkins"))
+5: local v_u_5 = {}
+6: local v_u_6 = nil
+7: local v_u_7 = nil
+8: local v_u_8 = nil
+9: local v_u_9 = nil
+10: local v_u_10 = nil
+11: local v_u_11 = nil
+12: local v_u_12 = nil
+13: local v_u_13 = nil
+14: local v_u_14 = nil
+15: local v_u_15 = nil
+   ...
+271: 			local v103 = v_u_6.player.UserId
+272: 			local v104 = v_u_96.id
+273: 			v101 = v102 == v103 .. "_" .. tostring(v104)
+274: 		end
+275: 		v100.Enabled = v101
+276: 		v97.Parent = v_u_13.List
+277: 		v_u_8.thumb(v97.Thumb, v_u_96.th, 158, 89)
+278: 		v_u_7.button(v97, function()
+279: 			-- upvalues: (ref) v_u_90, (copy) v_u_96
+280: 			v_u_90(v_u_96)
+281: 		end)
+282: 	end
+283: 	v_u_13.List.CanvasPosition = Vector2.zero
+284: 	v_u_7.dim(true)
+285: 	v_u_7.open(v_u_13)
+286: end
+287: function v_u_5.open() -- name: open
+288: 	-- upvalues: (ref) v_u_7, (ref) v_u_10, (copy) v_u_57, (ref) v_u_11, (copy) v_u_5, (copy) v_u_80
+289: 	if not v_u_7.isOpen(v_u_10) then
+290: 		v_u_57()
+291: 		v_u_11.CanvasPosition = Vector2.zero
+292: 		v_u_7.dim(true)
+293: 		v_u_7.open(v_u_10)
+294: 		task.spawn(v_u_5.refresh)
+295: 		task.spawn(v_u_80)
+296: 	end
+297: end
+298: function v_u_5.close() -- name: close
+299: 	-- upvalues: (ref) v_u_7, (ref) v_u_13, (ref) v_u_10
+300: 	if v_u_7.isOpen(v_u_13) then
+301: 		v_u_7.close(v_u_13)
+302: 		v_u_7.dim(false)
+303: 	end
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.Levels =====
+1: local v1 = game:GetService("ReplicatedStorage")
+2: local v_u_2 = require(v1:WaitForChild("DrawShared"):WaitForChild("Config"))
+3: local v_u_3 = {}
+4: local v_u_4 = nil
+5: local v_u_5 = nil
+6: local v_u_6 = nil
+7: local v_u_7 = {}
+8: function v_u_3.perksText(p8) -- name: perksText
+9: 	-- upvalues: (copy) v_u_2
+10: 	local v9 = v_u_2.CREATOR_LEVELS[p8]
+11: 	local v10 = v_u_2.CREATOR_LEVELS[p8 - 1]
+12: 	if not v9 then
+13: 		return ""
+14: 	end
+   ...
+66: 	-- upvalues: (copy) v_u_3, (ref) v_u_6, (copy) v_u_7, (ref) v_u_5
+67: 	local v34, v35 = v_u_3.progress(p31, p33)
+68: 	local v36 = v_u_6.Progress
+69: 	v36.Text.Text = p32 and "You are Level " .. v34 .. "  \194\183  " .. v_u_3.xpText(p31, p33) or "This creator is Level " .. v34
+70: 	v36.Bar.Fill.Size = UDim2.fromScale(0, 1)
+71: 	for v37, v38 in ipairs(v_u_7) do
+72: 		v38.Ring.Enabled = v37 == v34
+73: 		v38.BackgroundTransparency = v37 <= v34 and 0 or 0.45
+74: 	end
+75: 	local v39 = v_u_6.List
+76: 	local v40 = Vector2.new
+77: 	local v41 = (v34 - 2) * 52
+78: 	v39.CanvasPosition = v40(0, (math.max(0, v41)))
+79: 	v_u_5.dim(true)
+80: 	v_u_5.open(v_u_6)
+81: 	v_u_5.tween(v36.Bar.Fill, 0.5, {
+82: 		["Size"] = UDim2.fromScale(v35, 1)
+83: 	}, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
+84: end
+85: function v_u_3.init(p42) -- name: init
+86: 	-- upvalues: (ref) v_u_4, (ref) v_u_5, (ref) v_u_6, (copy) v_u_3, (copy) v_u_2, (copy) v_u_7
+87: 	v_u_4 = p42
+88: 	v_u_5 = p42.Util
+89: 	v_u_6 = v_u_4.ui.Root.Popups.Levels
+90: 	v_u_6.Visible = false
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.Cosmetics =====
+1: local v_u_1 = game:GetService("TweenService")
+2: local v2 = game:GetService("ReplicatedStorage")
+3: local v_u_3 = require(v2:WaitForChild("DrawShared"):WaitForChild("Config"))
+4: local v_u_4 = {}
+5: local v_u_5 = nil
+6: local v_u_6 = nil
+7: local v_u_7 = nil
+8: local v_u_8 = nil
+9: local v_u_9 = {}
+10: local v_u_10 = nil
+11: local v_u_11 = {}
+12: local v_u_12 = false
+13: local v_u_13 = setmetatable({}, {
+14: 	["__mode"] = "k"
+15: })
+   ...
+231: 	end
+232: 	if v65 == v_u_15 then
+233: 		return
+234: 	else
+235: 		v_u_15 = v65
+236: 		if v_u_14 then
+237: 			v_u_14:Destroy()
+238: 			v_u_14 = nil
+239: 		end
+240: 		local v66 = v64 and (v64.Scene and v_u_5.ui.Root.Home.MenuBgs:FindFirstChild(v64.Scene)) or nil
+241: 		if v66 then
+242: 			local v_u_67 = v_u_5.ui.Root.Home.Space
+243: 			local v_u_68 = Instance.new("CanvasGroup")
+244: 			v_u_68.Name = "ProfileScene"
+245: 			v_u_68.BackgroundTransparency = 1
+246: 			v_u_68.Size = UDim2.fromScale(1, 1)
+247: 			v_u_68.ZIndex = 20
+248: 			v_u_68.GroupTransparency = 1
+249: 			local v_u_69 = v66:Clone()
+250: 			v_u_69.Name = "ProfileScene"
+251: 			v_u_69.Position = UDim2.new()
+252: 			v_u_69.Size = UDim2.fromScale(1, 1)
+253: 			v_u_69.ZIndex = 20
+254: 			v_u_69.Visible = true
+255: 			v_u_69.Parent = v_u_68
+   ...
+605: 			v_u_116(v140.Preview, v_u_139, p131)
+606: 			v_u_85(v140, v_u_139)
+607: 			v_u_6.button(v140, function()
+608: 				-- upvalues: (ref) v_u_130, (copy) v_u_139
+609: 				v_u_130(v_u_139)
+610: 			end)
+611: 			local v141 = v_u_11
+612: 			table.insert(v141, {
+613: 				["cell"] = v140,
+614: 				["item"] = v_u_139
+615: 			})
+616: 		end
+617: 		v_u_7.List.CanvasPosition = Vector2.zero
+618: 		if not v_u_6.isOpen(v_u_7) then
+619: 			v_u_6.dim(true)
+620: 			v_u_6.open(v_u_7)
+621: 		end
+622: 	end
+623: end
+624: function v_u_4.init(p142) -- name: init
+625: 	-- upvalues: (ref) v_u_5, (ref) v_u_6, (ref) v_u_7, (ref) v_u_8, (copy) v_u_4
+626: 	v_u_5 = p142
+627: 	v_u_6 = p142.Util
+628: 	v_u_7 = v_u_5.ui.Root.Popups.Cosmetics
+629: 	v_u_8 = v_u_5.ui.Root.Popups.ProfileEdit
+
+===== ReplicatedStorage.DrawShared.Library =====
+1: local v1 = game:GetService("ReplicatedStorage"):WaitForChild("DrawAssets")
+2: local v_u_2 = require(script.Parent.Config)
+3: local v_u_3 = {
+4: 	["Categories"] = {
+5: 		{
+6: 			["Id"] = "Characters",
+7: 			["Name"] = "Characters"
+8: 		},
+9: 		{
+10: 			["Id"] = "Animals",
+11: 			["Name"] = "Animals"
+12: 		},
+13: 		{
+   ...
+129: 			v27.Vip = v21:GetAttribute("VIP") == true
+130: 			v27.NoRed = v21:GetAttribute("NoRed") == true
+131: 			v27.Follow = v21:GetAttribute("Follow") == true
+132: 			v27.Contest = v_u_2.CONTEST_ITEMS[v21.Name] == true
+133: 			v27.Crate = v_u_2.crateOf(v21.Name) ~= nil
+134: 			v_u_3.Items[v27.Id] = v27
+135: 			table.insert(v19, v27)
+136: 		end
+137: 	end
+138: 	table.sort(v19, v17)
+139: 	v_u_3.ByCat[v18.Id] = v19
+140: end
+141: v_u_3.Items.Drawing = {
+142: 	["Id"] = "Drawing",
+143: 	["Name"] = "Drawing",
+144: 	["Cat"] = "Draw",
+145: 	["Bones"] = nil,
+146: 	["Rest"] = nil,
+147: 	["Order"] = 0,
+148: 	["Kind"] = "drawing",
+149: 	["Colorable"] = false,
+150: 	["Scale"] = 1,
+151: 	["Vip"] = false,
+152: 	["Bones"] = {},
+153: 	["Rest"] = {}
+154: }
+155: local v33 = v1:FindFirstChild("Backgrounds")
+156: if v33 then
+
+===== ReplicatedStorage.DrawShared.Schema =====
+   ...
+811: 						if type(v298) ~= "string" or not p290["Plaque:" .. v317.t] then
+812: 							continue
+813: 						end
+814: 						v297.t = v317.t
+815: 					end
+816: 					if v297.s then
+817: 						v293 = v293 + v_u_5.pointsOf(v297.s)
+818: 					end
+819: 					v315[v316] = v297
+820: 				end
+821: 			end
+822: 			if v_u_1.MAX_TOTAL_POINTS < v293 then
+823: 				return false, "Drawings are too big"
+824: 			end
+825: 		end
+826: 		v318 = {}
+827: 		v319 = {}
+828: 		for v320, v321 in ipairs(p286.order) do
+829: 			if v_u_1.MAX_FRAMES < v320 then
+830: 				return false, "Too many frames"
+831: 			end
+832: 			if not v_u_5.validId(v321, true) or v318[v321] then
+833: 				return false, "Bad data"
+834: 			end
+835: 			v318[v321] = true
+   ...
+935: 					if type(v298) ~= "string" or not p290["Plaque:" .. v317.t] then
+936: 						continue
+937: 					end
+938: 					v297.t = v317.t
+939: 				end
+940: 				if v297.s then
+941: 					v293 = v293 + v_u_5.pointsOf(v297.s)
+942: 				end
+943: 				v315[v316] = v297
+944: 			end
+945: 		end
+946: 		if v_u_1.MAX_TOTAL_POINTS < v293 then
+947: 			return false, "Drawings are too big"
+948: 		end
+949: 	end
+950: 	local v318 = {}
+951: 	local v319 = {}
+952: 	for v320, v321 in ipairs(p286.order) do
+953: 		if v_u_1.MAX_FRAMES < v320 then
+954: 			return false, "Too many frames"
+955: 		end
+956: 		if not v_u_5.validId(v321, true) or v318[v321] then
+957: 			return false, "Bad data"
+958: 		end
+959: 		v318[v321] = true
+   ...
+1097: 	end)
+1098: 	local v357 = 0
+1099: 	for _, v358 in ipairs(v351) do
+1100: 		if v357 >= 12 then
+1101: 			break
+1102: 		end
+1103: 		local v359 = v358[1]
+1104: 		local v360 = v358[2]
+1105: 		local v361 = p348.objs[v359]
+1106: 		if not v361 then
+1107: 			continue
+1108: 		end
+1109: 		if v361.k == "Drawing" then
+1110: 			local v362 = v_u_5.pointsOf(v361.s)
+1111: 			if v362 > v352 then
+1112: 				continue
+1113: 			end
+1114: 			v352 = v352 - v362
+1115: 			v350.d[v359] = v361
+1116: 			v350.o[v359] = v360
+1117: 			v357 = v357 + 1
+1118: 		else
+1119: 			v350.d[v359] = {
+1120: 				["k"] = v361.k,
+1121: 				["c"] = v361.c,
+
+===== REMOTES =====
