@@ -1,0 +1,353 @@
+keys: Presets.byId, MOVE_PACKS, applyMove
+scripts scanned: 88
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.Project =====
+   ...
+1077: 	for _, v380 in pairs(v379.o) do
+1078: 		local v381 = v_u_5.fxOf(v380)
+1079: 		if v381 and v_u_5.fxKind(v381) ~= "loop" then
+1080: 			v380[8] = v380[9] and 0 or nil
+1081: 		end
+1082: 		if not v380[9] then
+1083: 			continue
+1084: 		end
+1085: 		v380[9].c = nil
+1086: 	end
+1087: 	return v379
+1088: end
+1089: function v_u_7.applyMoves(p383, p384, p385, p386) -- name: applyMoves
+1090: 	-- upvalues: (copy) v_u_2, (copy) v_u_211, (copy) v_u_382, (copy) v_u_12
+1091: 	local v387 = #p385
+1092: 	local v388 = p383:frame()
+1093: 	if v387 == 0 or not v388.o[p384] then
+1094: 		return false, "Nothing to animate"
+1095: 	end
+1096: 	if p386 then
+1097: 		return p383:applyMovesTogether(p384, p385)
+1098: 	end
+1099: 	if #p383.order + v387 > v_u_2.MAX_FRAMES then
+1100: 		return false, "Not enough room: max " .. v_u_2.MAX_FRAMES .. " frames"
+1101: 	end
+1102: 	local v389 = p383.cur
+1103: 	local v390 = { p383:fid() }
+1104: 	local v391 = {}
+1105: 	for v392 = 1, v387 do
+1106: 		v391[v392] = p383:newFid()
+1107: 		local v393 = v391[v392]
+1108: 		table.insert(v390, v393)
+1109: 	end
+   ...
+1188: 		v427[4] = math.floor(v429) / 2
+1189: 	end
+1190: 	local v430 = v427[1] * 10 + 0.5
+1191: 	local v431 = math.floor(v430) / 10
+1192: 	local v432 = v427[2] * 10 + 0.5
+1193: 	local v433 = math.floor(v432) / 10
+1194: 	v427[1] = v431
+1195: 	v427[2] = v433
+1196: 	local v434 = v427[3] * 1000 + 0.5
+1197: 	v427[3] = math.floor(v434) / 1000
+1198: 	return v427
+1199: end
+1200: function v_u_7.applyMovesTogether(p436, p437, p438) -- name: applyMovesTogether
+1201: 	-- upvalues: (copy) v_u_2, (copy) v_u_12, (copy) v_u_423, (copy) v_u_382, (copy) v_u_211, (copy) v_u_435, (copy) v_u_6, (copy) v_u_230
+1202: 	local v439 = #p438
+1203: 	if #p436.order + v439 > v_u_2.MAX_FRAMES then
+1204: 		return false, "Not enough room: max " .. v_u_2.MAX_FRAMES .. " frames"
+1205: 	end
+1206: 	local v440 = {}
+1207: 	local v441 = {}
+1208: 	for _, v442 in ipairs(p436.order) do
+1209: 		table.insert(v440, v442)
+1210: 	end
+1211: 	for v443 = 1, v439 do
+1212: 		v441[v443] = p436:newFid()
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.Editor =====
+   ...
+3553: 		v1114.Repeat.Lbl.Img.ImageTransparency = v1117
+3554: 		v1114.Repeat.Value.TextTransparency = v1117
+3555: 		for v1118, v1119 in pairs(v_u_90.SPEEDS) do
+3556: 			v_u_13.setColor(v1114.Speed[v1118], v1119 == v_u_90.speed and v_u_13.ACCENT or v_u_13.BTN)
+3557: 		end
+3558: 		v_u_90.moveTags()
+3559: 		v_u_20.moves(v1106, v1108, v_u_90.speed)
+3560: 	elseif v_u_13.isOpen(v1106) then
+3561: 		v_u_13.close(v1106)
+3562: 		v_u_302()
+3563: 	end
+3564: end
+3565: function v_u_90.applyMoves() -- name: applyMoves
+3566: 	-- upvalues: (copy) v_u_90, (ref) v_u_21, (ref) v_u_33, (ref) v_u_32, (ref) v_u_31, (ref) v_u_13, (ref) v_u_22, (ref) v_u_12, (ref) v_u_384, (ref) v_u_16, (ref) v_u_359, (copy) v_u_302
+3567: 	local v1120 = v_u_90.selItem()
+3568: 	local v1121 = v_u_90.pick
+3569: 	if v1121 then
+3570: 		v1121 = v_u_21.byId[v_u_90.pick]
+3571: 	end
+3572: 	local v1122 = v_u_33
+3573: 	if v1122 then
+3574: 		v1122 = v_u_32:frame().o[v_u_33]
+3575: 	end
+3576: 	local v1123 = v_u_33
+3577: 	if v1123 then
+   ...
+3585: 				end
+3586: 				v_u_90.objectMoveOk = true
+3587: 			end
+3588: 			if v1122[9] and v1122[9].a then
+3589: 				v_u_13.toast("Let go first: a held object follows its holder", true)
+3590: 				return
+3591: 			else
+3592: 				local v1124 = v_u_21.build(v1121, v1123, v1122, v_u_90.rep, v_u_90.speed)
+3593: 				local v_u_1125 = v_u_33
+3594: 				if v_u_90.moveOnly(v1121, function()
+3595: 					-- upvalues: (ref) v_u_33, (copy) v_u_1125, (ref) v_u_13, (ref) v_u_22, (ref) v_u_90
+3596: 					if v_u_33 == v_u_1125 and v_u_13.isOpen(v_u_22.Moves) then
+3597: 						v_u_90.applyMoves()
+3598: 					end
+3599: 				end) then
+3600: 					local v1126
+3601: 					if v_u_32.cur < #v_u_32.order then
+3602: 						local v1127 = v_u_12
+3603: 						if v1127 then
+3604: 							v1127 = v_u_12.Tutorial
+3605: 						end
+3606: 						local v1128
+3607: 						if v1127 == nil then
+3608: 							v1128 = false
+3609: 						else
+3610: 							v1128 = v1127.active == true
+3611: 						end
+3612: 						v1126 = not v1128
+3613: 						if v1126 then
+3614: 							v1126 = not v_u_32:movesAfter(v_u_33, v_u_32.cur)
+3615: 						end
+3616: 					else
+3617: 						v1126 = false
+3618: 					end
+3619: 					local v1129, v1130 = v_u_32:applyMoves(v_u_33, v1124, v1126)
+3620: 					if v1129 then
+3621: 						v_u_13.close(v_u_22.Moves)
+3622: 						local v1131 = {}
+3623: 						local v1132 = v_u_32.cur
+3624: 						local v1133 = v1126 and #v_u_32.order
+3625: 						if not v1133 then
+3626: 							local v1134 = v_u_32.cur + #v1124
+3627: 							local v1135 = #v_u_32.order
+3628: 							v1133 = math.min(v1134, v1135)
+3629: 						end
+3630: 						for v1136 = v1132, v1133 do
+3631: 							local v1137 = v_u_32.order[v1136]
+   ...
+5554: 		local v1459 = v_u_90
+5555: 		local v1460 = v_u_90.rep + 1
+5556: 		v1459.rep = math.min(6, v1460)
+5557: 		v_u_90.refreshMoves()
+5558: 	end)
+5559: 	for v1461, v_u_1462 in pairs(v_u_90.SPEEDS) do
+5560: 		v_u_13.button(v_u_1452.Bottom.Speed[v1461], function()
+5561: 			-- upvalues: (ref) v_u_90, (copy) v_u_1462
+5562: 			v_u_90.speed = v_u_1462
+5563: 			v_u_90.refreshMoves()
+5564: 		end)
+5565: 	end
+5566: 	v_u_13.button(v_u_1452.Bottom.ApplyBtn, v_u_90.applyMoves)
+5567: 	v_u_90.peek = v_u_12.DuetView.new(v_u_22, 24)
+5568: 	v_u_90.peek.frame.Position = UDim2.fromOffset(88, 100)
+5569: 	v_u_90.peek.frame.Size = UDim2.fromOffset(256, 144)
+5570: 	local v1463 = Instance.new("UIStroke")
+5571: 	v1463.Color = v_u_13.ACCENT
+5572: 	v1463.Thickness = 2
+5573: 	v1463.Parent = v_u_90.peek.frame
+5574: 	local v_u_1464 = Instance.new("TextButton")
+5575: 	v_u_1464.Name = "PeekTab"
+5576: 	v_u_1464.Position = UDim2.fromOffset(88, 72)
+5577: 	v_u_1464.Size = UDim2.fromOffset(170, 26)
+5578: 	v_u_1464.BackgroundColor3 = v_u_13.ACCENT
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.Shop =====
+   ...
+642: 				task.wait(0.35)
+643: 				if v_u_28.Visible then
+644: 					v_u_193.OkBtn.Visible = true
+645: 					v_u_193.Hint.Visible = true
+646: 				end
+647: 			end
+648: 		end)
+649: 	end
+650: end
+651: v_u_23 = function() -- name: refreshPacks
+652: 	-- upvalues: (ref) v_u_18, (copy) v_u_8, (ref) v_u_12
+653: 	if v_u_18 then
+654: 		for v212, v213 in ipairs(v_u_8.MOVE_PACKS) do
+655: 			local v214 = v_u_18.Packs:FindFirstChild("Card" .. v212)
+656: 			if not v214 then
+657: 				continue
+658: 			end
+659: 			local v215 = v_u_12.extra or v_u_12.packs[v213.Key] == true
+660: 			v214.BuyBtn.Visible = not v215
+661: 			v214.Owned.Visible = v215
+662: 		end
+663: 	end
+664: end
+665: function v_u_11.setPacks(p216) -- name: setPacks
+666: 	-- upvalues: (copy) v_u_8, (ref) v_u_12, (ref) v_u_23
+667: 	local v217 = {}
+668: 	local v218 = {}
+669: 	for _, v219 in ipairs(v_u_8.MOVE_PACKS) do
+670: 		if type(p216) ~= "table" or p216[v219.Key] ~= true then
+671: 			continue
+672: 		end
+673: 		v217[v219.Key] = true
+674: 		if v_u_12.packs[v219.Key] then
+675: 			continue
+676: 		end
+677: 		table.insert(v218, v219)
+678: 	end
+679: 	v_u_12.packs = v217
+680: 	v_u_23()
+681: 	if v_u_12.Editor and v_u_12.Editor.refreshExtra then
+   ...
+869: 			local v270 = Enum.InfoType.Product
+870: 			local v271, v272 = pcall(v267, v268, v269, v270)
+871: 			if v271 and (type(v272) == "table" and v272.PriceInRobux) then
+872: 				v_u_266.Text = v_u_265.Stars .. " stars<br/><font size=\"18\">" .. v_u_50 .. " " .. v272.PriceInRobux .. "</font>"
+873: 				v_u_42[v_u_264] = v272.PriceInRobux
+874: 				v_u_256()
+875: 			end
+876: 		end)
+877: 	end
+878: end
+879: local function v_u_292() -- name: fillPackCards
+880: 	-- upvalues: (copy) v_u_8, (ref) v_u_18, (ref) v_u_12, (copy) v_u_40, (copy) v_u_22, (ref) v_u_13, (copy) v_u_11, (copy) v_u_1, (copy) v_u_50
+881: 	for v274, v_u_275 in ipairs(v_u_8.MOVE_PACKS) do
+882: 		local v_u_276 = v_u_18.Packs:FindFirstChild("Card" .. v274)
+883: 		if not v_u_276 then
+884: 			continue
+885: 		end
+886: 		v_u_276.PackName.Text = v_u_275.Name
+887: 		local v277 = v_u_276.List.RowTemplate
+888: 		local v278 = {}
+889: 		for v279, v284 in ipairs(v_u_275.Moves) do
+890: 			local v281 = v_u_12.Presets
+891: 			if v281 then
+892: 				v281 = v_u_12.Presets.byId[v284]
+893: 			end
+894: 			local v282 = v277:Clone()
+895: 			v282.Name = "Row" .. v279
+896: 			v282.LayoutOrder = v279
+897: 			local v283 = "Move"
+898: 			if v281 then
+899: 				local v284 = v281.Name or v284
+900: 			end
+901: 			v282:SetAttribute(v283, v284)
+902: 			v282.Text = "\226\128\162 " .. v282:GetAttribute("Move")
+903: 			v282.Visible = true
+904: 			v282.Parent = v_u_276.List
+   ...
+957: 		v296.Outline.Enabled = not v297
+958: 		local v298 = {
+959: 			["BackgroundTransparency"] = v297 and 0 or 1,
+960: 			["TextColor3"] = v297 and v_u_39 or v_u_38
+961: 		}
+962: 		v_u_13.tween(v296, 0.2, v298, nil, nil, "hl")
+963: 	end
+964: end
+965: local function v_u_309() -- name: startReels
+966: 	-- upvalues: (copy) v_u_21, (ref) v_u_12, (copy) v_u_8, (ref) v_u_18, (copy) v_u_299
+967: 	if #v_u_21 <= 0 and v_u_12.Demo then
+968: 		local v300 = {}
+969: 		for v_u_301, v302 in ipairs(v_u_8.MOVE_PACKS) do
+970: 			local v_u_303 = v_u_18.Packs:FindFirstChild("Card" .. v_u_301)
+971: 			if not v_u_303 then
+972: 				continue
+973: 			end
+974: 			local v306 = { v_u_303.Stage, v302.Moves, function(p304, p305)
+975: 					-- upvalues: (copy) v_u_303, (ref) v_u_299, (copy) v_u_301
+976: 					v_u_303.Stage.Now.Text = p305.Name
+977: 					v_u_299(v_u_301, p304)
+978: 				end }
+979: 			table.insert(v300, v306)
+980: 		end
+981: 		local v307 = v_u_21
+   ...
+1833: 				v_u_13.toast("Opening your crate...")
+1834: 				return
+1835: 			end
+1836: 			if p517 == v_u_8.EXTRA_PRODUCT then
+1837: 				if p518 then
+1838: 					v_u_13.toast("Unlocking...")
+1839: 					return
+1840: 				end
+1841: 				if v_u_12.Editor and v_u_12.Editor.onExtraCancel then
+1842: 					v_u_12.Editor.onExtraCancel()
+1843: 				end
+1844: 			else
+1845: 				for _, v522 in ipairs(v_u_8.MOVE_PACKS) do
+1846: 		
+
+===== ReplicatedStorage.DrawShared.Config =====
+   ...
+47: 	["SHARE_MIN_FRAMES"] = 7,
+48: 	["MAX_SHARED"] = 10,
+49: 	["FEED_SIZE"] = 40,
+50: 	["VIEW_TIME"] = 2.5,
+51: 	["MAX_DESC_LEN"] = 200,
+52: 	["MAX_TAGS"] = 8,
+53: 	["COMMENT_MAX_LEN"] = 150,
+54: 	["COMMENT_HIDE"] = 5,
+55: 	["EVENT_ID"] = "3329914378647634512",
+56: 	["VIP_PRODUCT"] = 3717729723,
+57: 	["EXTRA_PRODUCT"] = 3719975415
+58: }
+59: v_u_1.MOVE_PACKS = {
+60: 	{
+61: 		["Key"] = "Stick",
+62: 		["Id"] = nil,
+63: 		["Name"] = "Stick Moves Pack",
+64: 		["Faces"] = true,
+65: 		["Moves"] = nil,
+66: 		["Id"] = v_u_1.EXTRA_PRODUCT,
+67: 		["Moves"] = {
+68: 			"Backflip",
+69: 			"Slash",
+70: 			"Dance",
+71: 			"Victory",
+   ...
+82: 			"Float",
+83: 			"FallDown",
+84: 			"Teleport",
+85: 			"Appear"
+86: 		}
+87: 	}
+88: }
+89: function v_u_1.ownsFaces(p2, p3) -- name: ownsFaces
+90: 	-- upvalues: (copy) v_u_1
+91: 	if p2 == true then
+92: 		return true
+93: 	end
+94: 	for _, v4 in ipairs(v_u_1.MOVE_PACKS) do
+95: 		if not v4.Faces or (type(p3) ~= "table" or p3[v4.Key] ~= true) then
+96: 			continue
+97: 		end
+98: 		return true
+99: 	end
+100: 	return false
+101: end
+102: function v_u_1.packOf(p5) -- name: packOf
+103: 	-- upvalues: (copy) v_u_1
+104: 	for _, v6 in ipairs(v_u_1.MOVE_PACKS) do
+105: 		if not table.find(v6.Moves, p5) then
+106: 			continue
+107: 		end
+108: 		return v6
+109: 	end
+110: 	return nil
+111: end
+112: v_u_1.RARITIES = {
+113: 	{
+114: 		["Key"] = "Common",
+115: 		["Name"] = "Common",
+116: 		["Weight"] = 50,
+
+===== REMOTES =====
