@@ -1,0 +1,1377 @@
+keys: Publish, Post, Save, call("
+scripts scanned: 88
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient =====
+   ...
+358: 	local v128 = v121:FindFirstChild("ProfileBtn")
+359: 	local v129 = v128 and v128.Size.X.Offset + 12 or 0
+360: 	v121.Logo.Position = UDim2.fromOffset(v129, 0)
+361: 	local v130 = v112.Size.X.Offset - (v120 + 14) - v121.UIPadding.PaddingRight.Offset - 16 - v129
+362: 	local v131 = (v130 - 160) / math.max(v127, 1)
+363: 	local v132 = math.clamp(v131, 0.75, 1)
+364: 	v121.Tabs.Fit.Scale = v132
+365: 	local v133 = v130 - v127 * v132
+366: 	v121.Logo.Size = UDim2.new(0, math.clamp(v133, 130, 360), 1, 0)
+367: 	v121.Logo.Visible = v133 >= 130
+368: 	local v134 = v112.Editor.TopBar
+369: 	local v135 = v134.Left.TitleBtn
+370: 	local v136 = v134.Right.SaveLbl
+371: 	v136.Visible = true
+372: 	if v112.Size.X.Offset - v120 - v_u_80(v134.Left, v135) - v_u_80(v134.Right) - 24 < 90 then
+373: 		v136.Visible = false
+374: 	end
+375: 	local v137 = UDim2.new
+376: 	local v138 = v112.Size.X.Offset - v120 - v_u_80(v134.Left, v135) - v_u_80(v134.Right) - 24
+377: 	v135.Size = v137(0, math.clamp(v138, 90, 240), 0, v135.Size.Y.Offset)
+378: end
+379: v_u_29.ui:GetPropertyChangedSignal("AbsoluteSize"):Connect(v139)
+380: v_u_53:GetPropertyChangedSignal("AbsoluteSize"):Connect(v139)
+381: v_u_3:GetPropertyChangedSignal("TopbarInset"):Connect(v139)
+382: v_u_3:GetPropertyChangedSignal("PreferredTextSize"):Connect(v139)
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.Playback =====
+   ...
+1071: 			task.delay(3, function()
+1072: 				-- upvalues: (ref) v_u_38, (copy) v_u_405, (ref) v_u_11, (ref) v_u_320
+1073: 				if v_u_38[v_u_405] then
+1074: 					v_u_38[v_u_405] = nil
+1075: 					if v_u_11.active then
+1076: 						v_u_320()
+1077: 					end
+1078: 				end
+1079: 			end)
+1080: 			v404 = false
+1081: 		end
+1082: 		if v404 then
+1083: 			local v406, v407 = v_u_13.call("AdminDelete", v403.id)
+1084: 			if v406 then
+1085: 				v_u_11.close()
+1086: 				v_u_13.toast("Cartoon removed")
+1087: 			else
+1088: 				v_u_13.toast(v407, true)
+1089: 			end
+1090: 		end
+1091: 	end
+1092: end
+1093: function v_u_11.watch(p409, p410) -- name: watch
+1094: 	-- upvalues: (copy) v_u_11, (ref) v_u_24, (ref) v_u_25, (copy) v_u_38, (copy) v_u_58, (ref) v_u_46, (copy) v_u_6, (copy) v_u_7, (copy) v_u_8, (ref) v_u_35, (ref) v_u_19, (ref) v_u_12, (ref) v_u_18, (copy) v_u_391, (copy) v_u_4, (ref) v_u_13, (copy) v_u_320, (ref) v_u_29, (ref) v_u_28, (ref) v_u_40, (ref) v_u_53, (copy) v_u_26, (ref) v_u_31, (ref) v_u_41, (ref) v_u_17, (ref) v_u_54, (ref) v_u_20, (ref) v_u_23, (ref) v_u_27, (copy) v_u_285, (copy) v_u_378, (ref) v_u_33, (copy) v_u_296, (ref) v_u_30, (copy) v_u_299, (copy) v_u_294, (ref) v_u_32, (copy) v_u_1, (copy) v_u_335
+1095: 	if v_u_11.active then
+   ...
+1239: 			else
+1240: 				v445 = v_u_422.admin == true
+1241: 			end
+1242: 			v444.Visible = v445
+1243: 			v423.CommentsBtn.Visible = v_u_422 ~= nil
+1244: 			v_u_18.Info.Views.Visible = v_u_422 ~= nil
+1245: 			v_u_12.CommentsUI.close(true)
+1246: 			v_u_391(v_u_422)
+1247: 			if v_u_422 and not (v_u_422.mine or v_u_422.seen) then
+1248: 				task.delay(v_u_4.VIEW_TIME + 0.1, function()
+1249: 					-- upvalues: (ref) v_u_11, (ref) v_u_25, (copy) v_u_422, (ref) v_u_13, (ref) v_u_320
+1250: 					if v_u_11.active and (v_u_25 and v_u_25.gallery == v_u_422) then
+1251: 						local v446 = v_u_13.call("Viewed", v_u_422.id)
+1252: 						if v446 and v446.views then
+1253: 							v_u_422.views = v446.views
+1254: 							v_u_422.seen = true
+1255: 							if v_u_11.active and (v_u_25 and v_u_25.gallery == v_u_422) then
+1256: 								v_u_320()
+1257: 							end
+1258: 						end
+1259: 					end
+1260: 				end)
+1261: 			end
+1262: 			v_u_29 = 0
+1263: 			v_u_28 = 1
+   ...
+1767: 			if type(v526) == "table" then
+1768: 				v525 = v523.du
+1769: 			else
+1770: 				v525 = false
+1771: 			end
+1772: 		else
+1773: 			v525 = v523
+1774: 		end
+1775: 		if v_u_11.active and v525 then
+1776: 			local v527 = v525.s
+1777: 			if type(v527) == "string" then
+1778: 				v_u_11.close()
+1779: 				v_u_12.Reels.openPost(v525.s)
+1780: 				return
+1781: 			end
+1782: 		end
+1783: 		if v523 then
+1784: 			local v528 = v523.rm
+1785: 			if type(v528) == "table" then
+1786: 				v523 = v523.rm
+1787: 			else
+1788: 				v523 = false
+1789: 			end
+1790: 		end
+1791: 		if v_u_11.active and v523 then
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.Editor =====
+   ...
+1010: 			break
+1011: 		end
+1012: 		v402[v404] = table.clone(v400)
+1013: 		table.insert(v401, v404)
+1014: 	end
+1015: 	if #v401 == 0 then
+1016: 		v_u_13.toast("It can\'t hold this here", true)
+1017: 	else
+1018: 		v_u_32:attach(v387, v402)
+1019: 		v_u_384(v401)
+1020: 		v_u_33 = v387
+1021: 		v_u_359()
+1022: 		local v406 = v_u_22.TopBar.Right.SaveLbl
+1023: 		v406.Text = "Unsaved"
+1024: 		v406.TextColor3 = Color3.fromRGB(150, 156, 175)
+1025: 		v_u_302()
+1026: 		local v407 = v_u_13.toast
+1027: 		local v408 = "Now held by "
+1028: 		local v409 = v_u_32.objs[p385]
+1029: 		if v409 then
+1030: 			v409 = v_u_6.get(v409.k)
+1031: 		end
+1032: 		v407(v408 .. (v409 and v409.Name or "it") .. (#v401 > 1 and " on " .. #v401 .. " frames" or ""))
+1033: 	end
+1034: end
+   ...
+1051: 		if v418 then
+1052: 			v418 = v417[9].a
+1053: 		end
+1054: 		if not v418 or v418[1] ~= v412[1] then
+1055: 			break
+1056: 		end
+1057: 		v413[v416] = false
+1058: 		table.insert(v414, v416)
+1059: 	end
+1060: 	v_u_384(v414)
+1061: 	v_u_32:attach(p410, v413)
+1062: 	v_u_359()
+1063: 	local v419 = v_u_22.TopBar.Right.SaveLbl
+1064: 	v419.Text = "Unsaved"
+1065: 	v419.TextColor3 = Color3.fromRGB(150, 156, 175)
+1066: 	v_u_302()
+1067: 	v_u_13.toast("Let go")
+1068: end
+1069: function v_u_11.toggleHold() -- name: toggleHold
+1070: 	-- upvalues: (ref) v_u_33, (ref) v_u_32, (ref) v_u_84, (copy) v_u_11, (copy) v_u_420, (ref) v_u_13, (ref) v_u_92, (ref) v_u_22, (ref) v_u_88
+1071: 	if v_u_33 and v_u_32 then
+1072: 		if v_u_84 then
+1073: 			v_u_11.cancelAttach()
+1074: 			return
+1075: 		else
+   ...
+1110: 	end
+1111: 	if not (v_u_32 and v_u_32:needsSync()) then
+1112: 		return true
+1113: 	end
+1114: 	v_u_52 = true
+1115: 	local v425 = v_u_32
+1116: 	local v426 = {}
+1117: 	for v427 in pairs(v425.dirty) do
+1118: 		table.insert(v426, v427)
+1119: 	end
+1120: 	v_u_384(v426)
+1121: 	local v428, v429 = v425:packSync()
+1122: 	local v430 = v_u_22.TopBar.Right.SaveLbl
+1123: 	v430.Text = "Saving..."
+1124: 	v430.TextColor3 = Color3.fromRGB(150, 156, 175)
+1125: 	local v431, v432 = v_u_13.call("Sync", v428)
+1126: 	v_u_52 = false
+1127: 	if v425 ~= v_u_32 then
+1128: 		return v431 ~= nil
+1129: 	end
+1130: 	if v431 then
+1131: 		if not v425:needsSync() then
+1132: 			local v433 = v_u_22.TopBar.Right.SaveLbl
+1133: 			v433.Text = "Saved"
+1134: 			v433.TextColor3 = Color3.fromRGB(150, 156, 175)
+1135: 		end
+1136: 		return true
+1137: 	end
+1138: 	v425:syncFailed(v429, v432 == "Missing frame")
+1139: 	local v434 = v_u_22.TopBar.Right.SaveLbl
+1140: 	v434.Text = "Not saved"
+1141: 	v434.TextColor3 = v_u_13.DANGER or Color3.fromRGB(150, 156, 175)
+1142: 	v_u_53 = os.clock() + 5
+1143: 	if v432 ~= "Slow down a little!" then
+1144: 		v_u_13.toast(v432, true)
+1145: 	end
+1146: 	return false
+1147: end
+1148: local function v_u_454(p436, p437, p438, p439, p440, p441) -- name: poseBone
+1149: 	-- upvalues: (ref) v_u_14, (copy) v_u_7
+1150: 	local v442 = p436.bones[p439]
+1151: 	if v442 then
+   ...
+1633: 	if v621.moved and (v621.kind == "move" and (v623 and (not v621.world0 and v622.cf == v_u_33))) then
+1634: 		local v624 = v622.c
+1635: 		local v625 = (v622.c[1] + v623[1] - v621.x0) * 10 + 0.5
+1636: 		v624[1] = math.floor(v625) / 10
+1637: 		local v626 = v622.c
+1638: 		local v627 = (v622.c[2] + v623[2] - v621.y0) * 10 + 0.5
+1639: 		v626[2] = math.floor(v627) / 10
+1640: 	end
+1641: 	local v628, v629
+1642: 	if v621.moved then
+1643: 		v_u_384({ v_u_32:fid() })
+1644: 		v_u_32:commit()
+1645: 		local v630 = v_u_22.TopBar.Right.SaveLbl
+1646: 		v630.Text = "Unsaved"
+1647: 		v630.TextColor3 = Color3.fromRGB(150, 156, 175)
+1648: 		v_u_302()
+1649: 		v_u_359()
+1650: 		if v621.moved and v621.kind == "bone" then
+1651: 			v628 = v_u_33
+1652: 			v629 = v_u_12
+1653: 			if v629 then
+1654: 				v629 = v_u_12.Tutorial
+1655: 			end
+1656: 			if v629 and v629.active then
+1657: 				v629.notify("bone", v628, nil)
+   ...
+2082: 			["s"] = v745
+2083: 		}, {
+2084: 			v742,
+2085: 			v744,
+2086: 			0,
+2087: 			1,
+2088: 			0,
+2089: 			0
+2090: 		})
+2091: 		if v756 then
+2092: 			v_u_3
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.Shop =====
+   ...
+58: local v_u_49 = {
+59: 	Color3.fromRGB(255, 120, 200),
+60: 	Color3.fromRGB(255, 224, 90),
+61: 	Color3.fromRGB(90, 220, 255),
+62: 	Color3.fromRGB(170, 255, 140)
+63: }
+64: local v_u_50 = utf8.char(57346)
+65: local function v_u_57(p_u_51) -- name: promptProduct
+66: 	-- upvalues: (copy) v_u_8, (ref) v_u_13, (copy) v_u_1, (ref) v_u_12
+67: 	if v_u_8.isQA() then
+68: 		task.spawn(function()
+69: 			-- upvalues: (ref) v_u_13, (copy) p_u_51
+70: 			local v52, v53 = v_u_13.call("QaBuy", p_u_51)
+71: 			if not v52 then
+72: 				v_u_13.toast(v53, true)
+73: 			end
+74: 		end)
+75: 		return true
+76: 	end
+77: 	local v54 = v_u_1.PromptProductPurchase
+78: 	local v55 = v_u_1
+79: 	local v56 = v_u_12.player
+80: 	return pcall(v54, v55, v56, p_u_51)
+81: end
+82: local function v_u_59() -- name: refresh
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.Tutorial =====
+   ...
+838: end
+839: local function v_u_335() -- name: layout
+840: 	-- upvalues: (ref) v_u_45, (ref) v_u_7, (ref) v_u_10, (ref) v_u_12, (ref) v_u_14, (ref) v_u_16
+841: 	v_u_45 = v_u_7.layoutRoot(v_u_10, v_u_12)
+842: 	v_u_14.S.Scale = v_u_45
+843: 	v_u_16.S.Scale = v_u_45
+844: end
+845: local function v_u_338(p_u_336)
+846: 	-- upvalues: (ref) v_u_8
+847: 	task.spawn(function()
+848: 		-- upvalues: (ref) v_u_8, (copy) p_u_336
+849: 		for v337 = 1, 3 do
+850: 			if v_u_8.call("TutoDone", p_u_336 == true) then
+851: 				return
+852: 			end
+853: 			task.wait(v337 * 2)
+854: 		end
+855: 	end)
+856: end
+857: local function v_u_341() -- name: cleanup
+858: 	-- upvalues: (ref) v_u_28, (ref) v_u_30, (ref) v_u_31, (ref) v_u_32, (ref) v_u_29, (copy) v_u_27, (copy) v_u_26, (ref) v_u_10, (ref) v_u_11, (ref) v_u_12, (ref) v_u_13, (ref) v_u_14, (ref) v_u_15, (ref) v_u_16, (ref) v_u_17, (ref) v_u_23, (ref) v_u_24, (ref) v_u_25, (ref) v_u_18, (ref) v_u_19, (ref) v_u_20, (ref) v_u_21, (ref) v_u_22
+859: 	local v339 = { v_u_28, v_u_30, v_u_31 }
+860: 	for _, v340 in pairs(v339) do
+861: 		v340:Disconnect()
+862: 	end
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.Admin =====
+   ...
+2: local v_u_2 = game:GetService("ReplicatedStorage")
+3: local v_u_3 = require(v_u_2:WaitForChild("DrawShared"):WaitForChild("Config"))
+4: local v4 = {}
+5: local v_u_5 = nil
+6: local v_u_6 = nil
+7: local v_u_7 = nil
+8: local v_u_8 = nil
+9: local v_u_9 = false
+10: local v_u_10 = false
+11: local v_u_11 = 0
+12: local function v_u_15() -- name: refresh
+13: 	-- upvalues: (ref) v_u_6, (ref) v_u_8, (copy) v_u_3
+14: 	local v12 = v_u_6.call("AdminInfo")
+15: 	if v_u_8.Visible then
+16: 		if type(v12) == "table" then
+17: 			v_u_8.Status.Text = "VIP: " .. (v12.vip and "Yes" or "No") .. "   |   Extras: " .. (v12.extra and "Yes" or "No") .. "   |   Tutorial: " .. (v12.tuto and "Done" or "Not done")
+18: 		else
+19: 			v_u_8.Status.Text = "VIP: ?   |   Extras: ?   |   Tutorial: ?"
+20: 		end
+21: 		local v13 = v_u_6.call("Theme")
+22: 		local v14
+23: 		if type(v13) == "table" then
+24: 			v14 = v_u_3.THEME_BY_KEY[v13.key]
+25: 		else
+26: 			v14 = false
+27: 		end
+28: 		v_u_8.ThemeBtn.Text = "Weekly theme: " .. (v14 and v14.Name or "?")
+29: 	end
+30: end
+31: local function v_u_26() -- name: setTheme
+32: 	-- upvalues: (ref) v_u_9, (copy) v_u_3, (ref) v_u_6, (ref) v_u_8, (ref) v_u_5
+33: 	if v_u_9 then
+   ...
+48: 				for _, v22 in ipairs(v_u_3.THEMES) do
+49: 					if string.lower(v22.Key) ~= string.lower(v20) then
+50: 						continue
+51: 					end
+52: 					v21 = v22.Key
+53: 				end
+54: 				if not v21 then
+55: 					v_u_6.toast("Unknown theme", true)
+56: 					return
+57: 				end
+58: 			end
+59: 			v_u_9 = true
+60: 			local v23, v24 = v_u_6.call("AdminTheme", v21)
+61: 			v_u_9 = false
+62: 			if v23 then
+63: 				local v25
+64: 				if type(v23) == "table" then
+65: 					v25 = v_u_3.THEME_BY_KEY[v23.key]
+66: 				else
+67: 					v25 = false
+68: 				end
+69: 				v_u_8.ThemeBtn.Text = "Weekly theme: " .. (v25 and v25.Name or "?")
+70: 				v_u_5.Home.setTheme(v23)
+71: 				v_u_6.toast(v21 and "Theme set: " .. v21 or "Theme back to auto")
+72: 			else
+73: 				v_u_6.toast(v24, true)
+74: 			end
+75: 		end
+76: 	end
+77: end
+78: local function v_u_29() -- name: giveVip
+79: 	-- upvalues: (ref) v_u_9, (ref) v_u_6, (ref) v_u_5, (ref) v_u_8
+80: 	if v_u_9 then
+81: 		return
+82: 	else
+83: 		v_u_9 = true
+84: 		local v27, v28 = v_u_6.call("AdminVip")
+85: 		v_u_9 = false
+86: 		if v27 then
+87: 			v_u_5.Shop.setVip(true)
+88: 			if type(v27) == "table" then
+89: 				v_u_8.Status.Text = "VIP: " .. (v27.vip and "Yes" or "No") .. "   |   Extras: " .. (v27.extra and "Yes" or "No") .. "   |   Tutorial: " .. (v27.tuto and "Done" or "Not done")
+90: 			else
+91: 				v_u_8.Status.Text = "VIP: ?   |   Extras: ?   |   Tutorial: ?"
+92: 			end
+93: 			v_u_6.toast("VIP given!")
+94: 		else
+95: 			v_u_6.toast(v28, true)
+96: 		end
+   ...
+107: 		v_u_9 = true
+108: 		if v_u_5.Playback.active then
+109: 			v_u_5.Playback.close()
+110: 		end
+111: 		if v_u_5.Editor.isOpen() then
+112: 			v_u_5.Editor.exit()
+113: 			if v_u_5.Editor.isOpen() then
+114: 				v_u_9 = false
+115: 				return
+116: 			end
+117: 		end
+118: 		v_u_6.busy(true, "Resetting...")
+119: 		local v30, v31 = v_u_6.call("AdminReset")
+120: 		v_u_6.busy(false)
+121: 		v_u_9 = false
+122: 		if v30 then
+123: 			v_u_5.Shop.setVip(false)
+124: 			v_u_5.Shop.setExtra(false)
+125: 			v_u_5.Shop.setPacks({})
+126: 			v_u_5.Tutorial.reset()
+127: 			if type(v30) == "table" then
+128: 				v_u_8.Status.Text = "VIP: " .. (v30.vip and "Yes" or "No") .. "   |   Extras: " .. (v30.extra and "Yes" or "No") .. "   |   Tutorial: " .. (v30.tuto and "Done" or "Not done")
+129: 			else
+130: 				v_u_8.Status.Text = "VIP: ?   |   Extras: ?   |   Tutorial: ?"
+131: 			end
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.Home =====
+   ...
+332: end
+333: local function v_u_158(p154) -- name: openProject
+334: 	-- upvalues: (ref) v_u_22, (ref) v_u_10, (ref) v_u_12, (ref) v_u_9
+335: 	local v155
+336: 	if v_u_22 then
+337: 		v155 = false
+338: 	else
+339: 		v_u_22 = true
+340: 		v155 = true
+341: 	end
+342: 	if v155 then
+343: 		v_u_10.busy(true, "Opening...")
+344: 		local v156, v157 = v_u_10.call("Open", p154)
+345: 		v_u_10.busy(false)
+346: 		v_u_22 = false
+347: 		if v156 then
+348: 			v_u_12.Visible = false
+349: 			v_u_9.Editor.open(v156.pid, v156.title, v156.data, v156.pub, v156.du)
+350: 		else
+351: 			v_u_10.toast(v157, true)
+352: 		end
+353: 	else
+354: 		return
+355: 	end
+356: end
+357: local function v_u_163(p159, p160) -- name: fadePublish
+358: 	-- upvalues: (ref) v_u_10, (ref) v_u_17
+359: 	local v161 = v_u_10.tween(v_u_17, p160, {
+360: 		["BackgroundTransparency"] = p159
+361: 	}, nil, nil, "fade")
+362: 	v_u_10.tween(v_u_17.UIStroke, p160, {
+363: 		["Transparency"] = p159
+364: 	}, nil, nil, "fade")
+365: 	v_u_10.tween(v_u_17.Spinner.UIStroke, p160, {
+366: 		["Transparency"] = p159
+367: 	}, nil, nil, "fade")
+368: 	for _, v162 in ipairs({ "Title", "Sub", "Done" }) do
+369: 		v_u_10.tween(v_u_17[v162], p160, {
+370: 			["TextTransparency"] = p159
+371: 		}, nil, nil, "fade")
+372: 	end
+373: 	v_u_10.tween(v_u_17.Done.Img, p160, {
+374: 		["ImageTransparency"] = p159
+375: 	}, nil, nil, "fade")
+376: 	return v161
+377: end
+378: local function v_u_167(p164, p165) -- name: showPublish
+379: 	-- upvalues: (ref) v_u_29, (ref) v_u_17, (ref) v_u_28, (ref) v_u_10, (copy) v_u_163, (ref) v_u_27, (copy) v_u_1
+380: 	v_u_29 = v_u_29 + 1
+381: 	v_u_17.Title.Text = p164
+382: 	v_u_17.Sub.Text = p165
+383: 	v_u_17.Spinner.Visible = true
+384: 	v_u_17.Done.Visible = false
+385: 	if not v_u_28 then
+386: 		v_u_28 = true
+387: 		v_u_10.dim(true)
+388: 	end
+389: 	if not v_u_17.Visible then
+390: 		v_u_163(1, 0)
+   ...
+413: 	v_u_17.Title.Text = p168
+414: 	v_u_17.Sub.Text = p169
+415: 	v_u_17.Pop.Scale = 1.08
+416: 	v_u_10.tween(v_u_17.Pop, 0.35, {
+417: 		["Scale"] = 1
+418: 	}, Enum.EasingStyle.Back, Enum.EasingDirection.Out, "pop")
+419: end
+420: local function v_u_173() -- name: getTrending
+421: 	-- upvalues: (ref) v_u_33, (ref) v_u_34, (ref) v_u_10
+422: 	if v_u_33 and os.clock() - v_u_34 < 60 then
+423: 		return v_u_33
+424: 	end
+425: 	local v171 = v_u_10.call("Tags")
+426: 	if type(v171) == "table" then
+427: 		local v172 = os.clock()
+428: 		v_u_33 = v171
+429: 		v_u_34 = v172
+430: 	end
+431: 	return v_u_33 or {}
+432: end
+433: local function v_u_176(p174) -- name: knownCount
+434: 	-- upvalues: (ref) v_u_33
+435: 	for _, v175 in ipairs(v_u_33 or {}) do
+436: 		if v175.t ~= p174 then
+437: 			continue
+   ...
+461: 			else
+462: 				v_u_31.TagInfo.Text = string.format("<font color=\"#96D2FF\">#%s</font>  is a brand new hashtag!", v_u_183)
+463: 			end
+464: 		end
+465: 		local v186 = v_u_176(v_u_183)
+466: 		if v186 then
+467: 			v_u_185(v186)
+468: 		else
+469: 			v_u_31.TagInfo.Text = string.format("<font color=\"#96D2FF\">#%s</font>  ...", v_u_183)
+470: 			task.delay(0.5, function()
+471: 				-- upvalues: (copy) v_u_182, (ref) v_u_35, (ref) v_u_31, (ref) v_u_10, (copy) v_u_183, (copy) v_u_185
+472: 				if v_u_182 == v_u_35 and v_u_31.Visible then
+473: 					local v187 = v_u_10.call("TagCount", v_u_183)
+474: 					if v_u_182 == v_u_35 then
+475: 						v_u_185(type(v187) == "table" and (v187.n or 0) or 0)
+476: 					end
+477: 				else
+478: 					return
+479: 				end
+480: 			end)
+481: 		end
+482: 	else
+483: 		v_u_31.TagInfo.Text = "Add #hashtags so more people find your cartoon"
+484: 		return
+485: 	end
+   ...
+666: 			["Position"] = v260
+667: 		}, Enum.EasingStyle.Back, Enum.EasingDirection.Out, "sw")
+668: 		v_u_10.tween(p257, 0.18, {
+669: 			["BackgroundColor3"] = v261
+670: 		}, nil, nil, "sw")
+671: 	end
+672: end
+673: local function v_u_289(p263, p264) -- name: askShare
+674: 	-- upvalues: (ref) v_u_32, (ref) v_u_31, (ref) v_u_40, (copy) v_u_256, (ref) v_u_10, (ref) v_u_41, (copy) v_u_6, (copy) v_u_188, (ref) v_u_189, (copy) v_u_173
+675: 	
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.CommentsUI =====
+   ...
+116: 	if v_u_13 and not p52:GetAttribute("Voting") then
+117: 		local v55 = v_u_13
+118: 		local v56 = p53.vote == p54 and 0 or p54
+119: 		local v57 = { p53.vote, p53.l, p53.d }
+120: 		local v58 = p53.vote or 0
+121: 		local v59 = (p53.l or 0) + (v56 == 1 and 1 or 0) - (v58 == 1 and 1 or 0)
+122: 		p53.l = math.max(0, v59)
+123: 		local v60 = (p53.d or 0) + (v56 == -1 and 1 or 0) - (v58 == -1 and 1 or 0)
+124: 		p53.d = math.max(0, v60)
+125: 		p53.vote = v56
+126: 		v_u_51(p52, p53)
+127: 		p52:SetAttribute("Voting", true)
+128: 		local v61, v62 = v_u_5.call("VoteComment", v55.id, p53.i, v56)
+129: 		if p52.Parent then
+130: 			p52:SetAttribute("Voting", nil)
+131: 			if v61 then
+132: 				local v63 = v61.l
+133: 				local v64 = v61.d
+134: 				local v65 = v61.vote
+135: 				p53.l = v63
+136: 				p53.d = v64
+137: 				p53.vote = v65
+138: 			else
+139: 				local v66 = v57[1]
+140: 				local v67 = v57[2]
+   ...
+158: 	else
+159: 		return
+160: 	end
+161: end
+162: local v_u_71 = nil
+163: local function v_u_81(p72, p73) -- name: loadReplies
+164: 	-- upvalues: (ref) v_u_13, (ref) v_u_5, (ref) v_u_24, (ref) v_u_6, (copy) v_u_15, (ref) v_u_71
+165: 	local v74 = v_u_13
+166: 	local v75 = p73.Content.RepliesBtn
+167: 	if v74 and not p73:GetAttribute("Loading") then
+168: 		p73:SetAttribute("Loading", true)
+169: 		v75.Text = "Loading..."
+170: 		local v76, v77 = v_u_5.call("Comments", v74.id, p72.i, "replies")
+171: 		p73:SetAttribute("Loading", nil)
+172: 		if v_u_13 == v74 and p73.Parent then
+173: 			if v76 then
+174: 				for _, v78 in ipairs(v76.list) do
+175: 					if v_u_15[v78.i] then
+176: 						continue
+177: 					end
+178: 					v_u_71(v78, p73, v78.i)
+179: 				end
+180: 				p73:SetAttribute("RepliesLoaded", true)
+181: 				p73.Content.Replies.Visible = true
+182: 				v75.Visible = false
+   ...
+308: 			v_u_81(p_u_87, v_u_90)
+309: 		end)
+310: 	end
+311: 	v_u_90.Visible = true
+312: 	v_u_90.Parent = p88 and p88.Content.Replies or v_u_7
+313: 	local v119 = v_u_14
+314: 	table.insert(v119, v_u_90)
+315: 	v_u_15[p_u_87.i] = v_u_90
+316: 	local v_u_120 = v_u_13
+317: 	v_u_5.button(v_u_106, function()
+318: 		-- upvalues: (ref) v_u_39, (copy) v_u_106, (ref) v_u_5, (copy) v_u_120, (copy) p_u_87, (ref) v_u_13, (copy) v_u_90, (ref) v_u_24, (ref) v_u_6, (ref) v_u_47, (ref) v_u_32, (ref) v_u_21
+319: 		if v_u_39(v_u_106, "Delete", "Sure?") then
+320: 			local v121, v122 = v_u_5.call("DelComment", v_u_120.id, p_u_87.i)
+321: 			if v_u_13 == v_u_120 and v_u_90.Parent then
+322: 				if v121 then
+323: 					v_u_47(v_u_90)
+324: 					local v123 = v_u_32
+325: 					local v124 = v_u_21
+326: 					local v125
+327: 					if type(v121) == "table" then
+328: 						local v126 = v121.n
+329: 						v125 = tonumber(v126) or 1
+330: 					else
+331: 						v125 = 1
+332: 					end
+   ...
+346: 			else
+347: 				return
+348: 			end
+349: 		else
+350: 			return
+351: 		end
+352: 	end)
+353: 	v_u_5.button(v_u_107, function()
+354: 		-- upvalues: (copy) v_u_107, (ref) v_u_39, (ref) v_u_5, (copy) v_u_120, (copy) p_u_87, (ref) v_u_13, (copy) v_u_90, (ref) v_u_24, (ref) v_u_6, (ref) v_u_47, (ref) v_u_32, (ref) v_u_21
+355: 		if v_u_107:GetAttribute("Done") or not v_u_39(v_u_107, "Report", "Sure?") then
+356: 			return
+357: 		else
+358: 			local v128, v129 = v_u_5.call("ReportComment", v_u_120.id, p_u_87.i)
+359: 			if v_u_13 == v_u_120 and v_u_90.Parent then
+360: 				if v128 then
+361: 					if type(v128) == "table" and v128.removed then
+362: 						v_u_47(v_u_90)
+363: 						v_u_32(v_u_21 - 1)
+364: 					else
+365: 						v_u_107:SetAttribute("Done", true)
+366: 						v_u_107.Text = "Reported"
+367: 						v_u_5.setColor(v_u_107, v_u_5.BTN)
+368: 					end
+369: 				else
+370: 					v_u_24 = v_u_24 + 1
+   ...
+399: 		local v132 = v_u_16
+400: 		local v133 = v_u_13
+401: 		if not p131 then
+402: 			v_u_34()
+403: 			v_u_19 = nil
+404: 			v_u_12.Visible = false
+405: 			v_u_17 = nil
+406: 			v_u_7.LoadMore.Visible = false
+407: 			v_u_6.Empty.Text = "Loading..."
+408: 			v_u_6.Empty.Visible = true
+409: 			v_u_7.CanvasPosition = Vector2.zero
+410: 		end
+411: 		
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.Reactions =====
+   ...
+10: 	p4.vote = p5
+11: end
+12: function v1.vote(p10, p11, p12) -- name: vote
+13: 	-- upvalues: (copy) v_u_9, (ref) v_u_3
+14: 	if not p10 or (p10.mine or p10.voting) then
+15: 		return nil
+16: 	end
+17: 	local v13 = p10.vote == p11 and 0 or p11
+18: 	local v14 = { p10.vote, p10.likes, p10.dislikes }
+19: 	v_u_9(p10, v13)
+20: 	p12(p10)
+21: 	p10.voting = true
+22: 	local v15, v16 = v_u_3.call("Vote", p10.id, v13)
+23: 	p10.voting = false
+24: 	if v15 then
+25: 		local v17 = v15.vote
+26: 		local v18 = v15.likes
+27: 		local v19 = v15.dislikes
+28: 		p10.vote = v17
+29: 		p10.likes = v18
+30: 		p10.dislikes = v19
+31: 	else
+32: 		local v20 = v14[1]
+33: 		local v21 = v14[2]
+34: 		local v22 = v14[3]
+   ...
+37: 		p10.dislikes = v22
+38: 		v_u_3.toast(v16, true)
+39: 	end
+40: 	p12(p10)
+41: 	return v15 and v13 and v13 or nil
+42: end
+43: local function v_u_32(p23, p24) -- name: sendStars
+44: 	-- upvalues: (ref) v_u_3, (ref) v_u_2
+45: 	if not p23.starSending then
+46: 		p23.starSending = true
+47: 		local v25 = 0
+48: 		while (p23.starQ or 0) > 0 do
+49: 			local v26, v27 = v_u_3.call("Star", p23.id)
+50: 			if v26 or v27 ~= "Slow down a little!" and v27 ~= "Please wait..." or v25 >= 4 then
+51: 				v25 = 0
+52: 				if v26 and not v26.need then
+53: 					p23.starQ = p23.starQ - 1
+54: 					p23.stars = v26.stars + p23.starQ
+55: 					local v28 = v26.mine
+56: 					if type(v28) == "number" then
+57: 						p23.myStars = v26.mine + p23.starQ
+58: 					end
+59: 					v_u_2.Shop.setStars(v26.balance - p23.starQ)
+60: 				else
+61: 					local v29 = p23.starQ
+   ...
+94: 	p33.stars = (p33.stars or 0) + 1
+95: 	p33.myStars = (p33.myStars or 0) + 1
+96: 	p33.starQ = (p33.starQ or 0) + 1
+97: 	if p35 then
+98: 		p35()
+99: 	end
+100: 	p34(p33)
+101: 	task.spawn(v_u_32, p33, p34)
+102: 	return true
+103: end
+104: function v1.report(p37, p38, p39) -- name: report
+105: 	-- upvalues: (ref) v_u_3
+106: 	local v40, v41 = v_u_3.call("Report", p37.id)
+107: 	if v40 then
+108: 		if type(v40) == "table" and v40.removed then
+109: 			p37.removed = true
+110: 			p38()
+111: 			v_u_3.toast("Cartoon removed from the Gallery")
+112: 			return true
+113: 		else
+114: 			p37.reported = true
+115: 			v_u_3.toast("Thanks, we got your report")
+116: 			p39(p37)
+117: 			return true
+118: 		end
+119: 	else
+120: 		v_u_3.toast(v41, true)
+121: 		return false
+122: 	end
+123: end
+124: function v1.remix(p42) -- name: remix
+125: 	-- upvalues: (ref) v_u_3
+126: 	if p42 and (not p42.mine and (p42.rx and not p42.remixing)) then
+127: 		p42.remixing = true
+128: 		local v43, v44 = v_u_3.call("Remix", p42.id)
+129: 		p42.remixing = false
+130: 		if v43 then
+131: 			if v43.vipCut then
+132: 				task.delay(0.6, v_u_3.toast, "VIP items were removed from your remix")
+133: 			end
+134: 			return v43
+135: 		else
+136: 			v_u_3.toast(v44, true)
+137: 			return nil
+138: 		end
+139: 	else
+140: 		return nil
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.Reels =====
+   ...
+956: 				["done"] = false,
+957: 				["it"] = p_u_355
+958: 			}
+959: 			v_u_10.setOffset(v_u_55)
+960: 			if v_u_40[0].id == p_u_355.id and v_u_40[0].frame.Visible then
+961: 				v_u_42 = 3
+962: 				v_u_10.setPlaying(false)
+963: 			end
+964: 			if not p_u_355.mine then
+965: 				local v_u_357 = v_u_59
+966: 				task.spawn(function()
+967: 					-- upvalues: (ref) v_u_8, (copy) p_u_355, (ref) v_u_5, (copy) v_u_357, (ref) v_u_59, (ref) v_u_6, (ref) v_u_33, (ref) v_u_34, (ref) v_u_245
+968: 					if v_u_8.call("Watching", p_u_355.id) and not p_u_355.seen then
+969: 						task.wait(v_u_5.VIEW_TIME + 0.1)
+970: 						if v_u_357 == v_u_59 and v_u_6.active then
+971: 							local v358 = v_u_8.call("Viewed", p_u_355.id)
+972: 							if type(v358) == "table" and v358.views then
+973: 								p_u_355.views = v358.views
+974: 								p_u_355.seen = true
+975: 								local v359 = p_u_355
+976: 								if v_u_6.active and v_u_33[v_u_34] == v359 then
+977: 									v_u_245(v359)
+978: 								end
+979: 							end
+980: 						end
+981: 					else
+982: 						return
+983: 					end
+   ...
+1064: 	-- upvalues: (ref) v_u_39, (copy) v_u_6, (copy) v_u_372, (ref) v_u_8, (copy) v_u_37, (copy) v_u_354, (copy) v_u_116, (ref) v_u_33, (ref) v_u_34, (ref) v_u_60, (ref) v_u_57, (copy) v_u_303, (copy) v_u_360, (copy) v_u_195
+1065: 	if not v_u_39 and v_u_6.active then
+1066: 		v_u_39 = true
+1067: 		task.spawn(function()
+1068: 			-- upvalues: (ref) v_u_6, (ref) v_u_372, (ref) v_u_8, (ref) v_u_37, (ref) v_u_354, (ref) v_u_116, (ref) v_u_33, (ref) v_u_34, (ref) v_u_60, (ref) v_u_57, (ref) v_u_303, (ref) v_u_360, (ref) v_u_195, (ref) v_u_39
+1069: 			while true do
+1070: 				while true do
+1071: 					local v373 = v_u_6.active and v_u_372()
+1072: 					if not v373 then
+1073: 						v_u_39 = false
+1074: 						return
+1075: 					end
+1076: 					local v374, v375 = v_u_8.call("View", v373.id, true)
+1077: 					if not v_u_6.active then
+1078: 						break
+1079: 					end
+1080: 					if type(v374) == "table" then
+1081: 						break
+1082: 					end
+1083: 					if v375 == "This cartoon is not available" or v375 == "Bad request" then
+1084: 						v373.dead = "This cartoon is no longer available"
+1085: 						v_u_195()
+1086: 					else
+1087: 						v373.tries = (v373.tries or 0) + 1
+1088: 						if v373.tries >= 3 then
+   ...
+1115: 					else
+1116: 						task.wait(v373.tries)
+1117: 					end
+1118: 				end
+1119: 			end
+1120: 		end)
+1121: 	end
+1122: end
+1123: local function v_u_383() -- name: request
+1124: 	-- upvalues: (ref) v_u_32, (ref) v_u_8
+1125: 	if v_u_32.kind == "foryou" then
+1126: 		local v377 = v_u_32.reset == true
+1127: 		local v378, v379 = v_u_8.call("Reels", v377)
+1128: 		if type(v378) == "table" then
+1129: 			local v380 = v378.items
+1130: 			if type(v380) == "table" then
+1131: 				v_u_32.reset = nil
+1132: 				return v378.items, nil, v378.cycled == true
+1133: 			end
+1134: 		end
+1135: 		return nil, v379
+1136: 	else
+1137: 		local v381, v382 = v_u_8.call("Feed", v_u_32.kind, v_u_32.tag)
+1138: 		if type(v381) == "table" then
+1139: 			return v381
+1140: 		else
+1141: 			return nil, v382
+1142: 		end
+1143: 	end
+1144: end
+1145: local function v_u_415() -- name: fetchMore
+1146: 	-- upvalues: (ref) v_u_35, (ref) v_u_32, (copy) v_u_6, (ref) v_u_36, (ref) v_u_33, (copy) v_u_383, (copy) v_u_91, (ref) v_u_72, (copy) v_u_263, (ref) v_u_19, (copy) v_u_81, (ref) v_u_13, (copy) v_u_80, (ref) v_u_16, (ref) v_u_20, (ref) v_u_83, (ref) v_u_84, (copy) v_u_415, (ref) v_u_248, (ref) v_u_249, (ref) v_u_7, (copy) v_u_369, (ref) v_u_362, (copy) v_u_195, (ref) v_u_361
+1147: 	if not v_u_35 and (v_u_32.more and v_u_6.active) then
+1148: 		v_u_35 = true
+1149: 		local v_u_384 = v_u_36
+   ...
+1253: 					v411.SecondaryBtn.Visible = true
+1254: 					v411.SecondaryBtn.Text = "Close"
+1255: 					v_u_83 = v409
+1256: 					v_u_84 = v410
+1257: 					v_u_20.Visible = true
+1258: 					v_u_16.Loading.Visible = false
+1259: 				else
+1260: 					local function v412()
+1261: 						-- upvalues: (ref) v_u_249, (ref) v_u_7
+1262: 						v_u_249(v_u_7.Home.open)
+1
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.Community =====
+   ...
+33: 			v_u_3.dim(true)
+34: 		end
+35: 		v_u_3.open(v_u_4)
+36: 	end
+37: end
+38: local function v_u_17() -- name: claim
+39: 	-- upvalues: (ref) v_u_8, (ref) v_u_6, (ref) v_u_3, (ref) v_u_4, (ref) v_u_5, (ref) v_u_2, (ref) v_u_7
+40: 	if v_u_8 or (not v_u_6 or v_u_6.claimed) then
+41: 		return
+42: 	else
+43: 		v_u_8 = true
+44: 		v_u_3.iconText(v_u_4.OkBtn, "Checking...")
+45: 		local v13, v14 = v_u_3.call("ClaimCommunity")
+46: 		v_u_8 = false
+47: 		if v13 then
+48: 			if v13.member then
+49: 				v_u_6.claimed = true
+50: 				v_u_5.Visible = false
+51: 				v_u_2.Shop.setStars(v13.stars)
+52: 				v_u_3.burst(v_u_4.OkBtn, { "\226\173\144", "\226\156\168" }, 16)
+53: 				if v_u_7 then
+54: 					v_u_7 = false
+55: 					v_u_3.close(v_u_4)
+56: 					v_u_3.dim(false)
+57: 				end
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.MenuMusic =====
+   ...
+71: 		v25.Edge.Color = v_u_12 and v_u_5 or v_u_7
+72: 	end
+73: end
+74: function v_u_4.setEnabled(p_u_27, p28) -- name: setEnabled
+75: 	-- upvalues: (ref) v_u_12, (ref) v_u_13, (copy) v_u_26, (copy) v_u_24, (ref) v_u_9
+76: 	v_u_12 = p_u_27
+77: 	v_u_13 = true
+78: 	v_u_26()
+79: 	v_u_24()
+80: 	if not p28 then
+81: 		task.spawn(function()
+82: 			-- upvalues: (ref) v_u_9, (copy) p_u_27, (ref) v_u_12
+83: 			local v29, v30 = v_u_9.call("MenuMusic", p_u_27)
+84: 			if not v29 and v_u_12 == p_u_27 then
+85: 				v_u_9.toast(v30, true)
+86: 			end
+87: 		end)
+88: 	end
+89: end
+90: function v_u_4.init(p31) -- name: init
+91: 	-- upvalues: (ref) v_u_8, (ref) v_u_9, (ref) v_u_10, (copy) v_u_2, (ref) v_u_14, (copy) v_u_3, (ref) v_u_13, (ref) v_u_12, (copy) v_u_19, (ref) v_u_11, (copy) v_u_4, (copy) v_u_26, (copy) v_u_24
+92: 	v_u_8 = p31
+93: 	v_u_9 = p31.Util
+94: 	v_u_10 = Instance.new("Sound")
+95: 	v_u_10.Name = "MenuMusic"
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.Afk =====
+   ...
+12: 	-- upvalues: (ref) v_u_5, (copy) v_u_2, (copy) v_u_7, (ref) v_u_6, (copy) v_u_3
+13: 	v_u_5 = p8.Util
+14: 	v_u_2.InputBegan:Connect(v_u_7)
+15: 	v_u_2.InputChanged:Connect(v_u_7)
+16: 	task.spawn(function()
+17: 		-- upvalues: (ref) v_u_6, (ref) v_u_3, (ref) v_u_5
+18: 		while true do
+19: 			repeat
+20: 				task.wait(15)
+21: 			until os.clock() - v_u_6 >= v_u_3.AFK_REJOIN_TIME
+22: 			v_u_6 = os.clock()
+23: 			v_u_5.busy(true, "Reconnecting...")
+24: 			if v_u_5.call("Rejoin") then
+25: 				task.delay(30, v_u_5.busy, false)
+26: 			else
+27: 				v_u_5.busy(false)
+28: 			end
+29: 		end
+30: 	end)
+31: end
+32: return v4
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.EditorTips =====
+   ...
+342: 	v_u_37.Edge.Color = v_u_40 and v_u_8 or v_u_10
+343: 	if not p_u_100 then
+344: 		v_u_65()
+345: 	end
+346: 	if not p101 then
+347: 		if p_u_100 then
+348: 			v_u_42 = os.clock() + 1
+349: 			table.clear(v_u_41)
+350: 		end
+351: 		v_u_35.toast(p_u_100 and "Tips on" or "Tips off")
+352: 		task.spawn(function()
+353: 			-- upvalues: (ref) v_u_35, (copy) p_u_100, (ref) v_u_40
+354: 			local v102, v103 = v_u_35.call("Tips", p_u_100)
+355: 			if not v102 and v_u_40 == p_u_100 then
+356: 				v_u_35.toast(v103, true)
+357: 			end
+358: 		end)
+359: 	end
+360: end
+361: function v_u_5.onOpen() -- name: onOpen
+362: 	-- upvalues: (ref) v_u_42
+363: 	v_u_42 = os.clock() + 10
+364: end
+365: function v_u_5.init(p104) -- name: init
+366: 	-- upvalues: (ref) v_u_34, (ref) v_u_35, (ref) v_u_36, (ref) v_u_37, (ref) v_u_38, (copy) v_u_6, (ref) v_u_39, (copy) v_u_5, (ref) v_u_40, (copy) v_u_1, (ref) v_u_43, (ref) v_u_45, (copy) v_u_65, (copy) v_u_7, (copy) v_u_9, (copy) v_u_8, (copy) v_u_10, (copy) v_u_99
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.DuetView =====
+   ...
+66: 	local v_u_27 = p_u_24.token
+67: 	p_u_24.id = p_u_25
+68: 	p_u_24.data = nil
+69: 	p_u_24.scene:clear()
+70: 	if v_u_6[p_u_25] then
+71: 		p_u_24:setData(v_u_6[p_u_25])
+72: 		if p_u_26 then
+73: 			p_u_26()
+74: 		end
+75: 	else
+76: 		task.spawn(function()
+77: 			-- upvalues: (ref) v_u_5, (copy) p_u_25, (copy) v_u_27, (copy) p_u_24, (ref) v_u_6, (copy) p_u_26
+78: 			local v28 = v_u_5.Util.call("View", p_u_25, true)
+79: 			if v_u_27 == p_u_24.token then
+80: 				local v29
+81: 				if type(v28) == "table" then
+82: 					v29 = v28.data
+83: 				else
+84: 					v29 = false
+85: 				end
+86: 				if type(v29) == "table" then
+87: 					local v30 = v29.order
+88: 					if type(v30) == "table" and #v29.order > 0 then
+89: 						v_u_6[p_u_25] = v29
+90: 						p_u_24:setData(v29)
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.MenuThemes =====
+   ...
+137: 	v_u_6.refresh()
+138: end
+139: local function v_u_44(p_u_40) -- name: buy
+140: 	-- upvalues: (ref) v_u_7, (ref) v_u_8, (copy) v_u_44, (copy) v_u_9, (copy) v_u_6
+141: 	if (v_u_7.stars or 0) < p_u_40.Price then
+142: 		v_u_8.toast("You need " .. p_u_40.Price .. " stars for this theme", true)
+143: 		v_u_7.Shop.openStars(function()
+144: 			-- upvalues: (ref) v_u_44, (copy) p_u_40
+145: 			v_u_44(p_u_40)
+146: 		end)
+147: 		return
+148: 	elseif v_u_8.confirm("Get the " .. p_u_40.Name .. " menu theme for " .. p_u_40.Price .. " stars?", "Get it") then
+149: 		local v_u_41, v42 = v_u_8.call("BuyMenuBg", p_u_40.Key)
+150: 		if v_u_41 then
+151: 			if v_u_41.need then
+152: 				v_u_7.Shop.openStars(function()
+153: 					-- upvalues: (ref) v_u_44, (copy) p_u_40
+154: 					v_u_44(p_u_40)
+155: 				end)
+156: 			else
+157: 				local v43 = v_u_9[p_u_40.Key]
+158: 				if v43 then
+159: 					v_u_8.burst(v43.Btn, { "\226\156\168", "\226\173\144" }, 16)
+160: 				end
+161: 				v_u_6.refresh()
+   ...
+251: 		v_u_23(v58, v_u_57.Key, v55)
+252: 		v58.Parent = v_u_11.Grid
+253: 		v_u_10[v_u_57.Key] = v58
+254: 		v_u_8.button(v58, function()
+255: 			-- upvalues: (ref) v_u_5, (ref) v_u_7, (copy) v_u_57, (ref) v_u_12, (ref) v_u_6, (ref) v_u_8
+256: 			if v_u_5.ownsMenuBg(v_u_7.owned, v_u_57.Key) then
+257: 				if (v_u_12 or "Galaxy") ~= v_u_57.Key then
+258: 					local v_u_59 = v_u_57.Key
+259: 					local v_u_60 = v_u_12
+260: 					v_u_6.apply(v_u_59)
+261: 					task.spawn(function()
+262: 						-- upvalues: (ref) v_u_8, (copy) v_u_59, (ref) v_u_6, (copy) v_u_60
+263: 						local v61, v62 = v_u_8.call("MenuBg", v_u_59)
+264: 						if not v61 then
+265: 							v_u_6.apply(v_u_60)
+266: 							v_u_8.toast(v62, true)
+267: 						end
+268: 					end)
+269: 					return
+270: 				end
+271: 			else
+272: 				v_u_6.closePicker()
+273: 				v_u_7.Shop.open("Themes")
+274: 			end
+275: 		end)
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.Contest =====
+   ...
+104: 		v52 = v_u_15.entry ~= nil
+105: 	end
+106: 	local v53 = v50.EntryTitle
+107: 	local v54
+108: 	if v52 then
+109: 		local v55 = v51 and (v51.title or "Your cartoon") or "Your cartoon"
+110: 		v54 = tostring(v55) or "Not entered yet"
+111: 	else
+112: 		v54 = "Not entered yet"
+113: 	end
+114: 	v53.Text = v54
+115: 	if v49 == "enter" then
+116: 		v50.Hint.Text = v52 and "You can switch to another cartoon until voting opens " .. (not (v_u_15 and v_u_15.voteAt) and "on the last day of the week" or DateTime.fromUnixTimestamp(v_u_15.voteAt):FormatLocalTime("ddd, MMM D [at] LT", "en-us")) .. "." or "Publish a " .. (v43 and "#" .. v43.Tag .. " " or "") .. "cartoon and enter it! Voting opens " .. (not (v_u_15 and v_u_15.voteAt) and "on the last day of the week" or DateTime.fromUnixTimestamp(v_u_15.voteAt):FormatLocalTime("ddd, MMM D [at] LT", "en-us")) .. "."
+117: 	elseif v49 == "vote" then
+118: 		v50.Hint.Text = v52 and "Voting is on. Good luck!" or "Entries are closed, but you can still vote!"
+119: 	else
+120: 		v50.Hint.Text = v_u_15 and "The contest is closed right now." or ""
+121: 	end
+122: 	v50.EnterBtn.Visible = v49 == "enter"
+123: 	v_u_7.iconText(v50.EnterBtn, v52 and "Change entry" or "\240\159\142\172 Enter a cartoon")
+124: 	local v56 = v_u_41
+125: 	if v51 then
+126: 		v51 = v51.th
+127: 	end
+128: 	v56(v50, v51, not v52)
+129: 	v_u_11.VoteBtn.Visible = v49 == "vote"
+130: 	v_u_11.VoteHint.Visible = v49 == "vote"
+131: end
+132: function v_u_5.refresh() -- name: refresh
+133: 	-- upvalues: (ref) v_u_16, (ref) v_u_7, (ref) v_u_15, (copy) v_u_57
+134: 	v_u_16 = v_u_16 + 1
+135: 	local v58 = v_u_16
+136: 	local v59 = v_u_7.call("Contest")
+137: 	if v58 == v_u_16 then
+138: 		if type(v59) == "table" then
+139: 			v_u_15 = v59
+140: 		end
+141: 		v_u_57()
+142: 	end
+143: end
+144: local function v_u_80() -- name: fillShowcase
+145: 	-- upvalues: (ref) v_u_17, (ref) v_u_7, (ref) v_u_11, (ref) v_u_12, (copy) v_u_3, (copy) v_u_23, (ref) v_u_8, (copy) v_u_5, (ref) v_u_6
+146: 	v_u_17 = v_u_17 + 1
+147: 	local v60 = v_u_17
+148: 	local v61 = v_u_7.call("Showcase")
+149: 	if v60 == v_u_17 then
+150: 		local v62 = v_u_11.Weeks
+151: 		for _, v63 in ipairs(v62:GetChildren()) do
+152: 			if v63.Name ~= "Week" then
+153: 				continue
+154: 			end
+155: 			v63:Destroy()
+156: 		end
+157: 		local v64 = type(v61) == "table" and v61 and v61 or {}
+158: 		v62.NoWinners.Visible = #v64 == 0
+159: 		for v65, v66 in ipairs(v64) do
+160: 			local v67 = v_u_12.Week:Clone()
+   ...
+175: 				local v76 = v75.Title
+176: 				local v77 = v_u_74.t and v_u_74.t ~= "" and (v_u_74.t or "Untitled") or "Untitled"
+177: 				v76.Text = tostring(v77)
+178: 				local v78 = v75.Author
+179: 				local v79 = v_u_74.dn or (v_u_74.an or "?")
+180: 				v78.Text = "by " .. tostring(v79)
+181: 				v_u_7.iconText(v75.Medal, v_u_23[v73.place] or "")
+182: 				v75.Parent = v67.Row
+183: 				v_u_8.thumb(v75.Thumb, v_u_74.th, 178, 100)
+184: 				v_u_7.button(v75, function()
+185: 					-- upvalues: (ref) v_u_5, (ref) v_u_6, (copy) v_u_74
+186: 					v_u_5.close()
+187: 					v_u_6.Reels.openPost(v_u_74.id)
+188: 				end)
+189: 			end
+190: 		end
+191: 	end
+192: end
+193: local function v_u_81() -- name: closePick
+194: 	-- upvalues: (ref) v_u_7, (ref) v_u_13
+195: 	if v_u_7.isOpen(v_u_13) then
+196: 		v_u_7.close(v_u_13)
+197: 		v_u_7.dim(false)
+198: 	end
+199: end
+   ...
+204: 	local v85 = v83 .. "_" .. tostring(v84)
+205: 	if v_u_15 and v_u_15.entry == v85 then
+206: 		if v_u_7.isOpen(v_u_13) then
+207: 			v_u_7.close(v_u_13)
+208: 			v_u_7.dim(false)
+209: 		end
+210: 		return
+211: 	else
+212: 		local v86 = p82.title or "this cartoon"
+213: 		local v87 = tostring(v86)
+214: 		if v_u_7.confirm("Enter \"" .. v87 .. "\" in this week\'s contest?", "Enter") then
+215: 			v_u_7.busy(true, "Entering...")
+216: 			local v88, v89 = v_u_7.call("ContestEnter", v85)
+217: 			v_u_7.busy(false)
+218: 			if v88 then
+219: 				if v_u_7.isOpen(v_u_13) then
+220: 					v_u_7.close(v_u_13)
+221: 					v_u_7.dim(false)
+222: 				end
+223: 				if v_u_15 then
+224: 					v_u_15
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.Cosmetics =====
+   ...
+482: 	end
+483: end
+484: local function v_u_122(p117) -- name: buy
+485: 	-- upvalues: (ref) v_u_12, (ref) v_u_5, (ref) v_u_6, (copy) v_u_19, (copy) v_u_4, (copy) v_u_3, (copy) v_u_11
+486: 	if v_u_12 then
+487: 		return
+488: 	elseif (v_u_5.stars or 0) < p117.Price then
+489: 		v_u_6.toast("You need " .. p117.Price .. " stars for this " .. v_u_19[p117.Slot], true)
+490: 		v_u_4.openStars(p117)
+491: 		return
+492: 	elseif v_u_6.confirm("Get the " .. p117.Name .. " " .. v_u_19[p117.Slot] .. " for " .. p117.Price .. " stars?", "Get it") then
+493: 		v_u_12 = true
+494: 		local v118, v119 = v_u_6.call("BuyCosmetic", p117.Id)
+495: 		v_u_12 = false
+496: 		if v118 then
+497: 			if not v118.need then
+498: 				if v118.stars then
+499: 					v_u_5.Shop.setStars(v118.stars)
+500: 				end
+501: 				local v120 = v_u_5.owned
+502: 				if type(v120) == "table" then
+503: 					v_u_5.owned[v_u_3.cosmeticOwnKey(p117.Id)] = true
+504: 				end
+505: 				v_u_5.MenuThemes.refresh()
+506: 				v_u_4.setEquipped(v118.cs)
+   ...
+541: 	else
+542: 		v125 = v_u_9[v_u_10] == nil and "equipped" or "owned"
+543: 	end
+544: 	if v125 == "equipped" then
+545: 		return
+546: 	elseif v125 == "owned" then
+547: 		local v126 = v_u_10
+548: 		local v127 = p124 and p124.Id or nil
+549: 		if v_u_12 then
+550: 			return
+551: 		else
+552: 			v_u_12 = true
+553: 			local v128, v129 = v_u_6.call("EquipCosmetic", v126, v127)
+554: 			v_u_12 = false
+555: 			if v128 then
+556: 				v_u_4.setEquipped(v128.cs)
+557: 			else
+558: 				v_u_6.toast(v129, true)
+559: 			end
+560: 		end
+561: 	elseif v125 == "locked" then
+562: 		v_u_6.toast("Reach creator Level " .. p124.Level .. " to unlock " .. p124.Name .. "!", true)
+563: 	else
+564: 		v_u_122(p124)
+565: 	end
+
+===== Players.DAYATTTTTT08.PlayerScripts.OnboardingRecorder =====
+   ...
+579: 		["keyboard"] = v_u_8.KeyboardEnabled,
+580: 		["pad"] = v_u_8.GamepadEnabled,
+581: 		["tenFoot"] = v_u_1:IsTenFootInterface(),
+582: 		["last"] = v_u_8:GetLastInputType().Name
+583: 	}
+584: 	local v175 = v_u_1:GetGuiInset().Y
+585: 	v174.inset = math.round(v175)
+586: 	local v176 = time() * 100
+587: 	v174.boot = math.round(v176) / 100
+588: 	v174.locale = v_u_2.RobloxLocaleId
+589: 	v174.sysLocale = v_u_2.SystemLocaleId
+590: 	local v177, v178 = pcall(function()
+591: 		return UserSettings():GetService("UserGameSettings").SavedQualityLevel.Value
+592: 	end)
+593: 	if not v177 then
+594: 		v178 = nil
+595: 	end
+596: 	v174.gfx = v178
+597: 	if v_u_23 then
+598: 		if #v_u_20 >= 600 then
+599: 			v_u_21 = v_u_21 + 1
+600: 		else
+601: 			local v179 = (os.clock() - v_u_22) * 100
+602: 			v174.t = math.round(v179) / 100
+603: 			local v180 = v_u_20
+
+===== ReplicatedStorage.DrawShared.Config =====
+   ...
+906: 		["Crate"] = "TinyChampion",
+907: 		["Icon"] = 71311088921012,
+908: 		["Prompt"] = "The Smallest Stickman Wins",
+909: 		["Desc"] = "Everyone says they are too small. Prove them wrong!"
+910: 	},
+911: 	{
+912: 		["Key"] = "PlotTwist",
+913: 		["Name"] = "Plot Twist",
+914: 		["Tag"] = "plottwist",
+915: 		["Crate"] = "CurtainCall",
+916: 		["Icon"] = 81857611901814,
+917: 		["Prompt"] = "Everything You Saw Was a Play",
+918: 		["Desc"] = "Surprise! Your audience thinks it is real. Save the reveal for the end."
+919: 	},
+920: 	{
+921: 		["Key"] = "Myths",
+922: 		["Name"] = "Gods & Myths",
+923: 		["Tag"] = "myths",
+924: 		["Crate"] = "Olympus",
+925: 		["Icon"] = 138177865452641,
+926: 		["Prompt"] = "A Greek Myth Retold",
+927: 		["Desc"] = "Retell a classic legend your way. Funny endings welcome!"
+928: 	},
+929: 	{
+930: 		["Key"] = "TimeLoop",
+   ...
+1646: 	}
+1647: }
+1648: v_u_1.ACH_TIERS = {
+1649: 	["bronze"] = Color3.fromRGB(214, 140, 74),
+1650: 	["silver"] = Color3.fromRGB(196, 206, 226),
+1651: 	["gold"] = Color3.fromRGB(255, 204, 48),
+1652: 	["special"] = Color3.fromRGB(178, 98, 255)
+1653: }
+1654: v_u_1.ACHIEVEMENTS = {
+1655: 	{
+1656: 		["Id"] = "first_publish",
+1657: 		["Name"] = "Premiere",
+1658: 		["Desc"] = "Published a first cartoon",
+1659: 		["Icon"] = "\240\159\142\172",
+1660: 		["Tier"] = "bronze"
+1661: 	},
+1662: 	{
+1663: 		["Id"] = "views_100",
+1664: 		["Name"] = "Getting Noticed",
+1665: 		["Desc"] = "A cartoon reached 100 views",
+1666: 		["Icon"] = "\240\159\145\128",
+1667: 		["Tier"] = "bronze",
+1668: 		["Stat"] = "views",
+1669: 		["At"] = 100
+1670: 	},
+
+===== ReplicatedStorage.OnboardingKit.Protocol =====
+1: local v1 = {
+2: 	["KitVersion"] = "1.0.0",
+3: 	["DataVersion"] = 3,
+4: 	["RemoteName"] = "Push",
+5: 	["RecordingAttribute"] = "OnboardingRecording",
+6: 	["SessionAttribute"] = "OnboardingSessionId",
+7: 	["ClientFlushSeconds"] = 5,
+8: 	["ServerSaveSeconds"] = 60,
+9: 	["JoinStatsSaveSeconds"] = 300,
+10: 	["PerfSampleSeconds"] = 5,
+11: 	["MoveSampleSeconds"] = 1,
+12: 	["IdleSeconds"] = 4,
+13: 	["MinBatchInterval"] = 3,
+14: 	["MaxEventsPerBatch"] = 150,
+15: 	["MaxEventsPerSession"] = 4000,
+16: 	["MaxPayloadBytes"] = 3800000,
+17: 	["MaxFields"] = 24,
+18: 	["MaxString"] = 120,
+19: 	["MaxEarlyLeaves"] = 500,
+20: 	["EventTypes"] = table.freeze({
+21: 		["Start"] = true,
+
+===== ReplicatedFirst.OnboardingLoadingTelemetry =====
+   ...
+35: 	v_u_15 = v_u_15 or os.clock()
+36: end)
+37: if v_u_9.Character ~= nil then
+38: 	local v17 = os.clock()
+39: 	v_u_15 = v17
+40: end
+41: local v18 = {
+42: 	["phase"] = "start",
+43: 	["gfx"] = nil,
+44: 	["mem"] = nil
+45: }
+46: local v19, v20 = pcall(function()
+47: 	return UserSettings():GetService("UserGameSettings").SavedQualityLevel.Value
+48: end)
+49: if not v19 then
+50: 	v20 = nil
+51: end
+52: v18.gfx = v20
+53: local v21, v22 = pcall(function()
+54: 	-- upvalues: (copy) v_u_5
+55: 	return v_u_5:GetTotalMemoryUsageMb()
+56: end)
+57: v18.mem = not v21 and -1 or math.round(v22)
+58: if #v_u_11 < 150 then
+59: 	v18.k = "Load"
+   ...
+86: 			["vy"] = nil,
+87: 			["gfx"] = nil,
+88: 			["touch"] = v_u_6.TouchEnabled,
+89: 			["mouse"] = v_u_6.MouseEnabled,
+90: 			["pad"] = v_u_6.GamepadEnabled,
+91: 			["tenFoot"] = v_u_1:IsTenFootInterface()
+92: 		}
+93: 		local v29 = v27.ViewportSize.X
+94: 		v28.vx = math.round(v29)
+95: 		local v30 = v27.ViewportSize.Y
+96: 		v28.vy = math.round(v30)
+97: 		local v31, v32 = pcall(function()
+98: 			return UserSettings():GetService("UserGameSettings").SavedQualityLevel.Value
+99: 		end)
+100: 		if not v31 then
+101: 			v32 = nil
+102: 		end
+103: 		v28.gfx = v32
+104: 		if #v_u_11 < 150 then
+105: 			v28.k = "Load"
+106: 			local v33 = os.clock()
+107: 			local v34
+108: 			if v33 == nil then
+109: 				v34 = nil
+110: 			else
+
+===== REMOTES =====
