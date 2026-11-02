@@ -1,0 +1,169 @@
+keys: PosePop, Presets., poseBone
+scripts scanned: 88
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.Editor =====
+   ...
+621: 		v_u_13.setActive(v292.SceneBtn, v_u_13.isOpen(v_u_22.Scenes))
+622: 		v_u_13.setActive(v292.MusicBtn, v_u_13.isOpen(v_u_22.Music))
+623: 		if v_u_76 and not v_u_13.isOpen(v_u_22.Music) then
+624: 			for _, v293 in ipairs(v_u_76:GetChildren()) do
+625: 				v293:Stop()
+626: 			end
+627: 		end
+628: 		v_u_13.setActive(v292.SoundBtn, v_u_13.isOpen(v_u_22.Sounds) or v_u_13.isOpen(v_u_22.Music))
+629: 		local v294 = v_u_29.Buttons
+630: 		v_u_13.setActive(v294.FxBtn, v_u_13.isOpen(v_u_22.ObjFx))
+631: 		v_u_13.setActive(v_u_29.Buttons.MovesBtn, v_u_13.isOpen(v_u_22.Moves))
+632: 		v_u_13.setActive(v294.FaceBtn, v_u_13.isOpen(v_u_22.FacePanel))
+633: 		v_u_13.setActive(v294.PoseBtn, v_u_13.isOpen(v_u_22.PosePop))
+634: 		v_u_13.setActive(v294.StyleBtn, v_u_13.isOpen(v_u_22.StylePanel))
+635: 		v_u_13.setActive(v294.HoldBtn, v_u_84 ~= nil)
+636: 		v_u_13.setActive(v280.OnionCfg, v_u_13.isOpen(v_u_22.OnionPop))
+637: 		v_u_13.setActive(v_u_22.Timeline.Actions.SpeedBtn, v_u_13.isOpen(v_u_22.Speed))
+638: 		local v295 = v_u_18.target()
+639: 		local v296 = v_u_13.setActive
+640: 		local v297 = v_u_29.Buttons.ColorBtn
+641: 		local v298
+642: 		if v295 == nil then
+643: 			v298 = false
+644: 		else
+645: 			v298 = v295 ~= "brush"
+   ...
+1136: 		return true
+1137: 	end
+1138: 	v425:syncFailed(v429, v432 == "Missing frame")
+1139: 	local v434 = v_u_22.TopBar.Right.SaveLbl
+1140: 	v434.Text = "Not saved"
+1141: 	v434.TextColor3 = v_u_13.DANGER or Color3.fromRGB(150, 156, 175)
+1142: 	v_u_53 = os.clock() + 5
+1143: 	if v432 ~= "Slow down a little!" then
+1144: 		v_u_13.toast(v432, true)
+1145: 	end
+1146: 	return false
+1147: end
+1148: local function v_u_454(p436, p437, p438, p439, p440, p441) -- name: poseBone
+1149: 	-- upvalues: (ref) v_u_14, (copy) v_u_7
+1150: 	local v442 = p436.bones[p439]
+1151: 	if v442 then
+1152: 		if not p437[7] then
+1153: 			p437[7] = table.clone(p436.item.Rest)
+1154: 		end
+1155: 		local v443 = p438 or p437
+1156: 		local v444, v445, v446 = v_u_14.fk(p436, v443)
+1157: 		local v447, v448 = v_u_14.toWorld(v443, v444[p439], v445[p439])
+1158: 		local v449, v450 = v_u_7.rot(p440 - v447, p441 - v448, -v443[3])
+1159: 		if v449 * v449 + v450 * v450 >= 1 then
+1160: 			local v451 = v_u_7.angleTo(v449, v450) - (v442.parent == 0 and 0 or v446[v442.parent])
+   ...
+2149: 		v_u_22.FacePanel,
+2150: 		v_u_22.StylePanel
+2151: 	}) do
+2152: 		if v764 == p763 or not v_u_13.isOpen(v764) then
+2153: 			continue
+2154: 		end
+2155: 		v_u_13.close(v764)
+2156: 	end
+2157: 	if p763 ~= v_u_22.Sounds then
+2158: 		v_u_95(true)
+2159: 	end
+2160: 	if not p762 then
+2161: 		for _, v765 in ipairs({ v_u_22.Speed, v_u_22.PosePop, v_u_22.OnionPop }) do
+2162: 			if v765 == p763 or not v_u_13.isOpen(v765) then
+2163: 				continue
+2164: 			end
+2165: 			v_u_13.close(v765)
+2166: 		end
+2167: 		v_u_18.close()
+2168: 	end
+2169: 	v_u_302()
+2170: end
+2171: local function v_u_768(p766, p767) -- name: togglePanel
+2172: 	-- upvalues: (ref) v_u_13, (ref) v_u_22, (ref) v_u_95, (copy) v_u_302, (ref) v_u_57, (ref) v_u_490, (ref) v_u_761, (ref) v_u_92
+2173: 	if v_u_13.isOpen(p766) then
+   ...
+3957: 			v_u_90.refreshFace()
+3958: 		end
+3959: 		if v_u_13.isOpen(v_u_22.StylePanel) then
+3960: 			v_u_90.refreshStyle()
+3961: 		end
+3962: 		if v_u_13.isOpen(v_u_22.Sounds) then
+3963: 			v_u_19.refresh()
+3964: 			v_u_1082()
+3965: 		end
+3966: 		if v_u_13.isOpen(v_u_22.Speed) then
+3967: 			v_u_985()
+3968: 		end
+3969: 		if v_u_13.isOpen(v_u_22.PosePop) then
+3970: 			local v1219 = v_u_90.selItem()
+3971: 			if not v1219 or (#v1219.Bones == 0 or not (v_u_33 and v_u_32:frame().o[v_u_33])) then
+3972: 				v_u_13.close(v_u_22.PosePop)
+3973: 				v_u_302()
+3974: 			end
+3975: 		end
+3976: 	end
+3977: end
+3978: local function v_u_1232(p1220) -- name: stepDuration
+3979: 	-- upvalues: (ref) v_u_32, (copy) v_u_5, (copy) v_u_985, (ref) v_u_16, (ref) v_u_22, (copy) v_u_302
+3980: 	local v1221 = v_u_32:frame()
+3981: 	local v1222 = v_u_5.DURATIONS
+3982: 	local v1223 = 0
+3983: 	for v1224, v1225 in ipairs(v1222) do
+3984: 		if v1225 > v1
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.Shop =====
+   ...
+880: 	-- upvalues: (copy) v_u_8, (ref) v_u_18, (ref) v_u_12, (copy) v_u_40, (copy) v_u_22, (ref) v_u_13, (copy) v_u_11, (copy) v_u_1, (copy) v_u_50
+881: 	for v274, v_u_275 in ipairs(v_u_8.MOVE_PACKS) do
+882: 		local v_u_276 = v_u_18.Packs:FindFirstChild("Card" .. v274)
+883: 		if not v_u_276 then
+884: 			continue
+885: 		end
+886: 		v_u_276.PackName.Text = v_u_275.Name
+887: 		local v277 = v_u_276.List.RowTemplate
+888: 		local v278 = {}
+889: 		for v279, v284 in ipairs(v_u_275.Moves) do
+890: 			local v281 = v_u_12.Presets
+891: 			if v281 then
+892: 				v281 = v_u_12.Presets.byId[v284]
+893: 			end
+894: 			local v282 = v277:Clone()
+895: 			v282.Name = "Row" .. v279
+896: 			v282.LayoutOrder = v279
+897: 			local v283 = "Move"
+898: 			if v281 then
+899: 				local v284 = v281.Name or v284
+900: 			end
+901: 			v282:SetAttribute(v283, v284)
+902: 			v282.Text = "\226\128\162 " .. v282:GetAttribute("Move")
+903: 			v282.Visible = true
+904: 			v282.Parent = v_u_276.List
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.EditorTips =====
+   ...
+11: local v_u_11 = {
+12: 	"Library",
+13: 	"Scenes",
+14: 	"Music",
+15: 	"Speed",
+16: 	"ColorPicker",
+17: 	"ObjFx",
+18: 	"Sounds",
+19: 	"SoundEdit",
+20: 	"OnionPop",
+21: 	"Moves",
+22: 	"FacePanel",
+23: 	"PosePop",
+24: 	"StylePanel",
+25: 	"DrawBar",
+26: 	"PickBar",
+27: 	"AttachBar",
+28: 	"FrameBar"
+29: }
+30: local v_u_33 = {
+31: 	{ "Inspector.Buttons.PoseBtn", "Pose lets you drag the dots to move arms and legs", function(p12)
+32: 			return p12.sel ~= nil
+33: 		end },
+34: 	{ "Timeline.Actions.AddFrameBtn", "Add a frame, then change the pose to make it move", function(p13)
+35: 			local v14
+
+===== REMOTES =====
