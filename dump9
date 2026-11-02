@@ -1,0 +1,4317 @@
+keys: NewCard
+scripts scanned: 88
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.Tutorial (FULL, 36490 chars) =====
+local v_u_1 = game:GetService("RunService")
+local v_u_2 = game:GetService("UserInputService")
+local v_u_3 = game:GetService("ReplicatedStorage")
+local v4 = v_u_3:WaitForChild("DrawShared")
+local v_u_5 = require(v4.Config)
+local v_u_6 = {
+	["active"] = false
+}
+local v_u_7 = nil
+local v_u_8 = nil
+local v_u_9 = nil
+local v_u_10 = nil
+local v_u_11 = nil
+local v_u_12 = nil
+local v_u_13 = nil
+local v_u_14 = nil
+local v_u_15 = nil
+local v_u_16 = nil
+local v_u_17 = nil
+local v_u_18 = nil
+local v_u_19 = nil
+local v_u_20 = nil
+local v_u_21 = nil
+local v_u_22 = nil
+local v_u_23 = nil
+local v_u_24 = nil
+local v_u_25 = nil
+local v_u_26 = {}
+local v_u_27 = {}
+local v_u_28 = nil
+local v_u_29 = nil
+local v_u_30 = nil
+local v_u_31 = nil
+local v_u_32 = nil
+local v_u_33 = 0
+local v_u_34 = nil
+local v_u_35 = nil
+local v_u_36 = false
+local v_u_37 = false
+local v_u_38 = 0
+local v_u_39 = false
+local v_u_40 = 0
+local v_u_41 = "welcome"
+local v_u_42 = nil
+local v_u_43 = 0
+local v_u_44 = 0
+local v_u_45 = 1
+local v_u_46 = {
+	0,
+	0,
+	0,
+	0
+}
+local v_u_47 = 0
+local v_u_48 = 1
+local v_u_49 = nil
+local v_u_50 = nil
+local v_u_51 = {
+	{
+		{
+			["bone"] = "ForeArmR",
+			["dir"] = nil,
+			["text"] = "Make him wave! HOLD the dot on his hand and DRAG it up to the circle!",
+			["dir"] = Vector2.new(0.6, -0.8)
+		},
+		{
+			["bone"] = "ShinL",
+			["dir"] = nil,
+			["text"] = "Now HOLD the dot on his foot and DRAG it out to the circle!",
+			["dir"] = Vector2.new(0.85, -0.5)
+		}
+	},
+	{
+		{
+			["bone"] = "ForeArmR",
+			["dir"] = nil,
+			["text"] = "Pose 2! DRAG his hand to the other side to wave hello!",
+			["dir"] = Vector2.new(-1, -0.1)
+		},
+		{
+			["bone"] = "ShinL",
+			["dir"] = nil,
+			["text"] = "Last one! DRAG his foot back down to tap it!",
+			["dir"] = Vector2.new(-0.85, 0.5)
+		}
+	}
+}
+local v_u_52 = #v_u_51
+local v_u_53 = { "Cork Pop", "Tada" }
+local v_u_54 = {
+	["welcome"] = 1,
+	["new"] = 2,
+	["add"] = 3,
+	["ninja"] = 4,
+	["pose"] = 5,
+	["frame"] = 6,
+	["anim"] = 7,
+	["play"] = 8,
+	["close"] = 9,
+	["home"] = 10,
+	["cartoons"] = 11
+}
+local function v_u_56(p55) -- name: shown
+	if not (p55 and p55.Parent) then
+		return false
+	end
+	if not p55:IsA("GuiObject") then
+		return not p55:IsA("LayerCollector") or p55.Enabled
+	end
+	if not p55.Visible then
+		return false
+	end
+	p55 = p55.Parent
+	if p55 then
+		continue
+	end
+	return false
+end
+local function v_u_63(p57, p58) -- name: rectOf
+	-- upvalues: (ref) v_u_11, (ref) v_u_45
+	local v59 = v_u_11.AbsolutePosition
+	local v60 = p57.AbsolutePosition
+	local v61 = p57.AbsoluteSize
+	local v62 = (p58 or 0) * v_u_45
+	return {
+		v60.X - v59.X - v62,
+		v60.Y - v59.Y - v62,
+		v60.X - v59.X + v61.X + v62,
+		v60.Y - v59.Y + v61.Y + v62
+	}
+end
+local function v_u_65(p64) -- name: padIcon
+	if string.find(p64, "RIGHT STICK") then
+		return Enum.KeyCode.Thumbstick2
+	elseif string.find(p64, "Press RB") then
+		return Enum.KeyCode.ButtonR1
+	elseif string.find(p64, "[Pp]ress A") then
+		return Enum.KeyCode.ButtonA
+	else
+		return nil
+	end
+end
+local function v_u_75(p66) -- name: setText
+	-- upvalues: (ref) v_u_7, (copy) v_u_65, (ref) v_u_8, (ref) v_u_50, (ref) v_u_18, (copy) v_u_2
+	local v67 = nil
+	local v68
+	if v_u_7.GamepadCursor == nil then
+		v68 = false
+	else
+		v68 = v_u_7.GamepadCursor.active()
+	end
+	if v68 then
+		local v69 = string.gsub(p66, "Tap here", "Press A here")
+		local v70 = string.gsub(v69, "Tap ", "Press A on ")
+		local v71 = string.gsub(v70, "tap ", "press A on ")
+		v67 = v_u_65(v71)
+		p66 = v_u_8.padLabel(v71)
+	end
+	if p66 ~= v_u_50 then
+		v_u_50 = p66
+		v_u_18.Txt.Text = p66
+		local v72 = v_u_18:FindFirstChild("PadIcon")
+		if v72 then
+			v72.Visible = v67 ~= nil
+			v72.Image = v67 and (v_u_2:GetImageForKeyCode(v67) or "") or ""
+			v_u_18.Txt.Position = UDim2.fromOffset(v67 and 92 or 24, 10)
+			v_u_18.Txt.Size = UDim2.new(1, v67 and -116 or -48, 1, -20)
+		end
+		local v73 = v_u_18.Pop
+		local v74 = v73.Scale
+		v73.Scale = math.min(v74, 0.88)
+		v_u_8.tween(v73, 0.25, {
+			["Scale"] = 1
+		}, Enum.EasingStyle.Back, Enum.EasingDirection.Out, "pop")
+	end
+end
+local function v_u_81() -- name: resolve
+	-- upvalues: (ref) v_u_9, (ref) v_u_42, (ref) v_u_41, (ref) v_u_44, (copy) v_u_54, (ref) v_u_8, (ref) v_u_7
+	if v_u_9.isOpen() then
+		local v76 = v_u_9.project()
+		if v_u_42 and not (v76 and v76.objs[v_u_42]) then
+			v_u_42 = nil
+		end
+		if not v_u_42 then
+			local v77 = v_u_8.isOpen(v_u_7.ui.Root.Editor.Library)
+			if v_u_41 ~= "ninja" or not v77 then
+				local v78 = v77 and "ninja" or "add"
+				if v_u_41 ~= v78 then
+					v_u_41 = v78
+					v_u_44 = 0
+					local v79 = v_u_54[v78]
+					if v79 then
+						task.spawn(v_u_8.call, "TutoStep", v79)
+					end
+				end
+			end
+		end
+	else
+		v_u_42 = nil
+		if v_u_41 ~= "new" then
+			v_u_41 = "new"
+			v_u_44 = 0
+			local v80 = v_u_54.new
+			if v80 then
+				task.spawn(v_u_8.call, "TutoStep", v80)
+			end
+		end
+		return
+	end
+end
+local function v_u_99() -- name: poseText
+	-- upvalues: (ref) v_u_9, (ref) v_u_42, (ref) v_u_7, (copy) v_u_51, (ref) v_u_43, (ref) v_u_33
+	if v_u_9.selected() == v_u_42 then
+		local v82
+		if v_u_7.GamepadCursor == nil then
+			v82 = false
+		else
+			v82 = v_u_7.GamepadCursor.active()
+		end
+		if v82 then
+			local v83 = v_u_9.project()
+			local v84 = v_u_51
+			local v85 = v83 and v83.cur or 1
+			local v86 = #v_u_51
+			local v87 = v84[math.clamp(v85, 1, v86)]
+			local v88 = v_u_43 + 1
+			local v89 = #v87
+			local v90 = v87[math.clamp(v88, 1, v89)]
+			local v91 = string.find(v90.bone, "Arm") and "hand" or "foot"
+			if v_u_9.padPart() == v90.bone then
+				return "Now push the RIGHT STICK toward the circle to move his " .. v91 .. "!"
+			else
+				return "Press RB to pick his " .. string.upper(v91) .. "!"
+			end
+		else
+			if os.clock() < v_u_33 then
+				return "Don\'t just tap! HOLD the glowing dot and DRAG it to the circle \240\159\145\137"
+			end
+			local v92 = v_u_9.project()
+			local v93 = v_u_51
+			local v94 = v92 and v92.cur or 1
+			local v95 = #v_u_51
+			local v96 = v93[math.clamp(v94, 1, v95)]
+			local v97 = v_u_43 + 1
+			local v98 = #v96
+			return v96[math.clamp(v97, 1, v98)].text
+		end
+	else
+		return "Tap your Ninja!"
+	end
+end
+local function v_u_107(p100) -- name: animPlan
+	-- upvalues: (copy) v_u_56, (copy) v_u_63, (ref) v_u_9, (ref) v_u_42
+	local v101 = p100.Moves
+	if v_u_56(v101) then
+		local v102 = v101.Grid:FindFirstChild("MV_Kick")
+		if v_u_56(v102) then
+			if v_u_9.movePick() == "Kick" then
+				return v_u_63(v101.Bottom.ApplyBtn, 6), "Tap Add Frames to make him kick!", "tap"
+			else
+				return v_u_63(v102, 6), "Pick the ninja Kick!", "tap"
+			end
+		else
+			return v_u_63(v101.Tabs.BodyTab, 6), "Tap Characters!", "tap"
+		end
+	elseif v_u_9.selected() == v_u_42 then
+		local v103 = p100.Inspector.Buttons.MovesBtn
+		if v_u_56(v103) then
+			return v_u_63(v103, 6), "Now tap Animations to add a ready-made move!", "tap"
+		else
+			return nil
+		end
+	else
+		local v104 = v_u_63(p100.StageArea)
+		if v_u_56(p100.Inspector) then
+			local v105 = v104[3]
+			local v106 = v_u_63(p100.Inspector)[1]
+			v104[3] = math.min(v105, v106)
+		end
+		return v104, "Tap your Ninja!", "drag"
+	end
+end
+local function v_u_126() -- name: plan
+	-- upvalues: (ref) v_u_7, (ref) v_u_41, (copy) v_u_56, (copy) v_u_63, (copy) v_u_99, (ref) v_u_9, (copy) v_u_52, (copy) v_u_107
+	local v108 = v_u_7.ui.Root.Editor
+	if v_u_41 == "new" then
+		local v109 = v_u_7.ui.Root.Home.MyPage.GridMask.Grid:FindFirstChild("NewCard")
+		if v_u_56(v109) then
+			return v_u_63(v109, 8), "Tap here to make a new cartoon!", "tap"
+		end
+	elseif v_u_41 == "add" then
+		local v110 = v108.LeftBar.AddBtn
+		if v_u_56(v110) then
+			return v_u_63(v110, 6), "Tap Add to pick a character!", "tap"
+		end
+	elseif v_u_41 == "ninja" then
+		local v111 = v108.Library.Grid:FindFirstChild("Ninja")
+		if v_u_56(v111) then
+			return v_u_63(v111, 6), "Pick the Ninja!", "tap"
+		end
+		local v112 = v108.Library.Tabs:FindFirstChild("Characters")
+		if v_u_56(v112) then
+			return v_u_63(v112, 6), "Tap Characters!", "tap"
+		end
+	else
+		if v_u_41 == "pose" then
+			local v113 = v_u_63(v108.StageArea)
+			if v_u_56(v108.Inspector) then
+				local v114 = v113[3]
+				local v115 = v_u_63(v108.Inspector)[1]
+				v113[3] = math.min(v114, v115)
+			end
+			return v113, v_u_99(), "drag"
+		end
+		if v_u_41 == "frame" then
+			local v116 = v108.Timeline.Actions.AddFrameBtn
+			if v_u_56(v116) then
+				local v117 = v_u_9.project()
+				local v118 = v117 and #v117.order or 1
+				local v119 = v118 == 1 and "Tap + Frame to make the next picture!" or (v118 == v_u_52 - 1 and "Last one! Tap + Frame!" or "Tap + Frame again!")
+				return v_u_63(v116, 6), v119, "tap"
+			end
+		else
+			if v_u_41 == "play" then
+				local v120 = v_u_63(v108.StageArea)
+				if v_u_56(v108.Inspector) then
+					local v121 = v120[3]
+					local v122 = v_u_63(v108.Inspector)[1]
+					v120[3] = math.min(v121, v122)
+				end
+				return v120, "Awesome! Let\'s watch your cartoon!", nil
+			end
+			if v_u_41 == "close" then
+				local v123 = v_u_7.watch.UI.Actions.CloseBtn
+				if v_u_56(v123) then
+					return v_u_63(v123, 6), "Looking good! Tap Close to finish your cartoon", "tap"
+				end
+			elseif v_u_41 == "home" then
+				local v124 = v108.TopBar.Left.BackBtn
+				if v_u_56(v124) then
+					return v_u_63(v124, 6), "It\'s saved! Tap Home to see all your cartoons", "tap"
+				end
+			elseif v_u_41 == "cartoons" then
+				local v125 = v_u_7.ui.Root.Home.Header.Tabs.GalleryBtn
+				if v_u_56(v125) then
+					return v_u_63(v125, 6), "You\'re an animator now! Tap Cartoons to watch what other players made", "tap"
+				end
+			elseif v_u_41 == "anim" then
+				return v_u_107(v108)
+			end
+		end
+	end
+	return nil
+end
+local function v_u_147(p127, p128) -- name: layoutDims
+	-- upvalues: (ref) v_u_46, (copy) v_u_26, (ref) v_u_47, (ref) v_u_13, (ref) v_u_45, (ref) v_u_44
+	local v129 = v_u_46[1]
+	local v130 = math.clamp(v129, 0, p127)
+	local v131 = math.floor(v130)
+	local v132 = v_u_46[2]
+	local v133 = math.clamp(v132, 0, p128)
+	local v134 = math.floor(v133)
+	local v135 = v_u_46[3]
+	local v136 = math.clamp(v135, v131, p127)
+	local v137 = math.floor(v136)
+	local v138 = v_u_46[4]
+	local v139 = math.clamp(v138, v134, p128)
+	local v140 = math.floor(v139)
+	v_u_26.Top.Position = UDim2.fromOffset(0, 0)
+	v_u_26.Top.Size = UDim2.fromOffset(p127, v134)
+	v_u_26.Bottom.Position = UDim2.fromOffset(0, v140)
+	v_u_26.Bottom.Size = UDim2.fromOffset(p127, p128 - v140)
+	v_u_26.Left.Position = UDim2.fromOffset(0, v134)
+	v_u_26.Left.Size = UDim2.fromOffset(v131, v140 - v134)
+	v_u_26.Right.Position = UDim2.fromOffset(v137, v134)
+	v_u_26.Right.Size = UDim2.fromOffset(p127 - v137, v140 - v134)
+	local v141 = 1 - v_u_47 * 0.5800000000000001
+	for _, v142 in pairs(v_u_26) do
+		v142.BackgroundTransparency = v141
+	end
+	local v143
+	if v137 - v131 > 6 and v140 - v134 > 6 then
+		v143 = v_u_47 > 0.05
+	else
+		v143 = false
+	end
+	v_u_13.Visible = v143
+	if v143 then
+		v_u_13.Position = UDim2.fromOffset(v131, v134)
+		v_u_13.Size = UDim2.fromOffset(v137 - v131, v140 - v134)
+		v_u_13.UIStroke.Thickness = v_u_45 * 4
+		local v144 = v_u_13.UIStroke
+		local v145 = v_u_47
+		local v146 = v_u_44 * 6
+		v144.Transparency = 1 - v145 * (math.sin(v146) * 0.3 + 0.7)
+	end
+end
+local function v_u_167(p148, p149, p150, p151) -- name: placeBubble
+	-- upvalues: (ref) v_u_45, (ref) v_u_49, (ref) v_u_18
+	local v152 = v_u_45 * 92 / 2
+	local v153 = v_u_45 * 38
+	local v154 = p150 - p148[4] > p148[2]
+	local v155
+	if v154 then
+		local v156 = (p148[4] + p150) / 2
+		local v157 = v152 + v153
+		local v158 = v152 + v153
+		local v159 = p150 - v152 - v_u_45 * 8
+		local v160 = math.max(v158, v159)
+		v155 = math.clamp(v156, v157, v160)
+	else
+		local v161 = p148[2] / 2
+		local v162 = v152 + v_u_45 * 8
+		local v163 = v152 + v_u_45 * 8
+		local v164 = p150 - v152 - v153
+		local v165 = math.max(v163, v164)
+		v155 = math.clamp(v161, v162, v165)
+	end
+	if v_u_49 then
+		v155 = v_u_49 + (v155 - v_u_49) * p151 or v155
+	end
+	v_u_49 = v155
+	v_u_18.Position = UDim2.fromOffset(p149 / 2 / v_u_45, v_u_49 / v_u_45)
+	local v166 = v_u_18.SkipBtn
+	if v154 then
+		v166.AnchorPoint = Vector2.new(1, 1)
+		v166.Position = UDim2.new(1, 0, 0, -8)
+	else
+		v166.AnchorPoint = Vector2.new(1, 0)
+		v166.Position = UDim2.new(1, 0, 1, 8)
+	end
+end
+local function v_u_191(p168, p169, p170) -- name: drawArrow
+	-- upvalues: (ref) v_u_45, (ref) v_u_44, (ref) v_u_14
+	local v171 = (p168[1] + p168[3]) / 2
+	local v172 = (p168[2] + p168[4]) / 2
+	local v173 = p169 / 2 - v171
+	local v174 = p170 / 2 - v172
+	local v175 = v173 * v173 + v174 * v174
+	local v176 = math.sqrt(v175)
+	if v176 < v_u_45 * 40 then
+		v173 = 0
+		v176 = 1
+		v174 = -1
+	end
+	local v177 = v173 / v176
+	local v178 = v174 / v176
+	local v179 = (p168[3] - p168[1]) / 2
+	local v180 = (p168[4] - p168[2]) / 2
+	local v181 = math.abs(v177) > 0.001 and (v179 / math.abs(v177) or (1 / 0)) or (1 / 0)
+	local v182 = math.abs(v178) > 0.001 and (v180 / math.abs(v178) or (1 / 0)) or (1 / 0)
+	local v183 = math.min(v181, v182)
+	local v184 = v_u_44 * 4.5
+	local v185 = math.sin(v184)
+	local v186 = v183 + (math.abs(v185) * 10 + 42) * v_u_45
+	v_u_14.Position = UDim2.fromOffset(v171 + v177 * v186, v172 + v178 * v186)
+	local v187 = v_u_14
+	local v188 = -v178
+	local v189 = -v177
+	local v190 = math.atan2(v188, v189)
+	v187.Rotation = math.deg(v190) - 90
+end
+local function v_u_197(p192, p193, p194) -- name: drawRipple
+	-- upvalues: (ref) v_u_15, (ref) v_u_45
+	v_u_15.Position = UDim2.fromOffset(p192, p193)
+	local v195 = 1 - (1 - p194) ^ 3
+	v_u_15.S.Scale = v_u_45 * (0.45 + v195 * 1.1)
+	local v196 = 0
+	if p194 < 0.15 then
+		v196 = p194 / 0.15
+	elseif p194 < 0.85 then
+		v196 = 1 - (p194 - 0.15) / 0.7
+	end
+	v_u_15.UIStroke.Transparency = 1 - v196 * 0.9
+end
+local function v_u_216(p198, p199, p200, p201) -- name: drawDrag
+	-- upvalues: (ref) v_u_44, (ref) v_u_16, (ref) v_u_17, (ref) v_u_45, (copy) v_u_197
+	local v202 = v_u_44 % 2.3
+	local v203 = 0
+	local v204 = 0
+	if v202 < 0.35 then
+		v203 = v202 / 0.35
+		p201 = p199
+		p200 = p198
+	elseif v202 < 1.25 then
+		local v205 = (v202 - 0.35) / 0.9
+		local v206 = v205 * v205 * (3 - v205 * 2)
+		p200 = p198 + (p200 - p198) * v206
+		p201 = p199 + (p201 - p199) * v206
+		v203 = 1
+		v204 = 1
+	elseif v202 < 1.7 then
+		v203 = 1 - (v202 - 1.25) / 0.45
+		v204 = v203
+	end
+	v_u_16.Position = UDim2.fromOffset(p200, p201)
+	v_u_16.BackgroundTransparency = 1 - v203 * 0.92
+	v_u_16.UIStroke.Transparency = 1 - v203
+	v_u_16.Hand.TextTransparency = 1 - v203
+	local v207 = p200 - p198
+	local v208 = p201 - p199
+	local v209 = v207 * v207 + v208 * v208
+	local v210 = math.sqrt(v209)
+	local v211 = v_u_17
+	local v212
+	if v204 > 0 then
+		v212 = v210 > 2
+	else
+		v212 = false
+	end
+	v211.Visible = v212
+	if v_u_17.Visible then
+		v_u_17.Position = UDim2.fromOffset((p198 + p200) / 2, (p199 + p201) / 2)
+		v_u_17.Size = UDim2.fromOffset(v210, v_u_45 * 6)
+		local v213 = v_u_17
+		local v214 = math.atan2(v208, v207)
+		v213.Rotation = math.deg(v214)
+		v_u_17.BackgroundTransparency = 1 - v204 * 0.5
+	end
+	local v215 = v202 < 0.7
+	if v215 then
+		v_u_197(p198, p199, v202 / 0.7)
+	end
+	return v203 > 0, v215
+end
+local function v_u_235(p217, p218, p219, p220) -- name: fadePointers
+	-- upvalues: (ref) v_u_14, (ref) v_u_15, (ref) v_u_16, (ref) v_u_17
+	local v221 = p217 * 9
+	local v222 = math.min(1, v221)
+	if not p218 and v_u_14.Visible then
+		local v223 = v_u_14
+		local v224 = v_u_14.GroupTransparency
+		v223.GroupTransparency = v224 + (1 - v224) * v222
+		v_u_14.Visible = v_u_14.GroupTransparency < 0.97
+	end
+	if not p219 and v_u_15.Visible then
+		local v225 = v_u_15.UIStroke
+		local v226 = v225.Transparency
+		v225.Transparency = v226 + (1 - v226) * v222
+		v_u_15.Visible = v225.Transparency < 0.97
+	end
+	if not p220 then
+		if v_u_16.Visible then
+			local v227 = v_u_16
+			local v228 = v_u_16.BackgroundTransparency
+			v227.BackgroundTransparency = v228 + (1 - v228) * v222
+			local v229 = v_u_16.UIStroke
+			local v230 = v_u_16.UIStroke.Transparency
+			v229.Transparency = v230 + (1 - v230) * v222
+			local v231 = v_u_16.Hand
+			local v232 = v_u_16.Hand.TextTransparency
+			v231.TextTransparency = v232 + (1 - v232) * v222
+			v_u_16.Visible = v_u_16.BackgroundTransparency < 0.97
+		end
+		if v_u_17.Visible then
+			local v233 = v_u_17
+			local v234 = v_u_17.BackgroundTransparency
+			v233.BackgroundTransparency = v234 + (1 - v234) * v222
+			v_u_17.Visible = v_u_17.BackgroundTransparency < 0.97
+		end
+	end
+end
+local function v_u_250(p236, p237, p238, p239) -- name: drawMarks
+	-- upvalues: (ref) v_u_23, (ref) v_u_45, (ref) v_u_44, (ref) v_u_24, (ref) v_u_25
+	v_u_23.Position = UDim2.fromOffset(p236, p237)
+	local v240 = v_u_23.S
+	local v241 = v_u_45
+	local v242 = v_u_44 * 7
+	v240.Scale = v241 * (math.sin(v242) * 0.18 + 1)
+	v_u_24.Position = UDim2.fromOffset(p238, p239)
+	v_u_24.S.Scale = v_u_45
+	local v243 = p238 - p236
+	local v244 = p239 - p237
+	v_u_25.Position = UDim2.fromOffset((p236 + p238) / 2, (p237 + p239) / 2)
+	local v245 = v_u_25
+	local v246 = UDim2.fromOffset
+	local v247 = v243 * v243 + v244 * v244
+	v245.Size = v246(math.sqrt(v247), v_u_45 * 4)
+	local v248 = v_u_25
+	local v249 = math.atan2(v244, v243)
+	v248.Rotation = math.deg(v249)
+end
+local function v_u_287(p251, p252, p253, p254, p255) -- name: drawPointers
+	-- upvalues: (copy) v_u_191, (copy) v_u_197, (ref) v_u_44, (ref) v_u_42, (ref) v_u_9, (ref) v_u_11, (ref) v_u_45, (copy) v_u_51, (ref) v_u_43, (ref) v_u_7, (copy) v_u_216, (copy) v_u_250, (ref) v_u_14, (ref) v_u_15, (ref) v_u_16, (ref) v_u_23, (ref) v_u_24, (ref) v_u_25, (copy) v_u_235
+	local v256 = false
+	local v257 = false
+	local v258 = false
+	local v259 = false
+	if p252 == "tap" then
+		v_u_191(p251, p253, p254)
+		v_u_197((p251[1] + p251[3]) / 2, (p251[2] + p251[4]) / 2, v_u_44 % 1.1 / 1.1)
+		v256 = true
+		v257 = true
+	elseif p252 == "drag" and (v_u_42 and not v_u_9.dragging()) then
+		local v260, v261 = v_u_9.objCenter(v_u_42)
+		if v260 then
+			local v262 = v_u_11.AbsolutePosition
+			local v263 = v260 - v262.X
+			local v264 = v261 - v262.Y
+			if v_u_9.selected() == v_u_42 then
+				local v265 = v_u_9.project()
+				local v266 = v_u_51
+				local v267 = v265 and v265.cur or 1
+				local v268 = #v_u_51
+				local v269 = v266[math.clamp(v267, 1, v268)]
+				local v270 = v_u_43 + 1
+				local v271 = #v269
+				local v272 = v269[math.clamp(v270, 1, v271)]
+				local v273
+				if v_u_7.GamepadCursor == nil then
+					v273 = false
+				else
+					v273 = v_u_7.GamepadCursor.active()
+				end
+				local v274, v275 = v_u_9.tip(v_u_42, v272.bone)
+				if v273 and v_u_9.padPart() ~= v272.bone then
+					v274 = nil
+				end
+				if v274 then
+					local v276 = v_u_11.AbsolutePosition
+					local v277 = v274 - v276.X
+					local v278 = v275 - v276.Y
+					local v279 = v272.dir
+					local v280 = v263 <= v277 and 1 or -1
+					local v281 = v_u_45 * 100
+					local v282 = v277 + v279.X * v280 * v281
+					local v283 = v278 + v279.Y * v281
+					v258, v257 = v_u_216(v277, v278, v282, v283)
+					if v273 then
+						v257 = false
+						v258 = false
+					end
+					v_u_250(v277, v278, v282, v283)
+					v259 = true
+				end
+			else
+				local v284 = v_u_45 * 30
+				v_u_191({
+					v263 - v284,
+					v264 - v284,
+					v263 + v284,
+					v264 + v284
+				}, p253, p254)
+				v_u_197(v263, v264, v_u_44 % 1.1 / 1.1)
+				v256 = true
+				v257 = true
+			end
+		end
+	end
+	if v256 then
+		v_u_14.GroupTransparency = 0
+		v_u_14.Visible = true
+	end
+	if v257 then
+		v_u_15.Visible = true
+	end
+	if v258 then
+		v_u_16.Visible = true
+	end
+	local v285 = v_u_24
+	local v286 = v_u_25
+	v_u_23.Visible = v259
+	v285.Visible = v259
+	v286.Visible = v259
+	v_u_235(p255, v256, v257, v258)
+end
+local function v_u_296() -- name: burst
+	-- upvalues: (ref) v_u_11, (ref) v_u_45, (copy) v_u_5, (copy) v_u_27
+	local v288 = v_u_11.Confetti
+	local v289 = v_u_11.AbsoluteSize.X
+	local v290 = v_u_45 * 110
+	for v291 = 1, 44 do
+		local v292 = v291 % 2 == 0 and 1 or -1
+		local v293 = v288:Clone()
+		v293.BackgroundColor3 = v_u_5.Palette[math.random(4, 11)]
+		v293.BackgroundTransparency = 1
+		local v294 = {
+			["f"] = nil,
+			["t"] = 0,
+			["life"] = nil,
+			["x"] = nil,
+			["y"] = nil,
+			["vx"] = nil,
+			["vy"] = nil,
+			["r"] = nil,
+			["vr"] = nil,
+			["ph"] = nil,
+			["f"] = v293,
+			["life"] = 1.9 + math.random() * 0.9,
+			["x"] = v289 / 2 + v292 * 260 * v_u_45,
+			["y"] = v290,
+			["vx"] = v292 * (60 + math.random() * 380) * v_u_45,
+			["vy"] = -(250 + math.random() * 420) * v_u_45,
+			["r"] = math.random(0, 360),
+			["vr"] = math.random(-600, 600),
+			["ph"] = math.random() * 6
+		}
+		v293.Position = UDim2.fromOffset(v294.x, v294.y)
+		v293.Size = UDim2.fromOffset(v_u_45 * 12, v_u_45 * 7)
+		v293.Visible = true
+		v293.Parent = v_u_11
+		local v295 = v_u_27
+		table.insert(v295, v294)
+	end
+end
+local function v_u_310(p297) -- name: updateBits
+	-- upvalues: (copy) v_u_27, (ref) v_u_45
+	for v298 = #v_u_27, 1, -1 do
+		local v299 = v_u_27[v298]
+		v299.t = v299.t + p297
+		if v299.t >= v299.life then
+			v299.f:Destroy()
+			table.remove(v_u_27, v298)
+		else
+			v299.vy = v299.vy + v_u_45 * 1100 * p297
+			local v300 = v299.vx
+			local v301 = p297 * 1.5
+			v299.vx = v300 * (1 - math.min(1, v301))
+			v299.x = v299.x + v299.vx * p297
+			v299.y = v299.y + v299.vy * p297
+			v299.r = v299.r + v299.vr * p297
+			local v302 = v299.f
+			v302.Position = UDim2.fromOffset(v299.x, v299.y)
+			v302.Rotation = v299.r
+			local v303 = UDim2.fromOffset
+			local v304 = v_u_45 * 12
+			local v305 = v299.t * 9 + v299.ph
+			local v306 = math.cos(v305)
+			v302.Size = v303(v304 * math.abs(v306), v_u_45 * 7)
+			local v307 = v299.t / 0.08
+			local v308 = (v299.life - v299.t) / 0.6
+			local v309 = math.min(v307, v308)
+			v302.BackgroundTransparency = 1 - math.clamp(v309, 0, 1)
+		end
+	end
+end
+local function v_u_334(p311) -- name: update
+	-- upvalues: (ref) v_u_44, (ref) v_u_11, (ref) v_u_41, (ref) v_u_9, (ref) v_u_36, (ref) v_u_35, (copy) v_u_54, (ref) v_u_8, (ref) v_u_48, (copy) v_u_26, (ref) v_u_18, (ref) v_u_50, (ref) v_u_40, (ref) v_u_7, (ref) v_u_34, (copy) v_u_81, (copy) v_u_126, (ref) v_u_46, (ref) v_u_47, (copy) v_u_147, (copy) v_u_75, (copy) v_u_167, (copy) v_u_287, (ref) v_u_23, (ref) v_u_25, (copy) v_u_235, (copy) v_u_310
+	v_u_44 = v_u_44 + p311
+	local v312 = v_u_11.AbsoluteSize.X
+	local v313 = v_u_11.AbsoluteSize.Y
+	local v314 = -p311 * 11
+	local v315 = 1 - math.exp(v314)
+	local v316
+	if v_u_41 == "welcome" then
+		v316 = false
+	else
+		v316 = v_u_41 ~= "end"
+	end
+	local v317, v318, v319
+	if v316 then
+		if v_u_41 == "home" and not v_u_9.isOpen() then
+			v_u_36 = true
+			v_u_35()
+			if v_u_41 ~= "party" then
+				v_u_41 = "party"
+				v_u_44 = 0
+				local v320 = v_u_54.party
+				if v320 then
+					task.spawn(v_u_8.call, "TutoStep", v320)
+				end
+			end
+			v_u_48 = 0
+			for _, v321 in pairs(v_u_26) do
+				v321.Interactable = true
+			end
+			if v_u_8.isOpen(v_u_18) then
+				v_u_8.close(v_u_18)
+			end
+			v_u_50 = nil
+			local v_u_322 = v_u_40
+			task.delay(4, function()
+				-- upvalues: (ref) v_u_40, (copy) v_u_322, (ref) v_u_41, (ref) v_u_44, (ref) v_u_54, (ref) v_u_8, (ref) v_u_48, (ref) v_u_26
+				if v_u_40 == v_u_322 and v_u_41 == "party" then
+					if v_u_41 ~= "cartoons" then
+						v_u_41 = "cartoons"
+						v_u_44 = 0
+						local v323 = v_u_54.cartoons
+						if v323 then
+							task.spawn(v_u_8.call, "TutoStep", v323)
+						end
+					end
+					v_u_48 = 1
+					for _, v324 in pairs(v_u_26) do
+						v324.Interactable = true
+					end
+				end
+			end)
+		elseif (v_u_41 == "party" or v_u_41 == "cartoons") and (v_u_7.Reels and v_u_7.Reels.active) then
+			v_u_34(true)
+			return
+		end
+		if v_u_41 ~= "watch" and (v_u_41 ~= "close" and (v_u_41 ~= "home" and (v_u_41 ~= "party" and v_u_41 ~= "cartoons"))) then
+			v_u_81()
+		end
+		v317, v318, v319 = v_u_126()
+	else
+		v317 = nil
+		v318 = nil
+		v319 = nil
+	end
+	local v325 = v317 or {
+		v312 / 2,
+		v313 / 2,
+		v312 / 2,
+		v313 / 2
+	}
+	local v326 = v_u_46
+	v326[1] = v326[1] + (v325[1] - v_u_46[1]) * v315
+	local v327 = v_u_46
+	v327[2] = v327[2] + (v325[2] - v_u_46[2]) * v315
+	local v328 = v_u_46
+	v328[3] = v328[3] + (v325[3] - v_u_46[3]) * v315
+	local v329 = v_u_46
+	v329[4] = v329[4] + (v325[4] - v_u_46[4]) * v315
+	local v330 = v_u_47
+	local v331 = v_u_48 - v_u_47
+	local v332 = p311 * 7
+	v_u_47 = v330 + v331 * math.min(1, v332)
+	v_u_147(v312, v313)
+	if v316 and v318 then
+		if not v_u_8.isOpen(v_u_18) then
+			v_u_8.open(v_u_18)
+		end
+		v_u_75(v318)
+		v_u_167(v317, v312, v313, v315)
+	end
+	if v316 and (v317 and v319) then
+		v_u_287(v317, v319, v312, v313, p311)
+	else
+		local v333 = v_u_25
+		v_u_23.Visible = false
+		v325.Visible = false
+		v333.Visible = false
+		v_u_235(p311)
+	end
+	v_u_310(p311)
+end
+local function v_u_335() -- name: layout
+	-- upvalues: (ref) v_u_45, (ref) v_u_7, (ref) v_u_10, (ref) v_u_12, (ref) v_u_14, (ref) v_u_16
+	v_u_45 = v_u_7.layoutRoot(v_u_10, v_u_12)
+	v_u_14.S.Scale = v_u_45
+	v_u_16.S.Scale = v_u_45
+end
+local function v_u_338(p_u_336)
+	-- upvalues: (ref) v_u_8
+	task.spawn(function()
+		-- upvalues: (ref) v_u_8, (copy) p_u_336
+		for v337 = 1, 3 do
+			if v_u_8.call("TutoDone", p_u_336 == true) then
+				return
+			end
+			task.wait(v337 * 2)
+		end
+	end)
+end
+local function v_u_341() -- name: cleanup
+	-- upvalues: (ref) v_u_28, (ref) v_u_30, (ref) v_u_31, (ref) v_u_32, (ref) v_u_29, (copy) v_u_27, (copy) v_u_26, (ref) v_u_10, (ref) v_u_11, (ref) v_u_12, (ref) v_u_13, (ref) v_u_14, (ref) v_u_15, (ref) v_u_16, (ref) v_u_17, (ref) v_u_23, (ref) v_u_24, (ref) v_u_25, (ref) v_u_18, (ref) v_u_19, (ref) v_u_20, (ref) v_u_21, (ref) v_u_22
+	local v339 = { v_u_28, v_u_30, v_u_31 }
+	for _, v340 in pairs(v339) do
+		v340:Disconnect()
+	end
+	v_u_28 = nil
+	v_u_30 = nil
+	v_u_31 = nil
+	v_u_32 = nil
+	if v_u_29 then
+		v_u_29:Disconnect()
+		v_u_29 = nil
+	end
+	table.clear(v_u_27)
+	table.clear(v_u_26)
+	if v_u_10 then
+		v_u_10:Destroy()
+		v_u_10 = nil
+	end
+	v_u_11 = nil
+	v_u_12 = nil
+	v_u_13 = nil
+	v_u_14 = nil
+	v_u_15 = nil
+	v_u_16 = nil
+	v_u_17 = nil
+	v_u_23 = nil
+	v_u_24 = nil
+	v_u_25 = nil
+	v_u_18 = nil
+	v_u_19 = nil
+	v_u_20 = nil
+	v_u_21 = nil
+	v_u_22 = nil
+end
+v_u_35 = function()
+	-- upvalues: (ref) v_u_21, (ref) v_u_8, (copy) v_u_53, (copy) v_u_296
+	local v_u_342 = v_u_21
+	v_u_342.Visible = true
+	v_u_342.GroupTransparency = 1
+	v_u_342.Pop.Scale = 0.6
+	v_u_8.tween(v_u_342, 0.25, {
+		["GroupTransparency"] = 0
+	}, nil, nil, "fade")
+	v_u_8.tween(v_u_342.Pop, 0.45, {
+		["Scale"] = 1
+	}, Enum.EasingStyle.Back, Enum.EasingDirection.Out, "pop")
+	for _, v343 in ipairs(v_u_53) do
+		v_u_8.sfx(v343)
+	end
+	v_u_296()
+	task.delay(3.4, function()
+		-- upvalues: (copy) v_u_342, (ref) v_u_8
+		if v_u_342.Parent then
+			v_u_8.tween(v_u_342, 0.5, {
+				["GroupTransparency"] = 1
+			}, nil, nil, "fade")
+			v_u_8.tween(v_u_342.Pop, 0.5, {
+				["Scale"] = 0.85
+			}, Enum.EasingStyle.Quad, Enum.EasingDirection.In, "pop")
+		end
+	end)
+end
+v_u_34 = function(p344)
+	-- upvalues: (ref) v_u_41, (copy) v_u_6, (ref) v_u_9, (ref) v_u_37, (ref) v_u_338, (ref) v_u_48, (copy) v_u_26, (ref) v_u_22, (ref) v_u_20, (ref) v_u_19, (ref) v_u_18, (ref) v_u_8, (ref) v_u_36, (ref) v_u_35, (ref) v_u_40, (copy) v_u_341
+	if v_u_41 ~= "end" then
+		v_u_41 = "end"
+		v_u_6.active = false
+		v_u_9.refreshHandles()
+		if not v_u_37 then
+			v_u_338(p344)
+		end
+		v_u_48 = 0
+		for _, v345 in pairs(v_u_26) do
+			v345.Interactable = false
+		end
+		v_u_22.Visible = false
+		local v346 = { v_u_20, v_u_19, v_u_18 }
+		for _, v347 in ipairs(v346) do
+			if not v_u_8.isOpen(v347) then
+				continue
+			end
+			v_u_8.close(v347)
+		end
+		if p344 then
+			p344 = not v_u_36
+		end
+		if p344 then
+			v_u_35()
+		end
+		local v_u_348 = v_u_40
+		task.delay(p344 and 4.4 or 0.6, function()
+			-- upvalues: (ref) v_u_40, (copy) v_u_348, (ref) v_u_341
+			if v_u_40 == v_u_348 then
+				v_u_341()
+			end
+		end)
+	end
+end
+local function v_u_349() -- name: askSkip
+	-- upvalues: (ref) v_u_41, (ref) v_u_8, (ref) v_u_20, (ref) v_u_34, (ref) v_u_22
+	if v_u_41 == "end" or v_u_8.isOpen(v_u_20) then
+		return
+	elseif v_u_41 == "party" or v_u_41 == "cartoons" then
+		v_u_34(true)
+	else
+		v_u_22.Visible = true
+		v_u_8.open(v_u_20)
+	end
+end
+local function v_u_350() -- name: closeConfirm
+	-- upvalues: (ref) v_u_22, (ref) v_u_8, (ref) v_u_20
+	v_u_22.Visible = false
+	v_u_8.close(v_u_20)
+end
+function v_u_6.padTarget() -- name: padTarget
+	-- upvalues: (copy) v_u_6, (ref) v_u_41, (ref) v_u_42, (ref) v_u_9, (copy) v_u_51, (ref) v_u_43
+	if not v_u_6.active or (v_u_41 ~= "pose" or (not v_u_42 or v_u_9.selected() ~= v_u_42)) then
+		return nil
+	end
+	local v351 = v_u_9.project()
+	local v352 = v_u_51
+	local v353 = v351 and v351.cur or 1
+	local v354 = #v_u_51
+	local v355 = v352[math.clamp(v353, 1, v354)]
+	local v356 = v_u_43 + 1
+	local v357 = #v355
+	return v355[math.clamp(v356, 1, v357)].bone
+end
+function v_u_6.notify(p358, p359, p360) -- name: notify
+	-- upvalues: (ref) v_u_41, (ref) v_u_42, (ref) v_u_43, (ref) v_u_44, (copy) v_u_54, (ref) v_u_8, (ref) v_u_9, (copy) v_u_51, (copy) v_u_52, (ref) v_u_38, (ref) v_u_48, (copy) v_u_26, (ref) v_u_18, (ref) v_u_50, (ref) v_u_40
+	if p358 == "add" then
+		if v_u_41 == "ninja" and p359 == "Ninja" then
+			v_u_42 = p360
+			v_u_43 = 0
+			if v_u_41 ~= "pose" then
+				v_u_41 = "pose"
+				v_u_44 = 0
+				local v361 = v_u_54.pose
+				if v361 then
+					task.spawn(v_u_8.call, "TutoStep", v361)
+					return
+				end
+			end
+		end
+	elseif p358 == "bone" then
+		if v_u_41 == "pose" and p359 == v_u_42 then
+			v_u_43 = v_u_43 + 1
+			v_u_44 = 0
+			local v362 = v_u_43
+			local v363 = v_u_9.project()
+			local v364 = v_u_51
+			local v365 = v363 and v363.cur or 1
+			local v366 = #v_u_51
+			if #v364[math.clamp(v365, 1, v366)] <= v362 then
+				local v367 = v_u_9.project()
+				local v368 = v367 and v_u_52 <= #v367.order and "anim" or "frame"
+				if v_u_41 ~= v368 then
+					v_u_41 = v368
+					v_u_44 = 0
+					local v369 = v_u_54[v368]
+					if v369 then
+						task.spawn(v_u_8.call, "TutoStep", v369)
+						return
+					end
+				end
+			end
+		end
+	elseif p358 == "frame" then
+		if v_u_41 == "frame" then
+			v_u_43 = 0
+			if v_u_41 ~= "pose" then
+				v_u_41 = "pose"
+				v_u_44 = 0
+				local v370 = v_u_54.pose
+				if v370 then
+					task.spawn(v_u_8.call, "TutoStep", v370)
+					return
+				end
+			end
+		end
+	elseif p358 == "play" then
+		if v_u_41 == "play" then
+			if v_u_41 ~= "watch" then
+				v_u_41 = "watch"
+				v_u_44 = 0
+				local v371 = v_u_54.watch
+				if v371 then
+					task.spawn(v_u_8.call, "TutoStep", v371)
+				end
+			end
+			v_u_38 = 0
+			v_u_48 = 0
+			for _, v372 in pairs(v_u_26) do
+				v372.Interactable = false
+			end
+			if v_u_8.isOpen(v_u_18) then
+				v_u_8.close(v_u_18)
+			end
+			v_u_50 = nil
+			return
+		end
+	elseif p358 == "ended" then
+		if v_u_41 == "watch" then
+			v_u_38 = v_u_38 + 1
+		end
+		if v_u_41 == "watch" and v_u_38 >= 2 then
+			if v_u_41 ~= "close" then
+				v_u_41 = "close"
+				v_u_44 = 0
+				local v373 = v_u_54.close
+				if v373 then
+					task.spawn(v_u_8.call, "TutoStep", v373)
+				end
+			end
+			v_u_48 = 1
+			for _, v374 in pairs(v_u_26) do
+				v374.Interactable = true
+			end
+			return
+		end
+	elseif p358 == "closed" then
+		if v_u_41 == "watch" and v_u_41 ~= "close" then
+			v_u_41 = "close"
+			v_u_44 = 0
+			local v375 = v_u_54.close
+			if v375 then
+				task.spawn(v_u_8.call, "TutoStep", v375)
+			end
+		end
+		if v_u_41 == "close" and v_u_41 ~= "home" then
+			v_u_41 = "home"
+			v_u_44 = 0
+			local v376 = v_u_54.home
+			if v376 then
+				task.spawn(v_u_8.call, "TutoStep", v376)
+				return
+			end
+		end
+	elseif p358 == "moves" and v_u_41 == "anim" then
+		if v_u_41 ~= "play" then
+			v_u_41 = "play"
+			v_u_44 = 0
+			local v377 = v_u_54.play
+			if v377 then
+				task.spawn(v_u_8.call, "TutoStep", v377)
+			end
+		end
+		local v_u_378 = v_u_40
+		task.delay(1.2, function()
+			-- upvalues: (ref) v_u_40, (copy) v_u_378, (ref) v_u_41, (ref) v_u_9
+			if v_u_40 == v_u_378 and v_u_41 == "play" then
+				v_u_9.play()
+			end
+		end)
+	end
+end
+function v_u_6.start() -- name: start
+	-- upvalues: (ref) v_u_39, (copy) v_u_3, (ref) v_u_40, (copy) v_u_6, (ref) v_u_10, (ref) v_u_11, (ref) v_u_12, (ref) v_u_13, (ref) v_u_14, (ref) v_u_15, (ref) v_u_16, (ref) v_u_17, (ref) v_u_23, (ref) v_u_24, (ref) v_u_25, (ref) v_u_18, (ref) v_u_19, (ref) v_u_20, (ref) v_u_21, (ref) v_u_22, (copy) v_u_26, (ref) v_u_7, (ref) v_u_45, (ref) v_u_29, (copy) v_u_335, (ref) v_u_8, (ref) v_u_41, (ref) v_u_44, (copy) v_u_54, (copy) v_u_349, (ref) v_u_34, (copy) v_u_350, (ref) v_u_46, (ref) v_u_47, (ref) v_u_48, (ref) v_u_28, (copy) v_u_1, (copy) v_u_334, (ref) v_u_30, (copy) v_u_2, (ref) v_u_32, (ref) v_u_43, (ref) v_u_9, (ref) v_u_31, (ref) v_u_42, (ref) v_u_33
+	if v_u_39 then
+		return
+	else
+		local v379 = v_u_3:FindFirstChild("TutorialGui")
+		if v379 then
+			v_u_39 = true
+			v_u_40 = v_u_40 + 1
+			v_u_6.active = true
+			v_u_10 = v379:Clone()
+			v_u_11 = v_u_10.Origin
+			v_u_12 = v_u_10.Root
+			local v380 = v_u_11.Ring
+			local v381 = v_u_11.Arrow
+			local v382 = v_u_11.Ripple
+			local v383 = v_u_11.Finger
+			local v384 = v_u_11.Trail
+			v_u_13 = v380
+			v_u_14 = v381
+			v_u_15 = v382
+			v_u_16 = v383
+			v_u_17 = v384
+			local v385 = v_u_11.Target
+			local v386 = v_u_11.Goal
+			local v387 = v_u_11.Guide
+			v_u_23 = v385
+			v_u_24 = v386
+			v_u_25 = v387
+			local v388 = v_u_12.Bubble
+			local v389 = v_u_12.Welcome
+			local v390 = v_u_12.Confirm
+			local v391 = v_u_12.Done
+			local v392 = v_u_12.Block
+			v_u_18 = v388
+			v_u_19 = v389
+			v_u_20 = v390
+			v_u_21 = v391
+			v_u_22 = v392
+			for _, v393 in ipairs({
+				"Top",
+				"Bottom",
+				"Left",
+				"Right"
+			}) do
+				v_u_26[v393] = v_u_11["Dim" .. v393]
+			end
+			v_u_10.Parent = v_u_7.player:WaitForChild("PlayerGui")
+			v_u_45 = v_u_7.layoutRoot(v_u_10, v_u_12)
+			v_u_14.S.Scale = v_u_45
+			v_u_16.S.Scale = v_u_45
+			v_u_29 = v_u_10:GetPropertyChangedSignal("AbsoluteSize"):Connect(v_u_335)
+			v_u_8.attention(v_u_19.GoBtn, {
+				["wiggle"] = true,
+				["delay"] = 0.6
+			})
+			v_u_8.button(v_u_19.GoBtn, function()
+				-- upvalues: (ref) v_u_41, (ref) v_u_8, (ref) v_u_19, (ref) v_u_44, (ref) v_u_54
+				if v_u_41 == "welcome" then
+					v_u_8.close(v_u_19)
+					if v_u_41 ~= "new" then
+						v_u_41 = "new"
+						v_u_44 = 0
+						local v394 = v_u_54.new
+						if v394 then
+							task.spawn(v_u_8.call, "TutoStep", v394)
+						end
+					end
+				end
+			end)
+			v_u_8.button(v_u_19.SkipBtn, v_u_349)
+			v_u_8.button(v_u_18.SkipBtn, v_u_349)
+			v_u_8.button(v_u_20.YesBtn, function()
+				-- upvalues: (ref) v_u_22, (ref) v_u_8, (ref) v_u_20, (ref) v_u_34
+				v_u_22.Visible = false
+				v_u_8.close(v_u_20)
+				v_u_34(false)
+			end)
+			v_u_8.button(v_u_20.NoBtn, v_u_350)
+			local v395 = v_u_11.AbsoluteSize.X
+			local v396 = v_u_11.AbsoluteSize.Y
+			v_u_46 = {
+				v395 / 2,
+				v396 / 2,
+				v395 / 2,
+				v396 / 2
+			}
+			v_u_41 = "welcome"
+			local v397 = v_u_54[v_u_41]
+			if v397 then
+				task.spawn(v_u_8.call, "TutoStep", v397)
+			end
+			v_u_47 = 0
+			v_u_48 = 1
+			v_u_8.open(v_u_19)
+			v_u_28 = v_u_1.RenderStepped:Connect(v_u_334)
+			v_u_30 = v_u_2.InputBegan:Connect(function(p398)
+				-- upvalues: (ref) v_u_32, (ref) v_u_43, (ref) v_u_9
+				local v399 = p398.UserInputType
+				if v399 == Enum.UserInputType.MouseButton1 or v399 == Enum.UserInputType.Touch then
+					v_u_32 = {
+						["p"] = p398.Position,
+						["moves"] = v_u_43,
+						["sel"] = v_u_9.selected()
+					}
+				end
+			end)
+			v_u_31 = v_u_2.InputEnded:Connect(function(p400)
+				-- upvalues: (ref) v_u_32, (ref) v_u_41, (ref) v_u_42, (ref) v_u_9, (ref) v_u_43, (ref) v_u_45, (ref) v_u_33, (ref) v_u_18, (ref) v_u_8
+				local v401 = p400.UserInputType
+				if v_u_32 and (v401 == Enum.UserInputType.MouseButton1 or v401 == Enum.UserInputType.Touch) then
+					local v402 = v_u_32
+					v_u_32 = nil
+					if v_u_41 == "pose" and (v402.sel == v_u_42 and (v_u_9.selected() == v_u_42 and v_u_43 == v402.moves)) then
+						if (p400.Position - v402.p).Magnitude < v_u_45 * 12 then
+							v_u_33 = os.clock() + 2.8
+							local v403 = v_u_18.Pop
+							v403.Scale = 1.12
+							v_u_8.tween(v403, 0.35, {
+								["Scale"] = 1
+							}, Enum.EasingStyle.Back, Enum.EasingDirection.Out, "pop")
+						end
+					end
+				else
+					return
+				end
+			end)
+		end
+	end
+end
+function v_u_6.lockClose() -- name: lockClose
+	-- upvalues: (ref) v_u_41
+	return v_u_41 == "watch"
+end
+function v_u_6.reset() -- name: reset
+	-- upvalues: (ref) v_u_40, (copy) v_u_6, (copy) v_u_341, (ref) v_u_39, (ref) v_u_41, (ref) v_u_42, (ref) v_u_43, (ref) v_u_50, (ref) v_u_49, (ref) v_u_36, (ref) v_u_37
+	v_u_40 = v_u_40 + 1
+	v_u_6.active = false
+	v_u_341()
+	v_u_39 = false
+	v_u_41 = "welcome"
+	v_u_42 = nil
+	v_u_43 = 0
+	v_u_50 = nil
+	v_u_49 = nil
+	v_u_36 = false
+	v_u_37 = false
+end
+function v_u_6.init(p404) -- name: init
+	-- upvalues: (ref) v_u_7, (ref) v_u_8, (ref) v_u_9
+	v_u_7 = p404
+	local v405 = p404.Util
+	local v406 = p404.Editor
+	v_u_8 = v405
+	v_u_9 = v406
+end
+return v_u_6
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.Home (FULL, 92890 chars) =====
+local v_u_1 = game:GetService("RunService")
+local v_u_2 = game:GetService("TweenService")
+local v_u_3 = game:GetService("UserInputService")
+local v_u_4 = game:GetService("ReplicatedStorage")
+local v5 = v_u_4:WaitForChild("DrawShared")
+local v_u_6 = require(v5.Config)
+local v_u_7 = require(script.Parent:WaitForChild("CrateSkins"))
+local v_u_8 = {}
+local v_u_9 = nil
+local v_u_10 = nil
+local v_u_11 = nil
+local v_u_12 = nil
+local v_u_13 = nil
+local v_u_14 = nil
+local v_u_15 = nil
+local v_u_16 = nil
+local v_u_17 = nil
+local v_u_18 = {}
+local v_u_19 = {}
+local v_u_20 = {}
+local v_u_21 = {}
+local v_u_22 = false
+local v_u_23 = "my"
+local v_u_24 = "foryou"
+local v_u_25 = 0
+local v_u_26 = 0
+local v_u_27 = nil
+local v_u_28 = false
+local v_u_29 = 0
+local v_u_30 = nil
+local v_u_31 = nil
+local v_u_32 = nil
+local v_u_33 = nil
+local v_u_34 = -1000000000
+local v_u_35 = 0
+local v_u_36 = nil
+local v_u_37 = {}
+local v_u_38 = {}
+local v_u_230 = nil
+local v_u_40 = false
+local v_u_41 = true
+local v_u_42 = nil
+local v_u_43 = nil
+local v_u_44 = nil
+local v_u_45 = 0
+local v_u_46 = false
+local v_u_47 = false
+local v_u_48 = {}
+local v_u_49 = 0
+local v_u_50 = Color3.fromRGB(255, 98, 48)
+local v_u_51 = {
+	"\240\159\146\153",
+	"\226\156\168",
+	"\240\159\146\156",
+	"\226\156\168"
+}
+local v_u_52 = Color3.fromRGB(24, 170, 214)
+local v_u_53 = {
+	["my"] = "<font color=\"#FFD84A\">Make</font> <font color=\"#FF7AC0\">a</font> <font color=\"#6FD6FF\">Cartoon</font><font color=\"#B98CFF\">!</font>",
+	["gallery"] = "<font color=\"#6FD6FF\">Browse</font> <font color=\"#FFD84A\">Cartoons</font>",
+	["author"] = "<font color=\"#FF7AC0\">Creator</font> <font color=\"#B98CFF\">Profile</font>"
+}
+local v_u_54 = {
+	["foryou"] = Color3.fromRGB(255, 92, 140),
+	["new"] = Color3.fromRGB(32, 186, 150),
+	["popular"] = Color3.fromRGB(255, 160, 40)
+}
+local v_u_55 = Color3.fromRGB(56, 150, 255)
+local v_u_56 = Color3.fromRGB(150, 84, 255)
+local v_u_57 = Color3.fromRGB(64, 52, 116)
+local v_u_58 = Color3.fromRGB(52, 46, 84)
+local v_u_59 = Color3.fromRGB(14, 11, 26)
+local v_u_60 = Color3.fromRGB(255, 150, 40)
+local v_u_61 = {
+	["like"] = "\240\159\145\141",
+	["star"] = "\226\173\144",
+	["comment"] = "\240\159\146\172",
+	["follow"] = "\240\159\146\153",
+	["remix"] = "\240\159\148\129",
+	["views"] = "\240\159\145\128",
+	["likes"] = "\240\159\145\141",
+	["stars"] = "\226\173\144",
+	["followers"] = "\240\159\146\153",
+	["contest"] = "\240\159\143\134",
+	["level"] = "\240\159\140\159"
+}
+local v_u_62 = { "1st", "2nd", "3rd" }
+local v_u_63 = {
+	["like"] = true,
+	["star"] = true,
+	["comment"] = true,
+	["follow"] = true,
+	["remix"] = true
+}
+local v_u_64 = {
+	["views"] = true,
+	["likes"] = true,
+	["stars"] = true,
+	["followers"] = true,
+	["ach"] = true,
+	["contest"] = true,
+	["level"] = true
+}
+local v_u_65 = {}
+local v_u_66 = nil
+local v_u_67 = v_u_6.MAX_PROJECTS
+local v_u_68 = v_u_6.MAX_SHARED
+local v_u_69 = 0
+local v_u_70 = 1
+local v_u_71 = 0
+local v_u_72 = 1
+local v_u_73 = nil
+local v_u_74 = nil
+local v_u_75 = nil
+local v_u_76 = nil
+local v_u_77 = 0
+local v_u_78 = {}
+local v_u_79 = {}
+local v_u_80 = 0
+local function v_u_97(p_u_81) -- name: fitStats
+	if p_u_81:FindFirstChild("Fit") or p_u_81:GetAttribute("Compact") then
+		return
+	else
+		local v_u_82 = p_u_81:FindFirstChildOfClass("UIListLayout")
+		if v_u_82 then
+			local v_u_83 = {}
+			for _, v84 in ipairs(p_u_81:GetChildren()) do
+				if not string.match(v84.Name, "^Gap") then
+					continue
+				end
+				table.insert(v_u_83, v84)
+			end
+			local v_u_85 = Instance.new("UIScale")
+			v_u_85.Name = "Fit"
+			v_u_85.Parent = p_u_81
+			local function v96() -- name: apply
+				-- upvalues: (copy) p_u_81, (copy) v_u_83, (copy) v_u_82, (copy) v_u_85
+				local v86 = p_u_81.Size.X.Scale * p_u_81.Parent.Size.X.Offset + p_u_81.Size.X.Offset
+				local v87 = p_u_81.AbsoluteSize.X / math.max(v86, 1)
+				if v87 > 0 and #v_u_83 ~= 0 then
+					local v88 = v_u_82.AbsoluteContentSize.X
+					for _, v89 in ipairs(v_u_83) do
+						v88 = v88 - v89.AbsoluteSize.X
+					end
+					local v90 = v88 / v87
+					local v91 = (v86 - v90) / #v_u_83
+					local v92 = math.clamp(v91, 4, 14)
+					for _, v93 in ipairs(v_u_83) do
+						if v93.Size.X.Offset == v92 then
+							continue
+						end
+						v93.Size = UDim2.fromOffset(v92, v93.Size.Y.Offset)
+					end
+					local v94 = v_u_85
+					local v95 = v86 / (v90 + v92 * #v_u_83)
+					v94.Scale = math.min(1, v95)
+				end
+			end
+			v_u_82:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(v96)
+			p_u_81:GetPropertyChangedSignal("AbsoluteSize"):Connect(v96)
+			task.defer(v96)
+		end
+	end
+end
+local function v_u_104(p98, p99, p100, p101, p102, p103) -- name: fillStats
+	-- upvalues: (copy) v_u_97, (ref) v_u_10
+	v_u_97(p98)
+	p98.Views.Text = v_u_10.short(p99)
+	p98.Likes.Text = v_u_10.short(p100)
+	if p98:FindFirstChild("Dislikes") then
+		p98.Dislikes.Text = v_u_10.short(p101)
+	end
+	if p98:FindFirstChild("Comments") then
+		p98.Comments.Text = v_u_10.short(p102)
+	end
+	if p98:FindFirstChild("Stars") then
+		p98.Stars.Text = v_u_10.short(p103)
+	end
+end
+local function v_u_113(p105, p106, p107, p108, p109, p110) -- name: paintCardStats
+	-- upvalues: (copy) v_u_104, (ref) v_u_10
+	local v111 = p105.Body.Inner
+	v111.StatsChip:SetAttribute("Has", true)
+	v_u_104(v111.StatsChip.Stats, p106, p107, p108, p109, p110)
+	local v112 = v111:FindFirstChild("AuthorRow")
+	if v112 then
+		v112.StarsMini.Count.Text = v_u_10.short(p110)
+	end
+end
+local function v_u_127(p114) -- name: fitGrid
+	-- upvalues: (ref) v_u_9, (copy) v_u_3, (copy) v_u_65
+	local v115 = p114:FindFirstChildOfClass("UIGridLayout")
+	local v116 = p114:FindFirstChildOfClass("UIPadding")
+	local v117 = v_u_9.scale
+	if v115 and (v117 and v117 > 0) then
+		local v118 = p114.AbsoluteWindowSize.X / v117 - (v116 and v116.PaddingLeft.Offset + v116.PaddingRight.Offset or 0)
+		if v118 >= 226 then
+			local v119 = v_u_3.TouchEnabled
+			if v119 then
+				v119 = not v_u_3.MouseEnabled
+			end
+			local v120 = (v118 + 16) / ((v119 and 280 or 226) + 16)
+			local v121 = math.floor(v120)
+			local v122 = math.max(1, v121)
+			local v123 = (v118 - (v122 - 1) * 16) / v122
+			local v124 = v123 / 240
+			v_u_65[p114] = v124
+			v115.CellPadding = UDim2.fromOffset(16, 16)
+			v115.CellSize = UDim2.fromOffset(v123, 200 * v124)
+			for _, v125 in ipairs(p114:GetChildren()) do
+				local v126 = v125:FindFirstChild("Body")
+				if not v126 then
+					continue
+				end
+				v126.Fit.Scale = v124
+			end
+		end
+	else
+		return
+	end
+end
+local function v_u_140(p128, p_u_129) -- name: hoverZone
+	-- upvalues: (copy) v_u_3
+	local v_u_130 = {}
+	local v_u_131 = false
+	local function v_u_134() -- name: check
+		-- upvalues: (copy) v_u_130, (ref) v_u_131, (copy) p_u_129
+		local v132 = false
+		for _, v133 in pairs(v_u_130) do
+			if not v133 then
+				continue
+			end
+			v132 = true
+		end
+		if v132 ~= v_u_131 then
+			v_u_131 = v132
+			p_u_129(v132)
+		end
+	end
+	local v_u_135 = v_u_131
+	for _, v_u_136 in ipairs(p128) do
+		v_u_136.MouseEnter:Connect(function()
+			-- upvalues: (ref) v_u_3, (copy) v_u_130, (copy) v_u_136, (ref) v_u_135, (copy) p_u_129
+			local v137 = v_u_3.TouchEnabled
+			if v137 then
+				v137 = not v_u_3.MouseEnabled
+			end
+			if not v137 then
+				v_u_130[v_u_136] = true
+				local v138 = false
+				for _, v139 in pairs(v_u_130) do
+					if not v139 then
+						continue
+					end
+					v138 = true
+				end
+				if v138 ~= v_u_135 then
+					v_u_135 = v138
+					p_u_129(v138)
+				end
+			end
+		end)
+		v_u_136.MouseLeave:Connect(function()
+			-- upvalues: (copy) v_u_130, (copy) v_u_136, (copy) v_u_134
+			v_u_130[v_u_136] = false
+			task.delay(0.05, v_u_134)
+		end)
+	end
+end
+local function v_u_145(p141, p142) -- name: setHover
+	-- upvalues: (ref) v_u_10
+	if p141:GetAttribute("Hot") == true ~= p142 then
+		p141:SetAttribute("Hot", p142)
+		v_u_10.tween(p141.Hover, 0.22, {
+			["Scale"] = p142 and 1.04 or 1
+		}, Enum.EasingStyle.Back, Enum.EasingDirection.Out, "hover")
+		local v143 = p141:FindFirstChild("Play") or p141:FindFirstChild("Hint")
+		if v143 then
+			v_u_10.tween(v143.Pop, 0.22, {
+				["Scale"] = p142 and 1 or 0
+			}, p142 and Enum.EasingStyle.Back or Enum.EasingStyle.Quad, Enum.EasingDirection.Out, "pop")
+		end
+		local v144 = p141.StatsChip
+		if p142 then
+			p142 = p141.StatsChip:GetAttribute("Has") == true
+		end
+		v144.Visible = p142
+	end
+end
+local function v_u_153(p146, p147) -- name: setActions
+	-- upvalues: (ref) v_u_66, (copy) v_u_153, (copy) v_u_145, (ref) v_u_10
+	local v148 = p146.Parent
+	if v148 then
+		v148 = p146:FindFirstChild("Body")
+	end
+	if v148 then
+		local v_u_149 = v148.Inner
+		if v_u_149:GetAttribute("Acts") == true ~= p147 then
+			if p147 and (v_u_66 and (v_u_66 ~= p146 and v_u_66.Parent)) then
+				v_u_153(v_u_66, false)
+			end
+			if not (p147 and p146) then
+				if v_u_66 == p146 then
+					p146 = nil
+				else
+					p146 = v_u_66 or nil
+				end
+			end
+			v_u_66 = p146
+			v_u_149:SetAttribute("Acts", p147)
+			v_u_145(v_u_149, p147)
+			local v_u_150 = v_u_149.Actions
+			v_u_150.Visible = true
+			v_u_10.tween(v_u_150, 0.18, {
+				["GroupTransparency"] = p147 and 0 or 1,
+				["Position"] = UDim2.fromOffset(8, p147 and 138 or 146)
+			}, nil, nil, "acts").Completed:Connect(function(p151)
+				-- upvalues: (copy) v_u_149, (copy) v_u_150
+				if p151 == Enum.PlaybackState.Completed and not v_u_149:GetAttribute("Acts") then
+					v_u_150.Visible = false
+				end
+			end)
+			for _, v152 in ipairs({ "Title", "Info" }) do
+				v_u_10.tween(v_u_149[v152], 0.15, {
+					["TextTransparency"] = p147 and 1 or 0
+				}, nil, nil, "fade")
+			end
+		end
+	else
+		return
+	end
+end
+local function v_u_158(p154) -- name: openProject
+	-- upvalues: (ref) v_u_22, (ref) v_u_10, (ref) v_u_12, (ref) v_u_9
+	local v155
+	if v_u_22 then
+		v155 = false
+	else
+		v_u_22 = true
+		v155 = true
+	end
+	if v155 then
+		v_u_10.busy(true, "Opening...")
+		local v156, v157 = v_u_10.call("Open", p154)
+		v_u_10.busy(false)
+		v_u_22 = false
+		if v156 then
+			v_u_12.Visible = false
+			v_u_9.Editor.open(v156.pid, v156.title, v156.data, v156.pub, v156.du)
+		else
+			v_u_10.toast(v157, true)
+		end
+	else
+		return
+	end
+end
+local function v_u_163(p159, p160) -- name: fadePublish
+	-- upvalues: (ref) v_u_10, (ref) v_u_17
+	local v161 = v_u_10.tween(v_u_17, p160, {
+		["BackgroundTransparency"] = p159
+	}, nil, nil, "fade")
+	v_u_10.tween(v_u_17.UIStroke, p160, {
+		["Transparency"] = p159
+	}, nil, nil, "fade")
+	v_u_10.tween(v_u_17.Spinner.UIStroke, p160, {
+		["Transparency"] = p159
+	}, nil, nil, "fade")
+	for _, v162 in ipairs({ "Title", "Sub", "Done" }) do
+		v_u_10.tween(v_u_17[v162], p160, {
+			["TextTransparency"] = p159
+		}, nil, nil, "fade")
+	end
+	v_u_10.tween(v_u_17.Done.Img, p160, {
+		["ImageTransparency"] = p159
+	}, nil, nil, "fade")
+	return v161
+end
+local function v_u_167(p164, p165) -- name: showPublish
+	-- upvalues: (ref) v_u_29, (ref) v_u_17, (ref) v_u_28, (ref) v_u_10, (copy) v_u_163, (ref) v_u_27, (copy) v_u_1
+	v_u_29 = v_u_29 + 1
+	v_u_17.Title.Text = p164
+	v_u_17.Sub.Text = p165
+	v_u_17.Spinner.Visible = true
+	v_u_17.Done.Visible = false
+	if not v_u_28 then
+		v_u_28 = true
+		v_u_10.dim(true)
+	end
+	if not v_u_17.Visible then
+		v_u_163(1, 0)
+		v_u_17.Pop.Scale = 0.85
+	end
+	v_u_17.Visible = true
+	v_u_163(0, 0.2)
+	v_u_10.tween(v_u_17.Pop, 0.3, {
+		["Scale"] = 1
+	}, Enum.EasingStyle.Back, Enum.EasingDirection.Out, "pop")
+	if not v_u_27 then
+		v_u_27 = v_u_1.RenderStepped:Connect(function(p166)
+			-- upvalues: (ref) v_u_17
+			v_u_17.Spinner.Rotation = (v_u_17.Spinner.Rotation + p166 * 380) % 360
+		end)
+	end
+end
+local function v_u_170(p168, p169) -- name: publishDone
+	-- upvalues: (ref) v_u_27, (ref) v_u_17, (ref) v_u_10
+	if v_u_27 then
+		v_u_27:Disconnect()
+		v_u_27 = nil
+	end
+	v_u_17.Spinner.Visible = false
+	v_u_17.Done.Visible = true
+	v_u_17.Title.Text = p168
+	v_u_17.Sub.Text = p169
+	v_u_17.Pop.Scale = 1.08
+	v_u_10.tween(v_u_17.Pop, 0.35, {
+		["Scale"] = 1
+	}, Enum.EasingStyle.Back, Enum.EasingDirection.Out, "pop")
+end
+local function v_u_173() -- name: getTrending
+	-- upvalues: (ref) v_u_33, (ref) v_u_34, (ref) v_u_10
+	if v_u_33 and os.clock() - v_u_34 < 60 then
+		return v_u_33
+	end
+	local v171 = v_u_10.call("Tags")
+	if type(v171) == "table" then
+		local v172 = os.clock()
+		v_u_33 = v171
+		v_u_34 = v172
+	end
+	return v_u_33 or {}
+end
+local function v_u_176(p174) -- name: knownCount
+	-- upvalues: (ref) v_u_33
+	for _, v175 in ipairs(v_u_33 or {}) do
+		if v175.t ~= p174 then
+			continue
+		end
+		return v175.n
+	end
+	return nil
+end
+local function v_u_188() -- name: showTagInfo
+	-- upvalues: (ref) v_u_31, (ref) v_u_35, (ref) v_u_10, (copy) v_u_176
+	local v177 = v_u_31.DescBox
+	local v178 = v177.Text
+	local v179 = v177.CursorPosition
+	if v179 and v179 > 0 then
+		local v180 = v179 - 1
+		v178 = string.sub(v178, 1, v180) or v178
+	end
+	local v181 = string.match(v178, "#([%w_]*)$")
+	v_u_35 = v_u_35 + 1
+	local v_u_182 = v_u_35
+	if v181 and #v181 >= 2 then
+		local v_u_183 = string.lower(v181)
+		local function v_u_185(p184) -- name: show
+			-- upvalues: (ref) v_u_31, (copy) v_u_183, (ref) v_u_10
+			if p184 and p184 > 0 then
+				v_u_31.TagInfo.Text = string.format("<font color=\"#96D2FF\">#%s</font>  used in %s %s", v_u_183, v_u_10.short(p184), p184 == 1 and "cartoon" or "cartoons")
+			else
+				v_u_31.TagInfo.Text = string.format("<font color=\"#96D2FF\">#%s</font>  is a brand new hashtag!", v_u_183)
+			end
+		end
+		local v186 = v_u_176(v_u_183)
+		if v186 then
+			v_u_185(v186)
+		else
+			v_u_31.TagInfo.Text = string.format("<font color=\"#96D2FF\">#%s</font>  ...", v_u_183)
+			task.delay(0.5, function()
+				-- upvalues: (copy) v_u_182, (ref) v_u_35, (ref) v_u_31, (ref) v_u_10, (copy) v_u_183, (copy) v_u_185
+				if v_u_182 == v_u_35 and v_u_31.Visible then
+					local v187 = v_u_10.call("TagCount", v_u_183)
+					if v_u_182 == v_u_35 then
+						v_u_185(type(v187) == "table" and (v187.n or 0) or 0)
+					end
+				else
+					return
+				end
+			end)
+		end
+	else
+		v_u_31.TagInfo.Text = "Add #hashtags so more people find your cartoon"
+		return
+	end
+end
+local v_u_189 = nil
+local function v_u_205(p190) -- name: insertTag
+	-- upvalues: (ref) v_u_31, (copy) v_u_6, (copy) v_u_188, (ref) v_u_189
+	local v191 = v_u_31.DescBox
+	local v192 = v_u_31.DescBox
+	local v193 = v192.Text
+	local v194 = v192.CursorPosition
+	if v194 and v194 > 0 then
+		local v195 = v194 - 1
+		v193 = string.sub(v193, 1, v195) or v193
+	end
+	local v196 = string.match(v193, "#([%w_]*)$")
+	local v197 = v191.Text
+	local v198
+	if v196 then
+		local v199 = v194 and (v194 > 0 and string.sub(v197, v194)) or ""
+		local v200 = #v193 - #v196 - 1
+		v198 = string.sub(v193, 1, v200) .. "#" .. p190 .. " " .. v199
+	else
+		v198 = v197 .. ((v197 == "" or string.match(v197, "%s$")) and "" or " ") .. "#" .. p190 .. " "
+	end
+	v191.Text = v198
+	local v201 = v_u_6.MAX_DESC_LEN
+	local v202 = utf8.len(v191.Text)
+	if v202 and v201 < v202 then
+		local v203 = v191.Text
+		local v204 = utf8.offset(v191.Text, v201 + 1) - 1
+		v191.Text = string.sub(v203, 1, v204)
+	else
+		v201 = v202
+	end
+	if not v201 then
+		local _ = #v191.Text
+	end
+	v_u_188()
+	v_u_189(true)
+end
+v_u_189 = function(p206)
+	-- upvalues: (ref) v_u_31, (ref) v_u_230, (copy) v_u_37, (ref) v_u_36, (copy) v_u_6, (ref) v_u_10, (copy) v_u_205, (ref) v_u_33
+	-- control flow flattened: this region could not be structured without a goto (unsupported in Luau), so it was lowered to the state-machine dispatch loop below to keep the output runnable.
+	local v223, v224, v225, v226, v227, v228, v229, v_u_231, v232, v233, v234, v235, v236, v237, v238, v239
+	local v223, v224, v225, v226, v227, v228, v229, v_u_230, v_u_231, v232, v233, v234, v235, v236, v237, v238, v239
+	local v240 = 5
+	while true do
+		if v240 == 1 then
+			if v229 == "" then
+				v240 = 4
+			else
+				v240 = 3
+			end
+		elseif v240 == 2 then
+			for _, v_u_241 in ipairs(v_u_33 or {}) do
+				if v229 ~= "" then
+					v238 = v_u_241.t
+					v239 = #v229
+					if string.sub(v238, 1, v239) ~= v229 then
+						continue
+					end
+				end
+				if v_u_231 and v_u_241.t == v_u_231.Tag then
+					continue
+				end
+				v223 = v223 + 1
+				if v223 > 15 then
+					break
+				end
+				v224 = v_u_31.Templates.Chip:Clone()
+				v224.Text = "#" .. v_u_241.t
+				v224.Count.Text = v_u_10.short(v_u_241.n)
+				v224.LayoutOrder = v223
+				v224.Visible = true
+				v224.Parent = v_u_31.Chips
+				v_u_10.button(v224, function()
+					-- upvalues: (ref) v_u_205, (copy) v_u_241
+					v_u_205(v_u_241.t)
+				end)
+				v225 = v_u_37
+				table.insert(v225, v224)
+			end
+			v_u_31.NoTags.Visible = #v_u_37 == 0
+			return
+		elseif v240 == 3 then
+			v226 = v_u_231.Tag
+			v227 = #v229
+			if string.sub(v226, 1, v227) == v229 then
+				v240 = 4
+			else
+				v240 = 2
+			end
+		elseif v240 == 4 then
+			v223 = v223 + 1
+			v228 = v_u_31.Templates.Chip:Clone()
+			v228.Text = "#" .. v_u_231.Tag
+			v228.Count.Visible = false
+			v228.TextColor3 = Color3.new(1, 1, 1)
+			if v228:FindFirstChild("UIPadding") then
+				v228.UIPadding.PaddingRight = UDim.new(0, 12)
+			end
+			v228.LayoutOrder = v223
+			v228.Visible = true
+			v228.Parent = v_u_31.Chips
+			v_u_10.setColor(v228, v_u_10.ON)
+			v_u_10.button(v228, function()
+				-- upvalues: (ref) v_u_205, (copy) v_u_231
+				v_u_205(v_u_231.Tag)
+			end)
+			v232 = v_u_37
+			table.insert(v232, v228)
+			v240 = 2
+		else
+			v233 = v_u_31.DescBox
+			v234 = v233.Text
+			v235 = v233.CursorPosition
+			if v235 and v235 > 0 then
+				v236 = v235 - 1
+				v234 = string.sub(v234, 1, v236) or v234
+			end
+			v237 = string.match(v234, "#([%w_]*)$")
+			v229 = v237 and string.lower(v237) or ""
+			if not p206 and v229 == v_u_230 then
+				return
+			end
+			v_u_230 = v229
+			for _, v242 in ipairs(v_u_37) do
+				v242:Destroy()
+			end
+			table.clear(v_u_37)
+			v223 = 0
+			v_u_231 = v_u_36
+			if v_u_231 then
+				v_u_231 = v_u_6.THEME_BY_KEY[v_u_36.key]
+			end
+			if v_u_231 then
+				v240 = 1
+			else
+				v240 = 2
+			end
+		end
+	end
+end
+local function v_u_255() -- name: refreshCounts
+	-- upvalues: (ref) v_u_31, (copy) v_u_6
+	local v243 = v_u_31.TitleBox
+	local v244 = v_u_6.MAX_TITLE_LEN
+	local v245 = utf8.len(v243.Text)
+	if v245 and v244 < v245 then
+		local v246 = v243.Text
+		local v247 = utf8.offset(v243.Text, v244 + 1) - 1
+		v243.Text = string.sub(v246, 1, v247)
+	else
+		v244 = v245
+	end
+	local v248 = v244 or #v243.Text
+	local v249 = v_u_31.DescBox
+	local v250 = v_u_6.MAX_DESC_LEN
+	local v251 = utf8.len(v249.Text)
+	if v251 and v250 < v251 then
+		local v252 = v249.Text
+		local v253 = utf8.offset(v249.Text, v250 + 1) - 1
+		v249.Text = string.sub(v252, 1, v253)
+	else
+		v250 = v251
+	end
+	local v254 = v250 or #v249.Text
+	v_u_31.TitleCount.Text = v248 .. "/" .. v_u_6.MAX_TITLE_LEN
+	v_u_31.DescCount.Text = v254 .. "/" .. v_u_6.MAX_DESC_LEN
+end
+local v_u_256 = Color3.fromRGB(150, 95, 255)
+local function v_u_262(p257, p258, p259) -- name: paintSwitch
+	-- upvalues: (copy) v_u_256, (ref) v_u_10
+	local v260 = p258 and UDim2.new(1, -27, 0.5, 0) or UDim2.new(0, 3, 0.5, 0)
+	local v261 = p258 and v_u_256 or v_u_10.BTN
+	if p259 then
+		v_u_10.stop(p257.Knob, "sw")
+		v_u_10.stop(p257, "sw")
+		p257.Knob.Position = v260
+		p257.BackgroundColor3 = v261
+	else
+		v_u_10.tween(p257.Knob, 0.18, {
+			["Position"] = v260
+		}, Enum.EasingStyle.Back, Enum.EasingDirection.Out, "sw")
+		v_u_10.tween(p257, 0.18, {
+			["BackgroundColor3"] = v261
+		}, nil, nil, "sw")
+	end
+end
+local function v_u_289(p263, p264) -- name: askShare
+	-- upvalues: (ref) v_u_32, (ref) v_u_31, (ref) v_u_40, (copy) v_u_256, (ref) v_u_10, (ref) v_u_41, (copy) v_u_6, (copy) v_u_188, (ref) v_u_189, (copy) v_u_173
+	if v_u_32 then
+		v_u_32(nil)
+	end
+	v_u_31.Title.Text = p264 and "Update your cartoon" or "Publish your cartoon"
+	v_u_31.ShareBtn.Text = p264 and "Update" or "Publish"
+	v_u_31.TitleBox.Text = p263.title or ""
+	v_u_31.DescBox.Text = p263.desc or ""
+	local v265 = p263.rx == true
+	v_u_40 = v265
+	local v266 = v_u_31.RemixRow.Switch
+	local v267 = v265 and UDim2.new(1, -27, 0.5, 0) or UDim2.new(0, 3, 0.5, 0)
+	local v268 = v265 and v_u_256 or v_u_10.BTN
+	v_u_10.stop(v266.Knob, "sw")
+	v_u_10.stop(v266, "sw")
+	v266.Knob.Position = v267
+	v266.BackgroundColor3 = v268
+	local v269 = p263.nd ~= true
+	v_u_41 = v269
+	local v270 = v_u_31.DuetRow.Switch
+	local v271 = v269 and UDim2.new(1, -27, 0.5, 0) or UDim2.new(0, 3, 0.5, 0)
+	local v272 = v269 and v_u_256 or v_u_10.BTN
+	v_u_10.stop(v270.Knob, "sw")
+	v_u_10.stop(v270, "sw")
+	v270.Knob.Position = v271
+	v270.BackgroundColor3 = v272
+	local v273 = v_u_31.TitleBox
+	local v274 = v_u_6.MAX_TITLE_LEN
+	local v275 = utf8.len(v273.Text)
+	if v275 and v274 < v275 then
+		local v276 = v273.Text
+		local v277 = utf8.offset(v273.Text, v274 + 1) - 1
+		v273.Text = string.sub(v276, 1, v277)
+	else
+		v274 = v275
+	end
+	local v278 = v274 or #v273.Text
+	local v279 = v_u_31.DescBox
+	local v280 = v_u_6.MAX_DESC_LEN
+	local v281 = utf8.len(v279.Text)
+	if v281 and v280 < v281 then
+		local v282 = v279.Text
+		local v283 = utf8.offset(v279.Text, v280 + 1) - 1
+		v279.Text = string.sub(v282, 1, v283)
+	else
+		v280 = v281
+	end
+	local v284 = v280 or #v279.Text
+	v_u_31.TitleCount.Text = v278 .. "/" .. v_u_6.MAX_TITLE_LEN
+	v_u_31.DescCount.Text = v284 .. "/" .. v_u_6.MAX_DESC_LEN
+	v_u_188()
+	v_u_189(true)
+	local v_u_285 = Instance.new("BindableEvent")
+	local v_u_286 = nil
+	local v_u_287 = false
+	v_u_32 = function(p288)
+		-- upvalues: (ref) v_u_287, (ref) v_u_286, (ref) v_u_32, (ref) v_u_31, (ref) v_u_10, (copy) v_u_285
+		if not v_u_287 then
+			v_u_287 = true
+			v_u_286 = p288
+			v_u_32 = nil
+			v_u_31.TitleBox:ReleaseFocus()
+			v_u_31.DescBox:ReleaseFocus()
+			v_u_10.close(v_u_31)
+			v_u_10.dim(false)
+			v_u_285:Fire()
+		end
+	end
+	v_u_10.dim(true)
+	v_u_10.open(v_u_31)
+	task.spawn(function()
+		-- upvalues: (ref) v_u_173, (ref) v_u_287, (ref) v_u_189, (ref) v_u_188
+		v_u_173()
+		if not v_u_287 then
+			v_u_189(true)
+			v_u_188()
+		end
+	end)
+	v_u_285.Event:Wait()
+	v_u_285:Destroy()
+	return v_u_286
+end
+local function v_u_301(p290) -- name: share
+	-- upvalues: (copy) v_u_6, (ref) v_u_10, (ref) v_u_21, (ref) v_u_68, (copy) v_u_289, (copy) v_u_167, (ref) v_u_29, (ref) v_u_28, (ref) v_u_17, (copy) v_u_163, (ref) v_u_27, (copy) v_u_170, (ref) v_u_34, (copy) v_u_8
+	local v291 = p290.pub == true
+	if not v291 then
+		if (p290.n or 1) < v_u_6.SHARE_MIN_FRAMES then
+			v_u_10.toast("You need at least " .. v_u_6.SHARE_MIN_FRAMES .. " frames to publish (you have " .. (p290.n or 1) .. ")", true)
+			return
+		end
+		local v292 = 0
+		for _, v293 in ipairs(v_u_21) do
+			if not v293.pub then
+				continue
+			end
+			v292 = v292 + 1
+		end
+		if v_u_68 <= v292 then
+			v_u_10.toast("You can only publish " .. v_u_68 .. " cartoons. Level up to publish more!", true)
+			return
+		end
+	end
+	local v294 = v_u_289(p290, v291)
+	if v294 then
+		v_u_167(v291 and "Updating your cartoon..." or "Publishing your cartoon...", "Saving it for everyone, please wait!")
+		local v295, v296 = v_u_10.call("Publish", p290.id, v294.title, {
+			["d"] = v294.desc,
+			["rx"] = v294.rx,
+			["nd"] = v294.nd
+		})
+		if v295 then
+			if v291 then
+				v_u_170("Cartoon updated!", "Everyone now sees the new version.")
+			else
+				v_u_170("Your cartoon is live!", "Everyone can watch it in the Gallery.")
+			end
+			local v_u_297 = v_u_29
+			task.delay(1.6, function()
+				-- upvalues: (ref) v_u_29, (copy) v_u_297, (ref) v_u_28, (ref) v_u_10, (ref) v_u_17, (ref) v_u_163, (ref) v_u_27
+				if v_u_29 == v_u_297 and v_u_28 then
+					v_u_28 = false
+					v_u_10.dim(false)
+					v_u_10.tween(v_u_17.Pop, 0.25, {
+						["Scale"] = 0.9
+					}, Enum.EasingStyle.Quad, Enum.EasingDirection.In, "pop")
+					v_u_163(1, 0.25).Completed:Connect(function(p298)
+						-- upvalues: (ref) v_u_28, (ref) v_u_17, (ref) v_u_27
+						if p298 == Enum.PlaybackState.Completed and not v_u_28 then
+							v_u_17.Visible = false
+							if v_u_27 then
+								v_u_27:Disconnect()
+								v_u_27 = nil
+							end
+						end
+					end)
+				end
+			end)
+			v_u_34 = -1000000000
+			v_u_8.refresh()
+			return true
+		end
+		local v_u_299 = v_u_29
+		task.delay(0, function()
+			-- upvalues: (ref) v_u_29, (copy) v_u_299, (ref) v_u_28, (ref) v_u_10, (ref) v_u_17, (ref) v_u_163, (ref) v_u_27
+			if v_u_29 == v_u_299 and v_u_28 then
+				v_u_28 = false
+				v_u_10.dim(false)
+				v_u_10.tween(v_u_17.Pop, 0.25, {
+					["Scale"] = 0.9
+				}, Enum.EasingStyle.Quad, Enum.EasingDirection.In, "pop")
+				v_u_163(1, 0.25).Completed:Connect(function(p300)
+					-- upvalues: (ref) v_u_28, (ref) v_u_17, (ref) v_u_27
+					if p300 == Enum.PlaybackState.Completed and not v_u_28 then
+						v_u_17.Visible = false
+						if v_u_27 then
+							v_u_27:Disconnect()
+							v_u_27 = nil
+						end
+					end
+				end)
+			end
+		end)
+		v_u_10.toast(v296, true)
+	end
+end
+function v_u_8.shareProject(p302, p303, p304) -- name: shareProject
+	-- upvalues: (ref) v_u_21, (copy) v_u_301
+	local v305 = nil
+	for _, v306 in ipairs(v_u_21) do
+		if v306.id ~= p302 then
+			continue
+		end
+		v305 = table.clone(v306)
+	end
+	local v307 = v305 or {
+		["id"] = p302
+	}
+	v307.title = p303
+	v307.n = p304
+	return v_u_301(v307) == true
+end
+local function v_u_311(p308) -- name: unshare
+	-- upvalues: (ref) v_u_10, (copy) v_u_8
+	if v_u_10.confirm("Remove this cartoon from the Gallery?", "Unpublish") then
+		v_u_10.busy(true, "Removing...")
+		local v309, v310 = v_u_10.call("Unpublish", p308.id)
+		v_u_10.busy(false)
+		if v309 then
+			v_u_10.toast("Removed from the Gallery")
+			v_u_8.refresh()
+		else
+			v_u_10.toast(v310, true)
+		end
+	else
+		return
+	end
+end
+local function v_u_399(p312, p313) -- name: buildCards
+	-- upvalues: (ref) v_u_66, (ref) v_u_67, (copy) v_u_18, (copy) v_u_65, (ref) v_u_13, (ref) v_u_16, (ref) v_u_10, (copy) v_u_113, (copy) v_u_3, (ref) v_u_11, (copy) v_u_153, (copy) v_u_158, (copy) v_u_140, (copy) v_u_6, (ref) v_u_22, (copy) v_u_8, (copy) v_u_399, (ref) v_u_21, (copy) v_u_301, (copy) v_u_311, (ref) v_u_68, (ref) v_u_70
+	v_u_66 = nil
+	v_u_67 = p313
+	local v314 = v_u_18
+	for _, v315 in ipairs(v314) do
+		v315:Destroy()
+	end
+	table.clear(v314)
+	local v316 = v_u_65[v_u_13.GridMask.Grid] or 1
+	local v_u_317 = {}
+	for v318, v319 in ipairs(p312) do
+		v_u_317[v319] = v318
+	end
+	local v320 = table.clone(p312)
+	table.sort(v320, function(p321, p322)
+		-- upvalues: (copy) v_u_317
+		if p321.pin == true == (p322.pin == true) then
+			return v_u_317[p321] < v_u_317[p322]
+		else
+			return p321.pin == true
+		end
+	end)
+	for v323, v_u_324 in ipairs(v320) do
+		local v_u_325 = v_u_16.ProjectCard:Clone()
+		v_u_325.Visible = true
+		local v326 = v_u_324.id
+		v_u_325.Name = "P" .. tostring(v326)
+		v_u_325.LayoutOrder = v323
+		v_u_325.Body.Fit.Scale = v316
+		local v_u_327 = v_u_325.Body.Inner
+		local v328 = v_u_327.Actions
+		local v329 = v_u_327.Title
+		local v330 = v_u_324.title
+		v329.Text = (v_u_324.pin and "\240\159\147\140 " or "") .. tostring(v330 or "Cartoon")
+		v328.PinBtn.Label.Text = v_u_324.pin and "Unpin" or "Pin"
+		local v331 = v_u_327.Info
+		local v332 = v_u_324.n or 1
+		v331.Text = tostring(v332) .. " frames  \194\183  " .. v_u_10.ago(v_u_324.upd)
+		local v333 = v_u_324.rm
+		if type(v333) == "table" and (v_u_324.rm.dn or v_u_324.rm.n) then
+			local v334 = v_u_327.Info
+			local v335 = v334.Text
+			local v336 = v_u_324.rm.dn or v_u_324.rm.n
+			v334.Text = v335 .. "  \194\183  remix of " .. tostring(v336)
+		else
+			local v337 = v_u_324.du
+			if type(v337) == "table" and (v_u_324.du.dn or v_u_324.du.n) then
+				local v338 = v_u_327.Info
+				local v339 = v338.Text
+				local v340 = v_u_324.du.dn or v_u_324.du.n
+				v338.Text = v339 .. "  \194\183  duet with " .. tostring(v340)
+			end
+		end
+		local v341 = v_u_324.pub == true
+		v_u_327.PubTag.Visible = v341
+		v328.UnpublishBtn.Visible = v341
+		v328.PublishBtn.Label.Text = v341 and "Update" or "Publish"
+		if v341 and v_u_324.st then
+			v_u_113(v_u_325, v_u_324.st.vw, v_u_324.st.l, v_u_324.st.dl, v_u_324.st.cc, v_u_324.st.st)
+			if v_u_324.st.hidden then
+				v_u_327.PubTag.Text = "HIDDEN"
+				v_u_327.PubTag.BackgroundColor3 = v_u_10.DANGER
+			end
+		end
+		local v342 = v_u_327.MoreBtn
+		local v343 = v_u_3.TouchEnabled
+		if v343 then
+			v343 = not v_u_3.MouseEnabled
+		end
+		v342.Visible = v343
+		v_u_327.Hint.Pop.Scale = 0
+		v_u_327.Hint.Visible = true
+		v_u_325.Parent = v_u_13.GridMask.Grid
+		v_u_11.thumb(v_u_327.Thumb, v_u_324.th, 224, 126)
+		v_u_327.Open.Activated:Connect(function()
+			-- upvalues: (ref) v_u_10, (ref) v_u_3, (copy) v_u_327, (ref) v_u_153, (copy) v_u_325, (ref) v_u_158, (copy) v_u_324
+			v_u_10.click()
+			local v344 = v_u_3.TouchEnabled
+			if v344 then
+				v344 = not v_u_3.MouseEnabled
+			end
+			if v344 and not v_u_327:GetAttribute("Acts") then
+				v_u_153(v_u_325, true)
+			else
+				v_u_158(v_u_324.id)
+			end
+		end)
+		local v345 = { v_u_327, v_u_327.Open }
+		for _, v346 in ipairs(v328:GetChildren()) do
+			if not v346:IsA("GuiButton") then
+				continue
+			end
+			table.insert(v345, v346)
+		end
+		v_u_140(v345, function(p347)
+			-- upvalues: (ref) v_u_153, (copy) v_u_325
+			v_u_153(v_u_325, p347)
+		end)
+		v_u_10.button(v_u_327.MoreBtn, function()
+			-- upvalues: (ref) v_u_153, (copy) v_u_325, (copy) v_u_327
+			v_u_153(v_u_325, not v_u_327:GetAttribute("Acts"))
+		end)
+		v_u_327.Hover.Scale = 0.6
+		task.delay(math.min(v323, 16) * 0.03, function()
+			-- upvalues: (copy) v_u_327, (ref) v_u_10
+			if v_u_327.Parent and not v_u_327:GetAttribute("Hot") then
+				v_u_10.tween(v_u_327.Hover, 0.35, {
+					["Scale"] = 1
+				}, Enum.EasingStyle.Back, Enum.EasingDirection.Out, "hover")
+			end
+		end)
+		local function v_u_353()
+			-- upvalues: (ref) v_u_10, (copy) v_u_324, (ref) v_u_6, (copy) v_u_325, (copy) v_u_327
+			local v348 = v_u_10.prompt("Name your cartoon", v_u_324.title, v_u_6.MAX_TITLE_LEN)
+			if v348 and v348 ~= "" then
+				local v349, v350 = v_u_10.call("Rename", v_u_324.id, v348)
+				if v349 then
+					v_u_324.title = v349.title
+					if v_u_325.Parent then
+						local v351 = v_u_327.Title
+						local v352 = v349.title
+						v351.Text = (v_u_324.pin and "\240\159\147\140 " or "") .. tostring(v352 or "Cartoon")
+					end
+					if v_u_324.pub then
+						v_u_10.toast("Tap Update to show the new name in the Gallery")
+					end
+				else
+					v_u_10.toast(v350, true)
+				end
+			else
+				return
+			end
+		end
+		v_u_10.button(v328.RenameBtn, function()
+			-- upvalues: (ref) v_u_22, (copy) v_u_353
+			local v354
+			if v_u_22 then
+				v354 = false
+			else
+				v_u_22 = true
+				v354 = true
+			end
+			if v354 then
+				local v355 = v_u_353
+				local v356, v357 = pcall(v355)
+				v_u_22 = false
+				if not v356 then
+					warn(v357)
+				end
+			end
+		end)
+		local function v_u_360()
+			-- upvalues: (ref) v_u_10, (copy) v_u_324, (ref) v_u_8
+			v_u_10.busy(true, "Copying...")
+			local v358, v359 = v_u_10.call("Duplicate", v_u_324.id)
+			v_u_10.busy(false)
+			if v358 then
+				v_u_8.refresh()
+			else
+				v_u_10.toast(v359, true)
+			end
+		end
+		v_u_10.button(v328.CopyBtn, function()
+			-- upvalues: (ref) v_u_22, (copy) v_u_360
+			local v361
+			if v_u_22 then
+				v361 = false
+			else
+				v_u_22 = true
+				v361 = true
+			end
+			if v361 then
+				local v362 = v_u_360
+				local v363, v364 = pcall(v362)
+				v_u_22 = false
+				if not v363 then
+					warn(v364)
+				end
+			end
+		end)
+		local function v_u_367()
+			-- upvalues: (ref) v_u_10, (copy) v_u_324, (ref) v_u_399, (ref) v_u_21, (ref) v_u_67
+			local v365, v366 = v_u_10.call("Pin", v_u_324.id, not v_u_324.pin)
+			if v365 then
+				v_u_324.pin = v365.pin == true and true or nil
+				v_u_10.toast(v_u_324.pin and "Pinned! It shows first here and on your profile" or "Unpinned")
+				v_u_399(v_u_21, v_u_67)
+			else
+				v_u_10.toast(v366, true)
+			end
+		end
+		v_u_10.button(v328.PinBtn, function()
+			-- upvalues: (ref) v_u_22, (copy) v_u_367
+			local v368
+			if v_u_22 then
+				v368 = false
+			else
+				v_u_22 = true
+				v368 = true
+			end
+			if v368 then
+				local v369 = v_u_367
+				local v370, v371 = pcall(v369)
+				v_u_22 = false
+				if not v370 then
+					warn(v371)
+				end
+			end
+		end)
+		local function v_u_372()
+			-- upvalues: (ref) v_u_301, (copy) v_u_324
+			v_u_301(v_u_324)
+		end
+		v_u_10.button(v328.PublishBtn, function()
+			-- upvalues: (ref) v_u_22, (copy) v_u_372
+			local v373
+			if v_u_22 then
+				v373 = false
+			else
+				v_u_22 = true
+				v373 = true
+			end
+			if v373 then
+				local v374 = v_u_372
+				local v375, v376 = pcall(v374)
+				v_u_22 = false
+				if not v375 then
+					warn(v376)
+				end
+			end
+		end)
+		local function v_u_377()
+			-- upvalues: (ref) v_u_311, (copy) v_u_324
+			v_u_311(v_u_324)
+		end
+		v_u_10.button(v328.UnpublishBtn, function()
+			-- upvalues: (ref) v_u_22, (copy) v_u_377
+			local v378
+			if v_u_22 then
+				v378 = false
+			else
+				v_u_22 = true
+				v378 = true
+			end
+			if v378 then
+				local v379 = v_u_377
+				local v380, v381 = pcall(v379)
+				v_u_22 = false
+				if not v380 then
+					warn(v381)
+				end
+			end
+		end)
+		local function v_u_387()
+			-- upvalues: (copy) v_u_324, (ref) v_u_10, (copy) v_u_327, (ref) v_u_8
+			local v382 = "Delete \"" .. (v_u_324.title or "this cartoon") .. "\" forever?"
+			if v_u_324.pub then
+				v382 = v382 .. " It will also leave the Gallery."
+			end
+			if v_u_10.confirm(v382, "Delete") then
+				local v383 = Instance.new("TextLabel")
+				v383.Name = "Deleting"
+				v383.Size = UDim2.fromScale(1, 1)
+				v383.ZIndex = 20
+				v383.BackgroundColor3 = Color3.fromRGB(8, 4, 18)
+				v383.BackgroundTransparency = 1
+				v383.Text = "Deleting..."
+				v383.FontFace = v_u_327.Title.FontFace
+				v383.TextSize = 22
+				v383.TextColor3 = Color3.new(1, 1, 1)
+				v383.TextTransparency = 1
+				v383.Active = true
+				local v384 = v_u_327:FindFirstChildOfClass("UICorner")
+				if v384 then
+					v384:Clone().Parent = v383
+				end
+				v383.Parent = v_u_327
+				v_u_10.tween(v383, 0.2, {
+					["BackgroundTransparency"] = 0.35,
+					["TextTransparency"] = 0
+				})
+				v_u_10.busy(true, "Deleting...")
+				local v385, v386 = v_u_10.call("Delete", v_u_324.id)
+				v_u_10.busy(false)
+				if v385 then
+					v_u_10.toast("Cartoon deleted")
+					v_u_8.refresh()
+				else
+					v383:Destroy()
+					v_u_10.toast(v386, true)
+				end
+			else
+				return
+			end
+		end
+		v_u_10.button(v328.DeleteBtn, function()
+			-- upvalues: (ref) v_u_22, (copy) v_u_387
+			local v388
+			if v_u_22 then
+				v388 = false
+			else
+				v_u_22 = true
+				v388 = true
+			end
+			if v388 then
+				local v389 = v_u_387
+				local v390, v391 = pcall(v389)
+				v_u_22 = false
+				if not v390 then
+					warn(v391)
+				end
+			end
+		end)
+		local v392 = v_u_18
+		table.insert(v392, v_u_325)
+	end
+	local v393 = v_u_13.Count
+	local v394 = #p312
+	local v395 = 0
+	local v396 = " / "
+	local v397 = " cartoons   |   "
+	for _, v398 in ipairs(v_u_21) do
+		if not v398.pub then
+			continue
+		end
+		v395 = v395 + 1
+	end
+	v393.Text = v394 .. v396 .. p313 .. v397 .. v395 .. " / " .. v_u_68 .. " public   |   Lv " .. v_u_70
+end
+function v_u_8.refresh() -- name: refresh
+	-- upvalues: (ref) v_u_10, (ref) v_u_9, (ref) v_u_21, (ref) v_u_68, (copy) v_u_6, (ref) v_u_69, (ref) v_u_70, (copy) v_u_399
+	local v_u_400 = false
+	local v401 = task.delay(0.35, function()
+		-- upvalues: (ref) v_u_400, (ref) v_u_10
+		v_u_400 = true
+		v_u_10.busy(true, "Loading your cartoons...")
+		task.wait(4)
+		if v_u_400 then
+			v_u_10.busy(true, "Almost there...")
+			v_u_10.busy(false)
+		end
+	end)
+	local v402 = v_u_400
+	local v403 = nil
+	local v404 = nil
+	for _ = 1, 5 do
+		v403, v404 = v_u_10.call("List")
+		if v403 or v404 ~= "Data not loaded, try again" then
+			break
+		end
+		task.wait(2)
+	end
+	if v402 then
+		v_u_400 = false
+		v_u_10.busy(false)
+	else
+		task.cancel(v401)
+	end
+	if not v403 then
+		v_u_10.toast(v404, true)
+		return nil
+	end
+	v_u_9.Shop.setVip(v403.vip)
+	v_u_9.MenuMusic.setEnabled(v403.menuMusic ~= false, true)
+	v_u_9.MenuThemes.apply(v403.menuBg)
+	v_u_9.EditorTips.setEnabled(v403.tips ~= false, true)
+	v_u_9.Shop.setExtra(v403.extra)
+	v_u_9.Shop.setPacks(v403.packs)
+	v_u_9.Shop.setOwned(v403.owned)
+	v_u_9.Shop.setStars(v403.stars)
+	v_u_9.Community.setState(v403.community, v403.tuto == false)
+	local v405 = v403.notices
+	if type(v405) == "table" then
+		for v406, v407 in ipairs(v403.notices) do
+			task.delay((v406 - 1) * 2.8, v_u_10.toast, v407, true)
+		end
+	end
+	v_u_21 = v403.projects or {}
+	v_u_68 = v403.shared or v_u_6.MAX_SHARED
+	local v408 = v403.xp
+	v_u_69 = tonumber(v408) or 0
+	local v409 = v403.level
+	local v410 = tonumber(v409) or 1
+	local v411 = v_u_6.creatorLevel
+	local v412 = v_u_69
+	v_u_70 = math.max(v410, v411(v412))
+	v_u_9.Cosmetics.setEquipped(v403.cs)
+	local v413 = v403.max or v_u_6.MAX_PROJECTS
+	v_u_399(v_u_21, v413)
+	if v403.tuto == false and (#v_u_21 < v413 and v_u_9.Tutorial) then
+		task.defer(v_u_9.Tutorial.start)
+	end
+	return v_u_21
+end
+local v_u_414 = nil
+local v_u_415 = nil
+local function v_u_443(p_u_416, p_u_417, p418, p_u_419, p_u_420) -- name: galleryCard
+	-- upvalues: (ref) v_u_16, (copy) v_u_65, (copy) v_u_6, (ref) v_u_9, (copy) v_u_113, (copy) v_u_3, (ref) v_u_11, (ref) v_u_10, (copy) v_u_158, (ref) v_u_415, (copy) v_u_140, (copy) v_u_145
+	local v421 = v_u_16.GalleryCard:Clone()
+	v421.Visible = true
+	v421.Name = "G" .. p_u_417
+	v421.LayoutOrder = p_u_417
+	v421:SetAttribute("PostId", p_u_416.id)
+	v421.Body.Fit.Scale = v_u_65[p418] or 1
+	local v_u_422 = v421.Body.Inner
+	local v423 = v_u_422.AuthorRow
+	local v424 = v_u_422.Title
+	local v425 = p_u_416.t and p_u_416.t ~= "" and (p_u_416.t or "Untitled") or "Untitled"
+	v424.Text = (p_u_416.pin and "\240\159\147\140 " or "") .. tostring(v425 or "Cartoon")
+	local v426 = v423.Author
+	local v427 = p_u_416.dn or (p_u_416.an or "?")
+	v426.Text = tostring(v427)
+	local v428 = p_u_416.lv
+	local v429 = tonumber(v428)
+	local v430 = 26
+	v423.LvTag.Visible = v429 ~= nil
+	if v429 then
+		v423.LvTag.Text = "Lv " .. v429
+		v423.LvTag.BackgroundColor3 = v_u_6.levelColor(v429)
+		v430 = v430 + (v423.LvTag.Size.X.Offset + 4)
+	end
+	v_u_9.Cosmetics.applyBadge(v423.BadgeIcon, p_u_416.bd)
+	if v423.BadgeIcon.Visible then
+		v423.BadgeIcon.Position = UDim2.new(0, v430, 0.5, 0)
+		v430 = v430 + (v423.BadgeIcon.Size.X.Offset + 4)
+	end
+	v423.Author.Position = UDim2.new(0, v430, v423.Author.Position.Y.Scale, v423.Author.Position.Y.Offset)
+	v423.Author.Size = UDim2.new(1, -(v430 + 60), v423.Author.Size.Y.Scale, v423.Author.Size.Y.Offset)
+	local v431 = p_u_416.a
+	if type(v431) == "number" then
+		v423.Avatar.Image = "rbxthumb://type=AvatarHeadShot&id=" .. p_u_416.a .. "&w=48&h=48"
+	end
+	v_u_113(v421, p_u_416.vw, p_u_416.l, p_u_416.dl, p_u_416.cc, p_u_416.st)
+	local v432
+	if p_u_420.kind == "author" then
+		v432 = p_u_420.userId == v_u_9.player.UserId
+	else
+		v432 = false
+	end
+	local v_u_433
+	if v432 then
+		local v434 = v_u_3.TouchEnabled
+		if v434 then
+			v434 = not v_u_3.MouseEnabled
+		end
+		v_u_433 = not v434
+	else
+		v_u_433 = v432
+	end
+	local v435 = v_u_422.MineTag
+	local v436
+	if p_u_416.mine == true then
+		v436 = not v432
+	else
+		v436 = false
+	end
+	v435.Visible = v436
+	local v437 = v_u_422.EditBtn
+	local v438
+	if p_u_416.mine == true then
+		v438 = not v_u_433
+	else
+		v438 = false
+	end
+	v437.Visible = v438
+	v421.Parent = p418
+	v_u_11.thumb(v_u_422.Thumb, p_u_416.th, 224, 126)
+	v_u_422.Open.Activated:Connect(function()
+		-- upvalues: (ref) v_u_10, (ref) v_u_9, (copy) p_u_420, (copy) p_u_419, (copy) p_u_417
+		v_u_10.click()
+		v_u_9.Reels.open(p_u_420.kind, {
+			["list"] = p_u_419,
+			["start"] = p_u_417,
+			["tag"] = p_u_420.tag,
+			["userId"] = p_u_420.userId,
+			["name"] = p_u_420.name
+		})
+	end)
+	if p_u_416.mine then
+		v_u_10.button(v_u_422.EditBtn, function()
+			-- upvalues: (copy) p_u_416, (ref) v_u_158
+			local v439 = p_u_416.id
+			local v440 = string.match
+			local v441 = tonumber(v440(v439 or "", "_(%d+)$"))
+			if v441 then
+				v_u_158(v441)
+			end
+		end)
+	end
+	v423.Author.Activated:Connect(function()
+		-- upvalues: (ref) v_u_10, (ref) v_u_415, (copy) p_u_416
+		v_u_10.click()
+		v_u_415(p_u_416.a)
+	end)
+	v_u_140({
+		v_u_422,
+		v_u_422.Open,
+		v423.Author,
+		v_u_422.EditBtn
+	}, function(p442)
+		-- upvalues: (ref) v_u_145, (copy) v_u_422, (copy) v_u_433, (copy) p_u_416
+		v_u_145(v_u_422, p442)
+		if v_u_433 and p_u_416.mine then
+			v_u_422.EditBtn.Visible = p442
+		end
+	end)
+	v_u_422.Hover.Scale = 0.6
+	task.delay(math.min(p_u_417, 16) * 0.03, function()
+		-- upvalues: (copy) v_u_422, (ref) v_u_10
+		if v_u_422.Parent and not v_u_422:GetAttribute("Hot") then
+			v_u_10.tween(v_u_422.Hover, 0.35, {
+				["Scale"] = 1
+			}, Enum.EasingStyle.Back, Enum.EasingDirection.Out, "hover")
+		end
+	end)
+	return v421
+end
+local function v_u_445() -- name: markTrending
+	-- upvalues: (copy) v_u_38, (ref) v_u_10, (ref) v_u_24, (ref) v_u_30
+	for _, v444 in ipairs(v_u_38) do
+		v_u_10.setColor(v444, v_u_24 == "tag" and v444:GetAttribute("Tag") == v_u_30 and v_u_10.ACCENT or v_u_10.BTN)
+	end
+end
+local v_u_446 = nil
+local v_u_447 = nil
+local function v_u_451() -- name: paintTrendRow
+	-- upvalues: (ref) v_u_24, (copy) v_u_38, (ref) v_u_10, (ref) v_u_14, (ref) v_u_44
+	local v448 = v_u_24 == "search"
+	for _, v449 in ipairs(v_u_38) do
+		v449.Visible = not v448
+	end
+	v_u_10.iconText(v_u_14.Trending.Label, v448 and "\240\159\145\164 Creator" or "\240\159\148\165 Trending")
+	local v450
+	if v448 then
+		v450 = v_u_44 ~= nil
+	else
+		v450 = #v_u_38 > 0
+	end
+	v_u_14.Trending.Visible = v450
+	v_u_14.GridMask.Position = UDim2.fromOffset(20, v450 and 96 or 56)
+	v_u_14.GridMask.Size = UDim2.new(1, -40, 1, v450 and -104 or -64)
+end
+local function v_u_455(p_u_452) -- name: showAuthorHit
+	-- upvalues: (ref) v_u_16, (ref) v_u_14, (ref) v_u_10, (ref) v_u_447, (ref) v_u_44, (copy) v_u_451
+	local v453 = v_u_16.TagChip:Clone()
+	local v454 = p_u_452.n
+	v453.Text = "@" .. tostring(v454)
+	v453.Count.Visible = false
+	v453.UIPadding.PaddingRight = UDim.new(0, 12)
+	v453.LayoutOrder = 0
+	v453.Visible = true
+	v453.Parent = v_u_14.Trending.ChipsMask.Chips
+	v_u_10.setColor(v453, v_u_10.ACCENT)
+	v_u_10.button(v453, function()
+		-- upvalues: (ref) v_u_447, (copy) p_u_452
+		v_u_447(p_u_452.a)
+	end)
+	v_u_44 = v453
+	v_u_451()
+end
+v_u_446 = function(p456, p457)
+	-- upvalues: (ref) v_u_24, (ref) v_u_30, (ref) v_u_14, (ref) v_u_44, (copy) v_u_451, (ref) v_u_25, (copy) v_u_54, (ref) v_u_10, (copy) v_u_445, (copy) v_u_19, (copy) v_u_455, (copy) v_u_443
+	v_u_24 = p456
+	v_u_30 = (p456 == "tag" or p456 == "search") and p457 and p457 or nil
+	if p456 ~= "search" and v_u_14.Search.Box.Text ~= "" then
+		v_u_14.Search.Box.Text = ""
+	end
+	if v_u_44 then
+		v_u_44:Destroy()
+		v_u_44 = nil
+	end
+	v_u_451()
+	v_u_25 = v_u_25 + 1
+	local v458 = v_u_25
+	for v459, v460 in pairs({
+		["foryou"] = v_u_14.Sub.ForYouTab,
+		["new"] = v_u_14.Sub.NewTab,
+		["popular"] = v_u_14.Sub.PopularTab
+	}) do
+		local v461 = v_u_54[v459]
+		v_u_10.setColor(v460, v459 == p456 and v461 and v461 or v461:Lerp(v_u_10.BTN, 0.55), v459 == p456)
+	end
+	v_u_445()
+	local v462 = v_u_19
+	for _, v463 in ipairs(v462) do
+		v463:Destroy()
+	end
+	table.clear(v462)
+	v_u_14.GridMask.Grid.CanvasPosition = Vector2.zero
+	v_u_14.Status.Text = "Loading..."
+	v_u_14.Status.Visible = true
+	local v464 = p456 == "search"
+	local v465, v466
+	if v464 then
+		v465, v466 = v_u_10.call("Search", v_u_30)
+	else
+		v465, v466 = v_u_10.call("Feed", p456, v_u_30)
+	end
+	if v_u_25 == v458 then
+		if v464 and type(v465) == "table" then
+			local v467 = v465.author
+			if type(v467) == "table" then
+				v_u_455(v465.author)
+			end
+			v465 = v465.posts
+		end
+		if type(v465) == "table" then
+			if #v465 == 0 then
+				v_u_14.Status.Text = v464 and "No cartoons found for \"" .. v_u_30 .. "\"" or (v_u_30 and "No cartoons with #" .. v_u_30 .. " yet" or "Nothing here yet. Publish a cartoon to be the first!")
+			else
+				v_u_14.Status.Visible = false
+				local v468 = {
+					["kind"] = p456
+				}
+				local v469
+				if v464 then
+					v469 = nil
+				else
+					v469 = v_u_30 or nil
+				end
+				v468.tag = v469
+				v468.name = v464 and v_u_30 or nil
+				for v470, v471 in ipairs(v465) do
+					local v472 = v_u_19
+					local v473 = v_u_443(v471, v470, v_u_14.GridMask.Grid, v465, v468)
+					table.insert(v472, v473)
+				end
+			end
+		else
+			v_u_14.Status.Text = v466 or "Gallery unavailable"
+			return
+		end
+	else
+		return
+	end
+end
+local function v_u_476() -- name: paintSocial
+	-- upvalues: (ref) v_u_15, (ref) v_u_43, (ref) v_u_9, (ref) v_u_10
+	local v474 = v_u_15.Top.Social
+	local v475 = v_u_43
+	if v475 then
+		v474.EditBtn.Visible = v475.id == v_u_9.player.UserId
+		v474.FollowersStat.Num.Text = v_u_10.short(v475.followers)
+		v474.FollowingStat.Num.Text = v_u_10.short(v475.following)
+		v474.FollowBtn.Visible = v475.id ~= v_u_9.player.UserId
+		v474.FollowBtn.Text = v475.isFollowing and "Following" or "Follow"
+		v474.FollowBtn.Icon.Img.Image = v475.isFollowing and "rbxassetid://91780977808401" or "rbxassetid://91970298053061"
+		v_u_10.setColor(v474.FollowBtn, v475.isFollowing and v_u_10.BTN or v_u_10.ACCENT)
+	else
+		v474.FollowersStat.Num.Text = "-"
+		v474.FollowingStat.Num.Text = "-"
+		v474.FollowBtn.Visible = false
+		v474.EditBtn.Visible = false
+	end
+end
+local function v_u_479() -- name: celebrateFollow
+	-- upvalues: (ref) v_u_15, (ref) v_u_10, (copy) v_u_51
+	local v477 = v_u_15.Top.Social
+	v_u_10.sfx("Sparkle")
+	v_u_10.burst(v477.FollowBtn, v_u_51, 14)
+	local v478 = v477.FollowersStat.Num.Pop
+	v478.Scale = 1.45
+	v_u_10.tween(v478, 0.35, {
+		["Scale"] = 1
+	}, Enum.EasingStyle.Back, Enum.EasingDirection.Out, "pop")
+end
+local function v_u_487() -- name: toggleFollow
+	-- upvalues: (ref) v_u_43, (ref) v_u_47, (ref) v_u_9, (copy) v_u_476, (copy) v_u_479, (ref) v_u_10
+	local v480 = v_u_43
+	if v480 and (not v_u_47 and v480.id ~= v_u_9.player.UserId) then
+		v_u_47 = true
+		local v481 = not v480.isFollowing
+		v480.isFollowing = v481
+		local v482 = v480.followers + (v481 and 1 or -1)
+		v480.followers = math.max(0, v482)
+		v_u_476()
+		if v481 then
+			v_u_479()
+		end
+		local v483, v484 = v_u_10.call("Follow", v480.id, v481)
+		v_u_47 = false
+		if v_u_43 == v480 then
+			if v483 then
+				v480.isFollowing = v483.following == true
+				local v485 = v483.followers
+				v480.followers = tonumber(v485) or v480.followers
+			else
+				v480.isFollowing = not v481
+				local v486 = v480.followers + (v481 and -1 or 1)
+				v480.followers = math.max(0, v486)
+				v_u_10.toast(v484, true)
+			end
+			v_u_476()
+		end
+	else
+		return
+	end
+end
+local function v_u_490() -- name: closeFollowList
+	-- upvalues: (ref) v_u_49, (ref) v_u_15, (copy) v_u_48
+	v_u_49 = v_u_49 + 1
+	v_u_15.FollowList.Visible = false
+	local v488 = v_u_48
+	for _, v489 in ipairs(v488) do
+		v489:Destroy()
+	end
+	table.clear(v488)
+end
+local function v_u_510() -- name: openFollowList
+	-- upvalues: (ref) v_u_43, (ref) v_u_15, (ref) v_u_49, (copy) v_u_48, (ref) v_u_10, (ref) v_u_415
+	local v491 = v_u_43
+	if v491 then
+		local v492 = v_u_15.FollowList
+		v_u_49 = v_u_49 + 1
+		local v493 = v_u_49
+		local v494 = v_u_48
+		for _, v495 in ipairs(v494) do
+			v495:Destroy()
+		end
+		table.clear(v494)
+		v492.Title.Text = "Following"
+		v492.Empty.Text = "Loading..."
+		v492.Empty.Visible = true
+		v492.List.CanvasPosition = Vector2.zero
+		v492.Visible = true
+		local v496, v497 = v_u_10.call("Following", v491.id)
+		if v493 == v_u_49 then
+			if v496 then
+				v492.Title.Text = "Following (" .. v_u_10.short(v496.total) .. ")"
+				v492.Empty.Text = "Not following anyone yet"
+				v492.Empty.Visible = #v496.list == 0
+				for v498, v_u_499 in ipairs(v496.list) do
+					local v500 = v492.Templates.Row:Clone()
+					v500.LayoutOrder = v498
+					local v501 = v500.Avatar
+					local v502 = v_u_499.a
+					v501.Image = "rbxthumb://type=AvatarHeadShot&id=" .. tostring(v502) .. "&w=48&h=48"
+					local v503 = v500.DisplayName
+					local v504 = v_u_499.dn
+					v503.Text = tostring(v504)
+					local v505 = v500.Username
+					local v506 = v_u_499.n
+					v505.Text = "@" .. tostring(v506)
+					v500.Visible = true
+					v500.Parent = v492.List
+					v_u_10.button(v500, function()
+						-- upvalues: (ref) v_u_49, (ref) v_u_15, (ref) v_u_48, (ref) v_u_415, (copy) v_u_499
+						v_u_49 = v_u_49 + 1
+						v_u_15.FollowList.Visible = false
+						local v507 = v_u_48
+						for _, v508 in ipairs(v507) do
+							v508:Destroy()
+						end
+						table.clear(v507)
+						v_u_415(v_u_499.a)
+					end)
+					local v509 = v_u_48
+					table.insert(v509, v500)
+				end
+			else
+				v492.Empty.Text = v497 or "Could not load"
+			end
+		else
+			return
+		end
+	else
+		return
+	end
+end
+local function v_u_526(p511, p512) -- name: fillShelf
+	-- upvalues: (ref) v_u_15, (copy) v_u_79, (copy) v_u_6, (ref) v_u_10, (copy) v_u_58, (copy) v_u_59, (copy) v_u_2
+	local v513 = v_u_15.Shelf
+	local v514 = v_u_79
+	for _, v515 in ipairs(v514) do
+		v515:Destroy()
+	end
+	table.clear(v514)
+	local v516 = {}
+	for _, v517 in ipairs(p511 or {}) do
+		v516[v517.id] = true
+	end
+	local v518 = 0
+	for v519, v_u_520 in ipairs(v_u_6.ACHIEVEMENTS) do
+		local v_u_521 = v516[v_u_520.Id] == true
+		if not (v_u_521 or p512) then
+			continue
+		end
+		local v522 = v513.Templates.Medal:Clone()
+		v522.LayoutOrder = (v_u_521 and 0 or 1000) + v519
+		v_u_10.setIcon(v522.Icon, v_u_521 and (v_u_520.Icon or "\240\159\148\146") or "\240\159\148\146")
+		v522.Icon.Dim.Enabled = not v_u_521
+		if v522.Icon:FindFirstChild("Img") then
+			v522.Icon.Img.ImageTransparency = v_u_521 and 0 or 0.45
+		end
+		v522.Ring.Color = v_u_521 and (v_u_6.ACH_TIERS[v_u_520.Tier] or v_u_58) or v_u_58
+		if not v_u_521 then
+			v522.BackgroundColor3 = v_u_59
+		end
+		v522.Visible = true
+		v522.Parent = v513.Row
+		v_u_10.button(v522, function()
+			-- upvalues: (ref) v_u_10, (copy) v_u_521, (copy) v_u_520
+			v_u_10.toast((v_u_521 and v_u_520.Icon or "\240\159\148\146") .. " " .. v_u_520.Name .. ": " .. v_u_520.Desc)
+		end)
+		if v_u_521 then
+			v518 = v518 + 1
+			v522.Icon.Rotation = -8
+			v_u_2:Create(v522.Icon, TweenInfo.new(1.4 + v519 % 3 * 0.25, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut, -1, true, v519 % 5 * 0.2), {
+				["Rotation"] = 8
+			}):Play()
+		end
+		local v523 = v_u_79
+		table.insert(v523, v522)
+	end
+	v_u_10.iconText(v513.Label, p512 and "\240\159\143\134 Trophies " .. v518 .. "/" .. #v_u_6.ACHIEVEMENTS or "\240\159\143\134 Trophies")
+	local v524 = v513.Empty
+	local v525
+	if p511 == nil then
+		v525 = false
+	else
+		v525 = #v_u_79 == 0
+	end
+	v524.Visible = v525
+end
+v_u_415 = function(p527)
+	-- upvalues: (ref) v_u_23, (ref) v_u_76, (ref) v_u_414, (ref) v_u_26, (copy) v_u_20, (ref) v_u_49, (ref) v_u_15, (copy) v_u_48, (ref) v_u_43, (copy) v_u_476, (ref) v_u_9, (copy) v_u_526, (ref) v_u_10, (ref) v_u_71, (ref) v_u_72, (copy) v_u_6, (ref) v_u_69, (ref) v_u_70, (copy) v_u_443
+	if type(p527) == "number" then
+		if v_u_23 == "author" and v_u_76 == p527 then
+			return
+		else
+			v_u_414("author")
+			v_u_76 = p527
+			v_u_26 = v_u_26 + 1
+			local v528 = v_u_26
+			local v529 = v_u_20
+			for _, v530 in ipairs(v529) do
+				v530:Destroy()
+			end
+			table.clear(v529)
+			v_u_49 = v_u_49 + 1
+			v_u_15.FollowList.Visible = false
+			local v531 = v_u_48
+			for _, v532 in ipairs(v531) do
+				v532:Destroy()
+			end
+			table.clear(v531)
+			v_u_43 = nil
+			v_u_476()
+			local v533 = v_u_15.Top.Bio
+			local v534 = v_u_43
+			local v535 = v534 and (v534.bio or "") or ""
+			if v535 == "" and (v534 and v534.id == v_u_9.player.UserId) then
+				v533.Text = "Add a bio with Edit Profile \226\156\143\239\184\143"
+				v533.TextTransparency = 0.45
+			else
+				v533.Text = v535
+				v533.TextTransparency = 0
+			end
+			v_u_526(nil, false)
+			local v536 = v_u_15.Top
+			v536.Avatar.Image = "rbxthumb://type=AvatarHeadShot&id=" .. p527 .. "&w=150&h=150"
+			v536.DisplayName.Text = "..."
+			v536.Username.Text = ""
+			v536.Count.Text = ""
+			v536.Avatar.LvBadge.Visible = false
+			v_u_9.Cosmetics.applyProfile(v536, nil)
+			v_u_9.Cosmetics.showScene(nil)
+			v_u_15.GridMask.Grid.CanvasPosition = Vector2.zero
+			v_u_15.Status.Text = "Loading..."
+			v_u_15.Status.Visible = true
+			local v537, v538 = v_u_10.call("Author", p527)
+			if v_u_26 == v528 then
+				if v537 then
+					local v539 = {
+						["id"] = p527
+					}
+					local v540 = v537.followers
+					v539.followers = tonumber(v540) or 0
+					local v541 = v537.following
+					v539.following = tonumber(v541) or 0
+					v539.isFollowing = v537.isFollowing == true
+					v_u_43 = v539
+					local v542 = v_u_43
+					local v543 = v537.bio
+					v542.bio = type(v543) == "string" and (v537.bio or "") or ""
+					v_u_476()
+					local v544 = v_u_15.Top.Bio
+					local v545 = v_u_43
+					local v546 = v545 and (v545.bio or "") or ""
+					if v546 == "" and (v545 and v545.id == v_u_9.player.UserId) then
+						v544.Text = "Add a bio with Edit Profile \226\156\143\239\184\143"
+						v544.TextTransparency = 0.45
+					else
+						v544.Text = v546
+						v544.TextTransparency = 0
+					end
+					local v547 = v_u_526
+					local v548 = v537.ach
+					v547(type(v548) == "table" and (v537.ach or {}) or {}, p527 == v_u_9.player.UserId)
+					local v549 = #v537.posts
+					v536.DisplayName.Text = v537.dn or (v537.name or "Player")
+					local v550 = v536.Username
+					local v551 = v537.name or "player"
+					v550.Text = "@" .. tostring(v551)
+					v536.Count.Text = v549 .. (v549 == 1 and " cartoon published" or " cartoons published")
+					local v552 = v537.xp
+					v_u_71 = tonumber(v552) or 0
+					local v553 = v537.lv
+					local v554 = tonumber(v553) or 1
+					local v555 = v_u_6.creatorLevel
+					local v556 = v_u_71
+					v_u_72 = math.max(v554, v555(v556))
+					local v557 = v_u_72
+					v536.Avatar.LvBadge.Text = "Lv " .. v557
+					v536.Avatar.LvBadge.BackgroundColor3 = v_u_6.levelColor(v557)
+					v536.Avatar.LvBadge.Visible = true
+					v_u_9.Cosmetics.applyProfile(v536, v537.cs)
+					local v558 = v_u_9.Cosmetics.showScene
+					local v559 = v537.cs
+					local v560
+					if type(v559) == "table" then
+						v560 = v537.cs.Background or nil
+					else
+						v560 = nil
+					end
+					v558(v560)
+					if p527 == v_u_9.player.UserId then
+						v_u_69 = v_u_71
+						v_u_70 = v_u_72
+						local v561 = v536.Count
+						v561.Text = v561.Text .. "  \194\183  " .. v_u_9.Levels.xpText(v_u_71, v_u_72)
+					end
+					if v549 == 0 then
+						v_u_15.Status.Text = "No cartoons published yet"
+					else
+						v_u_15.Status.Visible = false
+						for v562, v563 in ipairs(v537.posts) do
+							local v564 = v_u_20
+							local v565 = v_u_443(v563, v562, v_u_15.GridMask.Grid, v537.posts, {
+								["kind"] = "author",
+								["userId"] = nil,
+								["name"] = nil,
+								["userId"] = p527,
+								["name"] = v537.dn or v537.name
+							})
+							table.insert(v564, v565)
+						end
+					end
+				else
+					v_u_15.Status.Text = v538 or "Could not load this player"
+					v_u_76 = nil
+					return
+				end
+			else
+				return
+			end
+		end
+	else
+		return
+	end
+end
+local function v_u_569(p566) -- name: setTitle
+	-- upvalues: (copy) v_u_53, (ref) v_u_12, (ref) v_u_10
+	local v567 = v_u_53[p566] or "<font color=\"#FFD84A\">Make</font> <font color=\"#FF7AC0\">a</font> <font color=\"#6FD6FF\">Cartoon</font><font color=\"#B98CFF\">!</font>"
+	local v568 = v_u_12.Header.Logo
+	if v568.Face.Text ~= v567 then
+		v568.Face.Text = v567
+		v568.Text = string.gsub(v567, "color=\"#%x+\"", "color=\"#2E0E46\"")
+		v568.Pop.Scale = 0.75
+		v_u_10.tween(v568.Pop, 0.4, {
+			["Scale"] = 1
+		}, Enum.EasingStyle.Back, Enum.EasingDirection.Out, "pop")
+	end
+end
+v_u_414 = function(p570)
+	-- upvalues: (ref) v_u_23, (ref) v_u_13, (ref) v_u_14, (ref) v_u_15, (ref) v_u_12, (ref) v_u_10, (copy) v_u_52, (copy) v_u_569, (ref) v_u_26, (ref) v_u_76, (ref) v_u_42, (ref) v_u_49, (copy) v_u_48, (ref) v_u_9
+	v_u_23 = p570
+	v_u_13.Visible = p570 == "my"
+	v_u_14.Visible = p570 == "gallery"
+	v_u_15.Visible = p570 == "author"
+	local v571 = v_u_12.Header.Tabs
+	v_u_10.setColor(v571.MyBtn, p570 == "my" and v_u_10.ACCENT or v_u_52, true)
+	v_u_569(p570)
+	if p570 ~= "author" then
+		v_u_26 = v_u_26 + 1
+		v_u_76 = nil
+		v_u_42 = nil
+		v_u_49 = v_u_49 + 1
+		v_u_15.FollowList.Visible = false
+		local v572 = v_u_48
+		for _, v573 in ipairs(v572) do
+			v573:Destroy()
+		end
+		table.clear(v572)
+		v_u_9.Cosmetics.showScene(nil)
+	end
+end
+local function v_u_591(p_u_574) -- name: animateSpace
+	-- upvalues: (ref) v_u_10, (copy) v_u_2, (ref) v_u_12, (ref) v_u_9
+	v_u_10.twinkle(p_u_574)
+	local v575 = p_u_574:FindFirstChild("Nebula")
+	if v575 then
+		v_u_2:Create(v575, TweenInfo.new(40, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut, -1, true), {
+			["Rotation"] = 8
+		}):Play()
+	end
+	local v576 = p_u_574:FindFirstChild("Ring", true)
+	if v576 then
+		v_u_2:Create(v576, TweenInfo.new(6, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut, -1, true), {
+			["Rotation"] = -10
+		}):Play()
+	end
+	local v_u_577 = p_u_574:FindFirstChild("Comet")
+	if v_u_577 then
+		task.spawn(function()
+			-- upvalues: (copy) p_u_574, (ref) v_u_12, (ref) v_u_9, (copy) v_u_577, (ref) v_u_2
+			local v578 = Random.new()
+			while p_u_574.Parent do
+				task.wait(v578:NextNumber(4, 9))
+				local v579 = p_u_574.AbsoluteSize.X
+				local v580 = p_u_574.AbsoluteSize.Y
+				if not v_u_12.Visible or (not v_u_9.ui.Enabled or (v579 <= 10 or v580 <= 10)) then
+					continue
+				end
+				local v_u_581 = v_u_577:Clone()
+				local v582 = v578:NextNumber(18, 34)
+				local v583 = v578:NextNumber(0.3, 0.5) * v579
+				local v584 = v578:NextNumber(0.05, 0.65)
+				local v585 = v578:NextNumber(0.03, 0.35)
+				local v586 = math.rad(v582)
+				local v587 = v584 + math.cos(v586) * v583 / v579
+				local v588 = math.rad(v582)
+				local v589 = v585 + math.sin(v588) * v583 / v580
+				v_u_581.Rotation = v582
+				v_u_581.Position = UDim2.fromScale(v584, v585)
+				v_u_581.BackgroundTransparency = 1
+				v_u_581.Head.BackgroundTransparency = 1
+				v_u_581.Visible = true
+				v_u_581.Parent = p_u_574
+				v_u_2:Create(v_u_581, TweenInfo.new(1.3, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {
+					["Position"] = UDim2.fromScale(v587, v589)
+				}):Play()
+				v_u_2:Create(v_u_581, TweenInfo.new(0.25), {
+					["BackgroundTransparency"] = 0.05
+				}):Play()
+				v_u_2:Create(v_u_581.Head, TweenInfo.new(0.25), {
+					["BackgroundTransparency"] = 0
+				}):Play()
+				task.delay(0.75, function()
+					-- upvalues: (ref) v_u_2, (copy) v_u_581
+					local v590 = TweenInfo.new(0.55, Enum.EasingStyle.Quad, Enum.EasingDirection.In)
+					v_u_2:Create(v_u_581, v590, {
+						["BackgroundTransparency"] = 1
+					}):Play()
+					v_u_2:Create(v_u_581.Head, v590, {
+						["BackgroundTransparency"] = 1
+					}):Play()
+					task.delay(0.6, v_u_581.Destroy, v_u_581)
+				end)
+			end
+		end)
+	end
+end
+local function v_u_599(p592) -- name: animateNewCard
+	-- upvalues: (copy) v_u_2, (copy) v_u_140, (ref) v_u_10
+	local v_u_593 = p592.Body.Inner
+	local v594 = TweenInfo.new(4, Enum.EasingStyle.Linear, Enum.EasingDirection.In, -1)
+	v_u_2:Create(v_u_593.Rim.Rainbow, v594, {
+		["Rotation"] = 360
+	}):Play()
+	v_u_2:Create(v_u_593.Bg, TweenInfo.new(5, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut, -1, true), {
+		["Rotation"] = 80
+	}):Play()
+	local v595 = TweenInfo.new(0.9, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut, -1, true)
+	v_u_2:Create(v_u_593.Orb.Pulse, v595, {
+		["Scale"] = 1.08
+	}):Play()
+	v_u_2:Create(v_u_593.Halo.Pulse, v595, {
+		["Scale"] = 1.3
+	}):Play()
+	v_u_2:Create(v_u_593.Halo, v595, {
+		["BackgroundTransparency"] = 0.94
+	}):Play()
+	local v596 = Random.new()
+	for _, v597 in ipairs(v_u_593:GetChildren()) do
+		if not v597:GetAttribute("Spark") then
+			continue
+		end
+		v_u_2:Create(v597, TweenInfo.new(v596:NextNumber(0.7, 1.3), Enum.EasingStyle.Sine, Enum.EasingDirection.InOut, -1, true, v596:NextNumber(0, 1)), {
+			["TextTransparency"] = 0.85,
+			["Rotation"] = nil,
+			["Rotation"] = v596:NextInteger(-30, 30)
+		}):Play()
+	end
+	v_u_140({ p592 }, function(p598)
+		-- upvalues: (ref) v_u_10, (copy) v_u_593
+		v_u_10.tween(v_u_593.Hover, 0.25, {
+			["Scale"] = p598 and 1.04 or 1
+		}, Enum.EasingStyle.Back, Enum.EasingDirection.Out, "hover")
+	end)
+	p592.MouseButton1Down:Connect(function()
+		-- upvalues: (ref) v_u_10, (copy) v_u_593
+		v_u_10.tween(v_u_593.Hover, 0.07, {
+			["Scale"] = 0.95
+		}, nil, nil, "hover")
+	end)
+	p592.MouseButton1Up:Connect(function()
+		-- upvalues: (ref) v_u_10, (copy) v_u_593
+		v_u_10.tween(v_u_593.Hover, 0.3, {
+			["Scale"] = 1
+		}, Enum.EasingStyle.Back, Enum.EasingDirection.Out, "hover")
+	end)
+end
+local function v_u_601(p600) -- name: animateLogo
+	-- upvalues: (copy) v_u_2
+	p600.Rotation = -1.5
+	v_u_2:Create(p600, TweenInfo.new(2.4, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut, -1, true), {
+		["Rotation"] = 1.5
+	}):Play()
+	v_u_2:Create(p600.Face.UIGradient, TweenInfo.new(1.8, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut, -1, true), {
+		["Offset"] = Vector2.new(0, 0.15)
+	}):Play()
+end
+local function v_u_604(p602) -- name: plain
+	local v603 = string.gsub(p602, "<[^>]+>", "")
+	return string.gsub(string.gsub(string.gsub(v603, "&lt;", "<"), "&gt;", ">"), "&amp;", "&")
+end
+local function v_u_625(p605) -- name: noteText
+	-- upvalues: (ref) v_u_10, (copy) v_u_6, (copy) v_u_62, (ref) v_u_9
+	local v606 = p605.n
+	local v607 = tonumber(v606) or 1
+	local v608 = p605.an or "Someone"
+	local v609 = "<b>" .. string.gsub(string.gsub(string.gsub(tostring(v608 or ""), "&", "&amp;"), "<", "&lt;"), ">", "&gt;") .. "</b>"
+	local v610 = v607 > 1 and (" and " .. v607 - 1 .. (v607 == 2 and " other" or " others") or "") or ""
+	local v611 = p605.t or "your cartoon"
+	local v612 = "<b>" .. string.gsub(string.gsub(string.gsub(tostring(v611 or ""), "&", "&amp;"), "<", "&lt;"), ">", "&gt;") .. "</b>"
+	local v613 = p605.k
+	if v613 == "like" then
+		return v609 .. v610 .. " liked " .. v612
+	elseif v613 == "star" then
+		return v607 > 1 and v609 .. " and others gave " .. v607 .. " stars to " .. v612 or v609 .. " gave a star to " .. v612
+	elseif v613 == "comment" then
+		return v609 .. v610 .. " commented on " .. v612
+	elseif v613 == "reply" then
+		return v609 .. v610 .. " replied to your comment on " .. v612
+	elseif v613 == "follow" then
+		return v609 .. v610 .. " started following you"
+	elseif v613 == "remix" then
+		return v609 .. " remixed " .. v612
+	elseif v613 == "views" or (v613 == "likes" or v613 == "stars") then
+		return v612 .. " reached <b>" .. v_u_10.short(p605.v) .. " " .. v613 .. "</b>! \240\159\142\137"
+	elseif v613 == "followers" then
+		return "You reached <b>" .. v_u_10.short(p605.v) .. " followers</b>! \240\159\142\137"
+	elseif v613 == "ach" then
+		local v614 = v_u_6.ACH_BY_ID[p605.v]
+		local v615 = v614 and v614.Name or "?"
+		return "Trophy unlocked: <b>" .. string.gsub(string.gsub(string.gsub(tostring(v615 or ""), "&", "&amp;"), "<", "&lt;"), ">", "&gt;") .. "</b>! It\'s on your profile"
+	elseif v613 == "contest" then
+		local v616 = p605.s
+		local v617 = " <b>+" .. (tonumber(v616) or 0) .. " stars</b>"
+		local v618 = v_u_62
+		local v619 = p605.place
+		local v620 = v618[tonumber(v619) or 0]
+		if v620 then
+			return "Your cartoon took <b>" .. v620 .. " place</b> in the weekly contest! \240\159\142\137" .. v617
+		else
+			return "Contest results are in! Thanks for entering:" .. v617
+		end
+	else
+		if v613 ~= "level" then
+			return "Something new happened!"
+		end
+		local v621 = v_u_9.Levels.perksText
+		local v622 = p605.v
+		local v623 = v621(tonumber(v622) or 1)
+		local v624 = p605.v
+		return "You reached <b>Level " .. (tonumber(v624) or 1) .. "</b>! \240\159\142\137" .. (v623 == "" and "" or (" New: " .. string.gsub(string.gsub(string.gsub(tostring(v623 or ""), "&", "&amp;"), "<", "&lt;"), ">", "&gt;") or ""))
+	end
+end
+local function v_u_628() -- name: ringBell
+	-- upvalues: (ref) v_u_12, (ref) v_u_10
+	local v_u_626 = v_u_12.Header.Tabs.BellBtn
+	task.spawn(function()
+		-- upvalues: (ref) v_u_10, (copy) v_u_626
+		for _, v627 in ipairs({
+			18,
+			-16,
+			12,
+			-8,
+			4,
+			0
+		}) do
+			v_u_10.tween(v_u_626.Icon, 0.07, {
+				["Rotation"] = v627
+			}, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut, "ring")
+			task.wait(0.07)
+		end
+	end)
+	v_u_626.Badge.Pop.Scale = 1.5
+	v_u_10.tween(v_u_626.Badge.Pop, 0.35, {
+		["Scale"] = 1
+	}, Enum.EasingStyle.Back, Enum.EasingDirection.Out, "pop")
+end
+local function v_u_634() -- name: refreshBell
+	-- upvalues: (ref) v_u_10, (ref) v_u_80, (ref) v_u_12
+	local v629 = v_u_10.call("Inbox")
+	if type(v629) == "table" then
+		local v630 = v629.unread
+		v_u_80 = tonumber(v630) or 0
+		local v631 = v_u_12.Header.Tabs.BellBtn.Badge
+		v631.Visible = v_u_80 > 0
+		local v632
+		if v_u_80 > 9 then
+			v632 = "9+"
+		else
+			local v633 = v_u_80
+			v632 = tostring(v633)
+		end
+		v631.Text = v632
+	end
+end
+local function v_u_635() -- name: closeInbox
+	-- upvalues: (ref) v_u_77, (ref) v_u_74, (ref) v_u_73, (ref) v_u_10
+	v_u_77 = v_u_77 + 1
+	v_u_74.Visible = false
+	if v_u_73.Visible then
+		v_u_10.close(v_u_73)
+	end
+end
+v_u_447 = function(p636)
+	-- upvalues: (ref) v_u_23, (ref) v_u_76, (ref) v_u_42, (ref) v_u_415, (ref) v_u_414, (copy) v_u_19, (ref) v_u_446, (ref) v_u_24, (ref) v_u_30
+	if v_u_23 ~= "author" or v_u_76 ~= p636 then
+		local v_u_637 = v_u_23
+		local v_u_638 = v_u_76
+		v_u_42 = function()
+			-- upvalues: (copy) v_u_637, (copy) v_u_638, (ref) v_u_415, (ref) v_u_414, (ref) v_u_19, (ref) v_u_446, (ref) v_u_24, (ref) v_u_30
+			if v_u_637 == "author" and v_u_638 then
+				v_u_415(v_u_638)
+			else
+				v_u_414(v_u_637)
+				if v_u_637 == "gallery" and #v_u_19 == 0 then
+					v_u_446(v_u_24, v_u_30)
+				end
+			end
+		end
+		v_u_415(p636)
+	end
+end
+local function v_u_641(p639) -- name: openNote
+	-- upvalues: (ref) v_u_77, (ref) v_u_74, (ref) v_u_73, (ref) v_u_10, (ref) v_u_9, (copy) v_u_63, (ref) v_u_447
+	v_u_77 = v_u_77 + 1
+	v_u_74.Visible = false
+	if v_u_73.Visible then
+		v_u_10.close(v_u_73)
+	end
+	if p639.k == "contest" then
+		v_u_9.Contest.open()
+	else
+		if v_u_63[p639.k] then
+			local v640 = p639.a
+			if type(v640) == "number" then
+				v_u_447(p639.a)
+				return
+			end
+		end
+		v_u_447(v_u_9.player.UserId)
+	end
+end
+local function v_u_648() -- name: bioCount
+	-- upvalues: (ref) v_u_75, (copy) v_u_6
+	local v642 = v_u_75.BioBox
+	local v643 = v_u_6.MAX_BIO_LEN
+	local v644 = utf8.len(v642.Text)
+	if v644 and v643 < v644 then
+		local v645 = v642.Text
+		local v646 = utf8.offset(v642.Text, v643 + 1) - 1
+		v642.Text = string.sub(v645, 1, v646)
+	else
+		v643 = v644
+	end
+	local v647 = v643 or #v642.Text
+	v_u_75.BioCount.Text = v647 .. "/" .. v_u_6.MAX_BIO_LEN
+end
+local function v_u_649() -- name: closeEdit
+	-- upvalues: (ref) v_u_75, (ref) v_u_10
+	if v_u_75:GetAttribute("Open") then
+		v_u_75.BioBox:ReleaseFocus()
+		v_u_10.close(v_u_75)
+		v_u_10.dim(false)
+	end
+end
+local function v_u_657() -- name: openEdit
+	-- upvalues: (ref) v_u_43, (ref) v_u_9, (ref) v_u_75, (copy) v_u_6, (ref) v_u_10
+	local v650 = v_u_43
+	if v650 and (v650.id == v_u_9.player.UserId and not v_u_75:GetAttribute("Open")) then
+		v_u_75.BioBox.Text = v650.bio or ""
+		local v651 = v_u_75.BioBox
+		local v652 = v_u_6.MAX_BIO_LEN
+		local v653 = utf8.len(v651.Text)
+		if v653 and v652 < v653 then
+			local v654 = v651.Text
+			local v655 = utf8.offset(v651.Text, v652 + 1) - 1
+			v651.Text = string.sub(v654, 1, v655)
+		else
+			v652 = v653
+		end
+		local v656 = v652 or #v651.Text
+		v_u_75.BioCount.Text = v656 .. "/" .. v_u_6.MAX_BIO_LEN
+		v_u_9.Cosmetics.paintStyles()
+		v_u_10.dim(true)
+		v_u_10.open(v_u_75)
+	end
+end
+local function v_u_664() -- name: saveEdit
+	-- upvalues: (ref) v_u_43, (ref) v_u_10, (ref) v_u_75, (ref) v_u_15, (ref) v_u_9
+	local v658 = v_u_43
+	local v659, v660 = v_u_10.call("SetBio", v_u_75.BioBox.Text)
+	if v659 then
+		if v658 then
+			v658.bio = v659.bio
+		end
+		local v661 = v_u_15.Top.Bio
+		local v662 = v_u_43
+		local v663 = v662 and (v662.bio or "") or ""
+		if v663 == "" and (v662 and v662.id == v_u_9.player.UserId) then
+			v661.Text = "Add a bio with Edit Profile \226\156\143\239\184\143"
+			v661.TextTransparency = 0.45
+		else
+			v661.Text = v663
+			v661.TextTransparency = 0
+		end
+		if v_u_75:GetAttribute("Open") then
+			v_u_75.BioBox:ReleaseFocus()
+			v_u_10.close(v_u_75)
+			v_u_10.dim(false)
+		end
+		v_u_10.toast("Profile updated!")
+	else
+		v_u_10.toast(v660, true)
+	end
+end
+local function v_u_681(p665) -- name: fillInbox
+	-- upvalues: (copy) v_u_78, (ref) v_u_73, (copy) v_u_625, (ref) v_u_10, (copy) v_u_57, (copy) v_u_63, (copy) v_u_61, (copy) v_u_6, (copy) v_u_641
+	local v666 = v_u_78
+	for _, v667 in ipairs(v666) do
+		v667:Destroy()
+	end
+	table.clear(v666)
+	local v668 = p665.list
+	local v669 = type(v668) == "table" and (p665.list or {}) or {}
+	local v670 = p665.seen
+	local v671 = tonumber(v670) or 0
+	v_u_73.Empty.Text = "No notifications yet.\nPublish a cartoon to get some!"
+	v_u_73.Empty.Visible = #v669 == 0
+	for v672, v_u_673 in ipairs(v669) do
+		local v674 = v_u_73.Templates.Row:Clone()
+		v674.LayoutOrder = v672
+		v674.Msg.Text = v_u_625(v_u_673)
+		v674.When.Text = v_u_10.ago(v_u_673.at)
+		local v675 = v_u_673.at
+		local v676 = v671 < (tonumber(v675) or 0)
+		v674.Dot.Visible = v676
+		v_u_10.setColor(v674, v676 and v_u_57 or v_u_10.BTN)
+		local v677 = v_u_63[v_u_673.k]
+		if v677 then
+			local v678 = v_u_673.a
+			v677 = type(v678) == "number"
+		end
+		v674.Avatar.Visible = v677
+		v674.Kind.Visible = v677
+		v674.Big.Visible = not v677
+		if v677 then
+			v674.Avatar.Image = "rbxthumb://type=AvatarHeadShot&id=" .. v_u_673.a .. "&w=150&h=150"
+			v_u_10.setIcon(v674.Kind, v_u_61[v_u_673.k] or "\240\159\148\148")
+		else
+			local v679
+			if v_u_673.k == "ach" then
+				v679 = v_u_6.ACH_BY_ID[v_u_673.v]
+			else
+				v679 = false
+			end
+			v_u_10.setIcon(v674.Big, v679 and v679.Icon or (v_u_61[v_u_673.k] or "\240\159\148\148"))
+		end
+		v674.Visible = true
+		v674.Parent = v_u_73.List
+		v_u_10.button(v674, function()
+			-- upvalues: (ref) v_u_641, (copy) v_u_673
+			v_u_641(v_u_673)
+		end)
+		local v680 = v_u_78
+		table.insert(v680, v674)
+	end
+end
+local function v_u_691() -- name: openInbox
+	-- upvalues: (ref) v_u_73, (ref) v_u_77, (ref) v_u_74, (ref) v_u_10, (copy) v_u_78, (copy) v_u_681, (ref) v_u_80, (ref) v_u_12
+	if v_u_73:GetAttribute("Open") then
+		v_u_77 = v_u_77 + 1
+		v_u_74.Visible = false
+		if v_u_73.Visible then
+			v_u_10.close(v_u_73)
+		end
+		return
+	else
+		v_u_77 = v_u_77 + 1
+		local v682 = v_u_77
+		local v683 = v_u_78
+		for _, v684 in ipairs(v683) do
+			v684:Destroy()
+		end
+		table.clear(v683)
+		v_u_73.Empty.Text = "Loading..."
+		v_u_73.Empty.Visible = true
+		v_u_73.List.CanvasPosition = Vector2.zero
+		v_u_74.Visible = true
+		v_u_10.open(v_u_73)
+		local v685, v686 = v_u_10.call("Inbox")
+		if v682 == v_u_77 then
+			if v685 then
+				v_u_681(v685)
+				local v687 = v685.unread
+				if (tonumber(v687) or 0) > 0 or v_u_80 > 0 then
+					v_u_80 = 0
+					local v688 = v_u_12.Header.Tabs.BellBtn.Badge
+					v688.Visible = v_u_80 > 0
+					local v689
+					if v_u_80 > 9 then
+						v689 = "9+"
+					else
+						local v690 = v_u_80
+						v689 = tostring(v690)
+					end
+					v688.Text = v689
+					task.spawn(v_u_10.call, "InboxSeen")
+				end
+			else
+				v_u_73.Empty.Text = v686 or "Could not load"
+			end
+		else
+			return
+		end
+	end
+end
+local function v_u_701(p692) -- name: onNotify
+	-- upvalues: (ref) v_u_80, (ref) v_u_12, (copy) v_u_628, (copy) v_u_64, (copy) v_u_604, (copy) v_u_625, (ref) v_u_10
+	if type(p692) == "table" then
+		local v693 = p692.list
+		if type(v693) == "table" and #p692.list ~= 0 then
+			local v694 = p692.unread
+			v_u_80 = tonumber(v694) or v_u_80 + #p692.list
+			local v695 = v_u_12.Header.Tabs.BellBtn.Badge
+			v695.Visible = v_u_80 > 0
+			local v696
+			if v_u_80 > 9 then
+				v696 = "9+"
+			else
+				local v697 = v_u_80
+				v696 = tostring(v697)
+			end
+			v695.Text = v696
+			v_u_628()
+			local v698 = false
+			for _, v699 in ipairs(p692.list) do
+				if not v_u_64[v699.k] then
+					continue
+				end
+				v698 = true
+			end
+			local v700 = v_u_604((v_u_625(p692.list[1])))
+			if #p692.list > 1 then
+				v700 = v700 .. "  (+" .. #p692.list - 1 .. " more)"
+			end
+			v_u_10.toast("\240\159\148\148 " .. v700)
+			if v698 then
+				v_u_10.celebrate()
+			end
+			return
+		end
+	end
+end
+function v_u_8.page() -- name: page
+	-- upvalues: (ref) v_u_12, (ref) v_u_23
+	return v_u_12.Visible and v_u_23 or nil
+end
+function v_u_8.openTag(p702) -- name: openTag
+	-- upvalues: (ref) v_u_414, (copy) v_u_173, (copy) v_u_38, (ref) v_u_16, (ref) v_u_10, (ref) v_u_14, (ref) v_u_446, (copy) v_u_451, (copy) v_u_445
+	v_u_414("gallery")
+	task.spawn(function()
+		-- upvalues: (ref) v_u_173, (ref) v_u_38, (ref) v_u_16, (ref) v_u_10, (ref) v_u_14, (ref) v_u_446, (ref) v_u_451, (ref) v_u_445
+		local v703 = v_u_173()
+		local v704 = v_u_38
+		for _, v705 in ipairs(v704) do
+			v705:Destroy()
+		end
+		table.clear(v704)
+		for v706, v_u_707 in ipairs(v703) do
+			if v706 > 12 then
+				break
+			end
+			local v708 = v_u_16.TagChip:Clone()
+			v708.Text = "#" .. v_u_707.t
+			v708.Count.Text = v_u_10.short(v_u_707.n)
+			v708.LayoutOrder = v706
+			v708:SetAttribute("Tag", v_u_707.t)
+			v708.Visible = true
+			v708.Parent = v_u_14.Trending.ChipsMask.Chips
+			v_u_10.button(v708, function()
+				-- upvalues: (ref) v_u_446, (copy) v_u_707
+				v_u_446("tag", v_u_707.t)
+			end)
+			local v709 = v_u_38
+			table.insert(v709, v708)
+		end
+		v_u_451()
+		v_u_445()
+	end)
+	v_u_446("tag", p702)
+end
+local v_u_710 = nil
+function v_u_8.paintBanner(p711, p712) -- name: paintBanner
+	-- upvalues: (ref) v_u_710, (copy) v_u_7, (ref) v_u_9
+	local v713 = p711.Bg
+	v_u_710 = v_u_710 or v713.Color
+	local v714 = p711:FindFirstChild("BannerClip")
+	if not v714 then
+		v714 = Instance.new("CanvasGroup")
+		v714.Name = "BannerClip"
+		v714.BackgroundTransparency = 1
+		v714.Size = UDim2.fromScale(1, 1)
+		v714.ZIndex = 0
+		p711:FindFirstChildOfClass("UICorner"):Clone().Parent = v714
+		v714.Parent = p711
+	end
+	for _, v715 in ipairs(v714:GetChildren()) do
+		if not v715:IsA("GuiObject") then
+			continue
+		end
+		v715:Destroy()
+	end
+	local v716 = v_u_7.SKINS[p712.Crate]
+	if v716 then
+		local v717 = v716.Panel[1]
+		local v718 = v716.Panel[2]
+		v713.Color = ColorSequence.new({ ColorSequenceKeypoint.new(0, v717), ColorSequenceKeypoint.new(0.5, v717:Lerp(v718, 0.5)), ColorSequenceKeypoint.new(1, v718) })
+		local v719 = game:GetService("StarterGui").DrawUI.Root.Popups.Shop.Scroll.Crate.Header.DecoClip
+		for _, v720 in ipairs(v719:GetChildren()) do
+			if v720:GetAttribute("Skin") ~= p712.Crate then
+				continue
+			end
+			local v721 = v720:Clone()
+			local v722 = p711.Parent.Size
+			v721.AnchorPoint = Vector2.zero
+			v721.Position = UDim2.new()
+			v721.Size = UDim2.fromOffset(v722.X.Offset / 0.6, v722.Y.Offset / 0.6)
+			v721.Visible = true
+			local v723 = Instance.new("UIScale")
+			v723.Scale = 0.6
+			v723.Parent = v721
+			v721.Parent = v714
+			v_u_9.Shop.animateDeco(v721)
+			return
+		end
+	else
+		v713.Color = v_u_710
+	end
+end
+function v_u_8.setTheme(p724) -- name: setTheme
+	-- upvalues: (ref) v_u_36, (ref) v_u_9, (copy) v_u_6, (ref) v_u_14, (ref) v_u_13, (ref) v_u_10, (copy) v_u_8
+	v_u_36 = type(p724) == "table" and p724 and p724 or nil
+	if v_u_9.Shop and v_u_9.Shop.refreshCrates then
+		v_u_9.Shop.refreshCrates()
+	end
+	local v725 = v_u_36
+	if v725 then
+		v725 = v_u_6.THEME_BY_KEY[v_u_36.key]
+	end
+	for _, v726 in ipairs({ v_u_14.GridMask.Grid.ThemeCard, v_u_13.GridMask.Grid.ThemeCard }) do
+		v726.Visible = v725 ~= nil
+		if not v725 then
+			continue
+		end
+		local v727 = v726.Body.Inner
+		v727.Label.Text = v725.Name
+		v727.Sub.Text = v725.Prompt
+		v727.Orb.Icon.Image = "rbxassetid://" .. v725.Icon
+		local v728 = v727.Left
+		local v729 = v_u_36.ends - workspace:GetServerTimeNow()
+		local v730 = math.max(0, v729)
+		local v731 = v730 / 86400
+		local v732 = math.floor(v731)
+		local v733 = v730 % 86400 / 3600
+		local v734 = math.floor(v733)
+		local v735
+		if v732 > 0 then
+			v735 = v732 .. "d " .. v734 .. "h left"
+		else
+			local v736 = v730 % 3600 / 60
+			v735 = v734 .. "h " .. math.floor(v736) .. "m left"
+		end
+		v728.Text = v735
+		v_u_10.iconText(v727.Tag, "\240\159\143\134 WEEKLY CONTEST")
+		v_u_8.paintBanner(v727, v725)
+	end
+end
+local function v_u_748() -- name: watchTheme
+	-- upvalues: (ref) v_u_36, (ref) v_u_10, (copy) v_u_8, (ref) v_u_14, (ref) v_u_13
+	while true do
+		if v_u_36 and workspace:GetServerTimeNow() < v_u_36.ends then
+			for _, v737 in ipairs({ v_u_14.GridMask.Grid.ThemeCard, v_u_13.GridMask.Grid.ThemeCard }) do
+				local v738 = v737.Body.Inner.Left
+				local v739 = v_u_36.ends - workspace:GetServerTimeNow()
+				local v740 = math.max(0, v739)
+				local v741 = v740 / 86400
+				local v742 = math.floor(v741)
+				local v743 = v740 % 86400 / 3600
+				local v744 = math.floor(v743)
+				local v745
+				if v742 > 0 then
+					v745 = v742 .. "d " .. v744 .. "h left"
+				else
+					local v746 = v740 % 3600 / 60
+					v745 = v744 .. "h " .. math.floor(v746) .. "m left"
+				end
+				v738.Text = v745
+			end
+		else
+			local v747 = v_u_10.call("Theme")
+			if v747 then
+				v_u_8.setTheme(v747)
+			end
+		end
+		task.wait(30)
+	end
+end
+function v_u_8.theme() -- name: theme
+	-- upvalues: (ref) v_u_36
+	return v_u_36
+end
+function v_u_8.projects() -- name: projects
+	-- upvalues: (ref) v_u_21
+	return v_u_21
+end
+function v_u_8.level() -- name: level
+	-- upvalues: (ref) v_u_70
+	return v_u_70
+end
+function v_u_8.onCosmetics(p749) -- name: onCosmetics
+	-- upvalues: (ref) v_u_23, (ref) v_u_76, (ref) v_u_9, (ref) v_u_15
+	if v_u_23 == "author" and v_u_76 == v_u_9.player.UserId then
+		v_u_9.Cosmetics.applyProfile(v_u_15.Top, p749)
+		v_u_9.Cosmetics.showScene(p749.Background)
+	end
+end
+function v_u_8.closeEdit() -- name: closeEdit
+	-- upvalues: (ref) v_u_75, (ref) v_u_10
+	if v_u_75:GetAttribute("Open") then
+		v_u_75.BioBox:ReleaseFocus()
+		v_u_10.close(v_u_75)
+		v_u_10.dim(false)
+	end
+end
+function v_u_8.openGallery() -- name: openGallery
+	-- upvalues: (ref) v_u_414, (copy) v_u_173, (copy) v_u_38, (ref) v_u_16, (ref) v_u_10, (ref) v_u_14, (ref) v_u_446, (copy) v_u_451, (copy) v_u_445, (ref) v_u_24, (ref) v_u_30
+	v_u_414("gallery")
+	task.spawn(function()
+		-- upvalues: (ref) v_u_173, (ref) v_u_38, (ref) v_u_16, (ref) v_u_10, (ref) v_u_14, (ref) v_u_446, (ref) v_u_451, (ref) v_u_445
+		local v750 = v_u_173()
+		local v751 = v_u_38
+		for _, v752 in ipairs(v751) do
+			v752:Destroy()
+		end
+		table.clear(v751)
+		for v753, v_u_754 in ipairs(v750) do
+			if v753 > 12 then
+				break
+			end
+			local v755 = v_u_16.TagChip:Clone()
+			v755.Text = "#" .. v_u_754.t
+			v755.Count.Text = v_u_10.short(v_u_754.n)
+			v755.LayoutOrder = v753
+			v755:SetAttribute("Tag", v_u_754.t)
+			v755.Visible = true
+			v755.Parent = v_u_14.Trending.ChipsMask.Chips
+			v_u_10.button(v755, function()
+				-- upvalues: (ref) v_u_446, (copy) v_u_754
+				v_u_446("tag", v_u_754.t)
+			end)
+			local v756 = v_u_38
+			table.insert(v756, v755)
+		end
+		v_u_451()
+		v_u_445()
+	end)
+	v_u_446(v_u_24, v_u_30)
+end
+function v_u_8.openAuthor(p757, p758) -- name: openAuthor
+	-- upvalues: (ref) v_u_42, (ref) v_u_415
+	v_u_42 = p758
+	v_u_415(p757)
+end
+v_u_8.openProject = v_u_158
+function v_u_8.syncCard(p759) -- name: syncCards
+	-- upvalues: (copy) v_u_19, (copy) v_u_20, (copy) v_u_113
+	local v760 = { v_u_19, v_u_20 }
+	for _, v761 in ipairs(v760) do
+		for v762 = #v761, 1, -1 do
+			local v763 = v761[v762]
+			if v763:GetAttribute("PostId") ~= p759.id then
+				continue
+			end
+			if p759.removed then
+				v763:Destroy()
+				table.remove(v761, v762)
+			else
+				v_u_113(v763, p759.views, p759.likes, p759.dislikes, p759.comments, p759.stars)
+			end
+		end
+	end
+end
+function v_u_8.open(p764) -- name: open
+	-- upvalues: (ref) v_u_12, (ref) v_u_9, (ref) v_u_414, (copy) v_u_634, (copy) v_u_8, (copy) v_u_301, (ref) v_u_22
+	v_u_12.Visible = true
+	v_u_9.ui.Root.Editor.Visible = false
+	v_u_9.world.Enabled = false
+	v_u_9.handles.Enabled = false
+	v_u_414("my")
+	task.spawn(v_u_634)
+	local v765 = v_u_8.refresh()
+	v_u_9.Reels.warm()
+	if v765 and (type(p764) == "table" and (p764.pub and p764.changed)) then
+		for _, v_u_766 in ipairs(v765) do
+			if v_u_766.id ~= p764.pid or not v_u_766.pub then
+				continue
+			end
+			local function v_u_767()
+				-- upvalues: (ref) v_u_301, (copy) v_u_766
+				v_u_301(v_u_766)
+			end
+			task.defer(function()
+				-- upvalues: (ref) v_u_22, (copy) v_u_767
+				local v768
+				if v_u_22 then
+					v768 = false
+				else
+					v_u_22 = true
+					v768 = true
+				end
+				if v768 then
+					local v769 = v_u_767
+					local v770, v771 = pcall(v769)
+					v_u_22 = false
+					if not v770 then
+						warn(v771)
+					end
+				end
+			end)
+			return
+		end
+	end
+end
+function v_u_8.init(p772) -- name: init
+	-- upvalues: (ref) v_u_9, (ref) v_u_10, (ref) v_u_11, (ref) v_u_12, (ref) v_u_13, (ref) v_u_14, (ref) v_u_15, (ref) v_u_16, (ref) v_u_17, (ref) v_u_31, (ref) v_u_32, (ref) v_u_40, (ref) v_u_41, (copy) v_u_262, (copy) v_u_255, (copy) v_u_6, (copy) v_u_188, (ref) v_u_189, (copy) v_u_591, (ref) v_u_414, (copy) v_u_8, (copy) v_u_50, (copy) v_u_2, (copy) v_u_601, (copy) v_u_569, (ref) v_u_73, (ref) v_u_74, (copy) v_u_56, (copy) v_u_691, (copy) v_u_635, (ref) v_u_77, (ref) v_u_447, (ref) v_u_75, (copy) v_u_60, (copy) v_u_657, (copy) v_u_649, (copy) v_u_664, (ref) v_u_22, (copy) v_u_648, (ref) v_u_71, (ref) v_u_76, (ref) v_u_72, (copy) v_u_4, (copy) v_u_701, (copy) v_u_599, (ref) v_u_36, (copy) v_u_748, (copy) v_u_127, (ref) v_u_446, (copy) v_u_55, (ref) v_u_34, (copy) v_u_173, (copy) v_u_38, (copy) v_u_451, (copy) v_u_445, (ref) v_u_24, (ref) v_u_30, (ref) v_u_46, (ref) v_u_45, (copy) v_u_487, (copy) v_u_510, (copy) v_u_490, (ref) v_u_49, (copy) v_u_48, (ref) v_u_42, (copy) v_u_19, (copy) v_u_158
+	v_u_9 = p772
+	local v773 = p772.Util
+	local v774 = p772.Renderer
+	v_u_10 = v773
+	v_u_11 = v774
+	v_u_12 = v_u_9.ui.Root.Home
+	v_u_13 = v_u_12.MyPage
+	v_u_14 = v_u_12.GalleryPage
+	v_u_15 = v_u_12.AuthorPage
+	v_u_16 = v_u_12.Templates
+	v_u_17 = v_u_9.ui.Root.Popups.Publish
+	v_u_17.Visible = false
+	v_u_31 = v_u_9.ui.Root.Popups.ShareForm
+	v_u_31.Visible = false
+	v_u_14.Trending.Visible = false
+	local function v775() -- name: cancel
+		-- upvalues: (ref) v_u_32
+		if v_u_32 then
+			v_u_32(nil)
+		end
+	end
+	v_u_10.button(v_u_31.CloseBtn, v775)
+	v_u_10.button(v_u_31.CancelBtn, v775)
+	v_u_10.button(v_u_31.ShareBtn, function()
+		-- upvalues: (ref) v_u_32, (ref) v_u_31, (ref) v_u_10, (ref) v_u_40, (ref) v_u_41
+		if v_u_32 then
+			if string.gsub(v_u_31.TitleBox.Text, "^%s+", "") == "" then
+				v_u_10.toast("Give your cartoon a title first", true)
+			else
+				v_u_32({
+					["title"] = v_u_31.TitleBox.Text,
+					["desc"] = v_u_31.DescBox.Text,
+					["rx"] = v_u_40,
+					["nd"] = not v_u_41
+				})
+			end
+		else
+			return
+		end
+	end)
+	v_u_31.RemixRow.Activated:Connect(function()
+		-- upvalues: (ref) v_u_32, (ref) v_u_40, (ref) v_u_262, (ref) v_u_31
+		if v_u_32 then
+			local v776 = not v_u_40
+			v_u_40 = v776
+			v_u_262(v_u_31.RemixRow.Switch, v776, nil)
+		end
+	end)
+	v_u_31.DuetRow.Activated:Connect(function()
+		-- upvalues: (ref) v_u_32, (ref) v_u_41, (ref) v_u_262, (ref) v_u_31
+		if v_u_32 then
+			local v777 = not v_u_41
+			v_u_41 = v777
+			v_u_262(v_u_31.DuetRow.Switch, v777, nil)
+		end
+	end)
+	v_u_31.TitleBox:GetPropertyChangedSignal("Text"):Connect(v_u_255)
+	v_u_31.DescBox:GetPropertyChangedSignal("Text"):Connect(function()
+		-- upvalues: (ref) v_u_31, (ref) v_u_6, (ref) v_u_188, (ref) v_u_189
+		local v778 = v_u_31.TitleBox
+		local v779 = v_u_6.MAX_TITLE_LEN
+		local v780 = utf8.len(v778.Text)
+		if v780 and v779 < v780 then
+			local v781 = v778.Text
+			local v782 = utf8.offset(v778.Text, v779 + 1) - 1
+			v778.Text = string.sub(v781, 1, v782)
+		else
+			v779 = v780
+		end
+		local v783 = v779 or #v778.Text
+		local v784 = v_u_31.DescBox
+		local v785 = v_u_6.MAX_DESC_LEN
+		local v786 = utf8.len(v784.Text)
+		if v786 and v785 < v786 then
+			local v787 = v784.Text
+			local v788 = utf8.offset(v784.Text, v785 + 1) - 1
+			v784.Text = string.sub(v787, 1, v788)
+		else
+			v785 = v786
+		end
+		local v789 = v785 or #v784.Text
+		v_u_31.TitleCount.Text = v783 .. "/" .. v_u_6.MAX_TITLE_LEN
+		v_u_31.DescCount.Text = v789 .. "/" .. v_u_6.MAX_DESC_LEN
+		v_u_188()
+		v_u_189()
+	end)
+	v_u_31.DescBox:GetPropertyChangedSignal("CursorPosition"):Connect(function()
+		-- upvalues: (ref) v_u_31, (ref) v_u_188, (ref) v_u_189
+		if v_u_31.Visible then
+			v_u_188()
+			v_u_189()
+		end
+	end)
+	if v_u_12:FindFirstChild("Space") then
+		v_u_591(v_u_12.Space)
+	end
+	v_u_10.button(v_u_12.Header.Tabs.VipBtn, function()
+		-- upvalues: (ref) v_u_9
+		v_u_9.Shop.open("Vip")
+	end)
+	v_u_10.button(v_u_12.Header.Tabs.StarsBtn, v_u_9.Shop.openStars)
+	v_u_10.button(v_u_12.Header.Tabs.MyBtn, function()
+		-- upvalues: (ref) v_u_414, (ref) v_u_8
+		v_u_414("my")
+		v_u_8.refresh()
+	end)
+	local v790 = v_u_12.Header.Tabs.GalleryBtn
+	v_u_10.button(v790, function()
+		-- upvalues: (ref) v_u_9
+		v_u_9.Reels.open("foryou")
+	end)
+	v_u_10.setColor(v790, v_u_50, true)
+	local v792 = {
+		["pulse"] = false,
+		["when"] = nil,
+		["when"] = function() -- name: when
+			-- upvalues: (ref) v_u_12, (ref) v_u_9
+			local v791 = v_u_12.Visible
+			if v791 then
+				v791 = v_u_9.ui.Enabled
+			end
+			return v791
+		end
+	}
+	v_u_10.attention(v790, v792)
+	v_u_10.animateIcon(v790.Icon)
+	local v793 = v790:FindFirstChild("WatchTag")
+	if v793 then
+		v_u_2:Create(v793, TweenInfo.new(1.6, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut, -1, true), {
+			["Position"] = nil,
+			["Rotation"] = 4,
+			["Position"] = v793.Position + UDim2.fromOffset(0, -2)
+		}):Play()
+	end
+	v_u_601(v_u_12.Header.Logo)
+	v_u_569("my")
+	v_u_73 = v_u_9.ui.Root.Popups.Inbox
+	v_u_74 = v_u_9.ui.Root.Popups.InboxCatch
+	v_u_73.Visible = false
+	v_u_74.Visible = false
+	local v794 = v_u_12.Header.Tabs.BellBtn
+	v_u_10.setColor(v794, v_u_56, true)
+	v_u_10.button(v794, v_u_691)
+	v_u_10.button(v_u_73.CloseBtn, v_u_635)
+	v_u_74.Activated:Connect(v_u_635)
+	local v795 = v_u_12.Header.ProfileBtn
+	v_u_2:Create(v795.Ring.Rainbow, TweenInfo.new(4, Enum.EasingStyle.Linear, Enum.EasingDirection.In, -1), {
+		["Rotation"] = 405
+	}):Play()
+	v795.Image = "rbxthumb://type=AvatarHeadShot&id=" .. v_u_9.player.UserId .. "&w=150&h=150"
+	v_u_10.button(v795, function()
+		-- upvalues: (ref) v_u_77, (ref) v_u_74, (ref) v_u_73, (ref) v_u_10, (ref) v_u_447, (ref) v_u_9
+		v_u_77 = v_u_77 + 1
+		v_u_74.Visible = false
+		if v_u_73.Visible then
+			v_u_10.close(v_u_73)
+		end
+		v_u_447(v_u_9.player.UserId)
+	end)
+	v_u_75 = v_u_9.ui.Root.Popups.ProfileEdit
+	v_u_75.Visible = false
+	v_u_10.setColor(v_u_15.Top.Social.EditBtn, v_u_60, true)
+	v_u_10.button(v_u_15.Top.Social.EditBtn, v_u_657)
+	v_u_10.button(v_u_75.CloseBtn, v_u_649)
+	v_u_10.setColor(v_u_75.SaveBtn, v_u_10.GREEN, true)
+	local v_u_796 = v_u_664
+	v_u_10.button(v_u_75.SaveBtn, function()
+		-- upvalues: (ref) v_u_22, (copy) v_u_796
+		local v797
+		if v_u_22 then
+			v797 = false
+		else
+			v_u_22 = true
+			v797 = true
+		end
+		if v797 then
+			local v798 = v_u_796
+			local v799, v800 = pcall(v798)
+			v_u_22 = false
+			if not v799 then
+				warn(v800)
+			end
+		end
+	end)
+	v_u_75.BioBox:GetPropertyChangedSignal("Text"):Connect(v_u_648)
+	for _, v_u_801 in ipairs(v_u_75.Styles:GetChildren()) do
+		if not v_u_801:IsA("GuiButton") then
+			continue
+		end
+		v_u_10.button(v_u_801, function()
+			-- upvalues: (ref) v_u_9, (copy) v_u_801
+			v_u_9.Cosmetics.open(v_u_801:GetAttribute("Slot"))
+		end)
+	end
+	v_u_10.setColor(v_u_15.Top.BackBtn, v_u_10.ACCENT, true)
+	v_u_10.button(v_u_15.Top.Avatar.LvBadge, function()
+		-- upvalues: (ref) v_u_9, (ref) v_u_71, (ref) v_u_76, (ref) v_u_72
+		v_u_9.Levels.open(v_u_71, v_u_76 == v_u_9.player.UserId, v_u_72)
+	end)
+	v_u_4:WaitForChild("DrawRemotes"):WaitForChild("Notify").OnClientEvent:Connect(v_u_701)
+	v_u_599(v_u_13.GridMask.Grid.NewCard)
+	for _, v802 in ipairs({ v_u_14.GridMask.Grid.ThemeCard, v_u_13.GridMask.Grid.ThemeCard }) do
+		v_u_599(v802)
+		v_u_10.button(v802, function()
+			-- upvalues: (ref) v_u_36, (ref) v_u_6, (ref) v_u_9
+			if v_u_36 and v_u_6.THEME_BY_KEY[v_u_36.key] then
+				v_u_9.Contest.open()
+			end
+		end)
+	end
+	task.spawn(v_u_748)
+	for _, v_u_803 in ipairs({ v_u_13.GridMask.Grid, v_u_14.GridMask.Grid, v_u_15.GridMask.Grid }) do
+		v_u_803:GetPropertyChangedSignal("AbsoluteWindowSize"):Connect(function()
+			-- upvalues: (ref) v_u_127, (copy) v_u_803
+			v_u_127(v_u_803)
+		end)
+		task.defer(v_u_127, v_u_803)
+	end
+	v_u_10.button(v_u_14.Sub.ForYouTab, function()
+		-- upvalues: (ref) v_u_446
+		v_u_446("foryou")
+	end)
+	v_u_10.button(v_u_14.Sub.NewTab, function()
+		-- upvalues: (ref) v_u_446
+		v_u_446("new")
+	end)
+	v_u_10.button(v_u_14.Sub.PopularTab, function()
+		-- upvalues: (ref) v_u_446
+		v_u_446("popular")
+	end)
+	v_u_10.setColor(v_u_14.RefreshBtn, v_u_55, true)
+	v_u_10.button(v_u_14.RefreshBtn, function()
+		-- upvalues: (ref) v_u_14, (ref) v_u_10, (ref) v_u_34, (ref) v_u_173, (ref) v_u_38, (ref) v_u_16, (ref) v_u_446, (ref) v_u_451, (ref) v_u_445, (ref) v_u_24, (ref) v_u_30
+		local v804 = v_u_14.RefreshBtn.Icon
+		v804.Rotation = 0
+		v_u_10.tween(v804, 0.5, {
+			["Rotation"] = 360
+		}, Enum.EasingStyle.Back, Enum.EasingDirection.Out, "spin")
+		v_u_34 = -1000000000
+		task.spawn(function()
+			-- upvalues: (ref) v_u_173, (ref) v_u_38, (ref) v_u_16, (ref) v_u_10, (ref) v_u_14, (ref) v_u_446, (ref) v_u_451, (ref) v_u_445
+			local v805 = v_u_173()
+			local v806 = v_u_38
+			for _, v807 in ipairs(v806) do
+				v807:Destroy()
+			end
+			table.clear(v806)
+			for v808, v_u_809 in ipairs(v805) do
+				if v808 > 12 then
+					break
+				end
+				local v810 = v_u_16.TagChip:Clone()
+				v810.Text = "#" .. v_u_809.t
+				v810.Count.Text = v_u_10.short(v_u_809.n)
+				v810.LayoutOrder = v808
+				v810:SetAttribute("Tag", v_u_809.t)
+				v810.Visible = true
+				v810.Parent = v_u_14.Trending.ChipsMask.Chips
+				v_u_10.button(v810, function()
+					-- upvalues: (ref) v_u_446, (copy) v_u_809
+					v_u_446("tag", v_u_809.t)
+				end)
+				local v811 = v_u_38
+				table.insert(v811, v810)
+			end
+			v_u_451()
+			v_u_445()
+		end)
+		v_u_446(v_u_24, v_u_30)
+	end)
+	local v_u_812 = v_u_14.Search
+	local function v_u_820() -- name: layoutSearch
+		-- upvalues: (ref) v_u_14, (ref) v_u_46, (copy) v_u_812
+		local v813 = v_u_14.RefreshBtn.AbsoluteSize.X / 40
+		if v813 > 0 then
+			local v814 = v_u_14.AbsoluteSize.X / v813
+			local v815 = v814 - 102 - v_u_14.Sub.UIListLayout.AbsoluteContentSize.X / v813
+			local v816 = v_u_46 or (v_u_812.Box:IsFocused() or v_u_812.Box.Text ~= "")
+			local v817
+			if v815 >= 150 then
+				v817 = math.min(v815, 260)
+			else
+				v817 = not v816 and 40 or v814 - 90
+			end
+			v_u_812.Size = UDim2.fromOffset(v817, 40)
+			v_u_812.Box.Visible = v817 > 40
+			local v818 = v_u_812.ClearBtn
+			local v819
+			if v817 > 40 then
+				v819 = v_u_812.Box.Text ~= ""
+			else
+				v819 = false
+			end
+			v818.Visible = v819
+		end
+	end
+	v_u_812.Box:GetPropertyChangedSignal("Text"):Connect(function()
+		-- upvalues: (copy) v_u_812, (copy) v_u_820, (ref) v_u_45, (ref) v_u_24, (ref) v_u_446, (ref) v_u_30
+		local v821 = v_u_812.Box.Text
+		local v822 = utf8.len(v821)
+		if v822 and v822 > 30 then
+			local v823 = v_u_812.Box
+			local v824 = utf8.offset(v821, 31) - 1
+			v823.Text = string.sub(v821, 1, v824)
+			return
+		else
+			v_u_820()
+			v_u_45 = v_u_45 + 1
+			local v_u_825 = v_u_45
+			local v_u_826 = string.match(v_u_812.Box.Text, "^%s*(.-)%s*$") or ""
+			if v_u_826 == "" then
+				if v_u_24 == "search" then
+					v_u_446("foryou")
+				end
+				return
+			elseif (utf8.len(v_u_826) or #v_u_826) >= 2 then
+				task.delay(0.8, function()
+					-- upvalues: (ref) v_u_45, (copy) v_u_825, (ref) v_u_24, (ref) v_u_30, (copy) v_u_826, (ref) v_u_446
+					if v_u_45 == v_u_825 and (v_u_24 ~= "search" or v_u_30 ~= v_u_826) then
+						v_u_446("search", v_u_826)
+					end
+				end)
+			end
+		end
+	end)
+	v_u_812.Box.Focused:Connect(v_u_820)
+	v_u_812.Box.FocusLost:Connect(function(p827)
+		-- upvalues: (ref) v_u_46, (copy) v_u_820, (copy) v_u_812, (ref) v_u_24, (ref) v_u_30, (ref) v_u_45, (ref) v_u_446
+		v_u_46 = false
+		v_u_820()
+		local v828 = string.match(v_u_812.Box.Text, "^%s*(.-)%s*$") or ""
+		if p827 and ((utf8.len(v828) or #v828) >= 2 and (v_u_24 ~= "search" or v_u_30 ~= v828)) then
+			v_u_45 = v_u_45 + 1
+			v_u_446("search", v828)
+		end
+	end)
+	v_u_10.button(v_u_812.Icon, function()
+		-- upvalues: (ref) v_u_46, (copy) v_u_820, (copy) v_u_812
+		v_u_46 = true
+		v_u_820()
+		v_u_812.Box:CaptureFocus()
+	end)
+	v_u_10.button(v_u_812.ClearBtn, function()
+		-- upvalues: (copy) v_u_812
+		v_u_812.Box.Text = ""
+	end)
+	v_u_14:GetPropertyChangedSignal("AbsoluteSize"):Connect(v_u_820)
+	v_u_14.Sub.UIListLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(v_u_820)
+	task.defer(v_u_820)
+	v_u_10.button(v_u_15.Top.Social.FollowBtn, v_u_487)
+	v_u_10.button(v_u_15.Top.Social.FollowingStat, v_u_510)
+	v_u_10.button(v_u_15.FollowList.CloseBtn, v_u_490)
+	v_u_10.button(v_u_15.Top.BackBtn, function()
+		-- upvalues: (ref) v_u_15, (ref) v_u_49, (ref) v_u_48, (ref) v_u_42, (ref) v_u_414, (ref) v_u_19, (ref) v_u_446, (ref) v_u_24, (ref) v_u_30
+		if v_u_15.FollowList.Visible then
+			v_u_49 = v_u_49 + 1
+			v_u_15.FollowList.Visible = false
+			local v829 = v_u_48
+			for _, v830 in ipairs(v829) do
+				v830:Destroy()
+			end
+			table.clear(v829)
+			return
+		elseif v_u_42 then
+			local v831 = v_u_42
+			v_u_42 = nil
+			v831()
+		else
+			v_u_414("gallery")
+			if #v_u_19 == 0 then
+				v_u_446(v_u_24, v_u_30)
+			end
+		end
+	end)
+	local function v_u_834()
+		-- upvalues: (ref) v_u_10, (ref) v_u_22, (ref) v_u_158
+		v_u_10.busy(true, "Creating...")
+		local v832, v833 = v_u_10.call("Create")
+		v_u_10.busy(false)
+		if v832 then
+			v_u_22 = false
+			v_u_158(v832.id)
+		else
+			v_u_10.toast(v833, true)
+		end
+	end
+	v_u_10.button(v_u_13.GridMask.Grid.NewCard, function()
+		-- upvalues: (ref) v_u_22, (copy) v_u_834
+		local v835
+		if v_u_22 then
+			v835 = false
+		else
+			v_u_22 = true
+			v835 = true
+		end
+		if v835 then
+			local v836 = v_u_834
+			local v837, v838 = pcall(v836)
+			v_u_22 = false
+			if not v837 then
+				warn(v838)
+			end
+		end
+	end)
+end
+return v_u_8
+
+===== REMOTES =====
