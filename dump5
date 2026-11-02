@@ -1,0 +1,1214 @@
+keys: packSync, validId, k"] =, Kind"]
+scripts scanned: 90
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.Renderer =====
+   ...
+421: 		["es"] = 1.3
+422: 	},
+423: 	{
+424: 		["brow"] = "BrowSad",
+425: 		["mouth"] = "Wavy",
+426: 		["es"] = 1.25
+427: 	},
+428: 	{
+429: 		["eye"] = "Lid",
+430: 		["mouth"] = "O"
+431: 	},
+432: 	{
+433: 		["wink"] = true,
+434: 		["mouth"] = "Smile"
+435: 	},
+436: 	{
+437: 		["eye"] = "Heart",
+438: 		["mouth"] = "Smile"
+439: 	},
+440: 	{
+441: 		["eye"] = "Cross",
+442: 		["mouth"] = "Wavy"
+443: 	},
+444: 	{
+445: 		["eye"] = "Lid",
+446: 		["brow"] = "BrowSad",
+447: 		["mouth"] = "Frown",
+448: 		["tear"] = true
+449: 	},
+450: 	{
+451: 		["brow"] = "BrowAngry",
+452: 		["mouth"] = "Smile",
+453: 		["eh"] = 0.4
+454: 	},
+455: 	{
+456: 		["talk"] = true
+457: 	},
+458: 	{
+459: 		["brow"] = "BrowAngry",
+460: 		["mouth"] = "Big"
+461: 	},
+462: 	{
+463: 		["eye"] = "Lid"
+464: 	},
+465: 	{
+466: 		["shades"] = true,
+467: 		["mouth"] = "Flat"
+468: 	}
+   ...
+1323: 			v532:Destroy()
+1324: 		end
+1325: 	end
+1326: 	return v531
+1327: end
+1328: local v_u_534 = {
+1329: 	["drift"] = { 20, v_u_5.WORLD_W },
+1330: 	["bob"] = { 0.5, 6 },
+1331: 	["sway"] = { 0.5, 8 },
+1332: 	["spin"] = { 0.25, 0 },
+1333: 	["pulse"] = { 1, 0.08 },
+1334: 	["twinkle"] = { 0.7, 0.7 },
+1335: 	["blink"] = { 1, 0.5 },
+1336: 	["look"] = { 0.3, 5 }
+1337: }
+1338: local v_u_535 = { "BackgroundTransparency", "ImageTransparency", "TextTransparency" }
+1339: local v_u_536 = {
+1340: 	["drift"] = true,
+1341: 	["bob"] = true,
+1342: 	["sway"] = true,
+1343: 	["look"] = true
+1344: }
+1345: local v_u_537 = {}
+1346: local v_u_538 = 0
+1347: local v_u_539 = nil
+1348: local v_u_540 = setmetatable({}, {
+1349: 	["__mode"] = "k"
+1350: })
+1351: local function v_u_543(p541, p542) -- name: readProp
+1352: 	return p541[p542]
+1353: end
+1354: local function v_u_559(p544, p545) -- name: readAnims
+1355: 	-- upvalues: (copy) v_u_534, (copy) v_u_536, (copy) v_u_535, (copy) v_u_543
+   ...
+2259: 		v818.root:Destroy()
+2260: 	end
+2261: 	table.clear(p817.handles)
+2262: 	if p817.bgInst then
+2263: 		p817.bgInst:Destroy()
+2264: 		p817.bgInst = nil
+2265: 	end
+2266: 	p817.bgId = nil
+2267: end
+2268: function v_u_12.preview(p819, p820, p821, p822) -- name: preview
+2269: 	-- upvalues: (copy) v_u_12
+2270: 	local v823 = v_u_12.build({
+2271: 		["k"] = p820
+2272: 	})
+2273: 	if v823 then
+2274: 		local v824 = {
+2275: 			0,
+2276: 			0,
+2277: 			0,
+2278: 			1,
+2279: 			0,
+2280: 			0
+2281: 		}
+2282: 		v_u_12.apply(v823, v824)
+2283: 		if v823.particles then
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.Project =====
+   ...
+687: 		if p232[7] then
+688: 			v255 = p232[7][v254] or v255
+689: 		end
+690: 		local v257 = v246[7]
+691: 		local v258 = v_u_6.norm(v_u_6.lerpAngle(v256, v255, p233)) * 10 + 0.5
+692: 		v257[v254] = math.floor(v258) / 10
+693: 	end
+694: 	local v259 = p231[8] or 0
+695: 	if v259 > 0 and v_u_5.fxKind(v259) == "loop" then
+696: 		v246[8] = v259
+697: 	end
+698: 	local v260 = {
+699: 		["k"] = 0,
+700: 		["e"] = 1
+701: 	}
+702: 	if v235 then
+703: 		v260.f = v235.f
+704: 		local v261 = v235.t
+705: 		if v261 then
+706: 			v261 = table.clone(v235.t)
+707: 		end
+708: 		v260.t = v261
+709: 		local v262 = v235.a
+710: 		local v263
+711: 		if v236 then
+   ...
+1558: 		p575.frames[p575.order[v577]].g = p576
+1559: 	end
+1560: 	p575:commit()
+1561: end
+1562: function v_u_7.setMusic(p578, p579) -- name: setMusic
+1563: 	p578:begin({})
+1564: 	p578.music = p579
+1565: 	p578:commit()
+1566: end
+1567: function v_u_7.needsSync(p580) -- name: needsSync
+1568: 	return p580.structDirty or p580.objsDirty or next(p580.dirty) ~= nil
+1569: end
+1570: function v_u_7.packSync(p581) -- name: packSync
+1571: 	local v582 = {}
+1572: 	for _, v583 in ipairs(p581.order) do
+1573: 		v582[v583] = true
+1574: 	end
+1575: 	local v584 = p581.dirty
+1576: 	local v585
+1577: 	if p581.objsDirty then
+1578: 		v585 = p581.objs or nil
+1579: 	else
+1580: 		v585 = nil
+1581: 	end
+1582: 	p581.dirty = {}
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.Playback =====
+   ...
+132: 		end
+133: 	else
+134: 		v96 = v88
+135: 		v95 = v87
+136: 	end
+137: 	local v100 = v_u_34.w / (v_u_4.WORLD_W / v93)
+138: 	local v101, v102 = v_u_5.rot(v95 * v100, v96 * v100, -v94)
+139: 	return v_u_34.w / 2 - v101, v_u_34.h / 2 - v102, v100, -v94, v87, v88
+140: end
+141: local v_u_104 = {
+142: 	["a"] = nil,
+143: 	["b"] = nil,
+144: 	["k"] = 0,
+145: 	["fr"] = nil,
+146: 	["ft"] = 0,
+147: 	["time"] = 0,
+148: 	["dx"] = 0
+149: }
+150: local v_u_115 = {
+151: 	["cam"] = function(p105) -- name: camFn
+152: 		-- upvalues: (copy) v_u_104, (copy) v_u_103
+153: 		local v106 = v_u_104.a
+154: 		local v107, v108
+155: 		if v106.cf then
+156: 			v107, v108 = p105:followCenter(v106, v106.cf)
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.Editor =====
+   ...
+1109: 		task.wait(0.1)
+1110: 	end
+1111: 	if not (v_u_32 and v_u_32:needsSync()) then
+1112: 		return true
+1113: 	end
+1114: 	v_u_52 = true
+1115: 	local v425 = v_u_32
+1116: 	local v426 = {}
+1117: 	for v427 in pairs(v425.dirty) do
+1118: 		table.insert(v426, v427)
+1119: 	end
+1120: 	v_u_384(v426)
+1121: 	local v428, v429 = v425:packSync()
+1122: 	local v430 = v_u_22.TopBar.Right.SaveLbl
+1123: 	v430.Text = "Saving..."
+1124: 	v430.TextColor3 = Color3.fromRGB(150, 156, 175)
+1125: 	local v431, v432 = v_u_13.call("Sync", v428)
+1126: 	v_u_52 = false
+1127: 	if v425 ~= v_u_32 then
+1128: 		return v431 ~= nil
+1129: 	end
+1130: 	if v431 then
+1131: 		if not v425:needsSync() then
+1132: 			local v433 = v_u_22.TopBar.Right.SaveLbl
+1133: 			v433.Text = "Saved"
+   ...
+2068: 			if v755 == "brush" then
+2069: 				if v_u_34 ~= "draw" then
+2070: 					v_u_18.close()
+2071: 				end
+2072: 			elseif v755 ~= v_u_33 or v_u_34 ~= "select" then
+2073: 				v_u_18.close()
+2074: 			end
+2075: 		end
+2076: 		v_u_323()
+2077: 		v_u_88()
+2078: 		v_u_302()
+2079: 		local v756, v757 = v_u_32:addObject({
+2080: 			["k"] = "Drawing",
+2081: 			["s"] = nil,
+2082: 			["s"] = v745
+2083: 		}, {
+2084: 			v742,
+2085: 			v744,
+2086: 			0,
+2087: 			1,
+2088: 			0,
+2089: 			0
+2090: 		})
+2091: 		if v756 then
+2092: 			v_u_359()
+   ...
+2377: 	if p807.Cat == "Characters" or p807.Cat == "Animals" then
+2378: 		local v810 = v_u_6.bg(v_u_32:frame().g)
+2379: 		if v810 then
+2380: 			v810 = v810.Template:FindFirstChild("Ground")
+2381: 		end
+2382: 		if v810 then
+2383: 			local v811 = v810.Position.Y.Offset + v_u_90.GROUND_SINK
+2384: 			local v812 = v_u_5.WORLD_H / 2 / (p809[3] or 1)
+2385: 			if v811 < p809[2] - v812 or p809[2] + v812 < v811 then
+2386: 				return
+2387: 			else
+2388: 				local v813 = v_u_14.build({
+2389: 					["k"] = p807.Id
+2390: 				})
+2391: 				if v813 then
+2392: 					local _, _, _, v814 = v_u_14.bounds(v813, p808)
+2393: 					v813.root:Destroy()
+2394: 					local v815 = (p808[2] + v811 - v814) * 10 + 0.5
+2395: 					p808[2] = math.floor(v815) / 10
+2396: 				end
+2397: 			end
+2398: 		else
+2399: 			return
+2400: 		end
+2401: 	else
+   ...
+2435: 		v820 = v821
+2436: 		v819 = v828
+2437: 	end
+2438: 	if not v820 then
+2439: 		return nil
+2440: 	end
+2441: 	local v829 = v_u_31:ensure(v820, v_u_32.objs[v820])
+2442: 	local v830 = v_u_31:worldOf(v820)
+2443: 	p817[5] = v830[5]
+2444: 	local v831 = (v830[1] + (v830[5] == 1 and 1 or -1) * v_u_90.FOLLOW_GAP * v830[4]) * 10 + 0.5
+2445: 	p817[1] = math.floor(v831) / 10
+2446: 	local v832 = v_u_14.build({
+2447: 		["k"] = p816.Id
+2448: 	})
+2449: 	if v832 then
+2450: 		local _, _, _, v833 = v_u_14.bounds(v829, v830)
+2451: 		local _, _, _, v834 = v_u_14.bounds(v832, p817)
+2452: 		v832.root:Destroy()
+2453: 		local v835 = (p817[2] + v833 - v834) * 10 + 0.5
+2454: 		p817[2] = math.floor(v835) / 10
+2455: 	end
+2456: 	return v820
+2457: end
+2458: local function v_u_854(p836) -- name: addItem
+2459: 	-- upvalues: (copy) v_u_90, (ref) v_u_13, (ref) v_u_12, (ref) v_u_22, (ref) v_u_32, (ref) v_u_359, (ref) v_u_84, (copy) v_u_11, (copy) v_u_6, (ref) v_u_326, (copy) v_u_365, (copy) v_u_302
+   ...
+2474: 		local v840 = math.floor(v839) / 10
+2475: 		local v841 = (v837[2] + math.random(0, 50)) * 10 + 0.5
+2476: 		__set_list(v838, 1, {v840, math.floor(v841) / 10, 0, p836.Scale or 1, 0, 0})
+2477: 		if #p836.Bones > 0 then
+2478: 			v838[7] = table.clone(p836.Rest)
+2479: 		end
+2480: 		v_u_90.dropToGround(p836, v838, v837)
+2481: 		local v842 = p836.Follow
+2482: 		if v842 then
+2483: 			v842 = v_u_90.followSpot(p836, v838)
+2484: 		end
+2485: 		local v843 = {
+2486: 			["k"] = p836.Id
+2487: 		}
+2488: 		if p836.Id == "WinnerPlaque" then
+2489: 			local v844 = v_u_90.plaques()
+2490: 			v843.t = v844[#v844]
+2491: 		end
+2492: 		local v845, v846 = v_u_32:addObject(v843, v838)
+2493: 		if v845 then
+2494: 			v_u_359()
+2495: 			if v842 then
+2496: 				v_u_84 = v845
+2497: 				v_u_11.attachTo(v842, 0)
+2498: 				local v847 = v_u_13.toast
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.Demo =====
+   ...
+775: 		end
+776: 		local v246
+777: 		if v245 then
+778: 			local v247 = v245:FindFirstChild("Img")
+779: 			v246 = v247 and v247.Image or v245.Text
+780: 		else
+781: 			v246 = ""
+782: 		end
+783: 		v244(v241, v246, p239.Name, p239.Desc, p239.Loop and "Repeats: pick how many times below." or "Plays once, then you can keep animating.")
+784: 		local v248 = v_u_21
+785: 		local v249 = v243 and "Stickman" or "Ball"
+786: 		local v250 = {
+787: 			["k"] = v243 and "Stickman" or "Ball"
+788: 		}
+789: 		local v251 = v248.h
+790: 		if not v251 or v248.key ~= v249 then
+791: 			if v251 then
+792: 				v251.root:Destroy()
+793: 			end
+794: 			v251 = v_u_8.build(v250)
+795: 			v248.h = v251
+796: 			v248.key = v249
+797: 			if v251 then
+798: 				v251.root.Parent = v241.Stage.Holder
+799: 			end
+   ...
+880: 		end
+881: 		table.insert(v_u_288, v290)
+882: 	end
+883: 	local v291
+884: 	if v_u_288[1] == nil then
+885: 		v291 = false
+886: 	else
+887: 		v291 = v_u_288[1].Keys[1].p ~= nil
+888: 	end
+889: 	local v_u_292
+890: 	if #v_u_288 > 0 then
+891: 		v_u_292 = v_u_8.build({
+892: 			["k"] = p287 or (v291 and "Stickman" or "Ball")
+893: 		}) or nil
+894: 	else
+895: 		v_u_292 = nil
+896: 	end
+897: 	if not v_u_292 then
+898: 		return nil
+899: 	end
+900: 	local v_u_293 = p_u_284.Holder
+901: 	v_u_292.root.Parent = v_u_293
+902: 	local v294 = v_u_292.item
+903: 	local v_u_339 = {
+904: 		["h"] = nil,
+   ...
+1056: 			v359.h.root:Destroy()
+1057: 		end
+1058: 	end
+1059: end
+1060: function v5.face(p360, p361, p362, p363) -- name: face
+1061: 	-- upvalues: (copy) v_u_22, (ref) v_u_8, (copy) v_u_4, (ref) v_u_18, (copy) v_u_1, (ref) v_u_10, (ref) v_u_7
+1062: 	local v364 = p360.Demo
+1063: 	local v365 = v_u_22
+1064: 	local v366 = p361.k
+1065: 	local v367 = p361.c
+1066: 	local v368 = v366 .. "|" .. tostring(v367)
+1067: 	local v369 = {
+1068: 		["k"] = p361.k,
+1069: 		["c"] = p361.c
+1070: 	}
+1071: 	local v370 = v365.h
+1072: 	if not v370 or v365.key ~= v368 then
+1073: 		if v370 then
+1074: 			v370.root:Destroy()
+1075: 		end
+1076: 		v370 = v_u_8.build(v369)
+1077: 		v365.h = v370
+1078: 		v365.key = v368
+1079: 		if v370 then
+1080: 			v370.root.Parent = v364.Stage.Holder
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.CrateSkins =====
+1: local v_u_1 = {
+2: 	["DEFAULT"] = "Spooky"
+3: }
+4: local v2 = {
+5: 	["Spooky"] = {
+6: 		["Panel"] = { Color3.fromRGB(78, 34, 86), Color3.fromRGB(36, 18, 46) },
+7: 		["Edge"] = Color3.fromRGB(255, 140, 40),
+8: 		["Box"] = { Color3.fromRGB(214, 128, 62), Color3.fromRGB(168, 92, 44) },
+9: 		["Lid"] = { Color3.fromRGB(236, 158, 86), Color3.fromRGB(214, 128, 62) },
+10: 		["Metal"] = { Color3.fromRGB(255, 208, 64), Color3.fromRGB(226, 160, 30) },
+11: 		["Plank"] = Color3.fromRGB(168, 92, 44),
+12: 		["Halo"] = Color3.fromRGB(255, 200, 90),
+13: 		["Ray"] = Color3.fromRGB(255, 214, 110),
+14: 		["Spark"] = Color3.fromRGB(255, 238, 120)
+15: 	},
+16: 	["FriendlyPhantom"] = {
+17: 		["Panel"] = { Color3.fromRGB(60, 54, 132), Color3.fromRGB(24, 20, 62) },
+18: 		["Edge"] = Color3.fromRGB(150, 196, 255),
+19: 		["Box"] = { Color3.fromRGB(150, 156, 236), Color3.fromRGB(112, 116, 206) },
+20: 		["Lid"] = { Color3.fromRGB(180, 186, 248), Color3.fromRGB(150, 156, 236) },
+21: 		["Metal"] = { Color3.fromRGB(226, 236, 255), Color3.fromRGB(168, 188, 236) },
+22: 		["Plank"] = Color3.fromRGB(98, 102, 190),
+23: 		["Halo"] = Color3.fromRGB(170, 214, 255),
+24: 		["Ray"] = Color3.fromRGB(186, 224, 255),
+25: 		["Spark"] = Color3.fromRGB(206, 240, 255)
+26: 	},
+27: 	["Manor"] = {
+28: 		["Panel"] = { Color3.fromRGB(36, 86, 84), Color3.fromRGB(14, 38, 44) },
+29: 		["Edge"] = Color3.fromRGB(240, 192, 96),
+30: 		["Box"] = { Color3.fromRGB(168, 92, 64), Color3.fromRGB(128, 64, 46) },
+31: 		["Lid"] = { Color3.fromRGB(192, 112, 78), Color3.fromRGB(168, 92, 64) },
+32: 		["Metal"] = { Color3.fromRGB(255, 216, 112), Color3.fromRGB(218, 164, 62) },
+33: 		["Plank"] = Color3.fromRGB(120, 62, 44),
+34: 		["Halo"] = Color3.fromRGB(255, 214, 140),
+35: 		["Ray"] = Color3.fromRGB(255, 224, 150),
+36: 		["Spark"] = Color3.fromRGB(255, 238, 160)
+37: 	},
+38: 	["UnderTheBed"] = {
+39: 		["Panel"] = { Color3.fromRGB(30, 72, 120), Color3.fromRGB(12, 28, 58) },
+40: 		["Edge"] = Color3.fromRGB(120, 210, 255),
+41: 		["Box"] = { Color3.fromRGB(150, 110, 230), Color3.fromRGB(116, 80, 200) },
+42: 		["Lid"] = { Color3.fromRGB(176, 140, 246), Color3.fromRGB(150, 110, 230) },
+43: 		["Metal"] = { Color3.fromRGB(232, 240, 110), Color3.fromRGB(186, 206, 60) },
+44: 		["Plank"] = Color3.fromRGB(96, 64, 170),
+45: 		["Halo"] = Color3.fromRGB(150, 220, 255),
+46: 		["Ray"] = Color3.fromRGB(170, 230, 255),
+47: 		["Spark"] = Color3.fromRGB(255, 240, 140)
+48: 	},
+49: 	["KitchenClash"] = {
+50: 		["Panel"] = { Color3.fromRGB(64, 120, 214), Color3.fromRGB(30, 56, 128) },
+51: 		["Edge"] = Color3.fromRGB(255, 236, 190),
+52: 		["Box"] = { Color3.fromRGB(232, 80, 80), Color3.fromRGB(190, 52, 60) },
+53: 		["Lid"] = { Color3.fromRGB(248, 112, 104), Color3.fromRGB(232, 80, 80) },
+54: 		["Metal"] = { Color3.fromRGB(252, 248, 238), Color3.fromRGB(214, 206, 190) },
+55: 		["Plank"] = Color3.fromRGB(170, 40, 50),
+56: 		["Halo"] = Color3.fromRGB(255, 220, 150),
+57: 		["Ray"] = Color3.fromRGB(255, 230, 170),
+58: 		["Spark"] = Color3.fromRGB(255, 240, 150)
+59: 	},
+60: 	["SneakyBusiness"] = {
+61: 		["Panel"] = { Color3.fromRGB(44, 50, 70), Color3.fromRGB(16, 18, 28) },
+62: 		["Edge"] = Color3.fromRGB(255, 206, 70),
+63: 		["Box"] = { Color3.fromRGB(112, 120, 146), Color3.fromRGB(78, 84, 108) },
+64: 		["Lid"] = { Color3.fromRGB(136, 144, 170), Color3.fromRGB(112, 120, 146) },
+65: 		["Metal"] = { Color3.fromRGB(255, 214, 90), Color3.fromRGB(220, 160, 40) },
+66: 		["Plank"] = Color3.fromRGB(58, 64, 84),
+67: 		["Halo"] = Color3.fromRGB(255, 220, 110),
+68: 		["Ray"] = Color3.fromRGB(255, 226, 130),
+69: 		["Spark"] = Color3.fromRGB(255, 240, 150)
+70: 	},
+71: 	["Olympus"] = {
+72: 		["Panel"] = { Color3.fromRGB(56, 98, 184), Color3.fromRGB(22, 38, 98) },
+73: 		["Edge"] = Color3.fromRGB(255, 214, 110),
+74: 		["Box"] = { Color3.fromRGB(86, 136, 220), Color3.fromRGB(60, 104, 190) },
+75: 		["Lid"] = { Color3.fromRGB(116, 164, 236), Color3.fromRGB(86, 136, 220) },
+76: 		["Metal"] = { Color3.fromRGB(255, 214, 90), Color3.fromRGB(222, 160, 4
+
+===== Players.DAYATTTTTT08.PlayerScripts.OnboardingRecorder =====
+   ...
+221: 		return "Pad", p85.KeyCode.Name
+222: 	end
+223: end
+224: local function v_u_96(p88, p89) -- name: onInputBegan
+225: 	-- upvalues: (copy) v_u_87, (copy) v_u_84, (copy) v_u_19, (ref) v_u_23, (ref) v_u_20, (ref) v_u_21, (ref) v_u_22
+226: 	local v90, v91 = v_u_87(p88)
+227: 	if v90 == nil then
+228: 		return
+229: 	elseif v90 == "Key" and p89 then
+230: 		return
+231: 	else
+232: 		local v92 = {
+233: 			["k"] = "Input",
+234: 			["dev"] = nil,
+235: 			["btn"] = nil,
+236: 			["gpe"] = nil,
+237: 			["dev"] = v90,
+238: 			["btn"] = v91,
+239: 			["gpe"] = p89
+240: 		}
+241: 		if v90 == "Mouse" or v90 == "Touch" then
+242: 			v_u_84(v92, p88.Position.X, p88.Position.Y)
+243: 			local v93
+244: 			if v90 == "Touch" then
+245: 				v93 = p88
+   ...
+275: 			v101 = p97
+276: 		else
+277: 			v101 = p97.UserInputType
+278: 		end
+279: 		local v102 = v_u_19[v101]
+280: 		if v102 == nil then
+281: 			return
+282: 		else
+283: 			v_u_19[v101] = nil
+284: 			local v103 = p97.Position.X - v102.x
+285: 			local v104 = p97.Position.Y - v102.y
+286: 			local v105 = {
+287: 				["k"] = "Release",
+288: 				["dev"] = nil,
+289: 				["btn"] = nil,
+290: 				["gpe"] = nil,
+291: 				["dur"] = nil,
+292: 				["drag"] = nil,
+293: 				["dev"] = v99,
+294: 				["btn"] = v100,
+295: 				["gpe"] = p98
+296: 			}
+297: 			local v106 = (os.clock() - v102.t) * 100
+298: 			v105.dur = math.round(v106) / 100
+299: 			local v107 = v103 * v103 + v104 * v104
+   ...
+316: 			end
+317: 		end
+318: 	else
+319: 		return
+320: 	end
+321: end
+322: local function v_u_122(p_u_112) -- name: watchButton
+323: 	-- upvalues: (copy) v_u_18, (ref) v_u_23, (ref) v_u_20, (ref) v_u_21, (ref) v_u_22
+324: 	if p_u_112:IsA("GuiButton") and v_u_18[p_u_112] == nil then
+325: 		v_u_18[p_u_112] = p_u_112.Activated:Connect(function(p113)
+326: 			-- upvalues: (copy) p_u_112, (ref) v_u_23, (ref) v_u_20, (ref) v_u_21, (ref) v_u_22
+327: 			local v114 = {
+328: 				["k"] = "Button",
+329: 				["ui"] = nil
+330: 			}
+331: 			local v115 = p_u_112
+332: 			local v116
+333: 			if v115 == nil then
+334: 				v116 = nil
+335: 			else
+336: 				local v117 = v115:FindFirstAncestorWhichIsA("LayerCollector")
+337: 				local v118 = v115.Parent
+338: 				local v119 = (v118 == nil or v118 == v117) and "" or v118.Name .. "/"
+339: 				v116 = ("%s/%s%s"):format(v117 == nil and "?" or v117.Name, v119, v115.Name)
+340: 			end
+   ...
+361: 	-- upvalues: (copy) v_u_9, (ref) v_u_28, (copy) v_u_15, (ref) v_u_23, (ref) v_u_20, (ref) v_u_21, (ref) v_u_22
+362: 	local v123 = v_u_9.CurrentCamera
+363: 	if v123 == nil then
+364: 		return
+365: 	else
+366: 		local v124 = v123.ViewportSize
+367: 		local v125 = ("%dx%d"):format(v124.X, v124.Y)
+368: 		if v125 == v_u_28 then
+369: 			return
+370: 		else
+371: 			v_u_28 = v125
+372: 			local v126 = {
+373: 				["k"] = "Viewport",
+374: 				["vx"] = nil,
+375: 				["vy"] = nil,
+376: 				["orient"] = nil
+377: 			}
+378: 			local v127 = v124.X
+379: 			v126.vx = math.round(v127)
+380: 			local v128 = v124.Y
+381: 			v126.vy = math.round(v128)
+382: 			v126.orient = v_u_15.CurrentScreenOrientation.Name
+383: 			if v_u_23 then
+384: 				if #v_u_20 >= 600 then
+385: 					v_u_21 = v_u_21 + 1
+   ...
+394: 			end
+395: 		end
+396: 	end
+397: end
+398: local function v_u_147(p132) -- name: watchCharacter
+399: 	-- upvalues: (copy) v_u_17, (ref) v_u_23, (ref) v_u_20, (ref) v_u_21, (ref) v_u_22
+400: 	local v133 = v_u_17
+401: 	local v134 = p132.ChildAdded
+402: 	local function v139(p135)
+403: 		-- upvalues: (ref) v_u_23, (ref) v_u_20, (ref) v_u_21, (ref) v_u_22
+404: 		if p135:IsA("Tool") then
+405: 			local v136 = {
+406: 				["k"] = "Tool",
+407: 				["on"] = true,
+408: 				["tool"] = nil,
+409: 				["tool"] = p135.Name
+410: 			}
+411: 			if not v_u_23 then
+412: 				return
+413: 			end
+414: 			if #v_u_20 >= 600 then
+415: 				v_u_21 = v_u_21 + 1
+416: 				return
+417: 			end
+418: 			local v137 = (os.clock() - v_u_22) * 100
+419: 			v136.t = math.round(v137) / 100
+420: 			local v138 = v_u_20
+421: 			table.insert(v138, v136)
+422: 		end
+423: 	end
+424: 	table.insert(v133, v134
+
+===== ReplicatedStorage.DrawShared.Config =====
+   ...
+1254: 		["Xp"] = 0,
+1255: 		["Projects"] = 50,
+1256: 		["Public"] = 10,
+1257: 		["Pins"] = 1
+1258: 	},
+1259: 	{
+1260: 		["Xp"] = 100,
+1261: 		["Projects"] = 60,
+1262: 		["Public"] = 12
+1263: 	},
+1264: 	{
+1265: 		["Xp"] = 300,
+1266: 		["Unlock"] = "Bronze avatar frame"
+1267: 	},
+1268: 	{
+1269: 		["Xp"] = 700,
+1270: 		["Projects"] = 70,
+1271: 		["Public"] = 15,
+1272: 		["Pins"] = 2
+1273: 	},
+1274: 	{
+1275: 		["Xp"] = 1500,
+1276: 		["Projects"] = 85,
+1277: 		["Public"] = 20,
+1278: 		["Unlock"] = "Free effect pack"
+1279: 	},
+1280: 	{
+1281: 		["Xp"] = 3000,
+1282: 		["Unlock"] = "Profile background"
+1283: 	},
+1284: 	{
+1285: 		["Xp"] = 6000,
+1286: 		["Projects"] = 100,
+1287: 		["Public"] = 25,
+1288: 		["Pins"] = 3
+1289: 	},
+1290: 	{
+1291: 		["Xp"] = 12000,
+1292: 		["Unlock"] = "Silver avatar frame"
+1293: 	},
+1294: 	{
+1295: 		["Xp"] = 25000,
+1296: 		["Unlock"] = "Rainbow name"
+1297: 	},
+1298: 	{
+1299: 		["Xp"] = 50000,
+1300: 		["Projects"] = 150,
+1301: 		["Public"] = 30,
+1302: 		["Unlock"] = "Master Creator badge + gold frame"
+1303: 	}
+1304: }
+1305: for v67, v68 in ipairs(v_u_1.CREATOR_LEVELS) do
+1306: 	local v69 = v_u_1.CREATOR_LEVELS[v67 - 1]
+1307: 	v68.Level = v67
+1308: 	if not v69 then
+1309: 		continue
+1310: 	end
+1311: 	v68.Projects = v68.Projects or v69.Projects
+1312: 	v68.Public = v68.Public or v69.Public
+1313: 	v68.Pins = v68.Pins or v69.Pins
+1314: end
+   ...
+1735: 		["Desc"] = "Reached 100 followers",
+1736: 		["Icon"] = "\240\159\145\145",
+1737: 		["Tier"] = "gold",
+1738: 		["Stat"] = "followers",
+1739: 		["At"] = 100
+1740: 	},
+1741: 	{
+1742: 		["Id"] = "contest_gold",
+1743: 		["Name"] = "Contest Winner",
+1744: 		["Desc"] = "Won a cartoon contest",
+1745: 		["Icon"] = "\240\159\143\134",
+1746: 		["Tier"] = "gold",
+1747: 		["Kind"] = "contest"
+1748: 	},
+1749: 	{
+1750: 		["Id"] = "contest_silver",
+1751: 		["Name"] = "Contest Runner-up",
+1752: 		["Desc"] = "Took 2nd place in a contest",
+1753: 		["Icon"] = "\240\159\165\136",
+1754: 		["Tier"] = "silver",
+1755: 		["Kind"] = "contest"
+1756: 	},
+1757: 	{
+1758: 		["Id"] = "contest_bronze",
+1759: 		["Name"] = "Contest Podium",
+1760: 		["Desc"] = "Took 3rd place in a contest",
+1761: 		["Icon"] = "\240\159\165\137",
+1762: 		["Tier"] = "bronze",
+1763: 		["Kind"] = "contest"
+1764: 	},
+1765: 	{
+1766: 		["Id"] = "featured",
+1767: 		["Name"] = "Featured",
+1768: 		["Desc"] = "A cartoon was featured by the team",
+1769: 		["Icon"] = "\240\159\142\150\239\184\143",
+1770: 		["Tier"] = "special",
+1771: 		["Kind"] = "contest"
+1772: 	}
+1773: }
+1774: v_u_1.ACH_BY_ID = {}
+1775: for v94, v95 in ipairs(v_u_1.ACHIEVEMENTS) do
+1776: 	v95.Order = v94
+1777: 	v_u_1.ACH_BY_ID[v95.Id] = v95
+1778: end
+1779: v_u_1.QA_PLACE_ID = 81773427461462
+1780: function v_u_1.isQA() -- name: isQA
+1781: 	-- upvalues: (copy) v_u_1
+1782: 	return game.PlaceId == v_u_1.QA_PLACE_ID
+1783: end
+   ...
+1795: 	Color3.fromRGB(40, 180, 170),
+1796: 	Color3.fromRGB(55, 120, 235),
+1797: 	Color3.fromRGB(150, 90, 220),
+1798: 	Color3.fromRGB(240, 120, 180),
+1799: 	Color3.fromRGB(140, 90, 55),
+1800: 	Color3.fromRGB(245, 200, 160),
+1801: 	Color3.fromRGB(30, 50, 110)
+1802: }
+1803: v_u_1.Music = {
+1804: 	{
+1805: 		["Name"] = "\240\159\142\181 Happy Quirky",
+1806: 		["Id"] = 1841884736,
+1807: 		["Kind"] = "music"
+1808: 	},
+1809: 	{
+1810: 		["Name"] = "\240\159\142\181 Kids Play",
+1811: 		["Id"] = 9044625294,
+1812: 		["Kind"] = "music"
+1813: 	},
+1814: 	{
+1815: 		["Name"] = "\240\159\142\181 Funky Groove",
+1816: 		["Id"] = 9044944264,
+1817: 		["Kind"] = "music"
+1818: 	},
+1819: 	{
+1820: 		["Name"] = "\240\159\142\181 Epic Hero",
+1821: 		["Id"] = 1837823897,
+1822: 		["Kind"] = "music"
+1823: 	},
+1824: 	{
+1825: 		["Name"] = "\240\159\142\181 Halloween",
+1826: 		["Id"] = 139190190976686,
+1827: 		["Kind"] = "music"
+1828: 	},
+1829: 	{
+1830: 		["Name"] = "\240\159\140\167\239\184\143 Rain",
+1831: 		["Id"] = 9112856553,
+1832: 		["Kind"] = "ambient"
+1833: 	},
+1834: 	{
+1835: 		["Name"] = "\240\159\140\179 Forest Birds",
+1836: 		["Id"] = 9119383684,
+1837: 	
+
+===== ReplicatedStorage.DrawShared.Library =====
+   ...
+97: 			for v24, v25 in ipairs(v22) do
+98: 				local v26 = v21:FindFirstChild(v25, true)
+99: 				v23[v24] = v26 and (v26:IsA("GuiObject") and v26.Rotation) or 0
+100: 			end
+101: 			local v27 = {
+102: 				["Id"] = v21.Name,
+103: 				["Name"] = v21:GetAttribute("DisplayName") or v21.Name,
+104: 				["Cat"] = v18.Id,
+105: 				["Template"] = v21,
+106: 				["Bones"] = v22,
+107: 				["Rest"] = v23,
+108: 				["Order"] = v21:GetAttribute("Order") or 99,
+109: 				["Kind"] = v21:GetAttribute("EditableText") and "text" or (v21:GetAttribute("Particles") and "particles" or "rig")
+110: 			}
+111: 			for v28, v29 in ipairs(v_u_3.HUMAN) do
+112: 				if v22[v28] == v29 then
+113: 					continue
+114: 				end
+115: 				v30 = false
+116: 			end
+117: 			local v30 = true
+118: 			v27.Human = v30
+119: 			local v31 = v21:FindFirstChild("Skull", true)
+120: 			local v32
+121: 			if v31 == nil then
+   ...
+136: 		end
+137: 	end
+138: 	table.sort(v19, v17)
+139: 	v_u_3.ByCat[v18.Id] = v19
+140: end
+141: v_u_3.Items.Drawing = {
+142: 	["Id"] = "Drawing",
+143: 	["Name"] = "Drawing",
+144: 	["Cat"] = "Draw",
+145: 	["Bones"] = nil,
+146: 	["Rest"] = nil,
+147: 	["Order"] = 0,
+148: 	["Kind"] = "drawing",
+149: 	["Colorable"] = false,
+150: 	["Scale"] = 1,
+151: 	["Vip"] = false,
+152: 	["Bones"] = {},
+153: 	["Rest"] = {}
+154: }
+155: local v33 = v1:FindFirstChild("Backgrounds")
+156: if v33 then
+157: 	for _, v34 in ipairs(v33:GetChildren()) do
+158: 		if not v34:IsA("GuiObject") then
+159: 			continue
+160: 		end
+
+===== ReplicatedStorage.DrawShared.Schema =====
+   ...
+48: 			v28 = p27 ~= (-1 / 0)
+49: 		else
+50: 			v28 = false
+51: 		end
+52: 		if v28 and (p27 >= 1 and p27 <= v_u_6) then
+53: 			return math.floor(p27)
+54: 		end
+55: 	elseif type(p27) == "string" and (#p27 == 6 and string.match(p27, "^%x%x%x%x%x%x$")) then
+56: 		return string.upper(p27)
+57: 	end
+58: 	return nil
+59: end
+60: function v_u_5.validId(p30, p31) -- name: validId
+61: 	local v32
+62: 	if type(p30) == "string" and #p30 <= 9 then
+63: 		v32 = string.match(p30, p31 and "^f%d+$" or "^o%d+$") ~= nil
+64: 	else
+65: 		v32 = false
+66: 	end
+67: 	return v32
+68: end
+69: function v_u_5.pointsOf(p33) -- name: pointsOf
+70: 	local v34 = 0
+71: 	if type(p33) == "table" then
+72: 		for _, v35 in ipairs(p33) do
+   ...
+152: 	end
+153: end
+154: function v_u_5.cleanDef(p62, p63, p64) -- name: cleanDef
+155: 	-- upvalues: (copy) v_u_2, (copy) v_u_29, (copy) v_u_5, (copy) v_u_1, (copy) v_u_61, (copy) v_u_4
+156: 	if type(p62) == "table" then
+157: 		local v65 = p62.k
+158: 		if type(v65) == "string" then
+159: 			local v66 = v_u_2.Items[p62.k]
+160: 			if not v66 then
+161: 				return nil
+162: 			end
+163: 			local v67 = {
+164: 				["k"] = p62.k
+165: 			}
+166: 			if v66.Colorable and p62.c ~= nil then
+167: 				v67.c = v_u_29(p62.c)
+168: 				if v67.c and v66.NoRed then
+169: 					local v68 = v_u_5.color(v67.c)
+170: 					if v68 and v_u_5.isRed(v68) then
+171: 						v67.c = nil
+172: 					end
+173: 				end
+174: 			end
+175: 			if v66.Kind == "text" and p62.t ~= nil then
+176: 				local v69 = p62.t
+   ...
+207: 	return nil
+208: end
+209: local function v_u_141(p75, p76, p77, p78) -- name: cleanExt
+210: 	-- upvalues: (copy) v_u_5, (copy) v_u_2, (copy) v_u_3, (copy) v_u_4, (copy) v_u_29
+211: 	if type(p75) ~= "table" then
+212: 		return nil
+213: 	end
+214: 	local v79 = {}
+215: 	local v80 = 0
+216: 	local v81 = p75.a
+217: 	if type(v81) == "table" then
+218: 		local v82 = v81[1]
+219: 		if type(v82) == "string" and (v81[1] ~= p76 and (v_u_5.validId(v81[1]) and (p77 and p77[v81[1]]))) then
+220: 			local v83 = v_u_2.Items[p77[v81[1]].k]
+221: 			local v84 = v81[2]
+222: 			local v85
+223: 			if type(v84) == "number" and (v84 == v84 and v84 ~= (1 / 0)) then
+224: 				v85 = v84 ~= (-1 / 0)
+225: 			else
+226: 				v85 = false
+227: 			end
+228: 			local v86
+229: 			if v85 then
+230: 				local v87 = v81[2]
+231: 				v86 = math.floor(v87) or -1
+   ...
+653: 		v260 = v259 ~= (-1 / 0)
+654: 	else
+655: 		v260 = false
+656: 	end
+657: 	if v260 and p216.zp >= v_u_4.PUNCH_MIN then
+658: 		local v261 = p216.zp
+659: 		local v262 = v_u_4.PUNCH_MIN
+660: 		local v263 = v_u_4.PUNCH_MAX
+661: 		local v264 = math.clamp(v261, v262, v263)
+662: 		v226.zp = math.floor(v264)
+663: 	end
+664: 	local v265 = p216.cf
+665: 	if type(v265) == "string" and (v_u_5.validId(p216.cf) and p217[p216.cf]) then
+666: 		v226.cf = p216.cf
+667: 	end
+668: 	local v266 = p216.tr
+669: 	local v267 = v_u_4.TRANS_MAX
+670: 	local v268
+671: 	if type(v266) == "number" and (v266 == v266 and v266 ~= (1 / 0)) then
+672: 		v268 = v266 ~= (-1 / 0)
+673: 	else
+674: 		v268 = false
+675: 	end
+676: 	local v269 = not v268 and 0 or math.clamp(v266, 0, v267)
+677: 	local v270 = math.floor(v269)
+   ...
+679: 		v226.tr = v270
+680: 	end
+681: 	v226.sh = v_u_215(p216.sh)
+682: 	v226.sn = v_u_199(p216.sn, p220)
+683: 	local v271 = p216.o
+684: 	if type(v271) == "table" then
+685: 		local v272 = 0
+686: 		for v273, v274 in pairs(p216.o) do
+687: 			v272 = v272 + 1
+688: 			if v_u_1.MAX_OBJECTS < v272 then
+689: 				break
+690: 			end
+691: 			if not (v_u_5.validId(v273) and p217[v273]) then
+692: 				continue
+693: 			end
+694: 			local v275 = v_u_2.Items[p217[v273].k]
+695: 			if v275 then
+696: 				v275 = v_u_5.cleanState(v274, v275, v273, p217, p219)
+697: 			end
+698: 			if not v275 then
+699: 				continue
+700: 			end
+701: 			v226.o[v273] = v275
+702: 		end
+703: 	end
+   ...
+767: 	local v292, v293, v294, v295, v296, v297, v298, v299, v300, v301, v302, v303
+768: 	if p286.objs == nil then
+769: 		v315 = p285.objs
+770: 		if p286.objs ~= nil then
+771: 			v292 = 0
+772: 			v315 = {}
+773: 			
+
+===== ReplicatedStorage.DrawShared.Anim =====
+   ...
+81: 		"Best for: going to a new place.",
+82: 		"Best for: going to a new place.",
+83: 		"Best for: going up to the sky, a new level.",
+84: 		"Best for: falling down, going underground.",
+85: 		"Best for: the big ending of your cartoon!",
+86: 		"Best for: following someone into the next room.",
+87: 		"Best for: following someone into the next room."
+88: 	},
+89: 	["TRANS_TIME"] = 0.6,
+90: 	["FX"] = {
+91: 		{
+92: 			["Name"] = "Pop In",
+93: 			["Kind"] = "in"
+94: 		},
+95: 		{
+96: 			["Name"] = "Fade In",
+97: 			["Kind"] = "in"
+98: 		},
+99: 		{
+100: 			["Name"] = "Grow",
+101: 			["Kind"] = "in"
+102: 		},
+103: 		{
+104: 			["Name"] = "Zoom In",
+105: 			["Kind"] = "in"
+106: 		},
+107: 		{
+108: 			["Name"] = "Drop In",
+109: 			["Kind"] = "in"
+110: 		},
+111: 		{
+112: 			["Name"] = "From Left",
+113: 			["Kind"] = "in"
+114: 		},
+115: 		{
+116: 			["Name"] = "From Right",
+117: 			["Kind"] = "in"
+118: 		},
+119: 		{
+120: 			["Name"] = "Rise Up",
+121: 			["Kind"] = "in"
+122: 		},
+123: 		{
+124: 			["Name"] = "Spin In",
+125: 			["Kind"] = "in"
+126: 		},
+127: 		{
+128: 			["Name"] = "Bounce In",
+129: 			["Kind"] = "in"
+130: 		},
+131: 		{
+132: 			["Name"] = "Pop Out",
+133: 			["Kind"] = "out"
+134: 		},
+135: 		{
+136: 			["Name"] = "Fade Out",
+137: 			["Kind"] = "out"
+138: 		},
+139: 		{
+140: 			["Name"] = "Shrink",
+141: 			["Kind"] = "out"
+142: 		},
+143: 		{
+144: 			["Name"] = "Zoom Out",
+145: 			["Kind"] = "out"
+146: 		},
+147: 		{
+148: 			["Name"] = "Fly Up",
+149: 			["Kind"] = "out"
+150: 		},
+151: 		{
+152: 			["Name"] = "Fall Down",
+153: 			["Kind"] = "out"
+154: 		},
+155: 		{
+156: 			["Name"] = "To Left",
+157: 			["Kind"] = "out"
+158: 		},
+159: 		{
+160: 			["Name"] = "To Right",
+161: 			["Kind"] = "out"
+162: 		},
+163: 		{
+164: 			["Name"] = "Spin Out",
+165: 			["Kind"] = "out"
+166: 		},
+167: 		{
+168: 			["Name"] = "Vanish",
+169: 			["Kind"] = "out"
+170: 		},
+171: 		{
+172: 			["Name"] = "Shake",
+173: 			["Kind"] = "loop"
+174: 		},
+175: 		{
+176: 			["Name"] = "Vibrate",
+177: 			["Kind"] = "loop"
+178: 		},
+179: 		{
+180: 			["Name"] = "Wobble",
+181: 			["Kind"] = "loop"
+182: 		},
+183: 		{
+184: 			["Name"] = "Swing",
+185: 			["Kind"] = "loop"
+186: 		},
+187: 		{
+188: 			["Name"] = "Pulse",
+189: 			["Kind"] = "loop"
+190: 		},
+191: 		{
+192: 			["Name"] = "Heartbeat",
+193: 			["Kind"] = "loop"
+194: 		},
+195: 		{
+196: 			["Name"] = "Hop",
+197: 			["Kind"] = "loop"
+198: 		},
+199: 		{
+200: 			["Name"] = "Float",
+201: 			["Kind"] = "loop"
+202: 		},
+203: 		{
+204: 			["Name"] = "Spin",
+205: 			["Kind"] = "loop"
+206: 		},
+207: 		{
+208: 			["Name"] = "Blink",
+209: 			["Kind"] = "loop"
+210: 		},
+211: 		{
+212: 			["Name"] = "Flicker",
+213: 			["Kind"] = "loop"
+214: 		},
+215: 		{
+216: 			["Name"] = "Ghost",
+217: 			["Kind"] = "loop"
+218: 		},
+219: 		{
+220: 			["Name"] = "Jelly",
+221: 			["Kind"] = "loop"
+222: 		},
+223: 		{
+224: 			["Name"] = "Dizzy",
+225: 			["Kind"] = "loop"
+226: 		},
+227: 		{
+228: 			["Name"] = "Typewriter",
+229: 			["Kind"] = "in"
+230: 		}
+231: 	}
+232: }
+233: v_u_2.FX_MAX = #v_u_2.FX
+234: local v3 = {
+235: 	"Pops out of nowhere: grows a bit too big, then settles.",
+236: 	"Slowly appears from invisible.",
+237: 	"Grows from tiny to full size.",
+238: 	"Comes from very big and close, down to its place.",
+239: 	"Falls from the sky and bounces on its spot.",
+240: 	"Slides in from the left side of the screen.",
+241: 	"Slides in from the right side of the screen.",
+   ...
+503: }
+504: function v_u_2.soundEntry(p17, p18) -- name: soundEntry
+505: 	-- upvalues: (copy) v_u_2
+506: 	local v19 = math.max(p18 or 0, 0.1)
+507: 	local v20
+508: 	if type(p17) == "table" then
+509: 		v20 = p17.k or p17
+510: 	else
+511: 		v20 = p17
+512: 	end
+513: 	local v21 = type(p17) == "table" and p17 and p17 or {}
+514: 	local v22 = {
+515: 		["k"] = v20
+516: 	}
+517: 	for v23, v24 in pairs(v_u_2.SND) do
+518: 		local v25 = v21[v23]
+519: 		if type(v25) ~= "number" or v25 ~= v25 then
+520: 			v25 = v24[3]
+521: 		end
+522: 		local v26 = v24[1]
+523: 		local v27 = v24[2]
+524: 		local v28 =
+
+===== ReplicatedStorage.OnboardingKit.Protocol =====
+   ...
+15: 	["MaxEventsPerSession"] = 4000,
+16: 	["MaxPayloadBytes"] = 3800000,
+17: 	["MaxFields"] = 24,
+18: 	["MaxString"] = 120,
+19: 	["MaxEarlyLeaves"] = 500,
+20: 	["EventTypes"] = table.freeze({
+21: 		["Start"] = true,
+22: 		["Input"] = true,
+23: 		["Release"] = true,
+24: 		["Button"] = true,
+25: 		["Stage"] = true,
+26: 		["Prog"] = true,
+27: 		["Mark"] = true,
+28: 		["Move"] = true,
+29: 		["Idle"] = true,
+30: 		["Tool"] = true,
+31: 		["Prompt"] = true,
+32: 		["Viewport"] = true,
+33: 		["Focus"] = true,
+34: 		["Perf"] = true,
+35: 		["Load"] = true,
+36: 		["End"] = true
+37: 	}),
+38: 	["ServerOnly"] = table.freeze({
+39: 		["Prog"] = true,
+40: 		["Mark"] = true,
+41: 		["End"] = true
+42: 	})
+43: }
+44: return table.freeze(v1)
+
+===== StarterPlayer.PlayerModule.CommonUtils =====
+1: local v_u_5 = {
+2: 	["_mocks"] = {},
+3: 	["mock"] = function(p1, p2) -- name: mock
+4: 		-- upvalues: (copy) v_u_5
+5: 		v_u_5._mocks[p1] = p2
+6: 	end,
+7: 	["get"] = function(p3) -- name: get
+8: 		-- upvalues: (copy) v_u_5
+9: 		if v_u_5._mocks[p3] then
+10: 			return require(v_u_5._mocks[p3])
+11: 		end
+12: 		if script:FindFirstChild(p3) then
+13: 			return require(script:FindFirstChild(p3))
+14: 		end
+15: 		local v4 = "Util does not exist: " .. p3
+
+===== REMOTES =====
