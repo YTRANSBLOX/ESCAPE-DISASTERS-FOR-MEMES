@@ -1,0 +1,344 @@
+keys: NewBtn, openProject, Library.Grid, AddBtn
+scripts scanned: 91
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.Util =====
+   ...
+1186: 	local v334 = v_u_9.ui.Root
+1187: 	local v335 = v_u_9.ui.Root.Editor
+1188: 	for _, v336 in ipairs({ v334.Home.MyPage, v334.Home.GalleryPage, v334.Home.AuthorPage }) do
+1189: 		v_u_8.edgeMask(v336.GridMask.Grid)
+1190: 	end
+1191: 	for _, v337 in ipairs({ v334.Home.GalleryPage.Trending.ChipsMask.Chips, v335.Timeline.StripMask.Strip, v_u_9.watch.Reels.TopBar.FeedsMask.Feeds }) do
+1192: 		v_u_8.edgeMask(v337, true)
+1193: 	end
+1194: 	for _, v338 in ipairs({
+1195: 		v334.Home.AuthorPage.FollowList.List,
+1196: 		v334.Popups.Shop.Scroll,
+1197: 		v335.Inspector.Buttons,
+1198: 		v335.Library.Grid,
+1199: 		v335.Scenes.Grid,
+1200: 		v335.Music.List,
+1201: 		v335.Sounds.List,
+1202: 		v_u_9.watch.UI.CommentsPanel.List
+1203: 	}) do
+1204: 		v_u_8.edgeFade(v338, v_u_16)
+1205: 	end
+1206: 	v_u_8.edgeFade(v334.Popups.Inbox.List, v_u_17)
+1207: 	v_u_10 = v_u_9.ui.Root.Popups
+1208: 	local v339 = v_u_10.Confirm
+1209: 	local v_u_340 = v_u_10.Input
+1210: 	v_u_8.button(v339.YesBtn, function()
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.Editor =====
+   ...
+607: 		v287.TextTransparency = v289
+608: 		local v290 = v287:FindFirstChild("Icon")
+609: 		if v290 and v290:IsA("TextLabel") then
+610: 			v290.TextTransparency = v289
+611: 			local v291 = v290:FindFirstChild("Img")
+612: 			if v291 then
+613: 				v291.ImageTransparency = v289
+614: 			end
+615: 		end
+616: 		v_u_13.setActive(v280.OnionBtn, v_u_35)
+617: 		v_u_13.setActive(v280.CameraBtn, v_u_34 == "camera")
+618: 		local v292 = v_u_22.LeftBar
+619: 		v_u_13.setActive(v292.AddBtn, v_u_13.isOpen(v_u_22.Library))
+620: 		v_u_13.setActive(v292.DrawBtn, v_u_34 == "draw")
+621: 		v_u_13.setActive(v292.SceneBtn, v_u_13.isOpen(v_u_22.Scenes))
+622: 		v_u_13.setActive(v292.MusicBtn, v_u_13.isOpen(v_u_22.Music))
+623: 		if v_u_76 and not v_u_13.isOpen(v_u_22.Music) then
+624: 			for _, v293 in ipairs(v_u_76:GetChildren()) do
+625: 				v293:Stop()
+626: 			end
+627: 		end
+628: 		v_u_13.setActive(v292.SoundBtn, v_u_13.isOpen(v_u_22.Sounds) or v_u_13.isOpen(v_u_22.Music))
+629: 		local v294 = v_u_29.Buttons
+630: 		v_u_13.setActive(v294.FxBtn, v_u_13.isOpen(v_u_22.ObjFx))
+631: 		v_u_13.setActive(v_u_29.Buttons.MovesBtn, v_u_13.isOpen(v_u_22.Moves))
+   ...
+2527: local function v_u_862(p856) -- name: buildCat
+2528: 	-- upvalues: (copy) v_u_62, (ref) v_u_22, (copy) v_u_6, (copy) v_u_90, (ref) v_u_14, (ref) v_u_13, (copy) v_u_854
+2529: 	if not v_u_62[p856] then
+2530: 		local v857 = {}
+2531: 		v_u_62[p856] = v857
+2532: 		local v858 = v_u_22.Templates.ItemCard
+2533: 		for v859, v_u_860 in ipairs(v_u_6.ByCat[p856] or {}) do
+2534: 			local v861 = v858:Clone()
+2535: 			v861.Name = v_u_860.Id
+2536: 			v861.LayoutOrder = v859
+2537: 			v861.Label.Text = v_u_860.Name
+2538: 			v_u_90.styleTag(v861, v_u_860)
+2539: 			v861.Parent = v_u_22.Library.Grid
+2540: 			v_u_14.preview(v861.Preview.Holder, v_u_860.Id, 108, 88)
+2541: 			v861.Activated:Connect(function()
+2542: 				-- upvalues: (ref) v_u_13, (ref) v_u_854, (copy) v_u_860
+2543: 				v_u_13.click()
+2544: 				v_u_854(v_u_860)
+2545: 			end)
+2546: 			table.insert(v857, v861)
+2547: 		end
+2548: 	end
+2549: end
+2550: function v_u_11.refreshVip() -- name: refreshVip
+2551: 	-- upvalues: (copy) v_u_62, (copy) v_u_6, (copy) v_u_90, (ref) v_u_22, (ref) v_u_32, (copy) v_u_72
+   ...
+2653: 	for v884, v885 in pairs(v_u_62) do
+2654: 		for _, v886 in ipairs(v885) do
+2655: 			v886.Visible = v884 == p883
+2656: 		end
+2657: 	end
+2658: 	for _, v887 in ipairs(v_u_6.Categories) do
+2659: 		local v888 = v_u_22.Library.Tabs:FindFirstChild(v887.Id)
+2660: 		if not v888 then
+2661: 			continue
+2662: 		end
+2663: 		v_u_13.setColor(v888, v887.Id == p883 and v_u_13.ACCENT or v_u_13.BTN)
+2664: 	end
+2665: 	v_u_22.Library.Grid.CanvasPosition = Vector2.zero
+2666: end
+2667: local function v_u_892() -- name: buildLibrary
+2668: 	-- upvalues: (ref) v_u_63, (copy) v_u_6, (ref) v_u_22, (ref) v_u_13, (copy) v_u_889, (ref) v_u_855
+2669: 	if not v_u_63 then
+2670: 		v_u_63 = true
+2671: 		for _, v_u_890 in ipairs(v_u_6.Categories) do
+2672: 			local v891 = v_u_22.Library.Tabs:FindFirstChild(v_u_890.Id)
+2673: 			if not v891 then
+2674: 				continue
+2675: 			end
+2676: 			v_u_13.button(v891, function()
+2677: 				-- upvalues: (ref) v_u_889, (copy) v_u_890
+   ...
+3349: 				end
+3350: 			end)
+3351: 			local v1068 = v_u_73
+3352: 			table.insert(v1068, v1066)
+3353: 		end
+3354: 		v1058.Empty.Visible = #v1060 == 0
+3355: 		local v1069 = #v1060 >= v_u_9.MAX_SOUNDS
+3356: 		for v1070, v1071 in pairs(v_u_72) do
+3357: 			local v1072 = v_u_32:soundIndex(v1070) ~= nil
+3358: 			local v1073 = v_u_6.Sounds[v1070]
+3359: 			if v1073 and v_u_90.crateLocked(v1073) then
+3360: 				local _, v1074 = v_u_5.crateOf(v1070)
+3361: 				v1071.AddBtn.Text = "Unlock"
+3362: 				v_u_13.setColor(v1071.AddBtn, v_u_5.rarity(v1074.Rarity).Color)
+3363: 				local v1075 = v1071.AddBtn
+3364: 				v1075.TextTransparency = 0
+3365: 				local v1076 = v1075:FindFirstChild("Icon")
+3366: 				if v1076 and v1076:IsA("TextLabel") then
+3367: 					v1076.TextTransparency = 0
+3368: 					local v1077 = v1076:FindFirstChild("Img")
+33
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.Tutorial =====
+   ...
+280: 		return v104, "Tap your Ninja!", "drag"
+281: 	end
+282: end
+283: local function v_u_126() -- name: plan
+284: 	-- upvalues: (ref) v_u_7, (ref) v_u_41, (copy) v_u_56, (copy) v_u_63, (copy) v_u_99, (ref) v_u_9, (copy) v_u_52, (copy) v_u_107
+285: 	local v108 = v_u_7.ui.Root.Editor
+286: 	if v_u_41 == "new" then
+287: 		local v109 = v_u_7.ui.Root.Home.MyPage.GridMask.Grid:FindFirstChild("NewCard")
+288: 		if v_u_56(v109) then
+289: 			return v_u_63(v109, 8), "Tap here to make a new cartoon!", "tap"
+290: 		end
+291: 	elseif v_u_41 == "add" then
+292: 		local v110 = v108.LeftBar.AddBtn
+293: 		if v_u_56(v110) then
+294: 			return v_u_63(v110, 6), "Tap Add to pick a character!", "tap"
+295: 		end
+296: 	elseif v_u_41 == "ninja" then
+297: 		local v111 = v108.Library.Grid:FindFirstChild("Ninja")
+298: 		if v_u_56(v111) then
+299: 			return v_u_63(v111, 6), "Pick the Ninja!", "tap"
+300: 		end
+301: 		local v112 = v108.Library.Tabs:FindFirstChild("Characters")
+302: 		if v_u_56(v112) then
+303: 			return v_u_63(v112, 6), "Tap Characters!", "tap"
+304: 		end
+305: 	else
+306: 		if v_u_41 == "pose" then
+307: 			local v113 = v_u_63(v108.StageArea)
+308: 			if v_u_56(v108.Inspector) then
+309: 				local v114 = v113[3]
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.Home =====
+   ...
+321: 				end
+322: 			end)
+323: 			for _, v152 in ipairs({ "Title", "Info" }) do
+324: 				v_u_10.tween(v_u_149[v152], 0.15, {
+325: 					["TextTransparency"] = p147 and 1 or 0
+326: 				}, nil, nil, "fade")
+327: 			end
+328: 		end
+329: 	else
+330: 		return
+331: 	end
+332: end
+333: local function v_u_158(p154) -- name: openProject
+334: 	-- upvalues: (ref) v_u_22, (ref) v_u_10, (ref) v_u_12, (ref) v_u_9
+335: 	local v155
+336: 	if v_u_22 then
+337: 		v155 = false
+338: 	else
+339: 		v_u_22 = true
+340: 		v155 = true
+341: 	end
+342: 	if v155 then
+343: 		v_u_10.busy(true, "Opening...")
+344: 		local v156, v157 = v_u_10.call("Open", p154)
+345: 		v_u_10.busy(false)
+   ...
+2559: 			table.insert(v756, v755)
+2560: 		end
+2561: 		v_u_451()
+2562: 		v_u_445()
+2563: 	end)
+2564: 	v_u_446(v_u_24, v_u_30)
+2565: end
+2566: function v_u_8.openAuthor(p757, p758) -- name: openAuthor
+2567: 	-- upvalues: (ref) v_u_42, (ref) v_u_415
+2568: 	v_u_42 = p758
+2569: 	v_u_415(p757)
+2570: end
+2571: v_u_8.openProject = v_u_158
+2572: function v_u_8.syncCard(p759) -- name: syncCards
+2573: 	-- upvalues: (copy) v_u_19, (copy) v_u_20, (copy) v_u_113
+2574: 	local v760 = { v_u_19, v_u_20 }
+2575: 	for _, v761 in ipairs(v760) do
+2576: 		for v762 = #v761, 1, -1 do
+2577: 			local v763 = v761[v762]
+2578: 			if v763:GetAttribute("PostId") ~= p759.id then
+2579: 				continue
+2580: 			end
+2581: 			if p759.removed then
+2582: 				v763:Destroy()
+2583: 				table.remove(v761, v762)
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.CommentsUI =====
+   ...
+600: 	v_u_5 = p170.Util
+601: 	local v171 = v_u_4.watch.UI
+602: 	v_u_6 = v171.CommentsPanel
+603: 	v_u_7 = v_u_6.List
+604: 	v_u_10 = v171.Actions
+605: 	v_u_8 = v171.Templates.CommentRow
+606: 	v_u_9 = v_u_6.InputRow.Box
+607: 	v_u_11 = v_u_7.Sort
+608: 	v_u_12 = v_u_6.ReplyBar
+609: 	v_u_6.Visible = false
+610: 	v_u_6.Position = v_u_29
+611: 	v_u_5.setColor(v_u_11.TopBtn, v_u_18 == "top" and v_u_5.ACCENT or v_u_5.BTN)
+612: 	v_u_5.setColor(v_u_11.NewBtn, v_u_18 == "new" and v_u_5.ACCENT or v_u_5.BTN)
+613: 	v_u_5.button(v_u_11.TopBtn, function()
+614: 		-- upvalues: (ref) v_u_18, (ref) v_u_5, (ref) v_u_11, (ref) v_u_143
+615: 		if v_u_18 ~= "top" then
+616: 			v_u_18 = "top"
+617: 			v_u_5.setColor(v_u_11.TopBtn, v_u_18 == "top" and v_u_5.ACCENT or v_u_5.BTN)
+618: 			v_u_5.setColor(v_u_11.NewBtn, v_u_18 == "new" and v_u_5.ACCENT or v_u_5.BTN)
+619: 			v_u_143(false)
+620: 		end
+621: 	end)
+622: 	v_u_5.button(v_u_11.NewBtn, function()
+623: 		-- upvalues: (ref) v_u_18, (ref) v_u_5, (ref) v_u_11, (ref) v_u_143
+624: 		if v_u_18 ~= "new" then
+625: 			v_u_18 = "new"
+626: 			v_u_5.setColor(v_u_11.TopBtn, v_u_18 == "top" and v_u_5.ACCENT or v_u_5.BTN)
+627: 			v_u_5.setColor(v_u_11.NewBtn, v_u_18 == "new" and v_u_5.ACCENT or v_u_5.BTN)
+628: 			v_u_143(false)
+629: 		end
+630: 	end)
+631: 	v_u_5.button(v_u_12, v_u_35)
+632: 	v_u_5.button(v_u_12.CancelBtn, v_u_35)
+633: 	v_u_5.button(v_u_6.CloseBtn, function()
+634: 		-- upvalues: (ref) v_u_3
+635: 		v_u_3.close()
+636: 	end)
+637: 	v_u_5.button(v_u_6.InputRow.SendBtn, v_u_156)
+638: 	v_u_5.button(v_u_7.LoadMore, function()
+639: 		-- upvalues: (ref) v_u_143
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.Reels =====
+   ...
+2940: 			if v759 then
+2941: 				if v_u_62 then
+2942: 					local v760 = { "react", v_u_62.src, "remix" }
+2943: 					local v761 = v_u_63
+2944: 					table.insert(v761, v760)
+2945: 					if #v_u_63 >= 25 then
+2946: 						local v762 = v_u_63
+2947: 						v_u_63 = {}
+2948: 						task.spawn(v_u_8.call, "ReelsStats", v762)
+2949: 					end
+2950: 				end
+2951: 				if v_u_6.active and v_u_33[v_u_34] == v758 then
+2952: 					v_u_249(v_u_7.Home.openProject, v759.id)
+2953: 				else
+2954: 					v_u_8.toast("Your remix is in My Gallery!")
+2955: 				end
+2956: 			else
+2957: 				return
+2958: 			end
+2959: 		else
+2960: 			return
+2961: 		end
+2962: 	end
+2963: 	v_u_8.button(v_u_15.Remix.Btn, v763)
+2964: 	local function v768()
+   ...
+2966: 		local v764 = v_u_33[v_u_34]
+2967: 		if v764 and (v764.mine and v764.pid) then
+2968: 			if v_u_62 then
+2969: 				local v765 = { "react", v_u_62.src, "edit" }
+2970: 				local v766 = v_u_63
+2971: 				table.insert(v766, v765)
+2972: 				if #v_u_63 >= 25 then
+2973: 					local v767 = v_u_63
+2974: 					v_u_63 = {}
+2975: 					task.spawn(v_u_8.call, "ReelsStats", v767)
+2976: 				end
+2977: 			end
+2978: 			v_u_249(v_u_7.Home.openProject, v764.pid)
+2979: 		end
+2980: 	end
+2981: 	v_u_8.button(v_u_15.Edit.Btn, v768)
+2982: 	local function v770()
+2983: 		-- upvalues: (ref) v_u_81, (ref) v_u_33, (ref) v_u_34, (ref) v_u_245, (ref) v_u_19
+2984: 		table.clear(v_u_81)
+2985: 		local v769 = v_u_33[v_u_34]
+2986: 		if v769 then
+2987: 			v_u_245(v769)
+2988: 		end
+2989: 		v_u_19.Visible = not v_u_19.Visible
+2990: 	end
+   ...
+3037: 	end)
+3038: 	v_u_8.iconText(v_u_19.DuetBtn, v_u_19.DuetBtn.Text)
+3039: 	v_u_8.button(v_u_19.DuetBtn, function()
+3040: 		-- upvalues: (ref) v_u_33, (ref) v_u_34, (ref) v_u_19, (ref) v_u_8, (ref) v_u_6, (ref) v_u_249, (ref) v_u_7
+3041: 		local v776 = v_u_33[v_u_34]
+3042: 		if v776 and not (v776.endCard or (v776.mine or v776.dueting)) then
+3043: 			v_u_19.Visible = false
+3044: 			v776.dueting = true
+3045: 			local v777, v778 = v_u_8.call("Duet", v776.id)
+3046: 			v776.dueting = false
+3047: 			if v777 then
+3048: 				if v_u_6.active and v_u_33[v_u_34] == v776 then
+3049: 					v_u_249(v_u_7.Home.openProject, v777.id)
+3050: 				else
+3051: 					v_u_8.toast("Your duet is in My Gallery!")
+3052: 				end
+3053: 			else
+3054: 				v_u_8.toast(v778, true)
+3055: 				return
+3056: 			end
+3057: 		else
+3058: 			return
+3059: 		end
+3060: 	end)
+3061: 	v_u_8.button(v_u_19.RemoveBtn, function()
+
+===== REMOTES =====
