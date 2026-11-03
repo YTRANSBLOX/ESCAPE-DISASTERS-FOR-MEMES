@@ -1,0 +1,2974 @@
+keys: frame, Frame, pose, Pose, fx, Fx, FX, bone, Bone
+scripts scanned: 88
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient =====
+   ...
+69: 		local v20, v21 = pcall(v19)
+70: 		if v20 and v21 then
+71: 			v_u_17 = v21:GetControls()
+72: 		end
+73: 	end
+74: 	if v_u_17 then
+75: 		local v22 = v_u_17.Disable
+76: 		local v23 = v_u_17
+77: 		pcall(v22, v23)
+78: 	end
+79: end
+80: task.spawn(v_u_24)
+81: local v_u_25 = CFrame.new(0, 5000, 0) * CFrame.Angles(1.5707963267948966, 0, 0)
+82: local v_u_26 = nil
+83: local function v_u_28() -- name: lockCamera
+84: 	-- upvalues: (copy) v_u_25, (ref) v_u_26, (copy) v_u_28
+85: 	local v_u_27 = workspace.CurrentCamera
+86: 	if v_u_27 then
+87: 		v_u_27.CameraType = Enum.CameraType.Scriptable
+88: 		v_u_27.CFrame = v_u_25
+89: 		if v_u_26 then
+90: 			v_u_26:Disconnect()
+91: 		end
+92: 		v_u_26 = v_u_27:GetPropertyChangedSignal("CameraType"):Connect(function()
+93: 			-- upvalues: (copy) v_u_27, (ref) v_u_28
+94: 			if v_u_27.CameraType ~= Enum.CameraType.Scriptable then
+95: 				task.defer(v_u_28)
+96: 			end
+97: 		end)
+98: 	end
+99: end
+100: v_u_28()
+   ...
+186: 				local v51 = v50 * p43 + 0.5
+187: 				v49.MaxTextSize = math.floor(v51)
+188: 			end
+189: 		end
+190: 	end
+191: end
+192: local v52 = Instance.new("ScreenGui")
+193: v52.Name = "DrawScreen"
+194: v52.IgnoreGuiInset = true
+195: v52.ScreenInsets = Enum.ScreenInsets.None
+196: v52.ClipToDeviceSafeArea = false
+197: v52.ResetOnSpawn = false
+198: local v_u_53 = Instance.new("Frame")
+199: v_u_53.Name = "Screen"
+200: v_u_53.Size = UDim2.fromScale(1, 1)
+201: v_u_53.BackgroundTransparency = 1
+202: v_u_53.Active = false
+203: v_u_53.Parent = v52
+204: v52.Parent = v5
+205: local function v_u_72(p54) -- name: layoutBleed
+206: 	-- upvalues: (copy) v_u_29, (copy) v_u_53
+207: 	local v55 = v_u_29.scale
+208: 	local v56 = v_u_53.AbsolutePosition
+209: 	local v57 = v_u_53.AbsoluteSize
+210: 	if v57.X < 10 or v55 <= 0 then
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.Util =====
+   ...
+54: 	local v32
+55: 	if v30 then
+56: 		v32 = v30[v31]
+57: 	else
+58: 		v32 = v30
+59: 	end
+60: 	if v32 then
+61: 		v30[v31] = nil
+62: 		v32:Cancel()
+63: 	end
+64: end
+65: local v_u_33 = {}
+66: function v_u_8.sfx(p34, p35) -- name: sfx
+67: 	-- upvalues: (copy) v_u_7, (copy) v_u_33, (copy) v_u_2
+68: 	local v36 = v_u_7.Sounds[p34]
+69: 	if v36 then
+70: 		local v37 = v_u_33[p34]
+71: 		if not v37 then
+72: 			v37 = v36.Sound:Clone()
+73: 			v37.Parent = v_u_2
+74: 			v_u_33[p34] = v37
+75: 		end
+76: 		v37.Volume = p35 or v36.Sound.Volume
+77: 		v37.TimePosition = 0
+78: 		v37:Play()
+   ...
+172: 		-- upvalues: (ref) v_u_51, (copy) v_u_65
+173: 		v_u_51 = false
+174: 		v_u_65()
+175: 	end)
+176: 	p_u_46.Activated:Connect(function(...)
+177: 		-- upvalues: (ref) v_u_8, (copy) p_u_47
+178: 		v_u_8.click()
+179: 		p_u_47(...)
+180: 	end)
+181: end
+182: function v_u_8.click() -- name: click
+183: 	-- upvalues: (copy) v_u_8
+184: 	v_u_8.sfx("Button Click", 0.5)
+185: end
+186: local function v_u_75(p66) -- name: addShine
+187: 	-- upvalues: (copy) v_u_11
+188: 	local v67 = Instance.new("Frame")
+189: 	v67.Name = "Shine"
+190: 	v67.BackgroundColor3 = v_u_11
+191: 	v67.BorderSizePixel = 0
+192: 	v67.Active = false
+193: 	local v68 = p66:FindFirstChildOfClass("UIPadding")
+194: 	local v69, v70, v71, v72
+195: 	if v68 then
+196: 		v69 = v68.PaddingLeft.Offset
+197: 		v70 = v68.PaddingRight.Offset
+198: 		v71 = v68.PaddingTop.Offset
+199: 		v72 = v68.PaddingBottom.Offset
+200: 	else
+   ...
+583: 	Color3.fromRGB(92, 168, 255),
+584: 	Color3.fromRGB(180, 110, 255),
+585: 	Color3.fromRGB(255, 140, 60)
+586: }
+587: local v_u_159 = nil
+588: local v_u_160 = {}
+589: local v_u_161 = nil
+590: local v_u_162 = Font.new("rbxasset://fonts/families/LegacyArial.json")
+591: function v_u_8.burst(p163, p164, p165) -- name: burst
+592: 	-- upvalues: (ref) v_u_159, (ref) v_u_9, (copy) v_u_8, (copy) v_u_162, (copy) v_u_1
+593: 	if not v_u_159 then
+594: 		v_u_159 = Instance.new("ScreenGui")
+595: 		v_u_159.Name = "DrawFx"
+596: 		v_u_159.DisplayOrder = 100
+597: 		v_u_159.IgnoreGuiInset = true
+598: 		v_u_159.ResetOnSpawn = false
+599: 		v_u_159.Parent = v_u_9.player:WaitForChild("PlayerGui")
+600: 	end
+601: 	local v166 = v_u_159
+602: 	local v167 = p163.AbsolutePosition + p163.AbsoluteSize / 2 - v166.AbsolutePosition
+603: 	local v168 = v_u_9.scale or 1
+604: 	local v169 = Random.new()
+605: 	for v170 = 1, p165 do
+606: 		local v171 = v169:NextNumber(18, 30) * v168
+607: 		local v172 = math.floor(v171)
+   ...
+659: 			local v190 = (v181.t - (v181.life - 0.4)) / 0.4
+660: 			v184.BackgroundTransparency = math.clamp(v190, 0, 1)
+661: 		end
+662: 	end
+663: 	if #v_u_160 == 0 and v_u_161 then
+664: 		v_u_161:Disconnect()
+665: 		v_u_161 = nil
+666: 	end
+667: end
+668: function v_u_8.celebrate() -- name: celebrate
+669: 	-- upvalues: (copy) v_u_157, (copy) v_u_8, (ref) v_u_159, (ref) v_u_9, (copy) v_u_158, (copy) v_u_160, (ref) v_u_161, (copy) v_u_4, (copy) v_u_191
+670: 	for _, v192 in ipairs(v_u_157) do
+671: 		v_u_8.sfx(v192)
+672: 	end
+673: 	if not v_u_159 then
+674: 		v_u_159 = Instance.new("ScreenGui")
+675: 		v_u_159.Name = "DrawFx"
+676: 		v_u_159.DisplayOrder = 100
+677: 		v_u_159.IgnoreGuiInset = true
+678: 		v_u_159.ResetOnSpawn = false
+679: 		v_u_159.Parent = v_u_9.player:WaitForChild("PlayerGui")
+680: 	end
+681: 	local v193 = v_u_159.AbsoluteSize
+682: 	local v194 = v_u_9.scale or 1
+683: 	local v195 = Random.new()
+684: 	for v196 = 1, 70 do
+685: 		local v197 = v196 % 2 == 0 and 1 or -1
+686: 		local v198 = Instance.new("Frame")
+687: 		v198.BorderSizePixel = 0
+688: 		v198.AnchorPoint = Vector2.new(0.5, 0.5)
+689: 		v198.BackgroundColor3 = v_u_158[v195:NextInteger(1, #v_u_158)]
+690: 		v198.Parent = v_u_159
+691: 		local v199 = v_u_160
+692: 		local v200 = {
+693: 			["f"] = nil,
+694: 			["t"] = 0,
+695: 			["life"] = nil,
+696: 			["s"] = nil,
+697: 			["x"] = nil,
+698: 			["y"] = nil,
+   ...
+850: 		if v_u_15 == p_u_242 then
+851: 			v_u_15 = nil
+852: 			if v_u_14 then
+853: 				v_u_14.Visible = false
+854: 			end
+855: 		end
+856: 	end)
+85
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.Renderer =====
+   ...
+55: 		end
+56: 		v_u_19[v24] = v25
+57: 	end
+58: 	p21.TextScaled = false
+59: 	p21.TextSize = v25
+60: end
+61: local function v_u_81(p37, p38) -- name: analyze
+62: 	-- upvalues: (copy) v_u_11
+63: 	local v_u_39 = {
+64: 		["root"] = nil,
+65: 		["nodes"] = nil,
+66: 		["grads"] = nil,
+67: 		["bones"] = nil,
+68: 		["order"] = nil,
+69: 		["parts"] = nil,
+70: 		["tints"] = nil,
+71: 		["labels"] = nil,
+72: 		["fx"] = nil,
+73: 		["fy"] = nil,
+74: 		["fa"] = nil,
+75: 		["fade"] = nil,
+76: 		["alpha"] = 1,
+77: 		["root"] = p37,
+78: 		["nodes"] = {},
+79: 		["grads"] = {},
+80: 		["bones"] = {},
+81: 		["order"] = {},
+82: 		["parts"] = {},
+83: 		["tints"] = {},
+84: 		["labels"] = {},
+85: 		["fx"] = {},
+86: 		["fy"] = {},
+87: 		["fa"] = {},
+88: 		["fade"] = {}
+89: 	}
+90: 	local v40 = {}
+91: 	for v41, v42 in ipairs(p38) do
+92: 		local v43 = p37:FindFirstChild(v42, true)
+93: 		if v43 and v43:IsA("GuiObject") and (v43:GetAttribute("Length") ~= nil and not v40[v43]) then
+94: 			v40[v43] = v41
+95: 			v_u_39.bones[v41] = {
+96: 				["inst"] = nil,
+97: 				["ox"] = nil,
+98: 				["oy"] = nil,
+99: 				["rest"] = nil,
+100: 				["len"] = nil,
+101: 				["parent"] = 0,
+102: 				["depth"] = 0,
+103: 				["inst"] = v43,
+104: 				["ox"] = v43.Position.X.Offset,
+105: 				["oy"] = v43.Position.Y.Offset,
+106: 				["rest"] = v43.Rotation,
+107: 				["len"] = v43:GetAttribute("Length") or 0
+108: 			}
+109: 		else
+110: 			v_u_39.bones[v41] = false
+111: 		end
+112: 	end
+113: 	for _, v44 in ipairs(v_u_39.bones) do
+114: 		if not v44 then
+115: 			continue
+116: 		end
+117: 		local v45 = v44.inst.Parent
+118: 		while v45 and (v45 ~= p37 and not v40[v45]) do
+119: 			v45 = v45.Parent
+120: 		end
+121: 		v44.parent = v45 and (v40[v45] or 0) or 0
+122: 	end
+123: 	for v46, v50 in ipairs(v_u_39.bones) do
+124: 		if not v50 then
+125: 			continue
+126: 		end
+127: 		local v48 = v50
+128: 		local v49 = 0
+129: 		while v50.parent ~= 0 and v49 < 50 do
+130: 			v49 = v49 + 1
+131: 			local v50 = v_u_39.bones[v50.parent]
+132: 		end
+133: 		v48.depth = v49
+134: 		local v51 = v_u_39.order
+135: 		table.insert(v51, v46)
+136: 	end
+137: 	table.sort(v_u_39.order, function(p52, p53)
+138: 		-- upvalues: (copy) v_u_39
+139: 		return v_u_39.bones[p52].depth < v_u_39.bones[p53].depth
+140: 	end)
+141: 	for _, v54 in ipairs(p37:GetDescendants()) do
+142: 		if v54:IsA("GuiObject") then
+143: 			local v55 = v_u_39.nodes
+144: 			local v56 = {
+145: 				["inst"] = v54,
+146: 				["pos"] = v54.Position,
+147: 				["anchor"] = v54.AnchorPoint,
+148: 				["rot"] = v54.Rotation,
+149: 				["bone"] = v40[v54] ~= nil
+150: 			}
+151: 			table.insert(v55, v56)
+152: 			local v57 = {
+153: 				["inst"] = v54,
+154: 				["bg"] = v54.BackgroundTransparency
+155: 			}
+156: 			if v54:IsA("TextLabel") or v54:IsA("TextButton") then
+157: 				local v58 = v54.TextTransparency
+158: 				local v59 = v54.TextStrokeTransparency
+159: 				v57.text = v58
+160: 				v57.stroke = v59
+161: 			elseif v54:IsA("ImageLabel") or v54:IsA("ImageButton") then
+   ...
+208: 				end
+209: 				local v73, v74 = v_u_11(v68, v69, v71.Rotation)
+210: 				v68 = v71.Position.X.Offset + v73
+211: 				v69 = v71.Position.Y.Offset + v74
+212: 				v70 = v70 + v71.Rotation
+213: 				v71 = v71.Parent
+214: 			end
+215: 			if not (v72 and v71) then
+216: 				break
+217: 			end
+218: 			local v75 = v_u_39.parts
+219: 			local v76 = {
+220: 				["bone"] = v40[v71] or 0,
+221: 				["cx"] = v68,
+222: 				["cy"] = v69,
+223: 				["r"] = v70,
+224: 				["w"] = v66,
+225: 				["h"] = v67
+226: 			}
+227: 			table.insert(v75, v76)
+228: 		elseif v54:IsA("UIGradient") then
+229: 			local v77 = v_u_39.grads
+230: 			local v78 = {
+231: 				["inst"] = v54,
+232: 				["rot"] = v54.Rotation
+   ...
+238: 			end
+239: 			local v79 = v_u_39.fade
+240: 			local v80 = {
+241: 				["inst"] = v54,
+242: 				["line"] = v54.Transparency
+243: 			}
+244: 			table.insert(v79, v80)
+245: 		end
+246: 	end
+247: 	return v_u_39
+248: end
+249: function v_u_12.newRoot(p82) -- name: newRoot
+250: 	local v83 = Instance.new("Frame")
+251: 	v83.Name = p8
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.Project =====
+   ...
+42: 	return v14
+43: end
+44: local v_u_22 = v_u_7.copyState
+45: function v_u_7.new(p23, p24, p25) -- name: new
+46: 	-- upvalues: (copy) v_u_7, (copy) v_u_4
+47: 	local v26 = v_u_7
+48: 	local v27 = setmetatable({}, v26)
+49: 	v27.pid = p23
+50: 	v27.title = p24 or "Cartoon"
+51: 	local v28 = type(p25) == "table" and p25 and p25 or v_u_4.empty()
+52: 	v27.objs = v28.objs or {}
+53: 	v27.order = v28.order or {}
+54: 	v27.frames = v28.frames or {}
+55: 	v27.music = v28.music or 0
+56: 	if #v27.order == 0 then
+57: 		local v29 = v_u_4.empty()
+58: 		local v30 = v29.order
+59: 		local v31 = v29.frames
+60: 		v27.order = v30
+61: 		v27.frames = v31
+62: 	end
+63: 	v27.nObj = 0
+64: 	v27.nFrame = 0
+65: 	for v32 in pairs(v27.objs) do
+66: 		local v33 = v27.nObj
+67: 		local v34 = string.sub(v32, 2)
+68: 		local v35 = tonumber(v34) or 0
+69: 		v27.nObj = math.max(v33, v35)
+70: 	end
+71: 	for _, v36 in ipairs(v27.order) do
+72: 		local v37 = v27.nFrame
+73: 		local v38 = string.sub(v36, 2)
+74: 		local v39 = tonumber(v38) or 0
+75: 		v27.nFrame = math.max(v37, v39)
+76: 	end
+77: 	v27.cur = 1
+78: 	v27.undo = {}
+79: 	v27.redo = {}
+80: 	v27.dirty = {}
+81: 	v27.structDirty = false
+82: 	v27.objsDirty = false
+83: 	v27.pending = nil
+84: 	v27.changed = false
+85: 	return v27
+86: end
+87: function v_u_7.fid(p40, p41) -- name: fid
+88: 	return p40.order[p41 or p40.cur]
+89: end
+90: function v_u_7.frame(p42, p43) -- name: frame
+91: 	return p42.frames[p42.order[p43 or p42.cur]]
+92: end
+93: function v_u_7.objCount(p44) -- name: objCount
+94: 	local v45 = 0
+95: 	for _ in pairs(p44.objs) do
+96: 		v45 = v45 + 1
+97: 	end
+98: 	return v45
+99: end
+100: function v_u_7.pointsUsed(p46) -- name: pointsUsed
+101: 	-- upvalues: (copy) v_u_4
+102: 	local v47 = 0
+103: 	for _, v48 in pairs(p46.objs) do
+104: 		if not v48.s then
+105: 			continue
+106: 		end
+107: 		v47 = v47 + v_u_4.pointsOf(v48.s)
+108: 	end
+109: 	return v47
+110: end
+111: function v_u_7.newOid(p49) -- name: newOid
+112: 	p49.nObj = p49.nObj + 1
+113: 	return "o" .. p49.nObj
+114: end
+115: function v_u_7.newFid(p50) -- name: newFid
+116: 	p50.nFrame = p50.nFrame + 1
+117: 	return "f" .. p50.nFrame
+118: end
+119: function v_u_7.fidsFrom(p51, p52) -- name: fidsFrom
+120: 	local v53 = {}
+121: 	for v54 = p52, #p51.order do
+122: 		local v55 = p51.order[v54]
+123: 		table.insert(v53, v55)
+124: 	end
+125: 	return v53
+126: end
+127: function v_u_7.begin(p56, p57) -- name: begin
+128: 	-- upvalues: (copy) v_u_12
+129: 	local v58 = p56.objs
+130: 	local v59 = {}
+131: 	local v60 = {}
+132: 	for v61, v62 in pairs(v58) do
+133: 		v59[v61] = v62
+134: 	end
+135: 	v60.objs = v59
+136: 	v60.order = table.clone(p56.order)
+137: 	v60.frames = {}
+138: 	v60.cur = p56.cur
+139: 	v60.music = p56.music
+140: 	for _, v63 in ipairs(p57) do
+141: 		if v60.frames[v63] ~= nil then
+142: 			continue
+143: 		end
+144: 		local v64 = v60.frames
+145: 		local v65
+146: 		if p56.frames[v63] then
+147: 			v65 = v_u_12(p56.frames[v63]) or false
+148: 		else
+149: 			v65 = false
+150: 		end
+151: 		v64[v63] = v65
+152: 	end
+153: 	p56.pending = v60
+154: end
+155: local function v_u_71(p66, p67) -- name: sameObjs
+156: 	for v68, v69 in pairs(p66) do
+157: 		if p67[v68] == v69 then
+158: 			continue
+159: 		end
+   ...
+176: 		p72:bakeAuto()
+177: 		if not v_u_71(v73.objs, p72.objs) then
+178: 			p72.objsDirty = true
+179: 		end
+180: 		local v74 = p72.objs
+181: 		local v75 = {}
+182: 		local v76 = {}
+183: 		for v77, v78 in pairs(v74) do
+184: 			v75[v77] = v78
+185: 		end
+186: 		v76.objs = v75
+187: 		v76.order = table.clone(p72.order)
+188: 		v76.frames = {}
+189: 		v76.cur = p72.cur
+190: 		v76.music = p72.music
+191: 		for v79 in pairs(v73.frames) do
+192: 			local v80 = v76.frames
+193: 			local v81
+194: 			if p72.frames[v79] then
+195: 				v81 = v_u_12(p72.frames[v79]) or false
+196: 			else
+197: 				v81 = false
+198: 			end
+199: 			v80[v79] = v81
+200: 			p72.dirty[v79] = true
+201: 		end
+202: 		local v82 = p72.undo
+203: 		table.insert(v82, {
+204: 			["before"] = v73,
+205: 			["after"] = v76
+206: 		})
+207: 		if #p72.undo 
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.Timeline =====
+   ...
+131: 				end
+132: 			end
+133: 		end)
+134: 	end
+135: end
+136: function v_u_5.init(p61) -- name: init
+137: 	-- upvalues: (ref) v_u_6, (ref) v_u_7, (ref) v_u_15, (ref) v_u_8, (ref) v_u_9, (ref) v_u_10, (ref) v_u_11, (ref) v_u_13, (ref) v_u_14, (ref) v_u_12, (copy) v_u_1, (ref) v_u_20, (ref) v_u_21, (copy) v_u_41, (copy) v_u_60, (ref) v_u_23, (copy) v_u_5
+138: 	v_u_6 = p61
+139: 	v_u_7 = p61.Util
+140: 	local v62 = v_u_6.ui.Root.Editor
+141: 	v_u_15 = v62.Timeline
+142: 	v_u_8 = v_u_15.StripMask.Strip
+143: 	v_u_9 = v62.Templates.FrameCard
+144: 	v_u_10 = v_u_15.Counter
+145: 	v_u_11 = v_u_15.Actions.SpeedBtn
+146: 	v_u_13 = v_u_15.Actions.SelectBtn
+147: 	v_u_14 = v_u_15.DropMarker
+148: 	v_u_12 = v62.FrameBar
+149: 	v_u_1.InputChanged:Connect(function(p63)
+150: 		-- upvalues: (ref) v_u_20, (ref) v_u_21, (ref) v_u_41, (ref) v_u_60
+151: 		local v64 = v_u_20
+152: 		if v_u_21 then
+153: 			local v65 = v_u_21
+154: 			local v66
+155: 			if v65.input then
+156: 				v66 = p63 == v65.input
+157: 			else
+158: 				v66 = p63.UserInputType == Enum.UserInputType.MouseMovement
+159: 			end
+160: 			if v66 then
+   ...
+205: 				if v_u_23 then
+206: 					v_u_23:Disconnect()
+207: 					v_u_23 = nil
+208: 				end
+209: 				v_u_14.Visible = false
+210: 				v_u_8.ScrollingEnabled = true
+211: 				if not v74 then
+212: 					return
+213: 				end
+214: 				v74.ghost:Destroy()
+215: 				v_u_5.refresh()
+216: 				if v74.to then
+217: 					v_u_6.Editor.moveFrames(v74.idx, v74.to)
+218: 					return
+219: 				end
+220: 			elseif v_u_20 and p71 == v_u_20.input then
+221: 				v_u_20 = nil
+222: 			end
+223: 		else
+224: 			if v_u_20 and p71 == v_u_20.input then
+225: 				v_u_20 = nil
+226: 			end
+227: 			return
+228: 		end
+229: 	end)
+   ...
+233: 	local v75 = v_u_6.Editor.project()
+234: 	if v75 then
+235: 		for v76, v77 in ipairs(v_u_16) do
+236: 			local v78 = v_u_7.BTN
+237: 			if v_u_17 and v_u_18[v75.order[v76]] then
+238: 				v78 = v_u_24
+239: 			elseif v76 == v75.cur then
+240: 				v78 = v_u_7.ACCENT
+241: 			end
+242: 			v_u_7.setColor(v77, v78)
+243: 		end
+244: 		local v79 = #v_u_5.selection()
+245: 		v_u_12.Count.Text = v79 .. (v79 == 1 and " frame selected" or " frames selected")
+246: 	end
+247: end
+248: function v_u_5.selecting() -- name: selecting
+249: 	-- upvalues: (ref) v_u_17
+250: 	return v_u_17
+251: end
+252: function v_u_5.selection() -- name: selection
+253: 	-- upvalues: (ref) v_u_6, (copy) v_u_18
+254: 	local v81 = {}
+255: 	local v82 = v_u_6.Editor.project()
+256: 	if not v82 then
+257: 		return v81
+   ...
+266: end
+267: function v_u_5.setSelecting(p85) -- name: setSelecting
+268: 	-- upvalues: (ref) v_u_17, (copy) v_u_18, (ref) v_u_6, (ref) v_u_19, (ref) v_u_12, (ref) v_u_13, (ref) v_u_7, (copy) v_u_24, (copy) v_u_80
+269: 	v_u_17 = p85
+270: 	table.clear(v_u_18)
+271: 	local v86 = v_u_6.Editor.project()
+272: 	if p85 and v86 then
+273: 		v_u_18[v86:fid()] = true
+274: 		v_u_19 = v86.cur
+275: 	end
+276: 	if v_u_12 then
+277: 		v_u_12.Visible = p85
+278: 		v_u_13.Text = p85 and "Done" or "Edit frames"
+279: 		v_u_7.setColor(v_u_13, p85 and v_u_24 or v_u_7.BTN)
+280: 	end
+281: 	if v86 then
+282: 		v_u_80()
+283: 	end
+284: end
+285: function v_u_5.selectAll() -- name: selectAll
+286: 	-- upvalues: (copy) v_u_16, (ref) v_u_6, (copy) v_u_18, (copy) v_u_80
+287: 	for v87 = 1, #v_u_16 do
+288: 		local v88 = v_u_6.Editor.project()
+289: 		if v88 then
+290: 			v88 = v88.order[v87]
+   ...
+333: 			end
+334: 		else
+335: 			local v98 = v_u_6.Editor.project()
+336: 			if v98 then
+337: 				v98 = v98.order[p93]
+338: 			end
+339: 			if v98 then
+340: 				v_u_18[v98] = not v_u_18[v98] or nil
+341: 			end
+342: 			v_u_19 = p93
+343: 		end
+344: 		v_u_80()
+345: 		v_u_6.Editor.gotoFrame(p93)
+346: 	else
+347: 		v_u_6.Editor.gotoFrame(p93)
+348: 	end
+349: end
+350: function v_u_5.clear() -- name: clear
+351: 	-- upvalues: (ref) v_u_21, (ref) v_u_23, (ref) v_u_14, (ref) v_u_8, (copy) v_u_5, (ref) v_u_20, (copy) v_u_16
+352: 	local v100 = v_u_21
+353: 	v_u_21 = nil
+354: 	if v_u_23 then
+355: 		v_u_23:Disconnect()
+356: 		v_u_23 = nil
+357: 	end
+358
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.Playback =====
+   ...
+58: local v_u_51 = setmetatable({}, {
+59: 	["__mode"] = "k"
+60: })
+61: local v_u_52 = {}
+62: local v_u_53 = nil
+63: local v_u_54 = nil
+64: local function v_u_58() -- name: buildTimes
+65: 	-- upvalues: (copy) v_u_26, (ref) v_u_24, (ref) v_u_27, (ref) v_u_28
+66: 	table.clear(v_u_26)
+67: 	local v55 = 0
+68: 	for v56, v57 in ipairs(v_u_24.order) do
+69: 		v_u_26[v56] = v55
+70: 		v55 = v55 + v_u_24.frames[v57].d
+71: 	end
+72: 	v_u_27 = math.max(v55, 0.05)
+73: 	v_u_28 = 1
+74: end
+75: local function v_u_78(p59, p60, p61) -- name: fxMod
+76: 	-- upvalues: (copy) v_u_52, (copy) v_u_6, (ref) v_u_48, (ref) v_u_49, (ref) v_u_50, (copy) v_u_51
+77: 	local v62 = p60[8]
+78: 	if not v62 or v62 == 0 then
+79: 		return p60, 1
+80: 	end
+81: 	local v63 = v_u_52[p61]
+82: 	if not v63 then
+83: 		local v64 = string.sub(p61, 2)
+84: 		v63 = tonumber(v64) or 0
+85: 		v_u_52[p61] = v63
+86: 	end
+87: 	local v65, v66, v67, v68, v69 = v_u_6.fx(v62, v_u_48, v_u_49, v_u_50, v63)
+88: 	local v70 = v_u_51[p59]
+89: 	if not v70 then
+90: 		v70 = {}
+91: 		v_u_51[p59] = v70
+92: 	end
+93: 	local v71 = p60[1] + v65
+94: 	local v72 = p60[2] + v66
+95: 	local v73 = p60[3] + v67
+96: 	v70[1] = v71
+97: 	v70[2] = v72
+98: 	v70[3] = v73
+99: 	local v74 = p60[4] * v68
+   ...
+320: 		v_u_23:render(p166)
+321: 	end
+322: 	local v167 = #v_u_24.order
+323: 	local v168 = #v_u_24.order
+324: 	local v169 = v_u_28
+325: 	if v168 < v169 or p166 < v_u_26[v169] then
+326: 		v169 = 1
+327: 	end
+328: 	while v169 < v168 and v_u_26[v169 + 1] <= p166 do
+329: 		v169 = v169 + 1
+330: 	end
+331: 	v_u_28 = v169
+332: 	local v170 = v_u_24.frames[v_u_24.order[v169]]
+333: 	local v171
+334: 	if v169 < v167 then
+335: 		v171 = v_u_24.frames[v_u_24.order[v169 + 1]] or nil
+336: 	else
+337: 		v171 = nil
+338: 	end
+339: 	local v172 = p166 - v_u_26[v169]
+340: 	local v173
+341: 	if v171 then
+342: 		v173 = v_u_6.transKind(v170.tr) or nil
+343: 	else
+344: 		v173 = nil
+345: 	end
+346: 	local v174 = v_u_6.TRANS_TIME
+347: 	local v175 = v170.d
+   ...
+603: 			if v_u_30 then
+604: 				local v293 = v289.TimeLength
+605: 				v289.TimePosition = v293 > 0 and v_u_29 % v293 or v_u_29
+606: 				v289:Resume()
+607: 			else
+608: 				v289:Pause()
+609: 			end
+610: 		else
+611: 			v289:Stop()
+612: 		end
+613: 	end
+614: end
+615: local function v_u_296() -- name: stopSfx
+616: 	-- upvalues: (copy) v_u_47, (ref) v_u_45
+617: 	table.clear(v_u_47)
+618: 	for _, v295 in ipairs(v_u_45:GetChildren()) do
+619: 		v295:Destroy()
+620: 	end
+621: end
+622: local function v_u_299(p297) -- name: pauseSfx
+623: 	-- upvalues: (ref) v_u_45
+624: 	for _, v298 in ipairs(v_u_45:GetChildren()) do
+625: 		if not v298:IsA("Sound") then
+626: 			continue
+627: 		end
+628: 		if p297 then
+629: 			if not v298.IsPlaying then
+630: 				continue
+631: 			end
+632: 			v298:Pause()
+633: 			v298:SetAttribute("Held", true)
+634: 		else
+635: 			if not v298:GetAttribute("Held") then
+636: 				continue
+637: 			end
+638: 			v298:SetAttribute("Held", nil)
+639: 			v298:Resume()
+640: 		end
+641: 	end
+642: end
+643: local function v_u_305(p300) -- name: fireSfx
+644: 	-- upvalues: (ref) v_u_12, (ref) v_u_45, (ref) v_u_16
+645: 	local v_u_301, v302 = v_u_12.SoundEdit.make(p300, v_u_45)
+646: 	if v_u_301 then
+647: 		v_u_301.SoundGroup = v_u_16
+648: 		v_u_301.Ended:Once(function()
+649: 			-- upvalues: (copy) v_u_301
+650: 			task.delay(1.5, function()
+651: 				-- upvalues: (ref) v_u_301
+652: 				if v_u_301.Parent then
+653: 					v_u_301:Destroy()
+654: 				end
+655: 			end)
+   ...
+666: 					task.delay(1, v_u_304)
+667: 				else
+668: 					v_u_301:Destroy()
+669: 				end
+670: 			else
+671: 				return
+672: 			end
+673: 		end
+674: 		task.delay((v302 or 0) + 2, v_u_304)
+675: 		v_u_301:Play()
+676: 	end
+677: end
+678: local function v_u_313(p306) -- name: playSfx
+679: 	-- upvalues: (ref) v_u_24, (copy) v_u_7, (copy) v_u_6, (copy) v_u_305, (copy) v_u_47, (copy) v_u_26
+680: 	local v307 = v_u_24.frames[v_u_24.order[p306]]
+681: 	if v307 and v307.sn then
+682: 		for _, v308 in ipairs(v307.sn) do
+683: 			local v309 = v_u_7.Sounds[v_u_6.soundKey(v
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.Editor =====
+   ...
+150: 	local v113 = (p110 - v_u_42.X - v_u_40) / v_u_39
+151: 	local v114 = (p111 - v_u_42.Y - v_u_41) / v_u_39
+152: 	local v115 = v_u_38
+153: 	local v116 = v_u_38.z * p112
+154: 	v115.z = math.clamp(v116, 0.3, 6)
+155: 	local v117 = v_u_43 / v_u_5.WORLD_W
+156: 	local v118 = v_u_44 / v_u_5.WORLD_H
+157: 	local v119 = math.min(v117, v118) * 0.9 * v_u_38.z
+158: 	v_u_38.x = v113 - (p110 - (v_u_42.X + v_u_43 / 2)) / v119
+159: 	v_u_38.y = v114 - (p111 - (v_u_42.Y + v_u_44 / 2)) / v119
+160: 	v_u_99()
+161: end
+162: local function v_u_123(p121) -- name: boneColor
+163: 	local v122 = string.sub(p121, -1)
+164: 	if v122 == "L" then
+165: 		return Color3.fromRGB(70, 150, 255)
+166: 	elseif v122 == "R" then
+167: 		return Color3.fromRGB(255, 90, 90)
+168: 	else
+169: 		return Color3.fromRGB(255, 200, 50)
+170: 	end
+171: end
+172: local function v_u_130(p124, p125, p126) -- name: heldBy
+173: 	local v127 = 0
+174: 	while p125 and v127 < 10 do
+   ...
+181: 			return false
+182: 		end
+183: 		if v129[1] == p126 then
+184: 			return true
+185: 		end
+186: 		p125 = v129[1]
+187: 		v127 = v127 + 1
+188: 	end
+189: 	return false
+190: end
+191: local function v_u_136(p131) -- name: nextOf
+192: 	-- upvalues: (ref) v_u_32
+193: 	local v132 = v_u_32:frame()
+194: 	local v133 = v_u_32:frame(v_u_32.cur + 1)
+195: 	local v134 = v132.o[p131]
+196: 	if v133 and (v134 and ((v132.tr or 0) <= 0 and not (v134[9] and v134[9].a))) then
+197: 		local v135 = v133.o[p131]
+198: 		if v135 and not (v135[9] and v135[9].a) then
+199: 			return v135
+200: 		else
+201: 			return nil
+202: 		end
+203: 	else
+204: 		return nil
+205: 	end
+206: end
+   ...
+228: 	local v152 = 0
+229: 	local v153 = 0
+230: 	v_u_27.Visible = false
+231: 	v_u_26.Visible = false
+232: 	local v154 = v_u_1.TouchEnabled
+233: 	local v155 = v_u_39 * 36
+234: 	local v156 = math.clamp(v155, 12, 22)
+235: 	local v157 = v_u_39 * 60
+236: 	local v158 = math.clamp(v157, 24, 36)
+237: 	local v159 = v156 / 2 + (v154 and 7 or 4)
+238: 	local v160 = v158 / 2 + (v154 and 8 or 4)
+239: 	if v_u_36 and (v_u_32 and not v_u_17.active) then
+240: 		local v161 = v_u_32:frame()
+241: 		local v162 = v161.c
+242: 		local v163 = v_u_5.WORLD_W / v162[3] / 2
+243: 		local v164 = v_u_5.WORLD_H / v162[3] / 2
+244: 		local v165 = v162[1] - v163
+245: 		local v166 = v162[2] - v164
+246: 		local v167 = v_u_42.X + v_u_40 + v165 * v_u_39
+247: 		local v168 = v_u_42.Y + v_u_41 + v166 * v_u_39
+248: 		local v169 = v162[1] + v163
+249: 		local v170 = v162[2] + v164
+250: 		local v171 = v_u_42.X + v_u_40 + v169 * v_u_39
+251: 		local v172 = v_u_42.Y + v_u_41 + v170 * v_u_39
+252: 		local v173 = v_u_34 == "camera"
+   ...
+465: 				local v252 = v251[v151]
+466: 				if not v252 then
+467: 					v252 = v_u_12.handles.Templates.Joint:Clone()
+468: 					v252.Parent = v_u_25
+469: 					v251[v151] = v252
+470: 				end
+471: 				v252.Visible = true
+472: 				v252.Size = UDim2.fromOffset(v156, v156)
+473: 				v252.UIStroke.Thickness = v156 >= 16 and 3 or 2
+474: 				local v253 = v_u_24.AbsolutePosition
+475: 				v252.Position = UDim2.fromOffset(v249 - v253.X, v250 - v253.Y)
+476: 				v252.UIStroke.Color = v_u_123(v246.name)
+477: 				if v_u_90.padOid == v_u_33 and v_u_90.padBone == v246.i then
+478: 					v252.Size = UDim2.fromOffset(v156 + 10, v156 + 10)
+479: 					v252.UIStroke.Thickness = 4
+480: 					v252.UIStroke.Color = Color3.fromRGB(255, 214, 90)
+481: 				end
+482: 				local v254 = v_u_48
+483: 				local v255 = {
+484: 					["kind"] = "bone",
+485: 					["i"] = nil,
+486: 					["x"] = nil,
+487: 					["y"] = nil,
+488: 					["r"] = nil,
+489: 					["i"] = v246.i,
+490: 					["x"] = v249,
+491: 					["y"] = v250,
+492: 					["r"] = v159
+493: 				}
+494: 				table.insert(v254, v255)
+495: 			end
+496: 			if not v207 then
+   ...
+618: 		local v292 = v_u_22.LeftBar
+619: 		v_u_13.setActive(v292.AddBtn, v_u_13.isOpen(v_u_22.Library))
+620: 		v_u_13.setActive(v292.DrawBtn, v_u_34 == "draw")
+621: 		v_u_13.setActive(v292.SceneBtn, v_u_13.isOpen(v_u_22.Scenes))
+622: 		v_u_13.setActive(v292.MusicBtn, v_u_13.isOpen(v_u_22.Music))
+623: 
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.Shop =====
+   ...
+392: 		})
+393: 	end
+394: 	v131.Items.Visible = true
+395: 	v131.ItemsToggle.Visible = false
+396: 	v131.Tabs.Visible = false
+397: 	local v144 = v131.Hero.CrateArt:FindFirstChild("Rays")
+398: 	if v144 then
+399: 		v_u_5:Create(v144, TweenInfo.new(14, Enum.EasingStyle.Linear, Enum.EasingDirection.In, -1), {
+400: 			["Rotation"] = 360
+401: 		}):Play()
+402: 	end
+403: 	for _, v145 in ipairs(v131.Header.DecoClip:GetChildren()) do
+404: 		if not v145:IsA("Frame") then
+405: 			continue
+406: 		end
+407: 		v_u_11.animateDeco(v145)
+408: 	end
+409: end
+410: local function v_u_147() -- name: closeReveal
+411: 	-- upvalues: (ref) v_u_29, (ref) v_u_28
+412: 	if v_u_29 then
+413: 		v_u_29:Cancel()
+414: 		v_u_29 = nil
+415: 	end
+416: 	v_u_28.Visible = false
+417: end
+418: local function v_u_187(p_u_148, p_u_149) -- name: revealMany
+419: 	-- upvalues: (ref) v_u_28, (copy) v_u_31, (copy) v_u_32, (copy) v_u_8, (ref) v_u_13, (ref) v_u_29, (copy) v_u_5, (copy) v_u_9, (copy) v_u_86
+420: 	local v_u_150 = v_u_28.Center
+421: 	local v_u_151 = v_u_150.CrateArt
+422: 	local v_u_152 = v_u_150.Multi
+423: 	for _, v153 in ipairs(v_u_152:GetChildren()) do
+424: 		if not v153:IsA("Frame") or v153.Name == "MiniTemplate" then
+425: 			continue
+426: 		end
+427: 		v153:Destroy()
+428: 	end
+429: 	v_u_152.Grid.CellSize = v_u_31[#p_u_149] or v_u_32
+430: 	table.sort(p_u_149, function(p154, p155)
+431: 		-- upvalues: (ref) v_u_8
+432: 		local v156 = p154.e.Rarity
+433: 		for v159, v158 in ipairs(v_u_8.RARITIES) do
+434: 			if v158.Key ~= v156 then
+435: 				continue
+436: 			end
+   ...
+1169: 	if not v_u_46 and v_u_45 then
+1170: 		local v_u_360 = true
+1171: 		v_u_46 = function()
+1172: 			-- upvalues: (ref) v_u_360
+1173: 			v_u_360 = false
+1174: 		end
+1175: 		local v_u_361 = v_u_45.Stage
+1176: 		local v_u_362 = Random.new()
+1177: 		task.spawn(function()
+1178: 			-- upvalues: (ref) v_u_360, (copy) v_u_361, (ref) v_u_13, (copy) v_u_362
+1179: 			while v_u_360 do
+1180: 				for _, v363 in ipairs(v_u_361.Equalizer:GetChildren()) do
+1181: 					if not v363:IsA("Frame") then
+1182: 						continue
+1183: 					end
+1184: 					local v364 = v_u_13.tween
+1185: 					local v365 = {
+1186: 						["Size"] = UDim2.fromOffset(v363.Size.X.Offset, v_u_362:NextInteger(30, 140))
+1187: 					}
+1188: 					v364(v363, 0.225, v365, Enum.EasingStyle.Quad, Enum.EasingDirection.Out, "eq")
+1189: 				end
+1190: 				task.wait(0.25)
+1191: 			end
+1192: 		end)
+1193: 		task.spawn(function()
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.Tutorial =====
+   ...
+49: 	0,
+50: 	0,
+51: 	0,
+52: 	0
+53: }
+54: local v_u_47 = 0
+55: local v_u_48 = 1
+56: local v_u_49 = nil
+57: local v_u_50 = nil
+58: local v_u_51 = {
+59: 	{
+60: 		{
+61: 			["bone"] = "ForeArmR",
+62: 			["dir"] = nil,
+63: 			["text"] = "Make him wave! HOLD the dot on his hand and DRAG it up to the circle!",
+64: 			["dir"] = Vector2.new(0.6, -0.8)
+65: 		},
+66: 		{
+67: 			["bone"] = "ShinL",
+68: 			["dir"] = nil,
+69: 			["text"] = "Now HOLD the dot on his foot and DRAG it out to the circle!",
+70: 			["dir"] = Vector2.new(0.85, -0.5)
+71: 		}
+72: 	},
+73: 	{
+74: 		{
+75: 			["bone"] = "ForeArmR",
+76: 			["dir"] = nil,
+77: 			["text"] = "Pose 2! DRAG his hand to the other side to wave hello!",
+78: 			["dir"] = Vector2.new(-1, -0.1)
+79: 		},
+80: 		{
+81: 			["bone"] = "ShinL",
+82: 			["dir"] = nil,
+83: 			["text"] = "Last one! DRAG his foot back down to tap it!",
+84: 			["dir"] = Vector2.new(-0.85, 0.5)
+85: 		}
+86: 	}
+87: }
+88: local v_u_52 = #v_u_51
+89: local v_u_53 = { "Cork Pop", "Tada" }
+90: local v_u_54 = {
+91: 	["welcome"] = 1,
+92: 	["new"] = 2,
+93: 	["add"] = 3,
+94: 	["ninja"] = 4,
+95: 	["pose"] = 5,
+96: 	["frame"] = 6,
+97: 	["anim"] = 7,
+98: 	["play"] = 8,
+99: 	["close"] = 9,
+100: 	["home"] = 10,
+101: 	["cartoons"] = 11
+102: }
+103: local function v_u_56(p55) -- name: shown
+104: 	if not (p55 and p55.Parent) then
+105: 		return false
+106: 	end
+107: 	if not p55:IsA("GuiObject") then
+108: 		return not p55:IsA("LayerCollector") or p55.Enabled
+   ...
+199: 		v_u_42 = nil
+200: 		if v_u_41 ~= "new" then
+201: 			v_u_41 = "new"
+202: 			v_u_44 = 0
+203: 			local v80 = v_u_54.new
+204: 			if v80 then
+205: 				task.spawn(v_u_8.call, "TutoStep", v80)
+206: 			end
+207: 		end
+208: 		return
+209: 	end
+210: end
+211: local function v_u_99() -- name: poseText
+212: 	-- upvalues: (ref) v_u_9, (ref) v_u_42, (ref) v_u_7, (copy) v_u_51, (ref) v_u_43, (ref) v_u_33
+213: 	if v_u_9.selected() == v_u_42 then
+214: 		local v82
+215: 		if v_u_7.GamepadCursor == nil then
+216: 			v82 = false
+217: 		else
+218: 			v82 = v_u_7.GamepadCursor.active()
+219: 		end
+220: 		if v82 then
+221: 			local v83 = v_u_9.project()
+222: 			local v84 = v_u_51
+223: 			local v85 = v83 and v83.cur or 1
+224: 			local v86 = #v_u_51
+225: 			local v87 = v84[math.clamp(v85, 1, v86)]
+226: 			local v88 = v_u_43 + 1
+227: 			local v89 = #v87
+228: 			local v90 = v87[math.clamp(v88, 1, v89)]
+229: 			local v91 = string.find(v90.bone, "Arm") and "hand" or "foot"
+230: 			if v_u_9.padPart() == v90.bone then
+231: 				return "Now push the RIGHT STICK toward the circle to move his " .. v91 .. "!"
+232: 			else
+233: 				return "Press RB to pick his " .. string.upper(v91) .. "!"
+234: 			end
+235: 		else
+236: 			if os.clock() < v_u_33 then
+237: 				return "Don\'t just tap! HOLD the glowing dot and DRAG it to the circle \240\159\145\137"
+238: 			end
+239: 			local v92 = v_u_9.project()
+240: 			local v93 = v_u_51
+241: 			local v94 = v92 and v92.cur or 1
+242: 			local v95 = #v_u_51
+   ...
+247: 		end
+248: 	else
+249: 		return "Tap your Ninja!"
+250: 	end
+251: end
+252: local function v_u_107(p100) -- name: animPlan
+253: 	-- upvalues: (copy) v_u_56, (copy) v_u_63, (ref) v_u_9, (ref) v_u_42
+254: 	local v101 = p100.Moves
+255: 	if v_u_56(v101) then
+256: 		local v102 = v101.Grid:FindFirstChild("MV_Kick")
+257: 		if v_u_56(v102) then
+258: 			if v_u_9.movePick() == "Kick" then
+259: 				return v_u_63(v101.Bottom.ApplyBtn, 6), "Tap Add Frames to make him kick!", "tap"
+260: 			else
+261: 				return v_u_63(v102, 6), "Pick the ninja Kick!", "tap"
+262: 			end
+263: 		else
+264: 			return v_u_63(v101.Tabs.BodyTab, 6), "Tap Characters!", "tap"
+265: 		end
+266: 	elseif v_u_9.selected() == v_u_42 then
+267: 		local v103 = p100.Inspector.Buttons.MovesBtn
+268: 		if v_u_56(v103) then
+269: 			return v_u_63(v103, 6), "Now tap Animations to add a ready-made move!", "tap"
+270: 		else
+271: 			return nil
+   ...
+294: 			return v_u_63(v110, 6), "Tap Add to pick a character!", "tap"
+295: 		end
+296: 	elseif v_u_41 == "ninja" then
+297: 		local v111 = v108.Lib
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.Home =====
+   ...
+749: 			v_u_188()
+750: 		end
+751: 	end)
+752: 	v_u_285.Event:Wait()
+753: 	v_u_285:Destroy()
+754: 	return v_u_286
+755: end
+756: local function v_u_301(p290) -- name: share
+757: 	-- upvalues: (copy) v_u_6, (ref) v_u_10, (ref) v_u_21, (ref) v_u_68, (copy) v_u_289, (copy) v_u_167, (ref) v_u_29, (ref) v_u_28, (ref) v_u_17, (copy) v_u_163, (ref) v_u_27, (copy) v_u_170, (ref) v_u_34, (copy) v_u_8
+758: 	local v291 = p290.pub == true
+759: 	if not v291 then
+760: 		if (p290.n or 1) < v_u_6.SHARE_MIN_FRAMES then
+761: 			v_u_10.toast("You need at least " .. v_u_6.SHARE_MIN_FRAMES .. " frames to publish (you have " .. (p290.n or 1) .. ")", true)
+762: 			return
+763: 		end
+764: 		local v292 = 0
+765: 		for _, v293 in ipairs(v_u_21) do
+766: 			if not v293.pub then
+767: 				continue
+768: 			end
+769: 			v292 = v292 + 1
+770: 		end
+771: 		if v_u_68 <= v292 then
+772: 			v_u_10.toast("You can only publish " .. v_u_68 .. " cartoons. Level up to publish more!", true)
+773: 			return
+   ...
+897: 		local v326 = v_u_324.id
+898: 		v_u_325.Name = "P" .. tostring(v326)
+899: 		v_u_325.LayoutOrder = v323
+900: 		v_u_325.Body.Fit.Scale = v316
+901: 		local v_u_327 = v_u_325.Body.Inner
+902: 		local v328 = v_u_327.Actions
+903: 		local v329 = v_u_327.Title
+904: 		local v330 = v_u_324.title
+905: 		v329.Text = (v_u_324.pin and "\240\159\147\140 " or "") .. tostring(v330 or "Cartoon")
+906: 		v328.PinBtn.Label.Text = v_u_324.pin and "Unpin" or "Pin"
+907: 		local v331 = v_u_327.Info
+908: 		local v332 = v_u_324.n or 1
+909: 		v331.Text = tostring(v332) .. " frames  \194\183  " .. v_u_10.ago(v_u_324.upd)
+910: 		local v333 = v_u_324.rm
+911: 		if type(v333) == "table" and (v_u_324.rm.dn or v_u_324.rm.n) then
+912: 			local v334 = v_u_327.Info
+913: 			local v335 = v334.Text
+914: 			local v336 = v_u_324.rm.dn or v_u_324.rm.n
+915: 			v334.Text = v335 .. "  \194\183  remix of " .. tostring(v336)
+916: 		else
+917: 			local v337 = v_u_324.du
+918: 			if type(v337) == "table" and (v_u_324.du.dn or v_u_324.du.n) then
+919: 				local v338 = v_u_327.Info
+920: 				local v339 = v338.Text
+921: 				local v340 = v_u_324.du.dn or v_u_324.du.n
+   ...
+1518: 		v474.FollowBtn.Icon.Img.Image = v475.isFollowing and "rbxassetid://91780977808401" or "rbxassetid://91970298053061"
+1519: 		v_u_10.setColor(v474.FollowBtn, v475.isFollowing and v_u_10.BTN or v_u_10.ACCENT)
+1520: 	else
+1521: 		v474.FollowersStat.Num.Text = "-"
+1522: 		v474.FollowingStat.Num.Text = "-"
+1523: 		v474.FollowBtn.Visible = false
+1524: 		v474.EditBtn.Visible = false
+1525: 	end
+1526: end
+1527: local function v_u_479() -- name: celebrateFollow
+1528: 	-- upvalues: (ref) v_u_15, (ref) v_u_10, (copy) v_u_51
+1529: 	local v477 = v_u_15.Top.Social
+1530: 	v_u_10.sfx("Sparkle")
+1531: 	v_u_10.burst(v477.FollowBtn, v_u_51, 14)
+1532: 	local v478 = v477.FollowersStat.Num.Pop
+1533: 	v478.Scale = 1.45
+1534: 	v_u_10.tween(v478, 0.35, {
+1535: 		["Scale"] = 1
+1536: 	}, Enum.EasingStyle.Back, Enum.EasingDirection.Out, "pop")
+1537: end
+1538: local function v_u_487() -- name: toggleFollow
+1539: 	-- upvalues: (ref) v_u_43, (ref) v_u_47, (ref) v_u_9, (copy) v_u_476, (copy) v_u_479, (ref) v_u_10
+1540: 	local v480 = v_u_43
+1541: 	if v480 and (not v_u_47 and v480.id ~= v_u_9.player.UserId) then
+1542: 		v_u_47 = true
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.SoundEdit =====
+   ...
+15: local v_u_15 = nil
+16: v_u_6.onChange = nil
+17: v_u_6.onClose = nil
+18: local v_u_25 = {
+19: 	["d"] = function(p16) -- name: d
+20: 		return string.format("%.2fs", p16)
+21: 	end,
+22: 	["v"] = function(p17) -- name: v
+23: 		local v18 = p17 * 100
+24: 		return math.round(v18) .. "%"
+25: 	end,
+26: 	["s"] = function(p19) -- name: s
+27: 		return string.format("%.2fx", p19)
+28: 	end,
+29: 	["p"] = function(p20) -- name: p
+30: 		return (p20 > 0 and "+" or "") .. math.round(p20)
+31: 	end,
+32: 	["r"] = function(p21) -- name: r
+33: 		local v22 = p21 * 100
+34: 		return math.round(v22) .. "%"
+35: 	end,
+36: 	["e"] = function(p23) -- name: e
+37: 		local v24 = p23 * 100
+38: 		return math.round(v24) .. "%"
+39: 	end
+   ...
+250: end
+251: function v_u_6.index() -- name: index
+252: 	-- upvalues: (ref) v_u_12
+253: 	local v95 = v_u_12
+254: 	if v95 then
+255: 		v95 = v_u_12.index
+256: 	end
+257: 	return v95
+258: end
+259: function v_u_6.open(p96) -- name: open
+260: 	-- upvalues: (ref) v_u_7, (copy) v_u_5, (copy) v_u_4, (ref) v_u_15, (ref) v_u_14, (ref) v_u_10, (ref) v_u_12, (ref) v_u_9, (copy) v_u_43, (copy) v_u_51, (ref) v_u_8, (copy) v_u_65
+261: 	local v97 = v_u_7.Editor.project()
+262: 	local v98 = v97 and v97:frame().sn
+263: 	if v98 then
+264: 		v98 = v97:frame().sn[p96]
+265: 	end
+266: 	local v99
+267: 	if v98 then
+268: 		v99 = v_u_5.Sounds[v_u_4.soundKey(v98)]
+269: 	else
+270: 		v99 = v98
+271: 	end
+272: 	if v99 then
+273: 		if v_u_15 then
+274: 			v_u_15:Disconnect()
+275: 			v_u_15 = nil
+276: 		end
+   ...
+322: 	v_u_12 = nil
+323: 	if v_u_8.isOpen(v_u_9) then
+324: 		v_u_8.close(v_u_9)
+325: 	end
+326: 	if v104 and v_u_6.onClose then
+327: 		v_u_6.onClose()
+328: 	end
+329: end
+330: function v_u_6.refresh() -- name: refresh
+331: 	-- upvalues: (ref) v_u_12, (ref) v_u_7, (copy) v_u_4, (copy) v_u_6, (ref) v_u_13, (ref) v_u_9, (copy) v_u_43, (copy) v_u_51
+332: 	if v_u_12 then
+333: 		local v105 = v_u_7.Editor.project()
+334: 		local v106 = v105 and v105:frame().sn
+335: 		if v106 then
+336: 			v106 = v105:frame().sn[v_u_12.index]
+337: 		end
+338: 		if v106 and v_u_4.soundKey(v106) == v_u_12.snd.Id then
+339: 			if not v_u_13 then
+340: 				v_u_12.full = v_u_4.soundEntry(v106, v_u_12.snd.Length)
+341: 				local v107 = v_u_12
+342: 				local v108 = v_u_12.full
+343: 				v107.sig = string.format("%.2f|%.2f|%.2f|%.2f|%.2f|%.2f|%.2f|%.2f", v108.d, v108.v, v108.s, v108.p, v108.r, v108.e, v108.a, v108.b)
+344: 				if not v_u_12 then
+345: 					return
+346: 				end
+347: 				v_u_9.Head.SndName.Text = v_u_12.snd.Name
+348: 				v_u_9.Head.Info.Text = string.format("%s  -  %.1fs", v_u_12.snd.Cat, v_u_12.len)
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.Demo =====
+   ...
+42: 	if v33 then
+43: 		v33.Image = v32 and p28 and p28 or ""
+44: 		v33.Visible = v32
+45: 	end
+46: 	p27.Icon.Text = v32 and "" or p28
+47: 	p27.ItemName.Text = p29
+48: 	p27.Desc.Text = p30
+49: 	p27.Tip.Text = p31
+50: end
+51: local function v_u_68(p35, p36) -- name: drawTrans
+52: 	-- upvalues: (ref) v_u_13, (copy) v_u_3, (ref) v_u_24, (ref) v_u_25
+53: 	local v37 = v_u_13.Stage.TransDemo
+54: 	local v38 = v37.Fx
+55: 	local v39 = v37.MixB
+56: 	local v40 = v_u_3.transKind(p35)
+57: 	if v40 == "blend" then
+58: 		local v41 = math.clamp(p36, 0, 1)
+59: 		v39.GroupTransparency = 1 - v41 * v41 * (3 - 2 * v41)
+60: 		return
+61: 	end
+62: 	if v40 == "push" then
+63: 		local v42 = p35 == 10 and -1 or 1
+64: 		local v43 = math.clamp(p36, 0, 1)
+65: 		local v44 = v43 * v43 * (3 - 2 * v43)
+66: 		v39.GroupTransparency = 0
+   ...
+182: 				v47.UIStroke.Thickness = v62 + 24
+183: 			end
+184: 		else
+185: 			v64 = (p36 - 0.5) * 2
+186: 			v65 = math.clamp(v64, 0, 1)
+187: 			v63 = v62 * (v65 * v65 * (3 - 2 * v65))
+188: 			v47.Size = UDim2.fromOffset(v63 * 2, v63 * 2)
+189: 			v47.UIStroke.Thickness = v62 + 24
+190: 			return
+191: 		end
+192: 	end
+193: end
+194: local function v_u_101(p69) -- name: stepFrame
+195: 	-- upvalues: (ref) v_u_11, (ref) v_u_10, (ref) v_u_7, (ref) v_u_15, (copy) v_u_19, (ref) v_u_13, (copy) v_u_4, (copy) v_u_68, (copy) v_u_3, (ref) v_u_24, (copy) v_u_23
+196: 	if p69 ~= false then
+197: 		local v70 = v_u_11
+198: 		local v71 = v_u_10.Visible and v70.Visible
+199: 		if v71 then
+200: 			v71 = v_u_7.isOpen(v70)
+201: 		end
+202: 		if not v71 then
+203: 			if v_u_15 then
+204: 				v_u_15:Disconnect()
+205: 				v_u_15 = nil
+206: 			end
+   ...
+232: 		v79.Position = UDim2.fromScale(0.15 + 0.7 * v78, 0.62)
+233: 		v79.TextTransparency = 1 - math.clamp(v75, 0, 1)
+234: 		v_u_13.Graph.Area.Marker.Position = UDim2.fromScale(v76, 1 - (v78 - -0.3) / 1.6)
+235: 		return
+236: 	elseif v_u_19.kind == "trans" then
+237: 		local v80 = v72 % 3
+238: 		local v81
+239: 		if v80 < 0.9 then
+240: 			local v82 = v_u_13.Stage.TransDemo
+241: 			v82.SceneA.Position = UDim2.new()
+242: 			v82.MixB.SceneB.Position = UDim2.new()
+243: 			v82.MixB.GroupTransparency = 1
+244: 			local v83 = v82.Fx
+245: 			v83.Cover.Visible = false
+246: 			v83.Wipe.Visible = false
+247: 			v83.Iris.Visible = false
+248: 			v81 = v80 / 0.9 / 3
+249: 		elseif v80 < 1.8 then
+250: 			local v84 = (v80 - 0.9) / 0.9
+251: 			local v85 = v_u_13.Stage.TransDemo
+252: 			v85.SceneA.Position = UDim2.new()
+253: 			v85.MixB.SceneB.Position = UDim2.new()
+254: 			v85.MixB.GroupTransparency = 1
+255: 			local v86 = v85.Fx
+256: 			v86.Cover.Visible = false
+257: 			v86.Wipe.Visible = false
+258: 			v86.Iris.Visible = false
+259: 			v_u_68(v_u_19.id, v84)
+260: 			v81 = (1 + v84) / 3
+261: 		elseif v80 < 2.7 then
+262: 			local v87 = v_u_13.Stage.TransDemo
+263: 			v87.SceneA.Position = UDim2.new()
+264: 			v87.MixB.SceneB.Position = UDim2.new()
+265: 			v87.MixB.GroupTransparency = 1
+266: 			local v88 = v87.Fx
+267: 			v88.Cover.Visible = false
+268: 			v88.Wipe.Visible = false
+269: 			v88.Iris.Visible = false
+270: 			v73.TransDemo.MixB.GroupTransparency = 0
+271: 			v81 = (2 + (v80 - 0.9 - 0.9) / 0.9) / 3
+272: 		else
+273: 			local v89 = v_u_13.Stage.TransDemo
+274: 			v89.SceneA.Position = UDim2.new()
+275: 			v89.MixB.SceneB.Position = UDim2.new()
+276: 			v89.MixB.GroupTransparency = 1
+277: 			local v90 = v89.Fx
+278: 			v90.Cover.Visible = false
+279: 			v90.Wipe.Visible = false
+280: 			v90.Iris.Visible = false
+281: 			local v91 = v73.TransDemo.MixB
+282: 			local v92 = (v80 - 2.7) / 0.3
+283: 			local v93 = math.clamp(v92, 0, 1)
+284: 			v91.GroupTransparency = v93 * v93 * (3 - 2 * v93)
+285: 			v81 = 1
+286: 		end
+287: 		v_u_13.Graph.Phases.Marker.Position = UDim2.fromScale(v81, 0.5)
+288: 		return
+289: 	elseif v_u_19.kind == "camera" then
+   ...
+341: 		end
+342: 		v_u_101(false)
+343: 	end
+344: end
+345: function v5.trans(p111) -- name: trans
+346: 	-- upvalues: (copy) v_u_19, (ref) v_u_15, (ref) v_u_13, (copy) v_u_34, (ref) v_u_11, (copy) v_u
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.Presets =====
+   ...
+2152: 		p195.uar - p195.t,
+2153: 		p195.far - p195.uar,
+2154: 		p195.thl,
+2155: 		p195.shl - p195.thl,
+2156: 		p195.thr,
+2157: 		p195.shr - p195.thr
+2158: 	}
+2159: end
+2160: local function v_u_203(p197, p198) -- name: legOf
+2161: 	-- upvalues: (copy) v_u_194
+2162: 	local v199 = 0
+2163: 	for v200, v201 in ipairs(v_u_194) do
+2164: 		local v202 = p197.bones[v200]
+2165: 		if not v202 or v201 ~= "ThighL" and v201 ~= "ShinL" then
+2166: 			continue
+2167: 		end
+2168: 		v199 = v199 + v202.len
+2169: 	end
+2170: 	return math.max(v199, 40) * p198[4]
+2171: end
+2172: function v27.build(p204, p205, p206, p207, p208) -- name: build
+2173: 	-- upvalues: (copy) v_u_203, (ref) v_u_28, (copy) v_u_2, (copy) v_u_196, (copy) v_u_194
+2174: 	local v209 = math.clamp(p207 or 1, 1, 6)
+2175: 	local v_u_210 = {}
+2176: 	local v_u_211 = {}
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.BadgePopup =====
+   ...
+22: 	if not v_u_7 and #v_u_8 ~= 0 then
+23: 		local v12 = table.remove(v_u_8, 1)
+24: 		v_u_7 = true
+25: 		v_u_6.BadgeName.Text = v12.name
+26: 		local v13 = v_u_6.Pitch
+27: 		local v14 = v12.views
+28: 		local v15 = tonumber(v14) or 0
+29: 		local v16 = math.floor(v15)
+30: 		v13.Text = "Your published cartoons reached " .. tostring(v16):reverse():gsub("(%d%d%d)", "%1,"):reverse():gsub("^,", "") .. " views!"
+31: 		v_u_5.dim(true)
+32: 		v_u_5.open(v_u_6)
+33: 		for _, v17 in ipairs(v_u_9) do
+34: 			v_u_5.sfx(v17)
+35: 		end
+36: 	end
+37: end
+38: function v_u_3.show(p18, p19) -- name: show
+39: 	-- upvalues: (copy) v_u_8, (ref) v_u_10
+40: 	local v20 = v_u_8
+41: 	local v21 = {
+42: 		["name"] = tostring(p18 or "New Badge"),
+43: 		["views"] = p19
+44: 	}
+45: 	table.insert(v20, v21)
+46: 	v_u_10()
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.Reels =====
+   ...
+277: 	-- upvalues: (ref) v_u_7, (ref) v_u_23, (ref) v_u_52, (ref) v_u_55, (copy) v_u_40, (ref) v_u_54, (copy) v_u_46, (ref) v_u_13, (ref) v_u_53, (copy) v_u_41, (ref) v_u_10
+278: 	local v148 = v_u_7.world.Origin
+279: 	local v149 = v148.AbsolutePosition - v_u_23.AbsolutePosition
+280: 	local v150 = v148.AbsoluteSize
+281: 	local v151 = v_u_52.x
+282: 	local v152 = v_u_52.y
+283: 	local v153 = v_u_52.w
+284: 	local v154 = v_u_52.h
+285: 	local v155 = v_u_55
+286: 	local v156 = math.round(v155)
+287: 	local v157 = v150.Y + 8
+288: 	for v158, v159 in pairs(v_u_40) do
+289: 		local v160 = v159.frame
+290: 		v160.Position = UDim2.fromOffset(v149.X, v149.Y + v158 * v_u_54 + v156 - 4)
+291: 		v160.Size = UDim2.fromOffset(v150.X, v157)
+292: 		v159.film.Position = UDim2.fromOffset(v151, v152 + 4)
+293: 		v159.film.Size = UDim2.fromOffset(v153, v154)
+294: 		v160.MaskTop.Size = UDim2.fromOffset(v150.X, v152 + 4 + 1)
+295: 		v160.MaskBottom.Position = UDim2.fromOffset(0, v152 + 4 + v154 - 1)
+296: 		v160.MaskBottom.Size = UDim2.fromOffset(v150.X, v157 - v152 - 4 - v154 + 1)
+297: 		v160.MaskLeft.Size = UDim2.fromOffset(v151 + 1, v157)
+298: 		v160.MaskRight.Position = UDim2.fromOffset(v151 + v153 - 1, 0)
+299: 		v160.MaskRight.Size = UDim2.fromOffset(v150.X - v151 - v153 + 2, v157)
+300: 	end
+301: 	local v161 = v152 + v156
+   ...
+321: 	end
+322: 	v_u_10.setOffset(v156)
+323: end
+324: local function v_u_185(p173, p174) -- name: fillSlot
+325: 	-- upvalues: (copy) v_u_37, (ref) v_u_52, (ref) v_u_9, (ref) v_u_10, (ref) v_u_53
+326: 	local v175
+327: 	if p174 then
+328: 		v175 = p174.id or nil
+329: 	else
+330: 		v175 = nil
+331: 	end
+332: 	p173.id = v175
+333: 	p173.frame.Visible = true
+334: 	p173.film.Visible = p174 ~= nil
+335: 	if p174 then
+336: 		local v176 = v_u_37[p174.id]
+337: 		local v177 = p174.id
+338: 		local v178 = v_u_52.w
+339: 		local v179 = math.floor(v178)
+340: 		local v180 = v_u_52.h
+341: 		local v181 = v177 .. (v176 and "|d|" or "|t|") .. v179 .. "x" .. math.floor(v180)
+342: 		if p173.key ~= v181 then
+343: 			if p173.scene then
+344: 				p173.scene:clear()
+345: 				p173.scene = nil
+   ...
+400: 		v192 = false
+401: 	else
+402: 		v192 = v_u_60 ~= v189.id
+403: 	end
+404: 	local v193
+405: 	if v_u_42 > 0 and v189 ~= nil then
+406: 		v193 = v_u_40[0].id == v189.id
+407: 	else
+408: 		v193 = false
+409: 	end
+410: 	if not v193 then
+411: 		v_u_185(v_u_40[0], v192 and v189 and v189 or nil)
+412: 		v_u_40[0].frame.Visible = v_u_60 == nil
+413: 		if v192 and v189.endCard then
+414: 			v_u_40[0].msg.Visible = false
+415: 		end
+416: 	end
+417: 	local v194 = v192 and not (v189.endCard or v189.dead)
+418: 	if v194 then
+419: 		v194 = not v_u_20.Visible
+420: 	end
+421: 	v_u_16.Loading.Visible = v194
+422: 	if v194 then
+423: 		v_u_16.Loading.Msg.Text = v189.failed and "Couldn\'t load, tap to retry" or "Loading..."
+424: 	end
+425: 	v_u_186()
+426: end
+427: local function v_u_205(p196) -- name: fitActions
+428: 	-- upvalues: (ref) v_u_52, (ref) v_u_53
+429: 	local v197 = p196.Actions
+430: 	local v198 = 0
+431: 	for _, v199 in ipairs(v197:GetChildren()) do
+432: 		if not (v199:IsA("Frame") and v199.Visible) then
+433: 			continue
+434: 		end
+435: 		v198 = v198 + 1
+436: 	end
+437: 	local v200 = v_u_52.h / v_u_53
+438: 	local v201 = v197:FindFirstChild("Fit")
+439: 	if not v201 then
+440: 		v201 = Instance.new("UIScale")
+441: 		v201.Name = "Fit"
+442: 		v201.Parent = v197
+443: 	end
+444: 	local v202 = v200 + 20
+   ...
+948: 			end
+949: 		})
+950: 		if v_u_10.active then
+951: 			v_u_60 = p_u_355.id
+952: 			v_u_61 = {
+953: 				["it"] = nil,
+954: 				["played"] = 0,
+955: 				["frac"] = 0,
+956: 				["done"] = false,
+957: 				["it"] = p_u_355
+958: 			}
+959: 			v_u_10.setOffset(v_u_55)
+960: 			if v_u_40[0].id == p_u_355.id and v_u_40[0].frame.Visible then
+961: 				v_u_42 = 3
+962: 				v_u_10.setPlaying(false)
+963: 			end
+964: 			if not p_u_355.mine then
+965: 				local v_u_357 = v_u_59
+966: 				task.spawn(function()
+967: 					-- upvalues: (ref) v_u_8, (copy) p_u_355, (ref) v_u_5, (copy) v_u_357, (ref) v_u_59, (
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.EditorTips =====
+   ...
+5: local v_u_5 = {}
+6: local v_u_6 = Color3.fromRGB(255, 214, 90)
+7: local v_u_7 = Color3.fromRGB(255, 160, 40)
+8: local v_u_8 = Color3.fromRGB(110, 60, 10)
+9: local v_u_9 = Color3.fromRGB(96, 90, 130)
+10: local v_u_10 = Color3.fromRGB(40, 36, 64)
+11: local v_u_11 = {
+12: 	"Library",
+13: 	"Scenes",
+14: 	"Music",
+15: 	"Speed",
+16: 	"ColorPicker",
+17: 	"ObjFx",
+18: 	"Sounds",
+19: 	"SoundEdit",
+20: 	"OnionPop",
+21: 	"Moves",
+22: 	"FacePanel",
+23: 	"PosePop",
+24: 	"StylePanel",
+25: 	"DrawBar",
+26: 	"PickBar",
+27: 	"AttachBar",
+28: 	"FrameBar"
+29: }
+30: local v_u_33 = {
+31: 	{ "Inspector.Buttons.PoseBtn", "Pose lets you drag the dots to move arms and legs", function(p12)
+32: 			return p12.sel ~= nil
+33: 		end },
+34: 	{ "Timeline.Actions.AddFrameBtn", "Add a frame, then change the pose to make it move", function(p13)
+35: 			local v14
+36: 			if p13.frames == 1 then
+37: 				v14 = p13.objs >= 1
+38: 			else
+39: 				v14 = false
+40: 			end
+41: 			return v14
+42: 		end },
+43: 	{ "TopBar.Right.OnionBtn", "Onion shows the last frame faded, so poses line up", function(p15)
+44: 			local v16
+45: 			if p15.frames >= 2 then
+46: 				v16 = p15.frames <= 4
+47: 			else
+48: 				v16 = false
+49: 			end
+50: 			return v16
+51: 		end },
+52: 	{ "TopBar.Right.PlayBtn", "Press Play to watch your cartoon", function(p17)
+53: 			return p17.frames >= 3
+54: 		end },
+55: 	{ "Inspector.Buttons.MovesBtn", "Go back to an earlier frame and add a move: it plays at the same time as the others", function(p18)
+56: 			local v19
+57: 			if p18.sel == nil or p18.objs < 2 then
+58: 				v19 = false
+59: 			else
+60: 				v19 = p18.frames >= 4
+61: 			end
+62: 			return v19
+63: 		end },
+64: 	{ "Inspector.Buttons.MovesBtn", "Animations adds a ready-made move, like a kick", function(p20)
+65: 			local v21
+66: 			if p20.sel == nil then
+67: 				v21 = false
+68: 			else
+69: 				v21 = p20.frames >= 2
+70: 			end
+71: 			return v21
+72: 		end },
+73: 	{ "LeftBar.SceneBtn", "Scene changes the background", function(p22)
+74: 			local v23
+75: 			if p22.objs >= 1 then
+76: 				v23 = p22.defaultBg
+77: 			else
+78: 				v23 = false
+79: 			end
+80: 			return v23
+81: 		end },
+82: 	{ "Timeline.Actions.SpeedBtn", "Change how long each frame lasts", function(p24)
+83: 			return p24.frames >= 3
+84: 		end },
+85: 	{ "LeftBar.SoundBtn", "Audio adds music, ambience and sound effects", function(p25)
+86: 			local v26
+87: 			if p25.frames >= 4 then
+88: 				v26 = not p25.music
+89: 			else
+90: 				v26 = false
+91: 			end
+92: 			return v26
+93: 		end },
+94: 	{ "Inspector.Buttons.FxBtn", "Animate makes things bounce, spin or float", function(p27)
+95: 			local v28
+96: 			if p27.sel == nil then
+97: 				v28 = false
+98: 			else
+99: 				v28 = p27.frames >= 3
+100: 			end
+101: 			return v28
+102: 		end },
+103: 	{ "Inspector.Buttons.HoldBtn", "Hold lets a character carry another object", function(p29)
+104: 			local v30
+105: 			if p29.sel == nil then
+106: 				v30 = false
+107: 			else
+108: 				v30 = p29.objs >= 2
+109: 			end
+110: 			return v30
+111: 		end },
+112: 	{ "Timeline.Actions.SelectBtn", "Edit frames copies, pastes or reverses many frames", function(p31)
+113: 			return p31.frames >= 6
+114: 		end },
+115: 	{ "TopBar.Right.CameraBtn", "Camera zooms and pans for movie shots", function(p32)
+116: 			return p32.frames >= 5
+117: 		end }
+118: }
+119: local v_u_34 = nil
+120: local v_u_35 = nil
+121: local v_u_36 = nil
+122: local v_u_37 = nil
+123: local v_u_38 = nil
+124: local v_u_39 = nil
+125: local v_u_40 = true
+126: local v_u_41 = {}
+127: local v_u_42 = 0
+128: local v_u_43 = 0
+   ...
+274: 		-- upvalues: (ref) v_u_44, (copy) v_u_85, (ref) v_u_65
+275: 		if v_u_44 == v_u_85 then
+276: 			v_u_65()
+277: 		end
+278: 	end)
+279: end
+280: local function v_u_91() -- name: context
+281: 	-- upvalues: (ref) v_u_34, (copy) v_u_4, (copy) v_u_3
+282: 	local v87 = v_u_34.Editor.project()
+283: 	if not v87 then
+284: 		return nil
+285: 	end
+286: 	local v88 = v87:frame()
+287: 	local v89 = {
+288: 		["frames"] = #v87.order,
+289: 		["objs"] = v87:objCount(),
+290: 	
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.DuetView =====
+1: local v1 = game:GetService("ReplicatedStorage"):WaitForChild("DrawShared")
+2: local v_u_2 = require(v1:WaitForChild("Config"))
+3: local v_u_3 = require(v1:WaitForChild("Rig"))
+4: local v_u_4 = {}
+5: v_u_4.__index = v_u_4
+6: local v_u_5 = nil
+7: local v_u_6 = {}
+8: function v_u_4.new(p7, p8) -- name: new
+9: 	-- upvalues: (copy) v_u_4, (ref) v_u_5
+10: 	local v9 = v_u_4
+11: 	local v10 = setmetatable({}, v9)
+12: 	local v11 = Instance.new("Frame")
+13: 	v11.Name = "DuetView"
+14: 	v11.BackgroundColor3 = Color3.new(0, 0, 0)
+15: 	v11.BorderSizePixel = 0
+16: 	v11.ClipsDescendants = true
+17: 	v11.Visible = false
+18: 	v11.ZIndex = p8 or 1
+19: 	v11.Parent = p7
+20: 	v10.frame = v11
+21: 	local v12 = v_u_5.Renderer.newScene
+22: 	local v13 = v11.ZIndex
+23: 	local v14 = Instance.new("Frame")
+24: 	v14.Name = "DuetBg"
+25: 	v14.BackgroundTransparency = 1
+26: 	v14.Size = UDim2.new()
+27: 	v14.ZIndex = v13
+28: 	local v15 = Instance.new("UIScale")
+29: 	v15.Name = "S"
+30: 	v15.Parent = v14
+31: 	v14.Parent = v11
+32: 	local v16 = v11.ZIndex + 1
+33: 	local v17 = Instance.new("Frame")
+34: 	v17.Name = "DuetObj"
+35: 	v17.BackgroundTransparency = 1
+36: 	v17.Size = UDim2.new()
+37: 	v17.ZIndex = v16
+38: 	local v18 = Instance.new("UIScale")
+39: 	v18.Name = "S"
+40: 	v18.Parent = v17
+41: 	v17.Parent = v11
+42: 	v10.scene = v12(v14, v17)
+43: 	v10.times = {}
+44: 	v10.total = 1
+45: 	v10.cursor = 1
+   ...
+47: 	v10.id = nil
+48: 	v10.token = 0
+49: 	v10.opts = {}
+50: 	return v10
+51: end
+52: function v_u_4.setData(p19, p20) -- name: setData
+53: 	p19.data = p20
+54: 	p19.cursor = 1
+55: 	table.clear(p19.times)
+56: 	local v21 = 0
+57: 	for v22, v23 in ipairs(p20.order) do
+58: 		p19.times[v22] = v21
+59: 		v21 = v21 + p20.frames[v23].d
+60: 	end
+61: 	p19.total = math.max(v21, 0.05)
+62: end
+63: function v_u_4.load(p_u_24, p_u_25, p_u_26) -- name: load
+64: 	-- upvalues: (copy) v_u_6, (ref) v_u_5
+65: 	p_u_24.token = p_u_24.token + 1
+66: 	local v_u_27 = p_u_24.token
+67: 	p_u_24.id = p_u_25
+68: 	p_u_24.data = nil
+69: 	p_u_24.scene:clear()
+70: 	if v_u_6[p_u_25] then
+71: 		p_u_24:setData(v_u_6[p_u_25])
+   ...
+92: 							p_u_26()
+93: 						end
+94: 					end
+95: 				end
+96: 			end
+97: 		end)
+98: 	end
+99: end
+100: function v_u_4.hide(p31) -- name: hide
+101: 	p31.token = p31.token + 1
+102: 	p31.data = nil
+103: 	p31.scene:clear()
+104: 	p31.frame.Visible = false
+105: end
+106: function v_u_4.frameAt(p32, p33) -- name: frameAt
+107: 	local v34 = #p32.data.order
+108: 	local v35 = p32.cursor
+109: 	if v34 < v35 or p33 < p32.times[v35] then
+110: 		v35 = 1
+111: 	end
+112: 	while v35 < v34 and p32.times[v35 + 1] <= p33 do
+113: 		v35 = v35 + 1
+114: 	end
+115: 	p32.cursor = v35
+116: 	return v35
+117: end
+118: function v_u_4.render(p36, p37) -- name: render
+119: 	-- upvalues: (copy) v_u_3, (copy) v_u_2
+120: 	local v38 = p36.data
+121: 	if v38 then
+122: 		local v_u_39 = p36.frame.Size.X.Offset
+123: 		local v_u_40 = p36.frame.Size.Y.Offset
+124: 		if v_u_39 > 0 and v_u_40 > 0 then
+125: 			local v41 = p36.total - 0.0001
+126: 			local v42 = math.clamp(p37, 0, v41)
+127: 			local v43 = #v38.order
+128: 			local v44 = p36:frameAt(v42)
+129: 			local v45 = v38.frames[v38.order[v44]]
+130: 			local v46
+131: 			if v44 < v43 then
+132: 				v46 = v38.frames[v38.order[v44 + 1]] or nil
+133: 			else
+134: 				v46 = nil
+135: 			end
+136: 			local v47 = v42 - p36.times[v44]
+137: 			local v48, v49
+138: 			if v46 then
+139: 				local v50 = v45.d
+140: 				local v51 = v47 / math.max(v50, 0.01)
+141: 				v48 = math.clamp(v51, 0, 1)
+142: 				v49 = v_u_3.ease(v48, v45.e or 0)
+143: 			else
+144: 				v48 = 0
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.MenuThemes =====
+   ...
+15: 	-- upvalues: (copy) v_u_1, (ref) v_u_7
+16: 	local v18 = p14.Preview:FindFirstChild("Holder")
+17: 	if v18 then
+18: 		v18:Destroy()
+19: 	end
+20: 	local v19
+21: 	if p15 == "Galaxy" then
+22: 		v19 = v_u_1.DrawUI.Root.Home.Space
+23: 	else
+24: 		v19 = v_u_7.ui.Root.Home.MenuBgs:FindFirstChild(p15)
+25: 	end
+26: 	if v19 then
+27: 		local v20 = Instance.new("Frame")
+28: 		v20.Name = "Holder"
+29: 		v20.BackgroundTransparency = 1
+30: 		v20.Size = UDim2.fromOffset(1100, 670)
+31: 		local v21 = Instance.new("UIScale")
+32: 		v21.Scale = p16 / 1100
+33: 		v21.Parent = v20
+34: 		local v22 = v19:Clone()
+35: 		v22.Position = UDim2.new()
+36: 		v22.Size = UDim2.fromScale(1, 1)
+37: 		v22.Visible = true
+38: 		v22.Parent = v20
+39: 		v20.Parent = p14.Preview
+
+===== Players.DAYATTTTTT08.PlayerScripts.DrawClient.Cosmetics =====
+   ...
+11: local v_u_11 = {}
+12: local v_u_12 = false
+13: local v_u_13 = setmetatable({}, {
+14: 	["__mode"] = "k"
+15: })
+16: local v_u_14 = nil
+17: local v_u_15 = nil
+18: local v_u_16 = setmetatable({}, {
+19: 	["__mode"] = "k"
+20: })
+21: local v_u_17 = Font.new("rbxasset://fonts/families/FredokaOne.json")
+22: local v_u_18 = {
+23: 	["Frame"] = "\226\173\149 Avatar Frame",
+24: 	["Name"] = "\226\156\168 Name Effect",
+25: 	["Background"] = "\240\159\150\188\239\184\143 Background",
+26: 	["Badge"] = "\240\159\143\133 Badge"
+27: }
+28: local v_u_19 = {
+29: 	["Frame"] = "avatar frame",
+30: 	["Name"] = "name effect",
+31: 	["Background"] = "background",
+32: 	["Badge"] = "badge"
+33: }
+34: local v_u_20 = ColorSequence.new({
+35: 	ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 80, 80)),
+36: 	ColorSequenceKeypoint.new(0.2, Color3.fromRGB(255, 180, 60)),
+37: 	ColorSequenceKeypoint.new(0.4, Color3.fromRGB(255, 240, 90)),
+38: 	ColorSequenceKeypoint.new(0.6, Color3.fromRGB(90, 230, 120)),
+39: 	ColorSequenceKeypoint.new(0.8, Color3.fromRGB(80, 160, 255)),
+40: 	ColorSequenceKeypoint.new(1, Color3.fromRGB(190, 100, 255))
+41: })
+   ...
+59: 	local v28 = v_u_1:Create(p22, v24, v25)
+60: 	v_u_13[p22] = v28
+61: 	v28:Play()
+62: end
+63: function v_u_4.applyRing(p30, p31) -- name: applyRing
+64: 	-- upvalues: (copy) v_u_3, (copy) v_u_13, (copy) v_u_20, (copy) v_u_1
+65: 	local v32
+66: 	if type(p31) == "string" then
+67: 		v32 = v_u_3.COSMETIC_BY_ID[p31]
+68: 	else
+69: 		v32 = false
+70: 	end
+71: 	if not v32 or (v32.Slot ~= "Frame" or not v32) then
+72: 		v32 = nil
+73: 	end
+74: 	p30.Visible = v32 ~= nil
+75: 	local v33 = p30.Parent
+76: 	if v33 then
+77: 		v33 = p30.Parent:FindFirstChild("UIStroke")
+78: 	end
+79: 	if v33 then
+80: 		v33.Enabled = v32 == nil
+81: 	end
+82: 	local v34 = p30.Stroke.Grad
+83: 	if v32 then
+   ...
+137: end
+138: function v_u_4.applyName(p_u_49, p50) -- name: applyName
+139: 	-- upvalues: (copy) v_u_3, (copy) v_u_13, (copy) v_u_20, (copy) v_u_1, (copy) v_u_16, (copy) v_u_48, (copy) v_u_29
+140: 	local v51
+141: 	if type(p50) == "string" then
+142: 		v51 = v_u_3.COSMETIC_BY_ID[p50]
+143: 	else
+144: 		v51 = false
+145: 	end
+146: 	if not v51 or (v51.Slot ~= "Name" or not v51) then
+147: 		v51 = nil
+148: 	end
+149: 	local v52 = p_u_49.NameFx
+150: 	v52.Enabled = v51 ~= nil
+151: 	local v53 = p_u_49:FindFirstChild("Sparkles")
+152: 	if v53 then
+153: 		local v54
+154: 		if v51 == nil then
+155: 			v54 = false
+156: 		else
+157: 			v54 = v51.Sparkle == true
+158: 		end
+159: 		v53.Visible = v54
+160: 	end
+161: 	if v51 then
+   ...
+286: 	if v73 then
+287: 		v_u_6.setIcon(p71, v73.Icon)
+288: 	end
+289: end
+290: local function v_u_77(p74) -- name: placeBadge
+291: 	local v75 = p74.DisplayName
+292: 	local v76 = v75.TextBounds.X
+293: 	p74.NameBadge.Position = UDim2.fromOffset(v75.Position.X.Offset + v76 + 10, v75.Position.Y.Offset + (v75.Size.Y.Offset - p74.NameBadge.Size.Y.Offset) / 2)
+294: end
+295: function v_u_4.applyProfile(p_u_78, p79) -- name: applyProfile
+296: 	-- upvalues: (copy) v_u_4, (copy) v_u_16, (copy) v_u_77
+297: 	local v80 = type(p79) == "table" and p79 and p79 or {}
+298: 	v_u_4.applyRing(p_u_78.Avatar.Ring, v80.Frame)
+299: 	v_u_4.applyName(p_u_78.DisplayName, v80.Name)
+300: 	v_u_4.applyBadge(p_u_78.NameBadge, v80.Badge)
+301: 	if not v_u_16[p_u_78] then
+302: 		v_u_16[p_u_78] = true
+303: 		p_u_78.DisplayName:GetPropertyChangedSignal("TextBounds"):Connect(function()
+304: 			-- upvalues: (ref) v_u_77, (copy) p_u_78
+305: 			v_u_77(p_u_78)
+306: 		end)
+307: 	end
+308: 	v_u_77(p_u_78)
+309: end
+310: function v_u_4.equipped() -- name: equipped
+   ...
+372: local function v_u_100(p92, p93) -- name: nameLabel
+373: 	-- upvalues: (copy) v_u_17, (ref) v_u_5
+374: 	local v94 = Instance.new("TextLabel")
+375: 	v94.Name = "Sample"
+376: 	v94.BackgroundTransparency = 1
+377: 	v94.Size = UDim2.fromScale(1, 1)
+378: 	v94.FontFace = v_u_17
+379: 	v94.TextSize = p93
+380: 	v94.TextColor3 = Color3.new(1, 1, 1)
+381: 	v94.Text = v_u_5.player.DisplayName
+382: 	v94.TextTruncate = Enum.TextTruncate
+
+===== Players.DAYATTTTTT08.PlayerScripts.OnboardingRecorder =====
+   ...
+88: 		return v40, v41, nil
+89: 	else
+90: 		return v40, v41, v42.Name
+91: 	end
+92: end
+93: local function v_u_50(p45) -- name: pickGui
+94: 	local v46 = nil
+95: 	local v47 = nil
+96: 	for _, v49 in ipairs(p45) do
+97: 		if not v49.Visible then
+98: 			continue
+99: 		end
+100: 		if v46 == nil and (v49.BackgroundTransparency < 1 or not v49:IsA("Frame")) then
+101: 			v46 = v49
+102: 		end
+103: 		local v49
+104: 		if v47 == nil and v49:IsA("GuiButton") then
+105: 			if not v49.Active then
+106: 				v49 = v47
+107: 			end
+108: 		else
+109: 			v49 = v47
+110: 		end
+111: 		if v46 ~= nil and v49 ~= nil then
+112: 			v47 = v49
+   ...
+564: 	local v174 = {
+565: 		["k"] = "Start",
+566: 		["touch"] = nil,
+567: 		["mouse"] = nil,
+568: 		["keyboard"] = nil,
+569: 		["pad"] = nil,
+570: 		["tenFoot"] = nil,
+571: 		["last"] = nil,
+572: 		["inset"] = nil,
+573: 		["boot"] = nil,
+574: 		["locale"] = nil,
+575: 		["sysLocale"] = nil,
+576: 		["gfx"] = nil,
+577: 		["touch"] = v_u_8.TouchEnabled,
+578: 		["mouse"] = v_u_8.MouseEnabled,
+579: 		["keyboard"] = v_u_8.KeyboardEnabled,
+580: 		["pad"] = v_u_8.GamepadEnabled,
+581: 		["tenFoot"] = v_u_1:IsTenFootInterface(),
+582: 		["last"] = v_u_8:GetLastInputType().Name
+583: 	}
+584: 	local v175 = v_u_1:GetGuiInset().Y
+585: 	v174.inset = math.round(v175)
+586: 	local v176 = time() * 100
+587: 	v174.boot = math.round(v176) / 100
+588: 	v174.locale = v_u_2.RobloxLocaleId
+589: 	v174.sysLocale = v_u_2.SystemLocaleId
+590: 	local v177, v178 = pcall(function()
+591: 		return UserSettings():GetService("UserGameSettings").SavedQualityLevel.Value
+592: 	end)
+593: 	if not v177 then
+594: 		v178 = nil
+595: 	end
+596: 	v174.gfx = v178
+597: 	if v_u_23 then
+598: 		if #v_u_20 >= 600 then
+599: 			v_u_21 = v_u_21 + 1
+600: 		else
+601: 			local v179 = (os.clock() - v_u_22) * 100
+602: 			v174.t = math.round(v179) / 100
+603: 			local v180 = v_u_20
+604: 			table.insert(v180, v174)
+605: 		end
+606: 	end
+607: 	v_u_131()
+608: 	task.delay(2, function()
+
+===== ReplicatedStorage.DrawShared.Config =====
+   ...
+888: 		["Crate"] = "LongRoad",
+889: 		["Icon"] = 117040446421813,
+890: 		["Prompt"] = "Reunited After a Long Journey",
+891: 		["Desc"] = "Two friends have been apart for ages. Animate their big reunion."
+892: 	},
+893: 	{
+894: 		["Key"] = "Trickster",
+895: 		["Name"] = "The Trickster",
+896: 		["Tag"] = "trickster",
+897: 		["Crate"] = "PrankPack",
+898: 		["Icon"] = 121411925588981,
+899: 		["Prompt"] = "A Prank That Goes Wrong",
+900: 		["Desc"] = "The prank was supposed to work on someone else. Oops!"
+901: 	},
+902: 	{
+903: 		["Key"] = "Underdog",
+904: 		["Name"] = "Underdog",
+905: 		["Tag"] = "underdog",
+906: 		["Crate"] = "TinyChampion",
+907: 		["Icon"] = 71311088921012,
+908: 		["Prompt"] = "The Smallest Stickman Wins",
+909: 		["Desc"] = "Everyone says they are too small. Prove them wrong!"
+910: 	},
+911: 	{
+912: 		["Key"] = "PlotTwist",
+   ...
+1254: 		["Xp"] = 0,
+1255: 		["Projects"] = 50,
+1256: 		["Public"] = 10,
+1257: 		["Pins"] = 1
+1258: 	},
+1259: 	{
+1260: 		["Xp"] = 100,
+1261: 		["Projects"] = 60,
+1262: 		["Public"] = 12
+1263: 	},
+1264: 	{
+1265: 		["Xp"] = 300,
+1266: 		["Unlock"] = "Bronze avatar frame"
+1267: 	},
+1268: 	{
+1269: 		["Xp"] = 700,
+1270: 		["Projects"] = 70,
+1271: 		["Public"] = 15,
+1272: 		["Pins"] = 2
+1273: 	},
+1274: 	{
+1275: 		["Xp"] = 1500,
+1276: 		["Projects"] = 85,
+1277: 		["Public"] = 20,
+1278: 		["Unlock"] = "Free effect pack"
+   ...
+1280: 	{
+1281: 		["Xp"] = 3000,
+1282: 		["Unlock"] = "Profile background"
+1283: 	},
+1284: 	{
+1285: 		["Xp"] = 6000,
+1286: 		["Projects"] = 100,
+1287: 		["Public"] = 25,
+1288: 		["Pins"] = 3
+1289: 	},
+1290: 	{
+1291: 		["Xp"] = 12000,
+1292: 		["Unlock"] = "Silver avatar frame"
+1293: 	},
+1294: 	{
+1295: 		["Xp"] = 25000,
+1296: 		["Unlock"] = "Rainbow name"
+1297: 	},
+1298: 	{
+1299: 		["Xp"] = 50000,
+1300: 		["Projects"] = 150,
+1301: 		["Public"] = 30,
+1302: 		["Unlock"] = "Master Creator badge + gold frame"
+1303: 	}
+1304: }
+1305: for v67, v68 in ipairs(v_u_1.CREATOR_LEVELS) do
+1306: 	local v69 = v_u_1.CREATOR_LEVELS[v67 - 1]
+1307: 	v68.Level = v67
+1308: 	if not v69 then
+1309: 		continue
+1310: 	end
+1311: 	v68.Projects = v68.Projects or v69.Projects
+1312: 	v68.Public = v68.Public or v69.Public
+1313: 	v68.Pins = v68.Pins or v69.Pins
+1314: end
+   ...
+1369: 	-- upvalues: (copy) v_u_1
+1370: 	local v80 = tonumber(p79) or 1
+1371: 	local v81 = v_u_1.LEVEL_COLORS[1].Color
+1372: 	for _, v82 in ipairs(v_u_1.LEVEL_COLORS) do
+1373: 		if v82.From > v80 then
+1374: 			continue
+1375: 		end
+1376: 		v81 = v82.Color
+1377: 	end
+1378: 	return v81
+1379: end
+1380: v_u_1.COSMETIC_SLOTS = {
+1381: 	"Frame",
+1382: 	"Name",
+1383: 	"Background",
+1384: 	"Badge"
+1385: }
+1386: v_u_1.COSMETIC_PRICES = {
+1387: 	["Frame"] = 40,
+1388: 	["Name"] = 30,
+1389: 	["Background"] = 50,
+1390: 	["Badge"] = 25
+1391: }
+1392: local v83 = Color3.fromRGB
+1393: v_u_1.COSMETICS = {
+1394: 	{
+1395: 		["Id"] = "FrameBronze",
+1396: 		["Slot"] = "Frame",
+1397: 		["Name"] = "Bronze",
+1398: 		["Level"] = 3,
+1399: 		["Colors"] = nil,
+1400: 		["Colors"] = { v83(240, 170, 100), v83(140, 80, 36) }
+1401: 	},
+1402: 	{
+1403: 		["Id"] = "FrameSilver",
+1404: 		["Slot"] = "Frame",
+1405: 		["Name"] = "Silver",
+1406: 		["Level"] = 8,
+1407: 		["Colors"] = nil,
+1408: 		["Colors"] = { v83(245, 248, 255), v83(130, 140, 170) }
+1409: 	},
+1410: 	{
+1411: 		["Id"] = "FrameGold",
+1412: 		["Slot"] = "Frame",
+1413: 		["Name"] = "Gold",
+1414: 		["Level"] = 10,
+1415: 		["Colors"] = nil,
+1416: 		["Spin"] = true,
+1417: 		["Colors"] = { v83(255, 236, 120), v83(210, 130, 10) }
+1418: 	},
+1419: 	{
+1420: 		["Id"] = "FrameNeon",
+1421: 		["Slot"] = "Frame",
+1422: 		["Name"] = "Neon",
+1423: 		["Colors"] = nil,
+1424: 		["Spin"] = true,
+1425: 		["Colors"] = { v83(255, 70, 200), v83(60, 200, 255) }
+1426: 	},
+1427: 	{
+1428: 		["Id"] = "FrameFire",
+1429: 		["Slot"] = "Frame",
+1430: 		["Name"] = "Fire",
+1431: 		["Colors"] = nil,
+1432: 		["Spin"] = true,
+1433: 		["Colors"] = { v83(255, 230, 70), v83(255, 50, 30) }
+1434: 	},
+1435: 	{
+1436: 		["Id"] = "FrameIce",
+1437: 		["Slot"
+
+===== ReplicatedStorage.DrawShared.Library =====
+   ...
+39: 		"Torso",
+40: 		"Head",
+41: 		"UpperArmL",
+42: 		"ForeArmL",
+43: 		"UpperArmR",
+44: 		"ForeArmR",
+45: 		"ThighL",
+46: 		"ShinL",
+47: 		"ThighR",
+48: 		"ShinR"
+49: 	}
+50: }
+51: local function v11(p4) -- name: boneList
+52: 	local v5 = {}
+53: 	local v6 = p4:GetAttribute("Bones")
+54: 	if type(v6) == "string" and v6 ~= "" then
+55: 		for v7 in string.gmatch(v6, "[^,]+") do
+56: 			local v8 = string.gsub(v7, "%s", "")
+57: 			table.insert(v5, v8)
+58: 		end
+59: 		return v5
+60: 	end
+61: 	for _, v9 in ipairs(p4:GetDescendants()) do
+62: 		if not v9:IsA("GuiObject") or v9:GetAttribute("Length") == nil then
+63: 			continue
+64: 		end
+65: 		local v10 = v9.Name
+   ...
+94: 			end
+95: 			local v22 = v11(v21)
+96: 			local v23 = {}
+97: 			for v24, v25 in ipairs(v22) do
+98: 				local v26 = v21:FindFirstChild(v25, true)
+99: 				v23[v24] = v26 and (v26:IsA("GuiObject") and v26.Rotation) or 0
+100: 			end
+101: 			local v27 = {
+102: 				["Id"] = v21.Name,
+103: 				["Name"] = v21:GetAttribute("DisplayName") or v21.Name,
+104: 				["Cat"] = v18.Id,
+105: 				["Template"] = v21,
+106: 				["Bones"] = v22,
+107: 				["Rest"] = v23,
+108: 				["Order"] = v21:GetAttribute("Order") or 99,
+109: 				["Kind"] = v21:GetAttribute("EditableText") and "text" or (v21:GetAttribute("Particles") and "particles" or "rig")
+110: 			}
+111: 			for v28, v29 in ipairs(v_u_3.HUMAN) do
+112: 				if v22[v28] == v29 then
+113: 					continue
+114: 				end
+115: 				v30 = false
+116: 			end
+117: 			local v30 = true
+118: 			v27.Human = v30
+   ...
+133: 			v27.Crate = v_u_2.crateOf(v21.Name) ~= nil
+134: 			v_u_3.Items[v27.Id] = v27
+135: 			table.insert(v19, v27)
+136: 		end
+137: 	end
+138: 	table.sort(v19, v17)
+139: 	v_u_3.ByCat[v18.Id] = v19
+140: end
+141: v_u_3.Items.Drawing = {
+142: 	["Id"] = "Drawing",
+143: 	["Name"] = "Drawing",
+144: 	["Cat"] = "Draw",
+145: 	["Bones"] = nil,
+146: 	["Rest"] = nil,
+147: 	["Order"] = 0,
+148: 	["Kind"] = "drawing",
+149: 	["Colorable"] = false,
+150: 	["Scale"] = 1,
+151: 	["Vip"] = false,
+152: 	["Bones"] = {},
+153: 	["Rest"] = {}
+154: }
+155: local v33 = v1:FindFirstChild("Backgrounds")
+156: if v33 then
+157: 	for _, v34 in ipairs(v33:GetChildren()) do
+158: 		if not v34:IsA("GuiObject") then
+159: 			continue
+160: 		end
+161: 		local v35 = {
+162: 			["Id"] = v34.Name,
+163: 			["Name"] = v34:GetAttribute("DisplayName") or v34.Name,
+164: 			["Template"] = v34,
+
+===== ReplicatedStorage.DrawShared.Schema =====
+   ...
+223: 			if type(v84) == "number" and (v84 == v84 and v84 ~= (1 / 0)) then
+224: 				v85 = v84 ~= (-1 / 0)
+225: 			else
+226: 				v85 = false
+227: 			end
+228: 			local v86
+229: 			if v85 then
+230: 				local v87 = v81[2]
+231: 				v86 = math.floor(v87) or -1
+232: 			else
+233: 				v86 = -1
+234: 			end
+235: 			if v83 and (v86 >= 0 and v86 <= #v83.Bones) then
+236: 				local v88 = {}
+237: 				local v89 = v81[1]
+238: 				local v90 = v81[3]
+239: 				local v91
+240: 				if type(v90) == "number" and (v90 == v90 and v90 ~= (1 / 0)) then
+241: 					v91 = v90 ~= (-1 / 0)
+242: 				else
+243: 					v91 = false
+244: 				end
+245: 				local v92 = (not v91 and 0 or math.clamp(v90, -3000, 3000)) / 0.1 + 0.5
+246: 				local v93 = math.floor(v92) * 0.1
+247: 				local v94 = v81[4]
+   ...
+441: 	local v168 = (not v167 and 1 or math.clamp(v164, v165, v166)) / 0.001 + 0.5
+442: 	local v169 = math.floor(v168) * 0.001
+443: 	local v170 = p142[5] == 1 and 1 or 0
+444: 	local v171 = p142[6]
+445: 	local v172
+446: 	if type(v171) == "number" and (v171 == v171 and v171 ~= (1 / 0)) then
+447: 		v172 = v171 ~= (-1 / 0)
+448: 	else
+449: 		v172 = false
+450: 	end
+451: 	local v173 = not v172 and 0 or math.clamp(v171, -999, 999)
+452: 	__set_list(v148, 1, {v153, v158, v163, v169, v170, (math.floor(v173))})
+453: 	local v174 = #p143.Bones
+454: 	if v174 > 0 then
+455: 		local v175 = p142[7]
+456: 		local v176 = type(v175) == "table" and (p142[7] or {}) or {}
+457: 		local v177 = table.create(v174)
+458: 		for v178 = 1, v174 do
+459: 			local v179 = v176[v178]
+460: 			local v180
+461: 			if type(v179) == "number" and (v179 == v179 and v179 ~= (1 / 0)) then
+462: 				v180 = v179 ~= (-1 / 0)
+463: 			else
+464: 				v180 = false
+465: 			end
+   ...
+474: 	if type(v183) == "number" and (v183 == v183 and v183 ~= (1 / 0)) then
+475: 		v184 = v183 ~= (-1 / 0)
+476: 	else
+477: 		v184 = false
+478: 	end
+479: 	local v185
+480: 	if v184 then
+481: 		local v186 = p142[8]
+482: 		v185 = math.floor(v186) or 0
+483: 	else
+484: 		v185 = 0
+485: 	end
+486: 	local v187 = (v185 < 1 or v_u_4.FX_MAX < v185) and 0 or v185
+487: 	local v188 = v_u_141(p142[9], p144, p145, p146)
+488: 	if v187 > 0 or v188 then
+489: 		v148[7] = v148[7] or {}
+490: 		v148[8] = v187
+491: 	end
+492: 	if v188 then
+493: 		v148[9] = v188
+494: 	end
+495: 	return v148
+496: end
+497: local function v_u_199(p189, p190) -- name: cleanSounds
+498: 	-- upvalues: (copy) v_u_4, (copy) v_u_2, (copy) v_u_1
+   ...
+548: 				local v210 = math.floor(v209)
+549: 				local v211 = p200[2]
+550: 				local v212 = v_u_4.SHAKE_MIN
+551: 				local v213 = v_u_4.SHAKE_MAX
+552: 				local v214 = math.clamp(v211, v212, v213)
+553: 				__set_list(v205, 1, {v210, (math.floor(v214))})
+554: 				return v205
+555: 			end
+556: 		end
+557: 	end
+558: 	return nil
+559: end
+560: function v_u_5.cleanFrame(p216, p217, p218, p219, p220) -- name: cleanFrame
+561: 	-- upvalues: (copy) v_u_1, (copy) v_u_2, (copy) v_u_4, (copy) v_u_5, (copy) v_u_215, (copy) v_u_199
+562: 	if type(p216) ~= "table" then
+563: 		return nil
+564: 	end
+565: 	local v221 = v_u_1.POS_LIMIT
+566: 	local v222 = p216.c
+567: 	local v223 = type(v222) == "table" and (p216.c or {}) or {}
+568: 	local v224 = p216.g
+569: 	local v225
+570: 	if type(v224) == "string" then
+571: 		v225 = v_u_2.BgById[p216.g]
+572: 	else
+   ...
+742: 		["f1"] = {
+743: 			["d"] = nil,
+744: 			["e"] = 0,
+745: 			["g"] = nil,
+746: 			["c"] = nil,
+747: 			["o"] = nil,
+748: 			["d"] = v_u_1.DEFAULT_DURATION,
+749: 			["g"] = v_u_1.DEFAULT_BG,
+750: 			["c"] = { 640, 360, 1 },
+751: 			["o"] = {}
+752: 		}
+753: 	}
+754: 	v283.frames = v284
+755: 	v283.music = {}
+756: 	return v283
+757: end
+758: function v_u_5.apply(p285, p286, p287, p288, p289, p290) -- name: apply
+759: 	-- upvalues: (copy) v_u_1, (copy) v_u_5, (copy) v_u_2
+760: 	if type(p286) ~= "table" then
+761: 		return false, "Bad data"
+762: 	end
+763: 	local v291 = p286.order
+764: 	if type(v291) ~= "table" then
+765: 		return false, "Bad data"
+766: 	end
+   ...
+818: 					end
+819: 					v315[v316] = v297
+820: 				end
+821: 			end
+82
+
+===== ReplicatedStorage.DrawShared.Anim =====
+   ...
+9: 		"Back",
+10: 		"Elastic",
+11: 		"Bounce",
+12: 		"Snap",
+13: 		"Slow Mo",
+14: 		"Anticipate",
+15: 		"Steps"
+16: 	},
+17: 	["MOTION_MAX"] = 11,
+18: 	["MOTION_DESC"] = {
+19: 		"Starts slow, speeds up, then slows down at the end. The most natural move.",
+20: 		"Same speed from start to end. Steady, robot-like move.",
+21: 		"No move at all: holds this pose, then jumps straight to the next frame.",
+22: 		"Starts very slow and ends fast, like a rocket taking off.",
+23: 		"Starts fast and slows down at the end, like a soft landing.",
+24: 		"Goes a little too far, then comes back into place.",
+25: 		"Wobbles past the end like a spring, then settles.",
+26: 		"Hits the end and bounces a few times, like a falling ball.",
+27: 		"Super fast move that snaps into place almost instantly.",
+28: 		"Very slow at the start and the end, fast in the middle. Dramatic!",
+29: 		"Pulls back a bit first, then goes. Like winding up a punch.",
+30: 		"Moves in 4 choppy jumps, like old stop-motion."
+31: 	},
+32: 	["MOTION_TIP"] = {
+33: 		"Best for: walking, waving, most moves.",
+34: 		"Best for: cars, trains, robots, clouds.",
+35: 		"Best for: fast gags, blinks, sudden changes.",
+36: 		"Best for: rockets, starting to run, falling.",
+37: 		"Best for: landing, stopping, sliding to a stop.",
+38: 		"Best for: pointing, punchy cartoon poses.",
+39: 		"Best for: springs, boing gags, jelly things.",
+40: 		"Best for: balls, falling things, hard landings.",
+41: 		"Best for: punches, quick looks, fast reactions.",
+42: 		"Best for: dramatic moments and big reveals.",
+43: 		"Best for: jumps, throws, big punches.",
+44: 		"Best for: retro style, robots, stop-motion."
+45: 	},
+46: 	["TRANS"] = {
+47: 		"None",
+48: 		"Blend",
+49: 		"Fade Black",
+50: 		"Fade White",
+51: 		"Flash",
+52: 		"Wipe Left",
+53: 		"Wipe Right",
+54: 		"Wipe Up",
+55: 		"Wipe Down",
+56: 		"Iris",
+57: 		"Push Left",
+58: 		"Push Right"
+59: 	},
+60: 	["TRANS_MAX"] = 11,
+61: 	["TRANS_DESC"] = {
+62: 		"No transition: the poses move smoothly to the next frame.",
+63: 		"This frame slowly melts into the next one.",
+64: 		"The screen fades to black, then opens on the next frame.",
+65: 		"The screen fades to white, then opens on the next frame.",
+66: 		"A quick white flash hides the change. Great for hits!",
+67: 		"A curtain slides from right to left and reveals the next frame.",
+68: 		"A curtain slides from left to right and reveals the next frame.",
+69: 		"A curtain slides up and reveals the next frame.",
+70: 		"A curtain slides down and reveals the next frame.",
+71: 		"A circle closes on the middle, then opens on the next frame. Classic cartoon!",
+72: 		"The next frame pushes this one out to the left.",
+73: 		"The next frame pushes this one out to the right."
+74: 	},
+75: 	["TRANS_TIP"] = {
+76: 		"Tip: use the Motion tab to choose how poses move.",
+77: 		"Best for: dreams, time passing, soft scene changes.",
+78: 		"Best for: end of a scene, night time, \'later...\'.",
+79: 		"Best for: memories, waking up, magic.",
+80: 		"Best for: hits, explosions, photos, lightning.",
+81: 		"Best for: going to a new place.",
+82: 		"Best for: going to a new place.",
+83: 		"Best for: going up to the sky, a new level.",
+84: 		"Best for: falling down, going underground.",
+85: 		"Best for: the big ending of your cartoon!",
+86: 		"Best for: following someone into the next room.",
+87: 		"Best for: following someone into the next room."
+88: 	},
+89: 	["TRANS_TIME"] = 0.6,
+90: 	["FX"] = {
+91: 		{
+92: 			["Name"] = "Pop In",
+93: 			["Kind"] = "in"
+94: 		},
+95: 		{
+96: 			["Name"] = "Fade In",
+97: 			["Kind"] = "in"
+98: 		},
+99: 		{
+100: 			["Name"] = "Grow",
+101: 			["Kind"] = "in"
+102: 		},
+   ...
+221: 			["Kind"] = "loop"
+222: 		},
+223: 		{
+224: 			["Name"] = "Dizzy",
+225: 			["Kind"] = "loop"
+226: 		},
+227: 		{
+228: 			["Name"] = "Typewriter",
+229: 			["Kind"] = "in"
+230: 		}
+231: 	}
+232: }
+233: v_u_2.FX_MAX = #v_u_2.FX
+234: local v3 = {
+235: 	"Pops out of nowhere: grows a bit too big, then settles.",
+236: 	"Slowly appears from i
+
+===== ReplicatedStorage.OnboardingKit.Config =====
+1: return {
+2: 	["Enabled"] = true,
+3: 	["SampleRate"] = 1,
+4: 	["StoreName"] = "OnboardingLogs_v1",
+5: 	["StudioStoreName"] = "OnboardingLogs_Studio",
+6: 	["RecordInStudio"] = true,
+7: 	["DryRunInStudio"] = true,
+8: 	["Steps"] = {
+9: 		"Welcome",
+10: 		"New cartoon",
+11: 		"Tap Add",
+12: 		"Pick the Ninja",
+13: 		"Pose the Ninja",
+14: 		"Add a frame",
+15: 		"Add the Kick move",
+16: 		"Watch the cartoon",
+17: 		"Close the cartoon",
+18: 		"Go back Home",
+19: 		"Open Cartoons"
+20: 	},
+21: 	["HintLabelPath"] = {
+22: 		"TutorialGui",
+23: 		"Root",
+24: 		"Bubble",
+25: 		"Txt"
+26: 	},
+
+===== StarterPlayer.PlayerModule.ControlModule.ClickToMoveController =====
+   ...
+115: 				end
+116: 			end)
+117: 		end
+118: 	end
+119: end
+120: local function v_u_124(p60) -- name: getCollidableExtentsSize
+121: 	if p60 == nil or p60.PrimaryPart == nil then
+122: 		return
+123: 	else
+124: 		assert(p60, "")
+125: 		local v61 = p60.PrimaryPart
+126: 		assert(v61, "")
+127: 		local v62 = p60.PrimaryPart.CFrame:Inverse()
+128: 		local v63 = Vector3.new(inf, inf, inf)
+129: 		local v64 = Vector3.new(-inf, -inf, -inf)
+130: 		for _, v65 in pairs(p60:GetDescendants()) do
+131: 			if not (v65:IsA("BasePart") and v65.CanCollide) then
+132: 				continue
+133: 			end
+134: 			local v66 = v62 * v65.CFrame
+135: 			local v67 = v65.Size.X / 2
+136: 			local v68 = v65.Size.Y / 2
+137: 			local v69 = v65.Size.Z / 2
+138: 			local v70 = Vector3.new(v67, v68, v69)
+139: 			local v71 = {}
+140: 			local v72 = v70.X
+141: 			local v73 = v70.Y
+142: 			local v74 = v70.Z
+143: 			local v75 = Vector3.new(v72, v73, v74)
+144: 			local v76 = v70.X
+145: 			local v77 = v70.Y
+146: 			local v78 = -v70.Z
+   ...
+259: 	v_u_128.OriginPoint = nil
+260: 	v_u_128.AgentCanFollowPath = false
+261: 	v_u_128.DirectPath = false
+262: 	v_u_128.DirectPathRiseFirst = false
+263: 	v_u_128.stopTraverseFunc = nil
+264: 	v_u_128.setPointFunc = nil
+265: 	v_u_128.pointList = nil
+266: 	local v133 = v_u_128.Humanoid
+267: 	if v133 then
+268: 		v133 = v_u_128.Humanoid.RootPart
+269: 	end
+270: 	if v133 then
+271: 		v_u_128.OriginPoint = v133.CFrame.Position
+272: 		local v134 = 2
+273: 		local v135 = 5
+274: 		local v136 = true
+275: 		local v137 = v_u_128.Humanoid.SeatPart
+276: 		if v137 and v137:IsA("VehicleSeat") then
+277: 			local v138 = v137:FindFirstAncestorOfClass("Model")
+278: 			if v138 then
+279: 				local v139 = v138.PrimaryPart
+280: 				v138.PrimaryPart = v137
+281: 				if p127 then
+282: 					local v140 = v138:GetExtentsSize()
+283: 					local v141 = v_u_24 * 0.5
+   ...
+411: 		end
+412: 		return v150
+413: 	end
+414: 	v_u_128.Recomputing = false
+415: 	function v_u_128.OnPathBlocked(_, p151) -- name: OnPathBlocked
+416: 		-- upvalues: (copy) v_u_128, (ref) v_u_21, (ref) v_u_27
+417: 		if v_u_128.CurrentPoint <= p151 and not v_u_128.Recomputing then
+418: 			v_u_128.Recomputing = true
+419: 			if v_u_128.stopTraverseFunc then
+420: 				v_u_128.stopTraverseFunc()
+421: 				v_u_128.stopTraverseFunc = nil
+422: 			end
+423: 			v_u_128.OriginPoint = v_u_128.Humanoid.RootPart.CFrame.Position
+424: 			v_u_128.pathResult:ComputeAsync(v_u_128.OriginPoint, v_u_128.TargetPoint)
+425: 			v_u_128.pointList = v_u_128.pathResult:GetWaypoints()
+426: 			if #v_u_128.pointList > 0 then
+427: 				v_u_128.HumanoidOffsetFromPath = v_u_128.pointList[1].Position - v_u_128.OriginPoint
+428: 			end
+429: 			v_u_128.PathComputed = v_u_128.pathResult.Status == Enum.PathStatus.Success
+430: 			if v_u_21 then
+431: 				local v152 = v_u_128
+432: 				local v153 = v_u_128
+433: 				local v154, v155 = v_u_27.CreatePathDisplay(v_u_128.pointList)
+434: 				v152.stopTraverseFunc = v154
+435: 				v153.setPointFunc = v155
+   ...
+570: 					v180.HumanoidOffsetFromPath = Vector3.new(0, v181, 0)
+571: 					v_u_128.CurrentHumanoidPosition = v_u_128.Humanoid.RootPart.Position + v_u_128.HumanoidOffsetFromPath
+572: 					v_u_128.CurrentHumanoidVelocity = v_u_128.Humanoid.RootPart.Velocity
+573: 					v_u_128.SeatedConn = v_u_128.Humanoid.Seated:Connect(function(_, _)
+574: 						-- upvalues: (ref) v_u_128
+575: 						v_u_128:OnPathInterrupted()
+576: 					end)
+577: 					v_u_128.DiedConn = v_u_128.Humanoid.Died:Connect(function()
+578: 						-- upvalues: (ref) v_u_128
+579: 						v_u_128:OnPathInterrupted()
+580: 					end)
+581: 					if v_u_15 then
+582: 						v_u_128.lastPosition = v_u_128.Humanoid.RootPart.CFrame.Position
+583: 						v_u_128.TeleportedConn = v_u_128.Humanoid.RootPart:GetPropertyChangedSignal("CFrame"):Connect(function()
+584: 							-- upvalues: (ref) v_u_128
+585: 							local v182 = v_u_128.Humanoid.RootPart.CFrame.Position
+586: 							local v183 = (v182 - v_u_128.lastPosition).Magnitude
+587: 							v_u_128.lastPosition = v182
+588: 							if v
+
+===== StarterPlayer.PlayerModule.CameraModule =====
+   ...
+410: 			local v77, v78 = p75.activeCameraController:Update(p76)
+411: 			if v_u_29 and (v_u_7.VREnabled and p75.activeCameraController.IsInFirstPerson) then
+412: 				v_u_31.inFirstPerson = p75.activeCameraController:IsInFirstPerson()
+413: 			end
+414: 			local v79 = game.Workspace.CurrentCamera
+415: 			if v_u_30 then
+416: 				if p75.activeOcclusionModule and (not p75.activeCameraController.skipOcclusion and v79.ProjectionType ~= Enum.ProjectionType.Orthographic) then
+417: 					v77, v78 = p75.activeOcclusionModule:Update(p76, v77, v78)
+418: 				end
+419: 			elseif p75.activeOcclusionModule and not p75.activeCameraController.skipOcclusion then
+420: 				v77, v78 = p75.activeOcclusionModule:Update(p76, v77, v78)
+421: 			end
+422: 			v79.CFrame = v77
+423: 			v79.Focus = v78
+424: 			if p75.activeTransparencyController then
+425: 				p75.activeTransparencyController:Update(p76)
+426: 				return
+427: 			end
+428: 		elseif v_u_29 and v_u_7.VREnabled then
+429: 			v_u_31.inFirstPerson = false
+430: 		end
+431: 	end
+432: 	function v_u_1.OnCharacterAdded(p80, p81, p82) -- name: OnCharacterAdded
+433: 		if p80.activeOcclusionModule then
+434: 			p80.activeOcclusionModule:CharacterAdded(p81, p82)
+
+===== StarterPlayer.PlayerModule.CameraModule.BaseCamera =====
+   ...
+20: 	local v_u_16 = setmetatable({}, v15)
+21: 	v_u_16._connections = v_u_6.new()
+22: 	v_u_16.gamepadZoomLevels = { 0, 10, 20 }
+23: 	v_u_16.FIRST_PERSON_DISTANCE_THRESHOLD = 1
+24: 	v_u_16.cameraType = nil
+25: 	v_u_16.cameraMovementMode = nil
+26: 	v_u_16.lastCameraTransform = nil
+27: 	v_u_16.lastUserPanCamera = tick()
+28: 	v_u_16.humanoidRootPart = nil
+29: 	v_u_16.humanoidCache = {}
+30: 	v_u_16.lastSubject = nil
+31: 	v_u_16.lastSubjectPosition = Vector3.new(0, 5, 0)
+32: 	v_u_16.lastSubjectCFrame = CFrame.new(v_u_16.lastSubjectPosition)
+33: 	local v17 = v_u_13.CameraMinZoomDistance
+34: 	local v18 = v_u_13.CameraMaxZoomDistance
+35: 	v_u_16.currentSubjectDistance = math.clamp(12.5, v17, v18)
+36: 	v_u_16.inFirstPerson = false
+37: 	v_u_16.inMouseLockedMode = false
+38: 	v_u_16.resetCameraAngle = true
+39: 	v_u_16.enabled = false
+40: 	v_u_16.cameraChangedConn = nil
+41: 	v_u_16.shouldUseVRRotation = false
+42: 	v_u_16.VRRotationIntensityAvailable = false
+43: 	v_u_16.lastVRRotationIntensityCheckTime = 0
+44: 	v_u_16.lastVRRotationTime = 0
+   ...
+88: function v_u_14.OnCharacterAdded(p21, _) -- name: OnCharacterAdded
+89: 	p21.resetCameraAngle = p21.resetCameraAngle or p21:GetEnabled()
+90: 	p21.humanoidRootPart = nil
+91: end
+92: function v_u_14.GetHumanoidRootPart(p22) -- name: GetHumanoidRootPart
+93: 	-- upvalues: (copy) v_u_13
+94: 	local v23 = (not p22.humanoidRootPart and v_u_13.Character and true or false) and v_u_13.Character:FindFirstChildOfClass("Humanoid")
+95: 	if v23 then
+96: 		p22.humanoidRootPart = v23.RootPart
+97: 	end
+98: 	return p22.humanoidRootPart
+99: end
+100: function v_u_14.GetSubjectCFrame(p24) -- name: GetSubjectCFrame
+101: 	local v25 = p24.lastSubjectCFrame
+102: 	local v26 = workspace.CurrentCamera
+103: 	if v26 then
+104: 		v26 = v26.CameraSubject
+105: 	end
+106: 	if not v26 then
+107: 		return v25
+108: 	end
+109: 	if v26:IsA("Humanoid") then
+110: 		local v27 = v26:GetState() == Enum.HumanoidStateType.Dead
+111: 		local v28 = v26.CameraOffset
+112: 		if p24:GetIsMouseLocked() then
+113: 			v28 = Vector3.new()
+   ...
+123: 					v30 = Vector3.new(0, 1.5, 0)
+124: 					local v31 = v26.RootPart
+125: 					if v29 == v31 then
+126: 						local v32 = (v31.Size.Y - 2) / 2
+127: 						v30 = v30 + Vector3.new(0, v32, 0)
+128: 					end
+129: 				else
+130: 					v30 = Vector3.new(0, 2, 0)
+131: 				end
+132: 			else
+133: 				v30 = Vector3.new(0, 1.5, 0)
+134: 			end
+135: 			v25 = v29.CFrame * CFrame.new((v27 and Vector3.new(0, 0, 0) or v30) + v28)
+136: 		end
+137: 	elseif v26:IsA("BasePart") then
+138: 		v25 = v26.CFrame
+139: 	elseif v26:IsA("Model") then
+140: 		if v26.PrimaryPart then
+141: 			v25 = v26:GetPrimaryPartCFrame()
+142: 		else
+143: 			v25 = CFrame.new()
+144: 		end
+145: 	end
+146: 	if v25 then
+147: 		p24.lastSubjectCFrame = v25
+148: 	end
+149: 	return v25
+150: end
+151: function v_u_14.GetSubjectVelocity(_) -- name: GetSubjectVelocity
+152: 	local v33 = workspace.CurrentCamera
+153: 	if v33 then
+154: 		v33 = v33.CameraSubject
+155: 	end
+156: 	if not v33 then
+157: 		return Vector3.new(0, 0, 0)
+158: 	end
+159: 	if v33:IsA("BasePart") then
+   ...
+239: 				if v49.AutomaticScalingEnabled then
+240: 					v53 = Vector3.new(0, 1.5, 0)
+241: 					if v52 == v49.RootPart then
+242: 						local v54 = v49.RootPart.Size.Y / 2 - 1
+243: 						v53 = v53 + Vector3.new(0, v54, 0)
+244: 					end
+245: 				else
+246: 					v53 = Vector3.new(0, 2, 0)
+247: 				end
+248: 			else
+249: 				v53 = Vector3.new(0, 1.5, 0)
+250: 			end
+251: 			v48 = v52.CFrame.Position + v52.CFrame:vectorToWorldSpace((v50 and Vector3.new(0, 0, 0) or v53) + v51)
+252: 		end
+253: 	elseif v49:IsA("VehicleSeat") then
+254: 		v48 = v49.CFrame.Position + v49.CFrame:vectorToWorldSpace(Vector3.new(0, 5, 0))
+255: 	elseif v49:IsA("SkateboardPlatform") then
+256: 		v48 = v49.CFrame.Position + Vector3.new(0, 5, 0)
+257: 	elseif v49:IsA("BasePart") then
+258: 		v48 = v49.CFrame.Position
+259: 	elseif v49:IsA("Model") then
+260: 		if v49.PrimaryPart then
+261: 			v48 = v49:GetPrimaryPartCFrame().Position
+262: 		else
+263: 
+
+===== StarterPlayer.PlayerModule.ControlModule.ClassicThumbstick =====
+   ...
+17: local v_u_12 = require(script.Parent:WaitForChild("ActionController"))
+18: local v_u_13 = setmetatable({}, v_u_12)
+19: v_u_13.__index = v_u_13
+20: function v_u_13.new(p14) -- name: new
+21: 	-- upvalues: (copy) v_u_12, (copy) v_u_13
+22: 	local v15 = v_u_12.new()
+23: 	local v16 = v_u_13
+24: 	local v17 = setmetatable(v15, v16)
+25: 	v17.data = p14
+26: 	v17.enabled = false
+27: 	v17.isTouchActive = false
+28: 	v17.isFollowStick = false
+29: 	v17.thumbstickFrame = nil
+30: 	v17.screenPos = nil
+31: 	v17.stickImage = nil
+32: 	v17.thumbstickSize = nil
+33: 	return v17
+34: end
+35: local function v_u_21(p18) -- name: setupThumbstickInput
+36: 	-- upvalues: (copy) v_u_8
+37: 	for _, v19 in v_u_8:GetChildren() do
+38: 		if v19.Name ~= "DynamicTouchBinding" and v19.Name ~= "ClassicTouchBinding" then
+39: 			continue
+40: 		end
+41: 		v19:Destroy()
+   ...
+49: function v_u_13.Enable(p22, p23, p24) -- name: Enable
+50: 	-- upvalues: (copy) v_u_12, (copy) v_u_7, (copy) v_u_21, (copy) v_u_8
+51: 	if p23 == nil then
+52: 		return false
+53: 	end
+54: 	local v25 = p23 and true or false
+55: 	if p22.enabled == v25 then
+56: 		return true
+57: 	end
+58: 	v_u_12.Enable(p22, v25)
+59: 	p22.isJumping = false
+60: 	if v25 then
+61: 		if not p22.thumbstickFrame then
+62: 			p22:Create(p24)
+63: 		end
+64: 		if v_u_7 then
+65: 			v_u_21(p22)
+66: 			p22.thumbstickStateChangedConn = v_u_8.StateChanged:Connect(p22.onStateChanged)
+67: 			v_u_8.Enabled = true
+68: 		else
+69: 			p22.thumbstickStateChangedConn = v_u_8.StateChanged:Connect(p22.onStateChanged)
+70: 			v_u_8.Enabled = true
+71: 		end
+72: 		p22.thumbstickFrame.Visible = true
+73: 	else
+74: 		if v_u_7 then
+75: 			v_u_8.Enabled = false
+76: 			if p22.thumbstickStateChangedConn then
+77: 				p22.thumbstickStateChangedConn:Disconnect()
+78: 				p22.thumbstickStateChangedConn = nil
+79: 			end
+80: 		else
+81: 			v_u_8.Enabled = false
+82: 			if p22.thumbstickStateChangedConn then
+83: 				p22.thumbstickStateChangedConn:Disconnect()
+84: 				p22.thumbstickStateChangedConn = nil
+85: 			end
+86: 		end
+87: 		p22.thumbstickFrame.Visible = false
+88: 		p22:OnInputEnded()
+89: 	end
+90: 	p22.enabled = v25
+91: end
+92: function v_u_13.OnInputEnded(p26) -- name: OnInputEnded
+93: 	p26.isTouchActive = false
+94: 	p26.thumbstickFrame.Position = p26.screenPos
+95: 	p26.stickImage.Position = UDim2.new(0, p26.thumbstickFrame.Size.X.Offset / 2 - p26.thumbstickSize / 4, 0, p26.thumbstickFrame.Size.Y.Offset / 2 - p26.thumbstickSize / 4)
+96: 	local v27 = p26.data.actions.MoveAction:FindFirstChild("ClassicThumbstickScriptableBinding")
+97: 	if v27 then
+98: 		v27:Fire(Vector2.zero)
+99: 	end
+100: 	p26.isJumping = false
+101: 	p26.thumbstickFrame.Position = p26.screenPos
+102: end
+103: function v_u_13.Create(p_u_28, p_u_29) -- name: Create
+104: 	-- upvalues: (copy) v_u_8, (copy) v_u_5, (copy) v_u_4, (copy) v_u_11, (copy) v_u_10, (copy) v_u_7, (copy) v_u_6, (copy) v_u_9, (copy) v_u_1
+105: 	if p_u_28.thumbstickFrame then
+106: 		v_u_8.Enabled = false
+107: 		if p_u_28.thumbstickStateChangedConn then
+108: 			p_u_28.thumbstickStateChangedConn:Disconnect()
+109: 			p_u_28.thumbstickStateChangedConn = nil
+110: 		end
+111: 		p_u_28.thumbstickFrame:Destroy()
+112: 		p_u_28.thumbstickFrame = nil
+113: 		if p_u_28.absoluteSizeChangedConn then
+114: 			p_u_28.absoluteSizeChangedConn:Disconnect()
+115: 			p_u_28.absoluteSizeChangedConn = nil
+116: 		end
+117: 		if p_u_28.avatarAbilitiesEnabledChangedConn then
+118: 			p_u_28.avatarAbilitiesEnabledChangedConn:Disconnect()
+119: 			p_u_28.avatarAbilitiesEnabledChangedConn = nil
+120: 		end
+121: 	end
+122: 	p_u_28.thumbstickFrame = Instance.new("Frame")
+123: 	p_u_28.thumbstickFrame.Name = v_u_5 and "ClassicThumbstickFrame" or "ThumbstickFrame"
+124: 	p_u_28.thumbstickFrame.Active = true
+125: 	p_u_28.thumbstickFrame.Visible = false
+126: 	p_u_28.thumbstickFrame.BackgroundTransparency = 1
+127: 	local v_u_30 = Instance.new("ImageLabel")
+128: 	v_u_30.Name = "OuterImage"
+129: 	v_u_30.Image = "rbxasset://textures/ui/TouchControlsSheet.png"
+130: 	v_u_
